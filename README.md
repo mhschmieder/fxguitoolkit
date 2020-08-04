@@ -9,6 +9,6 @@ Eclipse and NetBeans related support files are included as they are generic and 
 
 The Javadocs are 100% compliant and complete, but I am still learning how to publish those at the hosting site that I think is part of Maven Central, as it is a bad idea to bloat a GitHub project with such files and to complicate repository changes (just as with binary files and archices). Hopefully later tonight!
 
-As a confidence boost at both ends, LayoutUtilities has a main() function that prints "Hello Maven from FxGuiToolkit" to the console (e.g. the one in Eclipse IDE). By running Maven's clean task, then the install task, you can quickly gain confidence that everything is integrated properly, by then running the main class and seeing the console and confirming that this library was the source of the validation message.
+As a confidence boost at both ends, LayoutFactory has a main() function that prints "Hello Maven from FxGuiToolkit" to the console (e.g. the one in Eclipse IDE). By running Maven's clean task, then the install task, you can quickly gain confidence that everything is integrated properly, by then running the main class and seeing the console and confirming that this library was the source of the validation message.
 
 This projects may eventually depend on my upcoming FxGraphicsToolkit library, and will be marked as such in the Maven POM file.
