@@ -28,12 +28,33 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
+package com.mhschmieder.fxguitoolkit;
+
 /**
- * This package contains the FxGuiToolkit Library's enhancements for JavaFX
- * Dialogs.
+ * {@code IconContext} is an enumeration of Icon Contexts, useful for
+ * determining offsets and sizes for icons when used in more than one place in
+ * an application.
  *
  * @version 1.0
  *
  * @author Mark Schmieder
  */
-package com.mhschmieder.fxguitoolkit.dialog;
+public enum IconContext {
+    /**
+     * Frame Title Bar context
+     */
+    FRAME_TITLE,
+    /**
+     * Standard Menu, Menu Bar, or Context Menu context
+     */
+    MENU,
+    /**
+     * Tool Bar context
+     */
+    TOOLBAR,
+    /**
+     * Control Panel context, such as for Modal Dialog OK/Cancel Buttons
+     */
+    CONTROL_PANEL;
+
+}

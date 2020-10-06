@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGuiToolkit Library
+ * This file is part of the FxuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
  * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
@@ -29,11 +29,10 @@
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
 /**
- * This package contains the FxGuiToolkit Library's enhancements for JavaFX
- * Dialogs.
+ * This package contains the FxGuiToolkit Library's utilities for JavaFX Images.
  *
  * @version 1.0
  *
  * @author Mark Schmieder
  */
-package com.mhschmieder.fxguitoolkit.dialog;
+package com.mhschmieder.fxguitoolkit.image;
