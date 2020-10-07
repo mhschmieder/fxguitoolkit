@@ -1,0 +1,359 @@
+/**
+ * MIT License
+ *
+ * Copyright (c) 2020 Mark Schmieder
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * This file is part of the FxGuiToolkit Library
+ *
+ * You should have received a copy of the MIT License along with the
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ *
+ * Project: https://github.com/mhschmieder/fxguitoolkit
+ */
+
+/*
+ * Style sheet for default skin.
+ */
+ 
+ .root {
+ 	/* Define a full set of achromatic gray values, for easy comprehension */
+ 	COLOR_GRAY05: #0d0d0d; /* aka "Night Mode" */
+ 	COLOR_GRAY10: #1a1a1a;
+ 	COLOR_GRAY15: #272727;
+ 	COLOR_GRAY19: #313131;
+ 	COLOR_GRAY20: #333333;
+ 	COLOR_GRAY25: #404040;
+ 	COLOR_GRAY30: #4d4d4d;
+ 	COLOR_GRAY32_5: #535353;
+ 	COLOR_GRAY33_3: #555555; /* fractional 1/3 Gray, aka "Davy's Gray" */
+ 	COLOR_GRAY40: #666666;
+ 	COLOR_GRAY41: #696969; /* aka "Dim Gray" */
+ 	COLOR_GRAY45: #737373;
+ 	COLOR_GRAY50: #808080; /* aka "Gray" */
+ 	COLOR_GRAY60: #999999;
+ 	COLOR_GRAY60_5: #9b9b9b;
+ 	COLOR_GRAY66_6: #aaaaaa; /* fractional 2/3 Gray */
+ 	COLOR_GRAY70: #b1b1b1;
+ 	COLOR_GRAY75: #c0c0c0; /* aka "Silver */
+ 	COLOR_GRAY80: #cbcbcb;
+ 	COLOR_GRAY85: #d8d8d8;
+ 	COLOR_GRAY86: #dcdcdc; /* aka "Gainsboro" */
+ 	COLOR_GRAY90: #e7e7e7; /* aka "Day Mode" */
+ }
+ 
+ /*******************************************************************************
+  *                                                                             *
+  * Dialogs                                                                     *
+  *                                                                             *
+  ******************************************************************************/
+ 
+/* The dialogs and alerts should all follow our default window background. */
+.dialog-pane {
+    -fx-background-color: COLOR_GRAY86;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * ButtonBar                                                                   *
+ *                                                                             *
+ ******************************************************************************/
+
+/* The new ButtonBar class was not yet given a CSS Style by Oracle. */
+.button-bar {
+    -fx-background-color: COLOR_GRAY86; 
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Charts                                                                      *
+ *                                                                             *
+ ******************************************************************************/
+
+/* It is much easier to read Chart Titles when they are large and bold-faced. */
+.chart-title {
+    -fx-font-size: 1.8em;
+	-fx-font-weight: bold;
+}
+
+/* Try to make the chart plot background match the surrounding region. */
+.chart-plot-background {
+    -fx-background-color: transparent; /* same result as "inherit" */
+}
+
+/* Try to make the chart legend background match the surrounding region. */
+.chart-legend {
+    -fx-background-color: transparent; /* same result as "inherit" */
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * LineChart, AreaChart                                                        *
+ *                                                                             *
+ ******************************************************************************/
+
+/* Use square legend symbols, as they are easier to see vs. hollow circles. */
+.chart-line-symbol,
+.chart-area-symbol {
+    -fx-background-insets: 0.0, 2.0;
+    -fx-background-radius: 0.0px; /* makes sure this remains square */
+    -fx-padding: 5.0px;
+}
+
+/* Use a much thinner stroke width than the default, for more detail. */
+.chart-series-line {
+    -fx-stroke-width: 1.0px;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * ChartPlot                                                                   *
+ *                                                                             *
+ ******************************************************************************/
+
+/* Try to make the chart grid lines narrow so they don't mask the data sets. */
+.chart-vertical-grid-lines,
+.chart-horizontal-grid-lines {
+    -fx-stroke-width: 0.75;
+}
+
+/* Try to make the chart zero lines narrow so they don't mask the data sets. */
+.chart-vertical-zero-line,
+.chart-horizontal-zero-line {
+    -fx-stroke-width: 1.5;
+}
+
+/* ====   DISABLED THINGS   ================================================= */
+
+.label:disabled,
+.button:disabled,
+.toggle-button:disabled,
+.radio-button:disabled,
+.check-box:disabled,
+.hyperlink:disabled,
+.menu-button:disabled,
+.split-menu-button:disabled,
+.slider:disabled,
+.scroll-bar:disabled,
+.scroll-pane:disabled,
+.progress-bar:disabled,
+.progress-indicator:disabled,
+.text-input:disabled,
+.choice-box:disabled,
+.combo-box-base:disabled,
+.date-cell:disabled > *, /* This is set on children so border is not affected. */
+.list-view:disabled,
+.tree-view:disabled,
+.table-view:disabled,
+.tree-table-view:disabled,
+.tab-pane:disabled,
+.titled-pane:disabled > .title,
+.accordion:disabled > .titled-pane > .title,
+.tab-pane > .tab-header-area > .headers-region > .tab:disabled,
+.menu:disabled,
+.menu-item:disabled > .label,
+.menu-item:disabled,
+.list-cell:filled:selected:focused:disabled,
+.list-cell:filled:selected:disabled,
+.tree-cell:filled:selected:focused:disabled,
+.tree-cell:filled:selected:disabled,
+.tree-cell > .tree-disclosure-node:disabled,
+.tree-table-row-cell > .tree-disclosure-node:disabled,
+.table-row-cell:selected:disabled,
+.tree-table-row-cell:selected:disabled,
+.table-cell:selected:disabled,
+.tree-table-cell:selected:disabled,
+.spinner:disabled {
+    -fx-opacity: 0.6;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Custom Styles                                                               *
+ *                                                                             *
+ ******************************************************************************/
+
+/* 
+ * Default content pane background; especially useful for windows that don't
+ * support custom user background colors. Approximates the Day Mode.
+ */
+.content-pane {
+    -fx-background-color: COLOR_GRAY86; 
+}
+
+/* 
+ * Banner text is the strip at the top of some pop-ups; we decided not to go
+ * bold-text but obviously it's trivial to change it later.
+ */
+.banner-text {
+    -fx-font-size: 120.0%;
+    -fx-text-alignment: center;
+}
+
+/* 
+ * Info text is mostly for informational text that needs to be easily noticed
+ * from surrounding GUI elements, but should be less prominent than titles.
+ */
+.info-text {
+    -fx-font-family: 'sans-serif';
+	-fx-font-size: 125.0%;
+	-fx-font-style: normal;
+	-fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+/* 
+ * Title text is mostly for stuff like Report Preview, where a document-style
+ * header appears at the top of the GUI form. It is also used above control
+ * grids in particular, where the data type of the controls is dynamic and
+ * needs to be indicated by a general title above the column headers.
+ */
+.title-text {
+    -fx-font-family: 'sans-serif';
+	-fx-font-size: 150.0%;
+	-fx-font-style: normal;
+	-fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+/* 
+ * The column header style should be used for all grid layout column headers,
+ * even if spanning columns. Bold italic helps headers stand out.
+ */
+.column-header {
+    -fx-font-family: 'sans-serif';
+	-fx-font-size: 100.0%;
+	-fx-font-style: italic;
+	-fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+/* 
+ * The row header style should be used for all grid layout row headers, even
+ * if spanning rows. Bold italic helps headers stand out.
+ */
+.row-header {
+    -fx-font-family: 'sans-serif';
+	-fx-font-size: 100.0%;
+	-fx-font-style: italic;
+	-fx-font-weight: bold;
+    -fx-alignment: center-right;
+}
+
+/* 
+ * The control label style should be used for all labels that are matched
+ * with a single control. Bold italic helps labels stand out.
+ */
+.control-label {
+    -fx-font-family: 'sans-serif';
+	-fx-font-size: 100.0%;
+	-fx-font-style: italic;
+	-fx-font-weight: bold;
+    -fx-alignment: center-right;
+}
+
+/* 
+ * Table column headers follow old Microsoft conventions and are used in the
+ * few remaining TableView and SpreadsheetView instances in our code base.
+ */
+.table-column-header {
+    -fx-background-color: #3e5697; /* #26619c = Lapis Lazuli */
+    -fx-padding: 4.0;
+    -fx-font-family: 'sans-serif';
+	-fx-font-size: 80.0%;
+	-fx-font-style: italic;
+	-fx-font-weight: bold;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-text-fill: white;
+}
+
+/* 
+ * Text area labels are for stuff like Notes in Project Properties, and
+ * are meant to make clearer what control the label goes with.
+ */
+.text-area-label {
+    -fx-font-family: 'sans-serif';
+    -fx-font-size: 120.0%;
+    -fx-font-weight: bold;
+    -fx-alignment: baseline-left;
+}
+
+/*
+ * Notes text areas are for a variety of features, and may eventually be
+ * stylized to look like note paper -- even with lines below each text line.
+ */
+.notes-text-area .content {
+	-fx-background-color: floralwhite;
+}
+
+/* 
+ * Property sheet labels are mostly for Project Properties and Report
+ * Preview; they aren't used in the Graphical Object Properties Editors.
+ */
+.property-sheet-label {
+    -fx-font-family: 'sans-serif';
+	-fx-font-size: 120.0%;
+	-fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+/* 
+ * Notice boxes represent the overall region styling for general pop-ups
+ * such as Factor of Safety, EULA, and probably our new Local Help.
+ */
+.notice-box {
+	-fx-background-color: beige;
+    -fx-padding: 3.0;
+	-fx-border-color: wheat;
+	-fx-border-width: 3.0;
+	-fx-spacing: 3.0;
+}
+
+/* 
+ * Status boxes are also used in pop-ups, but strictly for stuff like
+ * Task Progress Viewer, About Box, and anything task-or-status oriented.
+ */
+.status-box {
+	-fx-background-color: aliceblue;
+    -fx-padding: 3.0;
+	-fx-border-color: lightsteelblue;
+	-fx-border-width: 3.0;
+	-fx-spacing: 3.0;
+}
+
+/* 
+ * Log viewer text areas are used in just one place (the Session Log
+ * Viewer), but note that -fx-pref-row-count gets a compiler warning in
+ * Eclipse Luna (maybe in Eclipse Mars too?), but appears still supported.
+ */
+.log-viewer-text-area {
+	-fx-background-color: cornsilk;
+	-fx-border-color: derive(orange, 40.0%);
+	-fx-border-width: 3.0;
+	-fx-pref-column-count: 80.0;
+	-fx-pref-row-count: 60.0;
+	-fx-wrap-text: false;
+}
+
+.log-viewer-text-area .content {
+	-fx-background-color: ivory;
+}

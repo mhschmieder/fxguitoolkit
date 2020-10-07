@@ -30,7 +30,13 @@
  */
 package com.mhschmieder.fxguitoolkit;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.controlsfx.control.RangeSlider;
 import org.controlsfx.control.SegmentedButton;
@@ -39,13 +45,24 @@ import org.controlsfx.control.action.ActionUtils;
 import org.controlsfx.control.action.ActionUtils.ActionTextBehavior;
 import org.controlsfx.tools.Borders;
 
+import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
 import com.mhschmieder.fxguitoolkit.image.ImageUtilities;
 
+import javafx.application.HostServices;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.geometry.Side;
+import javafx.print.PrinterJob;
+import javafx.print.PrinterJob.JobStatus;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.chart.Axis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -67,6 +84,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TouchEvent;
+import javafx.scene.input.TouchPoint;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
@@ -79,6 +100,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
+import javafx.stage.Window;
 
 /**
  * {@code FxGuiUtilities} is a utility class for methods related to top-level
@@ -140,6 +163,12 @@ public final class FxGuiUtilities {
      */
     public static final int                             CONTROL_PANEL_ICON_INSET    = 6;
 
+    // Predetermined Splash Screen dimensions; image will scale to fit.
+    public static final int                             SPLASH_WIDTH                = 600;
+    public static final int                             SPLASH_HEIGHT               = 400;
+
+    public static final int                             LABEL_EDITOR_WIDTH_DEFAULT  = 320;
+
     /**
      * Labels by default are made as small as possible to contain their text,
      * but we prefer to have sufficient horizontal and vertical gaps for
@@ -156,6 +185,75 @@ public final class FxGuiUtilities {
      * user input control.
      */
     @SuppressWarnings("nls") public static final String LABEL_DELIMITER             = ": ";
+
+    // We have chosen the ampersand as the mnemonic marker, to be compatible
+    // with Qt and other GUI toolkits, so that it is more likely that resource
+    // bundles can be shared.
+    public static final char                            SWING_MNEMONIC_MARKER       = '&';
+
+    // JavaFX has its own built-in mnemonic marker.
+    public static final char                            JAVAFX_MNEMONIC_MARKER      = '_';
+
+    public static void addStylesheetAsJarResource( final ObservableList< String > stylesheetFilenames,
+                                                   final String jarRelativeStylesheetFilename ) {
+        // If no valid style sheet file (with extension) provided, return.
+        if ( ( jarRelativeStylesheetFilename == null )
+                || ( jarRelativeStylesheetFilename.length() < 5 ) ) {
+            return;
+        }
+
+        final URL stylesheetUrl = FxGuiUtilities.class.getResource( jarRelativeStylesheetFilename );
+        final String stylesheetFilename = stylesheetUrl.toExternalForm();
+        try {
+            // :NOTE: CSS loading can be timing-sensitive to JavaFX API calls
+            // that also affect style attributes, so it might be safer to defer
+            // the CSS loading so that it is applied to a more stable GUI.
+            stylesheetFilenames.add( stylesheetFilename );
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addStylesheetAsJarResource( final Parent parent,
+                                                   final String jarRelativeStylesheetFilename ) {
+        final ObservableList< String > stylesheetFilenames = parent.getStylesheets();
+        addStylesheetAsJarResource( stylesheetFilenames, jarRelativeStylesheetFilename );
+    }
+
+    public static void addStylesheetAsJarResource( final Scene scene,
+                                                   final String jarRelativeStylesheetFilename ) {
+        final ObservableList< String > stylesheetFilenames = scene.getStylesheets();
+        addStylesheetAsJarResource( stylesheetFilenames, jarRelativeStylesheetFilename );
+    }
+
+    public static void addStylesheetsAsJarResource( final Parent parent,
+                                                    final List< String > jarRelativeStylesheetFilenames ) {
+        // If no valid stylesheet file (with extension) provided, return.
+        if ( ( jarRelativeStylesheetFilenames == null )
+                || ( jarRelativeStylesheetFilenames.isEmpty() ) ) {
+            return;
+        }
+
+        final ObservableList< String > stylesheetFilenames = parent.getStylesheets();
+        for ( final String jarRelativeStylesheetFilename : jarRelativeStylesheetFilenames ) {
+            addStylesheetAsJarResource( stylesheetFilenames, jarRelativeStylesheetFilename );
+        }
+    }
+
+    public static void addStylesheetsAsJarResource( final Scene scene,
+                                                    final List< String > jarRelativeStylesheetFilenames ) {
+        // If no valid stylesheet file (with extension) provided, return.
+        if ( ( jarRelativeStylesheetFilenames == null )
+                || ( jarRelativeStylesheetFilenames.isEmpty() ) ) {
+            return;
+        }
+
+        final ObservableList< String > stylesheetFilenames = scene.getStylesheets();
+        for ( final String jarRelativeStylesheetFilename : jarRelativeStylesheetFilenames ) {
+            addStylesheetAsJarResource( stylesheetFilenames, jarRelativeStylesheetFilename );
+        }
+    }
 
     /**
      * Apply drop-shadow effects when the mouse enters the specified
@@ -187,6 +285,42 @@ public final class FxGuiUtilities {
                 node.setEffect( null );
             }
         } );
+    }
+
+    // Apply standardized attributes to all number-based charts.
+    @SuppressWarnings("nls")
+    public static void applyNumberChartAttributes( final XYChart< Number, Number > chart,
+                                                   final boolean isOverlayChart,
+                                                   final boolean showLegend,
+                                                   final Side legendSide ) {
+        chart.setLegendVisible( showLegend );
+        if ( showLegend ) {
+            if ( legendSide != null ) {
+                chart.setLegendSide( legendSide );
+            }
+        }
+
+        // It is safer to turn off animation while the chart is initializing.
+        chart.setAnimated( false );
+
+        // :NOTE: The overlay attribute could be for dual axis charts or for
+        // charts with the same y-axis data range, but the underlying assumption
+        // is a shared x-axis for all charts; only the bottom chart shows all.
+        chart.setAlternativeRowFillVisible( !isOverlayChart );
+        chart.setAlternativeColumnFillVisible( !isOverlayChart );
+        chart.setHorizontalGridLinesVisible( !isOverlayChart );
+        chart.setVerticalGridLinesVisible( !isOverlayChart );
+
+        // The overlay chart shouldn't show its x-axis tick marks or labels.
+        if ( isOverlayChart ) {
+            final Axis< Number > xAxis = chart.getXAxis();
+            xAxis.setLabel( "" );
+            xAxis.setTickLabelsVisible( false );
+            xAxis.setTickMarkVisible( false );
+
+            addStylesheetAsJarResource( chart,
+                                        "/com/mhschmieder/fxguitoolkit/resources/overlay-chart.css" );
+        }
     }
 
     /**
@@ -256,6 +390,20 @@ public final class FxGuiUtilities {
         // Get the button icon from JAR-resident resources and apply it.
         final ImageView icon = ImageUtilities.createIcon( iconFilename );
         applyToolbarIcon( labeled, icon );
+    }
+
+    /**
+     * This method centers a window on the screen, and takes the place of
+     * Window.centerOnScreen() as that method doesn't seem to account for
+     * screen resolution or other factors and thus results in off-centeredness.
+     *
+     * @param window
+     *            The window to be centered on the screen
+     */
+    public static void centerOnScreen( final Window window ) {
+        final Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+        window.setX( ( bounds.getMinX() + ( bounds.getWidth() / 2d ) ) - ( SPLASH_WIDTH / 2d ) );
+        window.setY( ( bounds.getMinY() + ( bounds.getHeight() / 2d ) ) - ( SPLASH_HEIGHT / 2d ) );
     }
 
     /**
@@ -364,6 +512,46 @@ public final class FxGuiUtilities {
                                                                           Insets.EMPTY ) );
 
         return background;
+    }
+
+    @SuppressWarnings("nls")
+    public static String getButtonLabel( final String groupName,
+                                         final String itemName,
+                                         final ResourceBundle resourceBundle ) {
+        // There must always at least be a group name for each button.
+        if ( ( groupName == null ) || groupName.trim().isEmpty() ) {
+            return "";
+        }
+
+        // Composite the button name from the group and item names.
+        final String buttonName = ( ( itemName == null ) || itemName.trim().isEmpty() )
+            ? groupName
+            : groupName + "." + itemName;
+
+        // Generate the resource lookup key for the button label.
+        final String resourceKey = buttonName + ".label";
+
+        try {
+            return resourceBundle.getString( resourceKey );
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+            return '!' + buttonName + '!';
+        }
+    }
+
+    // Get the button text from the resource bundle, if applicable.
+    public static String getButtonText( final String groupName,
+                                        final String itemName,
+                                        final ResourceBundle resourceBundle ) {
+        // Get the button label from the resource bundle, if applicable.
+        final String buttonLabel = getButtonLabel( groupName, itemName, resourceBundle );
+        if ( ( buttonLabel == null ) || buttonLabel.trim().isEmpty() ) {
+            return null;
+        }
+
+        // Strip the mnemonic marker from the button label.
+        return handleMnemonicMarker( buttonLabel, false );
     }
 
     /**
@@ -770,6 +958,41 @@ public final class FxGuiUtilities {
         return labeledTextFieldPane;
     }
 
+    // :NOTE: This method should only be used for Latin alphanumeric
+    // characters. See the Mnemonics.java example for a more complex and
+    // foolproof methodology for finding the key code for a mnemonic. We specify
+    // US-English (vs. just "English") to be safe, until support for
+    // locale-sensitive menus is added to the GUI (it is already implemented).
+    @SuppressWarnings("nls")
+    public static char getMnemonicChar( final String key ) {
+        final int mnemonicMarkerIndex = getMnemonicMarkerIndex( key );
+        final int mnemonicIndex = ( mnemonicMarkerIndex >= 0 ) ? mnemonicMarkerIndex + 1 : 0;
+        // final char mnemonicLabel = key.toUpperCase( Locale.getDefault() )
+        return key.toUpperCase( Locale.forLanguageTag( "en-US" ) ).charAt( mnemonicIndex );
+    }
+
+    public static int getMnemonicIndex( final String groupName,
+                                        final String itemName,
+                                        final ResourceBundle resourceBundle ) {
+        // Get the button label from the resource bundle, if applicable.
+        final String buttonLabel = getButtonLabel( groupName, itemName, resourceBundle );
+        if ( ( buttonLabel == null ) || buttonLabel.trim().isEmpty() ) {
+            return -1;
+        }
+
+        // Get the button displayed mnemonic index.
+        // :NOTE: The mnemonic marker index on the original label corresponds to
+        // the mnemonic index on the stripped label.
+        return getMnemonicMarkerIndex( buttonLabel );
+    }
+
+    // :NOTE: The menu label property files would be very time-consuming to edit
+    // safely for replacing the "&" with "_", so we use the old Swing symbol as
+    // the lookup and then replace it with the JavaFX symbol downstream.
+    public static int getMnemonicMarkerIndex( final String key ) {
+        return key.indexOf( SWING_MNEMONIC_MARKER );
+    }
+
     @SuppressWarnings("nls")
     public static TextArea getNotesEditor( final int numberOfRows ) {
         final TextArea notesEditor = new TextArea();
@@ -1051,6 +1274,75 @@ public final class FxGuiUtilities {
         return titlePane;
     }
 
+    public static String handleMnemonicMarker( final String label, final boolean replaceMnemonic ) {
+        final int mnemonicMarkerIndex = getMnemonicMarkerIndex( label );
+        final int mnemonicIndex = ( mnemonicMarkerIndex >= 0 ) ? mnemonicMarkerIndex + 1 : 0;
+        try {
+            // :NOTE: If no mnemonic marker is found, "-1" is returned, which is
+            // then incremented to use the first character as the mnemonic (by
+            // default).
+            final String labelPreMnemonic = label.substring( 0, mnemonicMarkerIndex );
+            final String labelPostMnemonic = label.substring( mnemonicIndex );
+
+            // Conditionally strip the mnemonic marker from the label, or
+            // replace the Swing mnemonic marker with the one for JavaFX.
+            final StringBuilder adjustedLabel = new StringBuilder();
+            adjustedLabel.append( labelPreMnemonic );
+            if ( replaceMnemonic ) {
+                adjustedLabel.append( JAVAFX_MNEMONIC_MARKER );
+            }
+            adjustedLabel.append( labelPostMnemonic );
+            return adjustedLabel.toString();
+        }
+        catch ( final IndexOutOfBoundsException ioobe ) {
+            ioobe.printStackTrace();
+            return label;
+        }
+    }
+
+    /**
+     * This method handles errors from Print Page commands.
+     *
+     * @param printerJob
+     *            The Printer Job that failed
+     * @param printCategory
+     *            The category or context for the Printer Job
+     */
+    public static void handlePrintJobError( final PrinterJob printerJob,
+                                            final String printCategory ) {
+        final String masthead = MessageFactory.getPrintServicesProblemMasthead();
+        final JobStatus jobStatus = printerJob.getJobStatus();
+        switch ( jobStatus ) {
+        case CANCELED:
+            // Print Information: Print Job Cancelled.
+            final String printJobCanceledMessage = MessageFactory.getPrintJobCanceledMessage();
+            DialogUtilities
+                    .showInformationAlert( printJobCanceledMessage, masthead, printCategory );
+            break;
+        case DONE:
+            // Print Warning: Cannot print due to Printer blocked by other Print
+            // Job.
+            final String printerBlockedMessage = MessageFactory.getPrinterBlockedMessage();
+            DialogUtilities.showWarningAlert( printerBlockedMessage, masthead, printCategory );
+            break;
+        case ERROR:
+            // Print Error: Nothing to print, or Printer not set up correctly.
+            final String nullPrintJobMessage = MessageFactory.getNullPrintJobMessage();
+            DialogUtilities.showErrorAlert( nullPrintJobMessage, masthead, printCategory );
+            break;
+        case NOT_STARTED:
+            // Print Error: Unknown internal failure; Print Job not started.
+            final String printJobNotStartedMessage = MessageFactory.getPrintJobNotStartedMessage();
+            DialogUtilities.showErrorAlert( printJobNotStartedMessage, masthead, printCategory );
+            break;
+        case PRINTING:
+            // This is the normal condition; nothing to do.
+            break;
+        default:
+            break;
+        }
+    }
+
     /**
      * This method initializes the persistent shared attributes of decorator
      * node groups, which generally are application managed and non-interactive.
@@ -1077,6 +1369,20 @@ public final class FxGuiUtilities {
         decoratorNodeGroup.setPickOnBounds( false );
     }
 
+    // :TODO: Search for the JavaFX CSS source code that analyzes HSB vs. RGB.
+    // :NOTE: This function is borrowed from ColorUtilities until we make the
+    // FxGraphicsUtilities library, at which time we should also normalize the
+    // logic here with what was done for EPS Export and PDF Export.
+    public static boolean isColorDark( final Color color ) {
+        // Use HSB Analysis to find the perceived Brightness of the supplied
+        // color. We introduce a small fudge factor for floating-point
+        // imprecision and rounding, equating roughly to 51% as the cutoff for
+        // Dark vs. Light, so that 50% Gray (aka Mid-Gray) will trigger a white
+        // foreground. This makes for better contrast and is easier on the eyes
+        // than a black foreground, in such cases.
+        return color.getBrightness() <= 0.51d;
+    }
+
     public static boolean isNodeInHierarchy( final Node sourceNode,
                                              final Node potentialHierarchyNode ) {
         if ( potentialHierarchyNode == null ) {
@@ -1092,6 +1398,110 @@ public final class FxGuiUtilities {
         }
 
         return false;
+    }
+
+    // Launch the user's default browser set to the specified initial URL.
+    public static void launchBrowser( final HostServices hostServices, final String url ) {
+        try {
+            final URI uri = new URI( url );
+            hostServices.showDocument( uri.toString() );
+        }
+        catch ( final NullPointerException | URISyntaxException e ) {
+            // In theory, we produce the URL so it can't be null or invalid.
+            e.printStackTrace();
+
+            // Alert the user that the default browser couldn't launch.
+            final String browserLaunchErrorMessage = MessageFactory.getBrowserLaunchErrorMessage();
+            final String browserLaunchErrorMasthead = MessageFactory.getBadUrlMasthead();
+            final String browserLaunchErrorTitle = MessageFactory.getBrowserLaunchErrorTitle();
+            com.mhschmieder.fxguitoolkit.dialog.DialogUtilities
+                    .showWarningAlert( browserLaunchErrorMessage,
+                                       browserLaunchErrorMasthead,
+                                       browserLaunchErrorTitle );
+        }
+    }
+
+    public static void redirectTouchEvents( final Window window ) {
+        // :NOTE: This is an experiment to see if this fixes the crashes on the
+        // new Touch Bars that Apple added to MacBook Pros in 2017.
+        window.addEventFilter( TouchEvent.ANY, touchEvent -> {
+            // Consume the touch event
+            touchEvent.consume();
+
+            // Create a fake Mouse Clicked Event for the current Touch Event.
+            final TouchPoint touchPoint = touchEvent.getTouchPoint();
+            final int clickCount = 1;
+            final MouseEvent mouseEvent = new MouseEvent( touchEvent.getSource(),
+                                                          touchEvent.getTarget(),
+                                                          MouseEvent.MOUSE_CLICKED,
+                                                          touchPoint.getX(),
+                                                          touchPoint.getY(),
+                                                          touchPoint.getScreenX(),
+                                                          touchPoint.getScreenY(),
+                                                          MouseButton.PRIMARY,
+                                                          clickCount,
+                                                          false,
+                                                          false,
+                                                          false,
+                                                          false,
+                                                          true,
+                                                          false,
+                                                          false,
+                                                          true,
+                                                          false,
+                                                          false,
+                                                          null );
+
+            // Fire the fake traditional Mouse Event.
+            final Scene scene = window.getScene();
+            Event.fireEvent( scene.getRoot(), mouseEvent );
+        } );
+    }
+
+    public static void removeStylesheetAsJarResource( final ObservableList< String > stylesheetFilenames,
+                                                      final String jarRelativeStylesheetFilename ) {
+        // If no valid stylesheet file (with extension) provided, return.
+        if ( ( jarRelativeStylesheetFilename == null )
+                || ( jarRelativeStylesheetFilename.length() < 5 ) ) {
+            return;
+        }
+
+        final URL stylesheetUrl = FxGuiUtilities.class.getResource( jarRelativeStylesheetFilename );
+        final String stylesheetFilename = stylesheetUrl.toExternalForm();
+        try {
+            // :NOTE: CSS loading can be timing-sensitive to JavaFX API calls
+            // that also affect style attributes, so it might be safer to defer
+            // the CSS loading so that it is applied to a more stable GUI.
+            stylesheetFilenames.remove( stylesheetFilename );
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void replaceStylesheetAsJarResource( final ObservableList< String > stylesheetFilenames,
+                                                       final String jarRelativeStylesheetFilenameOld,
+                                                       final String jarRelativeStylesheetFilenameNew ) {
+        removeStylesheetAsJarResource( stylesheetFilenames, jarRelativeStylesheetFilenameOld );
+        addStylesheetAsJarResource( stylesheetFilenames, jarRelativeStylesheetFilenameNew );
+    }
+
+    public static void replaceStylesheetAsJarResource( final Parent parent,
+                                                       final String jarRelativeStylesheetFilenameOld,
+                                                       final String jarRelativeStylesheetFilenameNew ) {
+        final ObservableList< String > stylesheetFilenames = parent.getStylesheets();
+        replaceStylesheetAsJarResource( stylesheetFilenames,
+                                        jarRelativeStylesheetFilenameOld,
+                                        jarRelativeStylesheetFilenameNew );
+    }
+
+    public static void replaceStylesheetAsJarResource( final Scene scene,
+                                                       final String jarRelativeStylesheetFilenameOld,
+                                                       final String jarRelativeStylesheetFilenameNew ) {
+        final ObservableList< String > stylesheetFilenames = scene.getStylesheets();
+        replaceStylesheetAsJarResource( stylesheetFilenames,
+                                        jarRelativeStylesheetFilenameOld,
+                                        jarRelativeStylesheetFilenameNew );
     }
 
     public static void setButtonProperties( final Button button, final String cssStyleClass ) {
@@ -1165,6 +1575,46 @@ public final class FxGuiUtilities {
 
         // Apply drop-shadow effects when the mouse enters a Spinner.
         applyDropShadowEffects( spinner );
+    }
+
+    // Try to globally change the foreground theme for elements not exposed
+    // in Java API calls, using our custom dark vs. light theme CSS files.
+    // :NOTE: For now, we assume dark and light themes only.
+    public static void setStylesheetForTheme( final Parent parent,
+                                              final Color backColor,
+                                              final String jarRelativeStylesheetFilenameDark,
+                                              final String jarRelativeStylesheetFilenameLight ) {
+        final boolean isDark = isColorDark( backColor );
+        if ( isDark ) {
+            replaceStylesheetAsJarResource( parent,
+                                            jarRelativeStylesheetFilenameLight,
+                                            jarRelativeStylesheetFilenameDark );
+        }
+        else {
+            replaceStylesheetAsJarResource( parent,
+                                            jarRelativeStylesheetFilenameDark,
+                                            jarRelativeStylesheetFilenameLight );
+        }
+    }
+
+    // Try to globally change the foreground theme for elements not exposed
+    // in Java API calls, using our custom dark vs. light theme CSS files.
+    // :NOTE: For now, we assume dark and light themes only.
+    public static void setStylesheetForTheme( final Scene scene,
+                                              final Color backColor,
+                                              final String jarRelativeStylesheetFilenameDark,
+                                              final String jarRelativeStylesheetFilenameLight ) {
+        final boolean isDark = isColorDark( backColor );
+        if ( isDark ) {
+            replaceStylesheetAsJarResource( scene,
+                                            jarRelativeStylesheetFilenameLight,
+                                            jarRelativeStylesheetFilenameDark );
+        }
+        else {
+            replaceStylesheetAsJarResource( scene,
+                                            jarRelativeStylesheetFilenameDark,
+                                            jarRelativeStylesheetFilenameLight );
+        }
     }
 
     public static void setTextAreaProperties( final TextArea textArea,

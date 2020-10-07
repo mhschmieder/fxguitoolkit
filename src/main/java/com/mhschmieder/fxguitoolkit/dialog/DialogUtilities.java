@@ -30,8 +30,16 @@
  */
 package com.mhschmieder.fxguitoolkit.dialog;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Optional;
+
+import com.mhschmieder.fxguitoolkit.MessageFactory;
+
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -91,12 +99,203 @@ public final class DialogUtilities {
      * @return A @Background object targeted to setBackground()
      */
     public static Background getDialogBackground( final Insets insets ) {
-        final Background background =
-                                    new Background( new BackgroundFill( WINDOW_BACKGROUND_COLOR,
-                                                                        CornerRadii.EMPTY,
-                                                                        insets ) );
+        final Background background = new Background( new BackgroundFill( WINDOW_BACKGROUND_COLOR,
+                                                                          CornerRadii.EMPTY,
+                                                                          insets ) );
 
         return background;
+    }
+
+    /**
+     * Blocks on the alert dialog.
+     *
+     * @param alert
+     *            the {@link Alert} to show and wait for.
+     * @param masthead
+     *            if not null, passed into {@link Alert#setHeaderText(String)}
+     * @param title
+     *            passed into {@link Alert#setTitle(String)
+     * @return the response from {@link Alert#showAndWait()}
+     */
+    private static final Optional< ButtonType > showAlertDialog( final Alert alert,
+                                                                 final String masthead,
+                                                                 final String title ) {
+        if ( masthead != null ) {
+            alert.setHeaderText( masthead );
+        }
+        alert.setTitle( title );
+
+        // Forward the show as a modal blocking call.
+        final Optional< ButtonType > response = alert.showAndWait();
+
+        // Return the user's dismissal ButtonType status to the caller.
+        return response;
+    }
+
+    /**
+     * Blocks while waiting for confirmation.
+     *
+     * @param message
+     *            The message for the user to confirm
+     * @param masthead
+     *            The header text
+     * @param title
+     *            The title of the confirmation dialog
+     * @param showCancel
+     *            Whether the confirmation dialog shows a cancel button
+     * @return the result of {@link Alert#showAndWait()}
+     */
+    public static final Optional< ButtonType > showConfirmationAlert( final String message,
+                                                                      final String masthead,
+                                                                      final String title,
+                                                                      final boolean showCancel ) {
+        final Optional< ButtonType > response = showConfirmationAlert( message,
+                                                                       masthead,
+                                                                       title,
+                                                                       showCancel,
+                                                                       AlertType.CONFIRMATION );
+        return response;
+    }
+
+    /**
+     * Blocks while waiting for confirmation.
+     *
+     * @param message
+     *            The message for the user to confirm
+     * @param masthead
+     *            The header text
+     * @param title
+     *            The title of the confirmation dialog
+     * @param showCancel
+     *            Whether the confirmation dialog shows a cancel button
+     * @param alertType
+     *            The type of alert to indicate with the banner icon
+     * @return the result of {@link Alert#showAndWait()}
+     */
+    public static final Optional< ButtonType > showConfirmationAlert( final String message,
+                                                                      final String masthead,
+                                                                      final String title,
+                                                                      final boolean showCancel,
+                                                                      final AlertType alertType ) {
+        // Most confirmation dialogs do not need a Cancel button.
+        final ArrayList< ButtonType > buttonTypes = new ArrayList<>();
+        buttonTypes.add( ButtonType.YES );
+        buttonTypes.add( ButtonType.NO );
+        if ( showCancel ) {
+            buttonTypes.add( ButtonType.CANCEL );
+        }
+
+        final ButtonType[] buttons = buttonTypes.toArray( new ButtonType[ 0 ] );
+
+        final Alert alert = new Alert( alertType, message, buttons );
+        final Optional< ButtonType > response = showAlertDialog( alert, masthead, title );
+
+        return response;
+    }
+
+    /**
+     * Creates a new error {@link Alert} and shows it, blocking until it
+     * returns.
+     *
+     * @param message
+     *            the error to display
+     * @param masthead
+     *            header text
+     * @param title
+     *            the title of the alert
+     */
+    public static final void showErrorAlert( final String message,
+                                             final String masthead,
+                                             final String title ) {
+        final Alert alert = new Alert( AlertType.ERROR, message );
+        showAlertDialog( alert, masthead, title );
+    }
+
+    public static final void showInformationAlert( final String message,
+                                                   final String masthead,
+                                                   final String title ) {
+        final Alert alert = new Alert( AlertType.INFORMATION, message );
+        showAlertDialog( alert, masthead, title );
+    }
+
+    public static final Optional< ButtonType > showFileExitConfirmationAlert( final File file,
+                                                                              final String productName ) {
+        final String message = MessageFactory.getSaveFileChangesMessage( file );
+        final String masthead = MessageFactory.getFileExitMasthead();
+        final String title = MessageFactory.getFileExitTitle( productName );
+        final Optional< ButtonType > response = showConfirmationAlert( message,
+                                                                       masthead,
+                                                                       title,
+                                                                       true );
+
+        return response;
+    }
+
+    /**
+     * Blocks while showing an error message.
+     *
+     * @param message
+     */
+    public static final void showFileOpenErrorAlert( final String message ) {
+        final String masthead = MessageFactory.getFileNotOpenedMasthead();
+        showFileOpenErrorAlert( message, masthead );
+    }
+
+    /**
+     * Blocks while showing an error message.
+     *
+     * @param message
+     *            error message
+     * @param masthead
+     *            header text
+     */
+    public static final void showFileOpenErrorAlert( final String message, final String masthead ) {
+        final String title = MessageFactory.getFileOpenErrorTitle();
+        showErrorAlert( message, masthead, title );
+    }
+
+    /**
+     * Blocks while showing an error message.
+     *
+     * @param message
+     */
+    public static final void showFileReadErrorAlert( final String message ) {
+        final String title = MessageFactory.getFileReadErrorTitle();
+        showErrorAlert( message, null, title );
+    }
+
+    public static final Optional< ButtonType > showFileSaveConfirmationAlert( final File file,
+                                                                              final String title ) {
+        final String message = MessageFactory.getSaveFileChangesMessage( file );
+        final String masthead = MessageFactory.getSaveFileChangesMasthead();
+        final Optional< ButtonType > response = showConfirmationAlert( message,
+                                                                       masthead,
+                                                                       title,
+                                                                       true );
+
+        return response;
+    }
+
+    /**
+     * Blocks while showing an error message.
+     *
+     * @param message
+     */
+    public static final void showFileSaveErrorAlert( final String message ) {
+        final String masthead = MessageFactory.getFileNotSavedMasthead();
+        final String title = MessageFactory.getFileSaveErrorTitle();
+        showErrorAlert( message, masthead, title );
+    }
+
+    /**
+     * Blocks while showing an error message.
+     *
+     * @param message
+     */
+    public static final void showFileSaveWarningAlert( final String message ) {
+        final String masthead = MessageFactory.getFilePartiallySavedMasthead();
+        final String title = MessageFactory.getFileSaveErrorTitle();
+        showWarningAlert( message, masthead, title );
     }
 
     /**
@@ -127,6 +326,22 @@ public final class DialogUtilities {
 
         // Forward the show as a modal blocking call.
         alert.showAndWait();
+    }
+
+    /**
+     * Blocks while showing an error message.
+     *
+     * @param message
+     * @param masthead
+     *            header text
+     * @param title
+     *            title of the alert
+     */
+    public static final void showWarningAlert( final String message,
+                                               final String masthead,
+                                               final String title ) {
+        final Alert alert = new Alert( AlertType.WARNING, message );
+        showAlertDialog( alert, masthead, title );
     }
 
 }
