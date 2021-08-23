@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020 Mark Schmieder
+ * Copyright (c) 2020, 2021 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import com.mhschmieder.fxguitoolkit.MessageFactory;
+import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
@@ -83,8 +84,8 @@ public final class DialogUtilities {
      *
      * @return A @Background object targeted to setBackground()
      */
-    public static Background getDialogBackground() {
-        final Background background = getDialogBackground( Insets.EMPTY );
+    public static Background makeDialogBackground() {
+        final Background background = makeDialogBackground( Insets.EMPTY );
 
         return background;
     }
@@ -98,10 +99,8 @@ public final class DialogUtilities {
      *            The {@link Insets} to use for the background
      * @return A @Background object targeted to setBackground()
      */
-    public static Background getDialogBackground( final Insets insets ) {
-        final Background background = new Background( new BackgroundFill( WINDOW_BACKGROUND_COLOR,
-                                                                          CornerRadii.EMPTY,
-                                                                          insets ) );
+    public static Background makeDialogBackground( final Insets insets ) {
+        final Background background = LayoutFactory.makeRegionBackground( WINDOW_BACKGROUND_COLOR, insets );
 
         return background;
     }

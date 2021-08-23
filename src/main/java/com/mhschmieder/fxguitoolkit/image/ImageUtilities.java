@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020 Mark Schmieder
+ * Copyright (c) 2020, 2021 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,14 +31,25 @@
 package com.mhschmieder.fxguitoolkit.image;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+import javax.imageio.ImageIO;
 
 /**
  * This is a utility class for generic common image functionality.
@@ -57,6 +68,80 @@ public final class ImageUtilities {
      */
     private ImageUtilities() {}
 
+    public static byte[] convertImageToByteArray( final Image image, final String imageFormatName ) {
+        try ( final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream() ) {
+            final BufferedImage bufferedImage = SwingFXUtils.fromFXImage( image, null);
+            if ( bufferedImage == null ) {
+                return null;
+            }
+            if ( !ImageIO.write( bufferedImage, imageFormatName, byteArrayOutputStream ) ) {
+                return null;
+            }
+            return byteArrayOutputStream.toByteArray();
+        }
+        catch ( final IOException ioe ) {
+            ioe.printStackTrace();
+            return null;
+        }
+    }
+
+    public static BufferedImage getInvertedMaskedMonochromeImage( final BufferedImage originalImage,
+                                                                  final java.awt.Color maskColor ) {
+        final int imageWidth = originalImage.getWidth();
+        final int imageHeight = originalImage.getHeight();
+        final BufferedImage invertedMaskedImage = new BufferedImage(
+                imageWidth,
+                imageHeight,
+                BufferedImage.TYPE_INT_RGB );
+
+        int pixelMask = maskColor.getRGB();
+        int pixelBlack = java.awt.Color.BLACK.getRGB();
+        int pixelWhite = java.awt.Color.WHITE.getRGB();
+
+        for ( int y = 0; y < imageHeight; y++ ) {
+            for ( int x = 0; x < imageWidth; x++ ) {
+                int pixelOriginal = originalImage.getRGB( x, y );
+                int pixelInvertedMasked = ( pixelBlack == pixelOriginal )
+                        ? pixelMask : ( pixelWhite == pixelOriginal )
+                        ? pixelBlack : pixelWhite;
+                invertedMaskedImage.setRGB( x, y, pixelInvertedMasked );
+            }
+        }
+
+        return invertedMaskedImage;
+    }
+
+    public static BufferedImage getDuotoneFromMonochromeImage( final BufferedImage monochromeImage,
+                                                               final java.awt.Color replacementColorForBlack,
+                                                               final java.awt.Color replacementColorForWhite ) {
+        // Avoid the alpha layer when converting a monochrome image, or
+        // we get undesired results such as all-solid uniform images.
+        final int imageWidth = monochromeImage.getWidth();
+        final int imageHeight = monochromeImage.getHeight();
+        final BufferedImage duotoneImage = new BufferedImage(
+                imageWidth,
+                imageHeight,
+                BufferedImage.TYPE_INT_RGB );
+
+        final int pixelBlack = java.awt.Color.BLACK.getRGB();
+        final int pixelWhite = java.awt.Color.WHITE.getRGB();
+
+        int pixelBlackReplacement = replacementColorForBlack.getRGB();
+        int pixelWhiteReplacement = replacementColorForWhite.getRGB();
+
+       for ( int y = 0; y < imageHeight; y++ ) {
+            for ( int x = 0; x < imageWidth; x++ ) {
+                final int pixelOriginal = monochromeImage.getRGB( x, y );
+                int pixelInvertedMasked = ( pixelBlack == pixelOriginal )
+                        ? pixelBlackReplacement : ( pixelWhite == pixelOriginal )
+                        ? pixelWhiteReplacement : pixelWhite;
+                duotoneImage.setRGB( x, y, pixelInvertedMasked );
+            }
+        }
+
+        return duotoneImage;
+    }
+
     /**
      * Create an Icon as an Image View, using a JAR-resident resource.
      * 
@@ -66,6 +151,19 @@ public final class ImageUtilities {
     public static ImageView createIcon( final String jarRelativeIconFilename ) {
         // Direct-load the Icon into an Image View container.
         return getImageView( jarRelativeIconFilename, false );
+    }
+
+    // Create an Icon as an Image View, using a JAR-resident resource.
+    public static ImageView createIcon( final String jarRelativeLegendFilename,
+                                          final double fitWidth,
+                                          final double fitHeight ) {
+        // Background-load the image into an Image View container.
+        return getImageView( jarRelativeLegendFilename,
+                true,
+                true,
+                -1d,
+                fitWidth,
+                fitHeight );
     }
 
     /**
@@ -234,6 +332,34 @@ public final class ImageUtilities {
         return snapshot;
     }
 
+    public static Image loadImage( final byte[] imageBytes,
+                                   final double fitWidth,
+                                   final double fitHeight ) {
+        try ( final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream( imageBytes ) ) {
+            return loadImage( byteArrayInputStream, fitWidth, fitHeight );
+        } catch ( final IOException e ) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Image loadImage( final InputStream inputStream,
+                                   final double fitWidth,
+                                   final double fitHeight ) {
+        // :NOTE: We set smoothing to on, as otherwise the small resulting
+        // image can have poor quality and perpetuate that when re-scaled.
+        // :NOTE: We no longer apply smoothing, as things can get much blurrier
+        // if the source image is mostly vector graphics vs. a raster bitmap.
+        return loadImageFromStream(
+                inputStream,
+                true,
+                -1d,
+                fitWidth,
+                fitHeight,
+                false );
+    }
+
     /**
      * Load an Image as an Application JAR-resident resource.
      * <p>
@@ -272,7 +398,7 @@ public final class ImageUtilities {
     }
 
     /**
-     * Load and upsample the {@link Image image} without smoothing or
+     * Load and upsample the {@link Image image}, conditionally smoothing and
      * anti-aliasing the pixels.
      *
      * @param inputStream
@@ -280,13 +406,16 @@ public final class ImageUtilities {
      * @param derivedImageAspectRatio
      * @param fitWidth
      * @param fitHeight
+     * @param smooth {@code true} if you want a smooth quality image; {@code false}
+     *                           if you care more about the speed of image loading
      * @return
      */
     public static Image loadImageFromStream( final InputStream inputStream,
                                              final boolean preserveSourceImageRatio,
                                              final double derivedImageAspectRatio,
                                              final double fitWidth,
-                                             final double fitHeight ) {
+                                             final double fitHeight,
+                                             final boolean smooth ) {
         // Determine whether the source image Aspect Ratio should be preserved.
         // If not, use the supplied fit dimensions (if valid) and apply the
         // supplied Aspect Ratio to whichever fit dimension wasn't provided.
@@ -311,7 +440,7 @@ public final class ImageUtilities {
                                        fitWidthAdjusted,
                                        fitHeightAdjusted,
                                        preserveSourceImageRatio,
-                                       false );
+                                       smooth );
 
         return image;
     }
@@ -441,6 +570,50 @@ public final class ImageUtilities {
 
         // Update the Image View container with the pre-loaded Image.
         updateImageView( imageView, image, backgroundLoading );
+    }
+
+    /**
+     * Placeholder for drag/drop of images; needs File Handler class written.
+     * 
+     * @return
+     */
+    //public static EventHandler< DragEvent > getImageDragHandler( final FileHandler fileHandler ) {
+    public static EventHandler< DragEvent > getImageDragHandler() {
+        return dragEvent -> {
+            final Dragboard dragboard = dragEvent.getDragboard();
+
+            final EventType< DragEvent > eventType = dragEvent.getEventType();
+
+            boolean dropCompleted = false;
+            if ( dragboard.hasFiles() ) {
+                // Block unless there is just one file and it has the proper file
+                // extension for the supported image formats (PNG, GIF, JPEG).
+                final List< File > files = dragboard.getFiles();
+                if ( files.size() == 1 ) {
+                    final File file = files.get( 0 );
+                    if ( isSupportedImageFile( file ) ) {
+                        if (  DragEvent.DRAG_OVER.equals( eventType ) ) {
+                            dragEvent.acceptTransferModes( TransferMode.ANY );
+                        } else if ( DragEvent.DRAG_DROPPED.equals( eventType ) ) {
+                            //dropCompleted = fileHandler.fileOpen( file );
+                        }
+                    }
+                }
+            }
+
+            // Let the drag source know whether the image was successfully
+            // transferred and/or whether the source was a supported format.
+            if ( DragEvent.DRAG_DROPPED.equals( eventType ) ) {
+                dragEvent.setDropCompleted( dropCompleted );
+            }
+
+            dragEvent.consume();
+        };
+    }
+
+    private static boolean isSupportedImageFile( File file ) {
+        // TODO: Implement the logic here for acceptance or rejection.
+        return true;
     }
 
 }

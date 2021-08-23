@@ -110,7 +110,7 @@ public abstract class XDialog extends Dialog< ButtonType > {
         setHeaderText( headerText );
 
         final DialogPane dialogPane = getDialogPane();
-        final Background background = DialogUtilities.getDialogBackground();
+        final Background background = DialogUtilities.makeDialogBackground();
         dialogPane.setBackground( background );
 
         // Make the Dialog just translucent enough to see what's behind it.

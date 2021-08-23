@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020 Mark Schmieder
+ * Copyright (c) 2020, 2021 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,8 +34,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import org.controlsfx.control.RangeSlider;
@@ -47,16 +49,22 @@ import org.controlsfx.tools.Borders;
 
 import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
 import com.mhschmieder.fxguitoolkit.image.ImageUtilities;
+import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
+import com.mhschmieder.iotoolkit.util.SystemType;
 
 import javafx.application.HostServices;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.Side;
 import javafx.print.PrinterJob;
 import javafx.print.PrinterJob.JobStatus;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -98,10 +106,20 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.Paint;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.SVGPath;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
 import javafx.stage.Window;
+
+import org.controlsfx.control.textfield.CustomTextField;
 
 /**
  * {@code FxGuiUtilities} is a utility class for methods related to top-level
@@ -186,6 +204,12 @@ public final class FxGuiUtilities {
      */
     @SuppressWarnings("nls") public static final String LABEL_DELIMITER             = ": ";
 
+    /**
+     * This is the most common inset for most contexts of icon hosting, to avoid
+     * clutter, but if we add menus later on, those usually use an inset of 2.
+     */
+    public static final double DEFAULT_ICON_INSET = 4;
+
     // We have chosen the ampersand as the mnemonic marker, to be compatible
     // with Qt and other GUI toolkits, so that it is more likely that resource
     // bundles can be shared.
@@ -193,6 +217,12 @@ public final class FxGuiUtilities {
 
     // JavaFX has its own built-in mnemonic marker.
     public static final char                            JAVAFX_MNEMONIC_MARKER      = '_';
+
+    // :TODO: Make a bunch of partial CSS string constants, to reduce copy/paste.
+    public static final String UNDECORATED_BORDERED_REGION_CSS
+            = "-fx-content-display: center; -fx-padding: 16; -fx-background-color: black; -fx-border-color: white; -fx-border-width: 1; -fx-border-radius: 7.5;";
+    public static final String UNDECORATED_LABELED_CSS
+            = "-fx-content-display: center; -fx-padding: 4 8 4 8; -fx-background-color: black; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 1; -fx-border-radius: 7.5;";
 
     public static void addStylesheetAsJarResource( final ObservableList< String > stylesheetFilenames,
                                                    final String jarRelativeStylesheetFilename ) {
@@ -255,7 +285,461 @@ public final class FxGuiUtilities {
         }
     }
 
+    public static List<String> getJarRelativeStylesheetFilenames(final SystemType systemType) {
+        // :NOTE: The CSS files are copied from FxGuiToolkit as a starting point
+        // and thus doesn't even begin to yet match our LAF for Society Desktop.
+        final List<String> jarRelativeStylesheetFilenames = new ArrayList<>();
+        jarRelativeStylesheetFilenames.add("/css/societySkin.css");
+        final String fontStylesheet = SystemType.MACOS.equals(systemType)
+                ? "/css/font-mac.css"
+                : "/css/font.css";
+        jarRelativeStylesheetFilenames.add(fontStylesheet);
+        return jarRelativeStylesheetFilenames;
+    }
+
+    @SuppressWarnings("nls")
+    public static String getButtonLabel( final String groupName,
+                                         final String itemName,
+                                         final ResourceBundle resourceBundle ) {
+        // There must always at least be a group name for each button.
+        if ( ( groupName == null ) || groupName.trim().isEmpty() ) {
+            return "";
+        }
+
+        // Composite the button name from the group and item names.
+        final String buttonName = ( ( itemName == null ) || itemName.trim().isEmpty() )
+                ? groupName
+                : groupName + "." + itemName;
+
+        // Generate the resource lookup key for the button label.
+        final String resourceKey = buttonName + ".label";
+
+        try {
+            return resourceBundle.getString( resourceKey );
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+            return '!' + buttonName + '!';
+        }
+    }
+
+    @SuppressWarnings("nls")
+    public static Label getTitleLabel(final String title) {
+        final Label titleLabel = new Label( title );
+
+        // :NOTE: This is temporary until we figure out why the CSS style from
+        // the main stylesheet doesn't appear to be loaded when this is invoked.
+        // titleLabel.getStyleClass().add( "title-text" );
+        titleLabel.setStyle("-fx-font-family: 'sans-serif'; -fx-font-size: 150.0%; -fx-font-style: normal; -fx-font-weight: bold; -fx-alignment: center;");
+
+        return titleLabel;
+    }
+
+    // :TODO: Pass in the minimum height as a parameter?
+    public static HBox getTitlePane( final Label titleLabel ) {
+        final HBox titlePane = LayoutFactory.makeCenteredLabeledHBox( titleLabel );
+        titlePane.setMinHeight( 32d );
+        titleLabel.prefHeightProperty().bind( titlePane.heightProperty() );
+
+        return titlePane;
+    }
+
+    // :NOTE: This method should only be used for Latin alphanumeric
+    // characters. See the Mnemonics.java example for a more complex and
+    // foolproof methodology for finding the key code for a mnemonic. We
+    // specify US-English (vs. just "English") to be safe, until support for
+    // locale-sensitive menus is added to the GUI (it is already implemented).
+    @SuppressWarnings("nls")
+    public static char getMnemonicChar( final String key ) {
+        final int mnemonicMarkerIndex = getMnemonicMarkerIndex( key );
+        final int mnemonicIndex = ( mnemonicMarkerIndex >= 0 ) ? mnemonicMarkerIndex + 1 : 0;
+        // final char mnemonicLabel = key.toUpperCase( Locale.getDefault() )
+        return key.toUpperCase( Locale.forLanguageTag( "en-US" ) ).charAt( mnemonicIndex );
+    }
+
+    public static int getMnemonicIndex( final String groupName,
+                                        final String itemName,
+                                        final ResourceBundle resourceBundle ) {
+        // Get the button label from the resource bundle, if applicable.
+        final String buttonLabel = getButtonLabel( groupName, itemName, resourceBundle );
+        if ( buttonLabel.trim().isEmpty() ) {
+            return -1;
+        }
+
+        // Get the button displayed mnemonic index.
+        // :NOTE: The mnemonic marker index on the original label corresponds to
+        // the mnemonic index on the stripped label.
+        return getMnemonicMarkerIndex( buttonLabel );
+    }
+
+    // :NOTE: The menu label property files would be very time-consuming to edit
+    // safely for replacing the "&" with "_", so we use the old Swing symbol as
+    // the lookup and then replace it with the JavaFX symbol downstream.
+    public static int getMnemonicMarkerIndex( final String key ) {
+        return key.indexOf( SWING_MNEMONIC_MARKER );
+    }
+
+    public static String handleMnemonicMarker( final String label, final boolean replaceMnemonic ) {
+        final int mnemonicMarkerIndex = getMnemonicMarkerIndex( label );
+        final int mnemonicIndex = ( mnemonicMarkerIndex >= 0 ) ? mnemonicMarkerIndex + 1 : 0;
+        try {
+            // :NOTE: If no mnemonic marker is found, "-1" is returned, which is
+            // then incremented to use the first character as the mnemonic (by
+            // default).
+            final String labelPreMnemonic = label.substring( 0, mnemonicMarkerIndex );
+            final String labelPostMnemonic = label.substring( mnemonicIndex );
+
+            // Conditionally strip the mnemonic marker from the label, or
+            // replace the Swing mnemonic marker with the one for JavaFX.
+            final StringBuilder adjustedLabel = new StringBuilder();
+            adjustedLabel.append( labelPreMnemonic );
+            if ( replaceMnemonic ) {
+                adjustedLabel.append( JAVAFX_MNEMONIC_MARKER );
+            }
+            adjustedLabel.append( labelPostMnemonic );
+            return adjustedLabel.toString();
+        }
+        catch ( final IndexOutOfBoundsException ioobe ) {
+            ioobe.printStackTrace();
+            return label;
+        }
+    }
+
+    public static void applyLabeledButtonStyle( final Button button,
+                                                final String backColorCss,
+                                                final String borderColorCss,
+                                                final String borderWidthCss ) {
+        applyLabeledButtonStyle(button, backColorCss, borderColorCss, borderWidthCss, "7.5" );
+    }
+
+    public static void applyLabeledButtonStyle( final Button button,
+                                                final String backgroundColorCss,
+                                                final String borderColorCss,
+                                                final String borderWidthCss,
+                                                final String borderRadiusCss ) {
+        applyLabeledButtonStyle(
+                button,
+                backgroundColorCss,
+                borderColorCss,
+                borderWidthCss,
+                borderRadiusCss,
+                null );
+    }
+
+    public static void applyLabeledButtonStyle( final Button button,
+                                                final String backgroundColorCss,
+                                                final String borderColorCss,
+                                                final String borderWidthCss,
+                                                final String borderRadiusCss,
+                                                final String borderInsetsCss ) {
+        // :NOTE: Do not apply the fx-content-display as centered here, as
+        // that causes buttons with both text and graphics to stack them
+        // both in the center of the button, thus obscuring each other.
+        final String padding = ( borderInsetsCss == null ) ? "-fx-padding: 6 8 6 8" : "";
+        final String backgroundInsets = ( borderInsetsCss != null ) ? "-fx-background-insets: " + borderInsetsCss : "";
+        final String borderInsets = ( borderInsetsCss != null ) ? "-fx-border-insets: " + borderInsetsCss : "";
+        button.setStyle(
+                "-fx-background-color: "
+                        + backgroundColorCss
+                        + "; "
+                        + backgroundInsets
+                        + "; -fx-background-radius: "
+                        + borderRadiusCss
+                        + "; -fx-border-color: "
+                        + borderColorCss
+                        + "; "
+                        + borderInsets
+                        + "; -fx-border-radius: "
+                        + borderRadiusCss
+                        + "; -fx-border-width: "
+                        + borderWidthCss
+                        + "; "
+                        + padding
+                        + "; -fx-text-fill: white;");
+    }
+
+    public static void applyApplicationButtonStyle( final Button button,
+                                                    final String backColorCss,
+                                                    final String borderColorCss,
+                                                    final String borderWidthCss) {
+        // :NOTE: Do not apply the fx-content-display as centered here, as
+        // that causes buttons with both text and graphics to stack them
+        // both in the center of the button, thus obscuring each other.
+        // :TODO: Move this into CSS as state-specific styles, to avoid
+        // so much copy/paste code in the toggle button action handlers.
+        applyLabeledButtonStyle(
+                button,
+                backColorCss,
+                borderColorCss,
+                borderWidthCss,
+                "45" );
+    }
+
+    public static void applyTextFieldStyle( final TextField textField,
+                                            final String backColorCss,
+                                            final String borderColorCss,
+                                            final String borderWidthCss ) {
+        // :NOTE: Do not apply the fx-content-display as centered here, as
+        // that causes buttons with both text and graphics to stack them
+        // both in the center of the button, thus obscuring each other.
+        textField.setStyle("-fx-padding: 6 8 6 8"
+                + "; -fx-background-color: "
+                + backColorCss
+                + "; -fx-text-fill: white; -fx-border-color: "
+                + borderColorCss
+                + "; -fx-border-width: "
+                + borderWidthCss
+                + "; -fx-border-radius: 45;"
+        );
+    }
+
+    public static void applyCustomTextFieldStyle( final CustomTextField customTextField,
+                                                  final String backColorCss,
+                                                  final String borderColorCss,
+                                                  final String borderWidthCss ) {
+        // :NOTE: Do not apply the fx-content-display as centered here, as
+        // that causes buttons with both text and graphics to stack them
+        // both in the center of the button, thus obscuring each other.
+        // :NOTE: This variant assumes a Node is added to the right side
+        // of the Custom Text Field, and thus leaves no inset padding there.
+        customTextField.setStyle("-fx-padding: 6 0 6 8"
+                + "; -fx-background-color: "
+                + backColorCss
+                + "; -fx-text-fill: white; -fx-border-color: "
+                + borderColorCss
+                + "; -fx-border-width: "
+                + borderWidthCss
+                + "; -fx-border-radius: 45;"
+        );
+    }
+
+    public static void applyRoundButtonStyle(final Button button,
+                                             final String backColorCss,
+                                             final int radiusPixels,
+                                             final String borderColorCss,
+                                             final int borderWidthPixels) {
+        final int spanPixels = 2 * radiusPixels;
+
+        // :TODO: Review whether units these are in pixels by default, and
+        // remove the "px" suffix in the CSS parameters if so.
+        final String radiusPixelsCss = Integer.toString(radiusPixels) + "px";
+        final String spanPixelsCss = Integer.toString(spanPixels) + "px";
+        final String borderWidthPixelsCss = Integer.toString(borderWidthPixels) + "px";
+
+        button.setStyle(
+                "-fx-content-display: center"
+                + "; -fx-base: "
+                + backColorCss
+                + "; -fx-background-color: "
+                + backColorCss
+                + "; -fx-background-size: "
+                + spanPixelsCss
+                + ", "
+                + spanPixelsCss
+                + "; -fx-background-radius: "
+                + radiusPixelsCss
+                + "; -fx-border-color: "
+                + borderColorCss
+                + "; -fx-border-width: "
+                + borderWidthPixelsCss
+                + "; -fx-border-radius: "
+                + radiusPixelsCss
+                + "; -fx-min-width: "
+                + spanPixelsCss
+                + "; -fx-min-height: "
+                + spanPixelsCss
+                + "; -fx-max-width: "
+                + spanPixelsCss
+                + "; -fx-max-height: "
+                + spanPixelsCss
+                + "; -fx-pref-width: "
+                + spanPixelsCss
+                + "; -fx-pref-height: "
+                + spanPixelsCss
+                + ";"
+        );
+    }
+
+    public static void applySolidRoundButtonStyle(final Button button,
+                                                  final String backColorCss,
+                                                  final int radiusPixels) {
+        final int borderWidthPixels = 1;
+        applyRoundButtonStyle(button, backColorCss, radiusPixels, backColorCss, borderWidthPixels);
+    }
+
+    public static void applyRegionStyle(final Region region,
+                                        final String backColorCss,
+                                        final String borderColorCss,
+                                        final String borderWidthCss) {
+        applyRegionStyle( region, backColorCss, borderColorCss, borderWidthCss, " 7.5" );
+    }
+
+    public static void applyRegionStyle(final Region region,
+                                        final String backColorCss,
+                                        final String borderColorCss,
+                                        final String borderWidthCss,
+                                        final String borderRadiusCss) {
+        region.setStyle("-fx-content-display: center"
+                + "; -fx-padding: 6 8 6 8"
+                + "; -fx-background-color: "
+                + backColorCss
+                + "; -fx-border-color: "
+                + borderColorCss
+                + "; -fx-border-width: "
+                + borderWidthCss
+                + "; -fx-border-radius: "
+                + borderRadiusCss
+                + ";"
+        );
+    }
+
+    public static VBox getImageBox(final Label imageLabel, final double imageSize) {
+        final VBox imageVBox = new VBox();
+        imageVBox.getChildren().addAll(imageLabel);
+        imageVBox.setAlignment(Pos.CENTER);
+        imageVBox.setMinSize(imageSize, imageSize);
+        imageVBox.setMaxSize(imageSize, imageSize);
+        imageVBox.setPrefSize(imageSize, imageSize);
+
+        return imageVBox;
+    }
+
+    public static SVGPath getSvgImage( final String svgContent)  {
+        final SVGPath svgImage = new SVGPath();
+        svgImage.setContent( svgContent );
+
+        return svgImage;
+    }
+
+    public static Label getSvgImageLabel(final SVGPath svgImage,
+                                         final Color svgColor,
+                                         final double imageSize) {
+        final Label svgImageLabel = new Label();
+        svgImageLabel.setAlignment(Pos.CENTER);
+        svgImageLabel.setBackground(
+                LayoutFactory.makeRegionBackground(svgColor));
+        svgImageLabel.setOpacity( 100d );
+        svgImageLabel.setMinSize(imageSize, imageSize);
+        svgImageLabel.setMaxSize(imageSize, imageSize);
+        svgImageLabel.setPrefSize(imageSize, imageSize);
+        svgImageLabel.setShape(svgImage);
+
+        return svgImageLabel;
+    }
+
+    public static Label getSvgImageLabel(final String svgContent,
+                                         final Color svgColor,
+                                         final double imageSize) {
+        final SVGPath svgImage = getSvgImage(svgContent);
+
+        return getSvgImageLabel(svgImage, svgColor, imageSize);
+    }
+
+    public static VBox getSvgImageBox(final String svgContent,
+                                      final Color svgColor,
+                                      final double imageSize) {
+        final Label svgImageLabel = getSvgImageLabel(svgContent,svgColor,imageSize);
+
+        return getImageBox(svgImageLabel, imageSize);
+    }
+
+    public static ToggleButton getSvgToggleButton(final SVGPath svgImage,
+                                                  final Color svgColor,
+                                                  final double imageSize,
+                                                  final String tooltipText) {
+        final ToggleButton svgToggleButton = new ToggleButton();
+        if ((tooltipText != null) && !tooltipText.isEmpty()) {
+            svgToggleButton.setTooltip(new Tooltip(tooltipText));
+        }
+        svgToggleButton.setBackground(LayoutFactory.makeRegionBackground(svgColor));
+        svgToggleButton.setMinSize(imageSize, imageSize);
+        svgToggleButton.setMaxSize(imageSize, imageSize);
+        svgToggleButton.setPrefSize(imageSize, imageSize);
+        svgToggleButton.setShape(svgImage);
+
+        return svgToggleButton;
+    }
+
+    public static ToggleButton getSvgToggleButton(final String svgContent,
+                                                  final Color svgColor,
+                                                  final double imageSize,
+                                                  final String tooltipText) {
+        final SVGPath svgImage = getSvgImage(svgContent);
+
+        return getSvgToggleButton(svgImage, svgColor, imageSize, tooltipText);
+    }
+
     /**
+     * Applies an {@link ImageView} hosted icon to a supplied {@link Labeled}
+     * container, and then applies a drop-shadow effect to the container.
+     *
+     * @param labeled  The {@link Labeled} container for the supplied icon
+     * @param iconOnly {@code true} if the {@link Labeled} container is to
+     *                 contain only the icon and no text; {@code false} otherwise
+     * @param icon     The {@link ImageView} that hosts the icon to apply
+     */
+    public static void applyIcon(final Labeled labeled,
+                                 final boolean iconOnly,
+                                 final Node icon) {
+        try {
+            // Set the icon, if it is a unique node in the scene graph.
+            labeled.setGraphic(icon);
+        } catch (final IllegalArgumentException iae) {
+            iae.printStackTrace();
+        }
+
+        if (iconOnly) {
+            // An icon container sometimes has no text, such as in a toolbar
+            // context.
+            labeled.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        }
+
+        // Style the icon to use consistent insets on all sides.
+        labeled.setPadding(new Insets(DEFAULT_ICON_INSET));
+
+        // Apply drop-shadow effects when the mouse enters a node.
+        applyDropShadowEffect(labeled);
+    }
+
+    /**
+     * Applies an icon to a supplied {@link Labeled} container, using a
+     * resource filename to load the icon into an {@link ImageView}.
+     *
+     * @param labeled      The {@link Labeled} container for the supplied icon
+     * @param iconOnly     {@code true} if the {@link Labeled} container is to
+     *                     contain only the icon and no text; {@code false} otherwise
+     * @param iconFilename The resource filename for the icon
+     */
+    public static void applyIcon(final Labeled labeled,
+                                 final boolean iconOnly,
+                                 final String iconFilename) {
+        // Get the button icon from JAR-resident resources and apply it.
+        final ImageView icon = ImageUtilities.createIcon(iconFilename);
+        applyIcon(labeled, iconOnly, icon);
+    }
+
+    /**
+     * Applies an icon to a supplied {@link Labeled} container, using a
+     * resource filename to load the icon into an {@link ImageView}.
+     *
+     * @param labeled      The {@link Labeled} container for the supplied icon
+     * @param iconOnly     {@code true} if the {@link Labeled} container is to
+     *                     contain only the icon and no text; {@code false} otherwise
+     * @param iconFilename The resource filename for the icon
+     * @param fitWidth     The desired resulting width of the loaded icon
+     * @param fitHeight    The desired resulting height of the loaded icon
+     */
+    public static void applyIcon(final Labeled labeled,
+                                 final boolean iconOnly,
+                                 final String iconFilename,
+                                 final double fitWidth,
+                                 final double fitHeight) {
+        // Get the button icon from JAR-resident resources and apply it.
+        final ImageView icon = ImageUtilities.createIcon(iconFilename, fitWidth, fitHeight);
+        applyIcon(labeled, iconOnly, icon);
+    }
+
+   /**
      * Apply drop-shadow effects when the mouse enters the specified
      * {@link Node}
      *
@@ -263,7 +747,7 @@ public final class FxGuiUtilities {
      *            The {@link Node} to which drop-shadow animation should be
      *            applied
      */
-    public static void applyDropShadowEffects( final Node node ) {
+    public static void applyDropShadowEffect( final Node node ) {
         // Apply a drop-shadow effect if a node was focus traversed via TAB, or
         // if the mouse is hovering over the node (even in passing through).
         // :NOTE: If the current background is black, we need to make sure the
@@ -284,6 +768,333 @@ public final class FxGuiUtilities {
             else {
                 node.setEffect( null );
             }
+        } );
+    }
+
+    /**
+     * Creates a random color every time the method is called.
+     *
+     * @return A random Color with full opacity
+     */
+    public static Paint randomColor() {
+        Random random = new Random();
+        int r = random.nextInt(255 );
+        int g = random.nextInt(255 );
+        int b = random.nextInt(255 );
+
+        return Color.rgb( r, g, b );
+    }
+
+    public static ResizeTarget detectResizeTarget( final MouseEvent mouseEvent,
+                                                   final Scene scene,
+                                                   final Region region ) {
+        final Insets insets = region.getInsets();
+
+        return detectResizeTarget(
+                mouseEvent,
+                scene,
+                insets );
+    }
+
+    public static ResizeTarget detectResizeTarget( final MouseEvent mouseEvent,
+                                                   final Scene scene,
+                                                   final Insets insets ) {
+        final double borderWidth = 8d;
+
+        return detectResizeTarget(
+                mouseEvent,
+                scene,
+                insets,
+                borderWidth );
+    }
+
+    public static ResizeTarget detectResizeTarget( final MouseEvent mouseEvent,
+                                                   final Scene scene,
+                                                   final Insets insets,
+                                                   final double borderWidth ) {
+        final double resizeMarginTop = Math.max( borderWidth, 0.5d * insets.getTop() );
+        final double resizeMarginLeft = Math.max( borderWidth, 0.5d * insets.getLeft() );
+        final double resizeMarginBottom = Math.max( borderWidth, 0.5d * insets.getBottom() );
+        final double resizeMarginRight = Math.max( borderWidth, 0.5d * insets.getRight() );
+
+        return detectResizeTarget(
+                mouseEvent,
+                scene,
+                resizeMarginTop,
+                resizeMarginRight,
+                resizeMarginBottom,
+                resizeMarginLeft );
+    }
+
+    public static ResizeTarget detectResizeTarget( final MouseEvent mouseEvent,
+                                                   final Scene scene,
+                                                   final double resizeMarginTop,
+                                                   final double resizeMarginRight,
+                                                   final double resizeMarginBottom,
+                                                   final double resizeMarginLeft ) {
+        final double yMin = mouseEvent.getSceneY();
+        final double xMin = mouseEvent.getSceneX();
+        final double yMax = scene.getHeight() - yMin;
+        final double xMax = scene.getWidth() - xMin;
+
+        return ResizeTarget.detectResizeTarget(
+                yMin,
+                xMin,
+                yMax,
+                xMax,
+                resizeMarginTop,
+                resizeMarginRight,
+                resizeMarginBottom,
+                resizeMarginLeft );
+    }
+
+    public static ResizeTarget detectResizeTarget( final MouseEvent mouseEvent,
+                                                   final Region region,
+                                                   final Bounds layoutBounds,
+                                                   final double borderWidth ) {
+        final double mouseX = mouseEvent.getX();
+        final double mouseY = mouseEvent.getY();
+
+        final Insets insets = region.getInsets();
+
+        final double diffMinY = Math.abs( layoutBounds.getMinY() - mouseY + insets.getTop() );
+        final double diffMinX = Math.abs( layoutBounds.getMinX() - mouseX + insets.getLeft() );
+        final double diffMaxY = Math.abs( layoutBounds.getMaxY() - mouseY - insets.getBottom() );
+        final double diffMaxX = Math.abs( layoutBounds.getMaxX() - mouseX - insets.getRight() );
+
+        final double resizeMarginTop = Math.max( borderWidth, 0.5d * insets.getTop() );
+        final double resizeMarginLeft = Math.max( borderWidth, 0.5d * insets.getLeft() );
+        final double resizeMarginBottom = Math.max( borderWidth, 0.5d * insets.getBottom() );
+        final double resizeMarginRight = Math.max( borderWidth, 0.5d * insets.getRight() );
+
+        return ResizeTarget.detectResizeTarget(
+                diffMinY,
+                diffMinX,
+                diffMaxY,
+                diffMaxX,
+                resizeMarginTop,
+                resizeMarginRight,
+                resizeMarginBottom,
+                resizeMarginLeft );
+    }
+
+    public static Cursor getCursorForResizeTarget( final ResizeTarget resizeTarget ) {
+        switch ( resizeTarget ) {
+            case NONE:
+                return Cursor.DEFAULT;
+            case TOP:
+                return Cursor.N_RESIZE;
+            case TOP_RIGHT:
+                return Cursor.NE_RESIZE;
+            case RIGHT:
+                return Cursor.E_RESIZE;
+            case BOTTOM_RIGHT:
+                return Cursor.SE_RESIZE;
+            case BOTTOM:
+                return Cursor.S_RESIZE;
+            case BOTTOM_LEFT:
+                return Cursor.SW_RESIZE;
+            case LEFT:
+                return Cursor.W_RESIZE;
+            case TOP_LEFT:
+                return Cursor.NW_RESIZE;
+            default:
+                break;
+        }
+
+        return Cursor.DEFAULT;
+    }
+
+    public static void clampStageSize( final Stage stage ) {
+        final double width = stage.getWidth();
+        final double clampedWidth = getClampedWidth( stage, width );
+        if ( clampedWidth != width ) {
+            stage.setWidth( clampedWidth );
+        }
+
+        final double height = stage.getHeight();
+        final double clampedHeight = getClampedHeight( stage, height );
+        if ( clampedHeight != height ) {
+            stage.setHeight( clampedHeight );
+        }
+
+    }
+
+    public static double getClampedWidth(final Stage stage,
+                                         final double resizeWidthCandidate ) {
+        final Screen activeScreen = findActiveScreen( stage );
+        final Rectangle2D screenBounds = activeScreen.getVisualBounds();
+
+        return getClampedWidth( stage, resizeWidthCandidate, screenBounds );
+    }
+
+    public static double getClampedWidth(final Stage stage,
+                                         final double resizeWidthCandidate,
+                                         final Rectangle2D bounds ) {
+        final double allowedWidth = bounds.getWidth();
+
+        return getClampedWidth( stage, resizeWidthCandidate, allowedWidth );
+    }
+
+    public static double getClampedWidth(final Stage stage,
+                                         final double resizeWidthCandidate,
+                                         final double allowedWidth ) {
+        return ( resizeWidthCandidate > stage.getMaxWidth() )
+                ? stage.getMaxWidth() : ( resizeWidthCandidate < stage.getMinWidth() )
+                ? stage.getMinWidth() : Math.min( resizeWidthCandidate, allowedWidth );
+    }
+
+    public static double getClampedHeight(final Stage stage,
+                                          final double resizeHeightCandidate ) {
+        final Screen activeScreen = findActiveScreen( stage );
+        final Rectangle2D screenBounds = activeScreen.getVisualBounds();
+
+        return getClampedHeight( stage, resizeHeightCandidate, screenBounds );
+    }
+
+    public static double getClampedHeight(final Stage stage,
+                                          final double resizeHeightCandidate,
+                                          final Rectangle2D bounds ) {
+        final double allowedHeight = bounds.getHeight();
+        return getClampedHeight( stage, resizeHeightCandidate, allowedHeight );
+    }
+
+    public static double getClampedHeight(final Stage stage,
+                                          final double resizeHeightCandidate,
+                                          final double allowedHeight ) {
+        return ( resizeHeightCandidate > stage.getMaxHeight() )
+                ? stage.getMaxHeight() : ( resizeHeightCandidate < stage.getMinHeight() )
+                ? stage.getMinHeight() : Math.min( resizeHeightCandidate, allowedHeight );
+    }
+
+    public static Screen findActiveScreen(final Window window ) {
+        final double minX = window.getX();
+        final double minY = window.getY();
+        final double width = window.getWidth();
+        final double height = window.getHeight();
+        final Rectangle2D bounds = new Rectangle2D( minX, minY, width, height );
+
+        final List<Screen> screens = Screen.getScreens();
+
+        for ( final Screen screen : screens ) {
+            final Rectangle2D screenRect = screen.getVisualBounds();
+
+            // First, check for simple containment, as only one
+            // screen can fully contain the supplied window.
+            if ( screenRect.contains( bounds ) ) {
+                return screen;
+            }
+
+            // Next, check for intersection of the interior.
+            if ( screenRect.intersects( bounds ) ) {
+                return screen;
+            }
+        }
+
+        return Screen.getPrimary();
+    }
+
+    public static void updateToggleButtonSilently( final ToggleButton toggleButton,
+                                                   final EventHandler< ActionEvent > selectionHandler,
+                                                   final boolean selected ) {
+        // Remove any existing selection handler so we don't get infinite
+        // recursion on selection change callbacks during manual updates.
+        toggleButton.setOnAction( actionEvent -> {} );
+        toggleButton.setSelected( selected );
+        toggleButton.setOnAction( selectionHandler );
+    }
+
+    // Converts a color to an rgba syntax that works in JavaFX 8 CSS
+    // where other syntaxes don't (but should; there are bugs in Java 8).
+    //
+    // Primarily, this method is needed when a color is specified with
+    // an alpha value; colors with no alpha work using every available
+    // CSS syntax, as does the default color "name" for "transparent".
+    //
+    // As with some other methods here, this one actually comes from
+    // FxGuiToolkit's ColorUtilities class, which we use very little of.
+    public static String colorToRgba( final Color color ) {
+        return "rgba("
+                + String.valueOf( Math.floor( color.getRed() * 255d ) )
+                + ", "
+                + String.valueOf( Math.floor( color.getGreen() * 255d ) )
+                + ", "
+                + String.valueOf( Math.floor( color.getBlue() * 255d ) )
+                + ", "
+                + String.valueOf( color.getOpacity() )
+                + ")";
+    }
+
+    // Never speak of this code... ever again!
+    public static void resizeTextAreaHeight( final TextArea textArea ) {
+        final double totalWidth = textArea.getPrefWidth();
+        resizeTextAreaHeight( textArea, totalWidth );
+    }
+
+    // Never speak of this code... ever again!
+    public static void resizeTextAreaHeight( final TextArea textArea,
+                                             final double totalWidth ) {
+        final String text = textArea.getText();
+
+        final Label l = new Label( text );
+        l.setFont( textArea.getFont() );
+        l.applyCss();
+
+        final Text t = new Text( text );
+        t.setFont( textArea.getFont() );
+        t.setWrappingWidth( totalWidth );
+        t.applyCss();
+
+        final HBox hl = new HBox();
+        hl.setMinWidth( totalWidth );
+        hl.setPrefWidth( totalWidth );
+        hl.setMaxWidth( totalWidth );
+        hl.getChildren().add( l );
+        final Scene sl = new Scene( hl );
+
+        final HBox ht = new HBox();
+        ht.setMinWidth( totalWidth );
+        ht.setPrefWidth( totalWidth );
+        ht.setMaxWidth( totalWidth );
+        ht.getChildren().add( t );
+        final Scene st = new Scene( ht );
+
+        final double lHeight = l.prefHeight( Region.USE_COMPUTED_SIZE ) + 16d;
+        final double tHeight = t.prefHeight( Region.USE_COMPUTED_SIZE ) + 16d;
+        final double finalHeight = Math.max( lHeight, tHeight );
+
+        textArea.setMinHeight( finalHeight );
+        textArea.setPrefHeight( finalHeight );
+        textArea.setMaxHeight( finalHeight );
+    }
+
+    public static void adaptDividerToRegionBounds( final Region region ) {
+        region.layoutBoundsProperty().addListener( ( observable, oldValue, newValue ) -> {
+            if ( newValue == null ) {
+                return;
+            }
+
+            final double x = 0.5d * newValue.getWidth();
+            final double y = 0.5d * newValue.getHeight();
+            final Color white0 = Color.web( "white", 0d );
+
+            final Stop[] dividerStops = new Stop[] {
+                    new Stop( 0d, Color.WHITE ),
+                    new Stop( 0.5d, white0 ),
+                    new Stop( 1d, white0 )
+            };
+
+            RadialGradient dividerGradient = new RadialGradient(
+                    0d,
+                    0d,
+                    x,
+                    y,
+                    newValue.getWidth(),
+                    false,
+                    CycleMethod.NO_CYCLE,
+                    dividerStops );
+
+            region.setBackground( LayoutFactory.makeRegionBackground( dividerGradient ) );
         } );
     }
 
@@ -379,7 +1190,7 @@ public final class FxGuiUtilities {
         labeled.setPadding( new Insets( TOOLBAR_ICON_INSET ) );
 
         // Apply drop-shadow effects when the mouse enters a node.
-        applyDropShadowEffects( labeled );
+        applyDropShadowEffect( labeled );
     }
 
     /**
@@ -514,32 +1325,6 @@ public final class FxGuiUtilities {
         return background;
     }
 
-    @SuppressWarnings("nls")
-    public static String getButtonLabel( final String groupName,
-                                         final String itemName,
-                                         final ResourceBundle resourceBundle ) {
-        // There must always at least be a group name for each button.
-        if ( ( groupName == null ) || groupName.trim().isEmpty() ) {
-            return "";
-        }
-
-        // Composite the button name from the group and item names.
-        final String buttonName = ( ( itemName == null ) || itemName.trim().isEmpty() )
-            ? groupName
-            : groupName + "." + itemName;
-
-        // Generate the resource lookup key for the button label.
-        final String resourceKey = buttonName + ".label";
-
-        try {
-            return resourceBundle.getString( resourceKey );
-        }
-        catch ( final Exception e ) {
-            e.printStackTrace();
-            return '!' + buttonName + '!';
-        }
-    }
-
     // Get the button text from the resource bundle, if applicable.
     public static String getButtonText( final String groupName,
                                         final String itemName,
@@ -564,7 +1349,7 @@ public final class FxGuiUtilities {
         checkBox.setSelected( selected );
 
         // Apply drop-shadow effects when the mouse enters a check box.
-        applyDropShadowEffects( checkBox );
+        applyDropShadowEffect( checkBox );
 
         return checkBox;
     }
@@ -794,7 +1579,7 @@ public final class FxGuiUtilities {
         }
 
         // Apply drop-shadow effects when the mouse enters the Button.
-        applyDropShadowEffects( button );
+        applyDropShadowEffect( button );
 
         return button;
     }
@@ -958,41 +1743,6 @@ public final class FxGuiUtilities {
         return labeledTextFieldPane;
     }
 
-    // :NOTE: This method should only be used for Latin alphanumeric
-    // characters. See the Mnemonics.java example for a more complex and
-    // foolproof methodology for finding the key code for a mnemonic. We specify
-    // US-English (vs. just "English") to be safe, until support for
-    // locale-sensitive menus is added to the GUI (it is already implemented).
-    @SuppressWarnings("nls")
-    public static char getMnemonicChar( final String key ) {
-        final int mnemonicMarkerIndex = getMnemonicMarkerIndex( key );
-        final int mnemonicIndex = ( mnemonicMarkerIndex >= 0 ) ? mnemonicMarkerIndex + 1 : 0;
-        // final char mnemonicLabel = key.toUpperCase( Locale.getDefault() )
-        return key.toUpperCase( Locale.forLanguageTag( "en-US" ) ).charAt( mnemonicIndex );
-    }
-
-    public static int getMnemonicIndex( final String groupName,
-                                        final String itemName,
-                                        final ResourceBundle resourceBundle ) {
-        // Get the button label from the resource bundle, if applicable.
-        final String buttonLabel = getButtonLabel( groupName, itemName, resourceBundle );
-        if ( ( buttonLabel == null ) || buttonLabel.trim().isEmpty() ) {
-            return -1;
-        }
-
-        // Get the button displayed mnemonic index.
-        // :NOTE: The mnemonic marker index on the original label corresponds to
-        // the mnemonic index on the stripped label.
-        return getMnemonicMarkerIndex( buttonLabel );
-    }
-
-    // :NOTE: The menu label property files would be very time-consuming to edit
-    // safely for replacing the "&" with "_", so we use the old Swing symbol as
-    // the lookup and then replace it with the JavaFX symbol downstream.
-    public static int getMnemonicMarkerIndex( final String key ) {
-        return key.indexOf( SWING_MNEMONIC_MARKER );
-    }
-
     @SuppressWarnings("nls")
     public static TextArea getNotesEditor( final int numberOfRows ) {
         final TextArea notesEditor = new TextArea();
@@ -1036,7 +1786,7 @@ public final class FxGuiUtilities {
         radioButton.setSelected( selected );
 
         // Apply drop-shadow effects when the mouse enters a radio button.
-        applyDropShadowEffects( radioButton );
+        applyDropShadowEffect( radioButton );
 
         return radioButton;
     }
@@ -1108,7 +1858,7 @@ public final class FxGuiUtilities {
             toggleButton.setPadding( new Insets( TOOLBAR_ICON_INSET ) );
 
             // Apply drop-shadow effects when the mouse enters a node.
-            FxGuiUtilities.applyDropShadowEffects( toggleButton );
+            FxGuiUtilities.applyDropShadowEffect( toggleButton );
         }
 
         // Use the dark styling so the selected button is more obvious.
@@ -1217,7 +1967,7 @@ public final class FxGuiUtilities {
         }
 
         // Apply drop-shadow effects when the mouse enters a Status Label.
-        FxGuiUtilities.applyDropShadowEffects( statusLabel );
+        FxGuiUtilities.applyDropShadowEffect( statusLabel );
 
         // Labels do not have context menus by default, and all we'd want to do
         // anyway is copy the text, just when it's something of interest like a
@@ -1247,57 +1997,6 @@ public final class FxGuiUtilities {
                 .thickness( 1d ).title( title ).radius( 2.5d, 2.5d, 2.5d, 2.5d ).build().build();
 
         return titledBorderWrappedNode;
-    }
-
-    @SuppressWarnings("nls")
-    public static Label getTitleLabel( final String title ) {
-        final String titleLabelText = title;
-        final Label titleLabel = new Label( titleLabelText );
-
-        titleLabel.getStyleClass().add( "title-text" );
-
-        return titleLabel;
-    }
-
-    // :TODO: Pass in the minimum height as a parameter?
-    public static HBox getTitlePane( final Label titleLabel ) {
-        final HBox titlePane = new HBox();
-
-        titlePane.setAlignment( Pos.CENTER );
-
-        titlePane.getChildren().add( titleLabel );
-
-        titlePane.setMinHeight( 32d );
-
-        titleLabel.prefHeightProperty().bind( titlePane.heightProperty() );
-
-        return titlePane;
-    }
-
-    public static String handleMnemonicMarker( final String label, final boolean replaceMnemonic ) {
-        final int mnemonicMarkerIndex = getMnemonicMarkerIndex( label );
-        final int mnemonicIndex = ( mnemonicMarkerIndex >= 0 ) ? mnemonicMarkerIndex + 1 : 0;
-        try {
-            // :NOTE: If no mnemonic marker is found, "-1" is returned, which is
-            // then incremented to use the first character as the mnemonic (by
-            // default).
-            final String labelPreMnemonic = label.substring( 0, mnemonicMarkerIndex );
-            final String labelPostMnemonic = label.substring( mnemonicIndex );
-
-            // Conditionally strip the mnemonic marker from the label, or
-            // replace the Swing mnemonic marker with the one for JavaFX.
-            final StringBuilder adjustedLabel = new StringBuilder();
-            adjustedLabel.append( labelPreMnemonic );
-            if ( replaceMnemonic ) {
-                adjustedLabel.append( JAVAFX_MNEMONIC_MARKER );
-            }
-            adjustedLabel.append( labelPostMnemonic );
-            return adjustedLabel.toString();
-        }
-        catch ( final IndexOutOfBoundsException ioobe ) {
-            ioobe.printStackTrace();
-            return label;
-        }
     }
 
     /**
@@ -1517,7 +2216,7 @@ public final class FxGuiUtilities {
         button.setFocusTraversable( true );
 
         // Apply drop-shadow effects when the mouse enters a Button.
-        applyDropShadowEffects( button );
+        applyDropShadowEffect( button );
     }
 
     public static void setColumnHeaderLabelForeground( final GridPane gridPane,
@@ -1543,7 +2242,7 @@ public final class FxGuiUtilities {
         comboBox.getEditor().getStyleClass().add( "enhanced-combo-box" );
 
         // Apply drop-shadow effects when the mouse enters a Combo Box.
-        applyDropShadowEffects( comboBox );
+        applyDropShadowEffect( comboBox );
     }
 
     public static void setRowHeaderLabelForeground( final GridPane gridPane,
@@ -1574,7 +2273,7 @@ public final class FxGuiUtilities {
         spinner.getEditor().getStyleClass().add( "enhanced-spinner" );
 
         // Apply drop-shadow effects when the mouse enters a Spinner.
-        applyDropShadowEffects( spinner );
+        applyDropShadowEffect( spinner );
     }
 
     // Try to globally change the foreground theme for elements not exposed
@@ -1623,7 +2322,7 @@ public final class FxGuiUtilities {
         textArea.getStyleClass().add( cssStyleClass );
 
         // Apply drop-shadow effects when the mouse enters a Text Area.
-        applyDropShadowEffects( textArea );
+        applyDropShadowEffect( textArea );
     }
 
     @SuppressWarnings("nls")
@@ -1632,7 +2331,7 @@ public final class FxGuiUtilities {
         textField.getStyleClass().add( "enhanced-text-input" );
 
         // Apply drop-shadow effects when the mouse enters a Text Field.
-        applyDropShadowEffects( textField );
+        applyDropShadowEffect( textField );
     }
 
     public static void setToggleButtonProperties( final ToggleButton toggleButton,
@@ -1645,7 +2344,7 @@ public final class FxGuiUtilities {
         }
 
         // Apply drop-shadow effects when the mouse enters a Toggle Button.
-        applyDropShadowEffects( toggleButton );
+        applyDropShadowEffect( toggleButton );
     }
 
 }

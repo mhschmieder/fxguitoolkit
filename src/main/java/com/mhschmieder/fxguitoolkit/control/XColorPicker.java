@@ -74,7 +74,7 @@ public class XColorPicker extends ColorPicker {
         }
 
         // Apply drop-shadow effects when the mouse enters this node.
-        FxGuiUtilities.applyDropShadowEffects( this );
+        FxGuiUtilities.applyDropShadowEffect( this );
     }
 
     // Set the Java FX color to the color picker.
