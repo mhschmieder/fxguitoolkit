@@ -41,16 +41,16 @@ public final class MainApplicationLoadTask extends Task< Void > {
 
     // 15 seconds (30 x 500ms) ought to be enough for even the slowest computer
     // to initialize the main application.
-    private static final int     THREAD_SLEEP_INTERVAL_MS        = 500;
-    private static final int     MAXIMUM_THREAD_SLEEP_TIME_MS    = 15000;
-    private static final int     MAXIMUM_THREAD_SLEEP_INCREMENTS = Math
+    private static final int THREAD_SLEEP_INTERVAL_MS        = 500;
+    private static final int MAXIMUM_THREAD_SLEEP_TIME_MS    = 15000;
+    private static final int MAXIMUM_THREAD_SLEEP_INCREMENTS = Math
             .round( MAXIMUM_THREAD_SLEEP_TIME_MS / THREAD_SLEEP_INTERVAL_MS );
 
     // Cache the progress text so we can initialize it via the constructor.
-    private String progressText;
+    private String           progressText;
 
     // Cache a reference to the main application stage.
-    private Stage mainApplicationStage;
+    private Stage            mainApplicationStage;
 
     public MainApplicationLoadTask( final String progressText ) {
         // Always call the super-constructor first!
@@ -68,7 +68,7 @@ public final class MainApplicationLoadTask extends Task< Void > {
 
         for ( int i = 0; i < MAXIMUM_THREAD_SLEEP_INCREMENTS; i++ ) {
             progressText += '.';
-            updateMessage(progressText);
+            updateMessage( progressText );
 
             Thread.sleep( THREAD_SLEEP_INTERVAL_MS );
 
@@ -77,12 +77,14 @@ public final class MainApplicationLoadTask extends Task< Void > {
             // If the main application stage has finished initializing, exit the
             // Splash Screen timer loop.
             // :TODO: Once there is more going on with the main Society Desktop
-            // window, implement the "isInitialized()" function and ass it to the
+            // window, implement the "isInitialized()" function and ass it to
+            // the
             // logic here.
             // :TODO: Make this an observable, if bindings help.
-            //if ( ( mainApplicationStage != null ) && mainApplicationStage.isInitialized() ) {
+            // if ( ( mainApplicationStage != null ) &&
+            // mainApplicationStage.isInitialized() ) {
             if ( mainApplicationStage != null ) {
-                    break;
+                break;
             }
         }
 

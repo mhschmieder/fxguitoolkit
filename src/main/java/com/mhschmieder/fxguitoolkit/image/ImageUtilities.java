@@ -68,9 +68,10 @@ public final class ImageUtilities {
      */
     private ImageUtilities() {}
 
-    public static byte[] convertImageToByteArray( final Image image, final String imageFormatName ) {
+    public static byte[] convertImageToByteArray( final Image image,
+                                                  final String imageFormatName ) {
         try ( final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream() ) {
-            final BufferedImage bufferedImage = SwingFXUtils.fromFXImage( image, null);
+            final BufferedImage bufferedImage = SwingFXUtils.fromFXImage( image, null );
             if ( bufferedImage == null ) {
                 return null;
             }
@@ -89,10 +90,9 @@ public final class ImageUtilities {
                                                                   final java.awt.Color maskColor ) {
         final int imageWidth = originalImage.getWidth();
         final int imageHeight = originalImage.getHeight();
-        final BufferedImage invertedMaskedImage = new BufferedImage(
-                imageWidth,
-                imageHeight,
-                BufferedImage.TYPE_INT_RGB );
+        final BufferedImage invertedMaskedImage = new BufferedImage( imageWidth,
+                                                                     imageHeight,
+                                                                     BufferedImage.TYPE_INT_RGB );
 
         int pixelMask = maskColor.getRGB();
         int pixelBlack = java.awt.Color.BLACK.getRGB();
@@ -102,8 +102,8 @@ public final class ImageUtilities {
             for ( int x = 0; x < imageWidth; x++ ) {
                 int pixelOriginal = originalImage.getRGB( x, y );
                 int pixelInvertedMasked = ( pixelBlack == pixelOriginal )
-                        ? pixelMask : ( pixelWhite == pixelOriginal )
-                        ? pixelBlack : pixelWhite;
+                    ? pixelMask
+                    : ( pixelWhite == pixelOriginal ) ? pixelBlack : pixelWhite;
                 invertedMaskedImage.setRGB( x, y, pixelInvertedMasked );
             }
         }
@@ -118,10 +118,9 @@ public final class ImageUtilities {
         // we get undesired results such as all-solid uniform images.
         final int imageWidth = monochromeImage.getWidth();
         final int imageHeight = monochromeImage.getHeight();
-        final BufferedImage duotoneImage = new BufferedImage(
-                imageWidth,
-                imageHeight,
-                BufferedImage.TYPE_INT_RGB );
+        final BufferedImage duotoneImage = new BufferedImage( imageWidth,
+                                                              imageHeight,
+                                                              BufferedImage.TYPE_INT_RGB );
 
         final int pixelBlack = java.awt.Color.BLACK.getRGB();
         final int pixelWhite = java.awt.Color.WHITE.getRGB();
@@ -129,12 +128,12 @@ public final class ImageUtilities {
         int pixelBlackReplacement = replacementColorForBlack.getRGB();
         int pixelWhiteReplacement = replacementColorForWhite.getRGB();
 
-       for ( int y = 0; y < imageHeight; y++ ) {
+        for ( int y = 0; y < imageHeight; y++ ) {
             for ( int x = 0; x < imageWidth; x++ ) {
                 final int pixelOriginal = monochromeImage.getRGB( x, y );
                 int pixelInvertedMasked = ( pixelBlack == pixelOriginal )
-                        ? pixelBlackReplacement : ( pixelWhite == pixelOriginal )
-                        ? pixelWhiteReplacement : pixelWhite;
+                    ? pixelBlackReplacement
+                    : ( pixelWhite == pixelOriginal ) ? pixelWhiteReplacement : pixelWhite;
                 duotoneImage.setRGB( x, y, pixelInvertedMasked );
             }
         }
@@ -146,7 +145,8 @@ public final class ImageUtilities {
      * Create an Icon as an Image View, using a JAR-resident resource.
      * 
      * @param jarRelativeIconFilename
-     * @return
+     *            The file name of the image icon file contained in this JAR
+     * @return An Image View that loads the supplied image icon file
      */
     public static ImageView createIcon( final String jarRelativeIconFilename ) {
         // Direct-load the Icon into an Image View container.
@@ -155,26 +155,26 @@ public final class ImageUtilities {
 
     // Create an Icon as an Image View, using a JAR-resident resource.
     public static ImageView createIcon( final String jarRelativeLegendFilename,
-                                          final double fitWidth,
-                                          final double fitHeight ) {
+                                        final double fitWidth,
+                                        final double fitHeight ) {
         // Background-load the image into an Image View container.
-        return getImageView( jarRelativeLegendFilename,
-                true,
-                true,
-                -1d,
-                fitWidth,
-                fitHeight );
+        return getImageView( jarRelativeLegendFilename, true, true, -1d, fitWidth, fitHeight );
     }
 
     /**
      * Create a Legend as an Image View, using a JAR-resident resource.
      * 
      * @param jarRelativeLegendFilename
+     *            The file name of the image icon file contained in this JAR
      * @param preserveSourceImageRatio
+     *            Flag for preserving source image ratio
      * @param derivedImageAspectRatio
+     *            Value of derived image aspect ratio
      * @param fitWidth
+     *            The fit width to use for the image target
      * @param fitHeight
-     * @return
+     *            The fit height to use for the image target
+     * @return The Image View created from the supplied file name and parameters
      */
     public static ImageView createLegend( final String jarRelativeLegendFilename,
                                           final boolean preserveSourceImageRatio,
@@ -194,7 +194,8 @@ public final class ImageUtilities {
      * Create a Logo as an Image View, using a JAR-resident resource.
      * 
      * @param jarRelativeLogoFilename
-     * @return
+     *            The file name of the image icon file contained in this JAR
+     * @return The Image View created from the supplied file name
      */
     public static ImageView createLogo( final String jarRelativeLogoFilename ) {
         // Background-load the Logo into an Image View container.
@@ -203,7 +204,9 @@ public final class ImageUtilities {
 
     /**
      * @param node
-     * @return
+     *            The Node in the Scene Graph to use as scope for a screen shot
+     * @return A Buffered Image corresponding to a screen shot of the supplied
+     *         Node
      */
     public static BufferedImage getBufferedImageSnapshot( final Node node ) {
         // Get the JavaFX WritableImage as the snapshot of the source Node.
@@ -222,8 +225,11 @@ public final class ImageUtilities {
      * Put an Image into an Image View container for use in Layouts.
      * 
      * @param image
+     *            The Image to use for an Image View container
      * @param backgroundLoading
-     * @return
+     *            Flag for whether to use background loading or immediate
+     *            loading of the Image
+     * @return The Image View container for the supplied Image
      */
     public static ImageView getImageView( final Image image, final boolean backgroundLoading ) {
         // :NOTE: We no longer use the dimensions; we know the size as we
@@ -240,17 +246,24 @@ public final class ImageUtilities {
      * Put an Image into an Image View container for use in Layouts.
      * 
      * @param image
+     *            The Image to use for loading the Image View container
      * @param backgroundLoading
-     * @param preserveRatio
-     * @param aspectRatio
+     *            Flag for whether to use background loading or immediate
+     *            loading of the Image
+     * @param preserveSourceImageRatio
+     *            Flag for preserving source image ratio
+     * @param derivedImageAspectRatio
+     *            Value of derived image aspect ratio
      * @param fitWidth
+     *            The fit width to use for the image target
      * @param fitHeight
-     * @return
+     *            The fit height to use for the image target
+     * @return The Image View container for the supplied Image
      */
     public static ImageView getImageView( final Image image,
                                           final boolean backgroundLoading,
-                                          final boolean preserveRatio,
-                                          final double aspectRatio,
+                                          final boolean preserveSourceImageRatio,
+                                          final double derivedImageAspectRatio,
                                           final double fitWidth,
                                           final double fitHeight ) {
         final ImageView imageView = new ImageView();
@@ -259,8 +272,8 @@ public final class ImageUtilities {
         updateImageView( imageView,
                          image,
                          backgroundLoading,
-                         preserveRatio,
-                         aspectRatio,
+                         preserveSourceImageRatio,
+                         derivedImageAspectRatio,
                          fitWidth,
                          fitHeight );
 
@@ -271,8 +284,11 @@ public final class ImageUtilities {
      * Direct-load or background-load an Image as a JAR-resident resource.
      * 
      * @param jarRelativeImageFilename
+     *            The file name of an image file contained in this JAR
      * @param backgroundLoading
-     * @return
+     *            Flag for whether to use background loading or immediate
+     *            loading of the Image
+     * @return The Image View container for the supplied Image file
      */
     public static ImageView getImageView( final String jarRelativeImageFilename,
                                           final boolean backgroundLoading ) {
@@ -289,12 +305,19 @@ public final class ImageUtilities {
      * Direct-load or background-load an Image as a JAR-resident resource.
      * 
      * @param jarRelativeImageFilename
+     *            The file name of an image file contained in this JAR
      * @param backgroundLoading
+     *            Flag for whether to use background loading or immediate
+     *            loading of the Image
      * @param preserveSourceImageRatio
+     *            Flag for preserving source image ratio
      * @param derivedImageAspectRatio
+     *            Value of derived image aspect ratio
      * @param fitWidth
+     *            The fit width to use for the image target
      * @param fitHeight
-     * @return
+     *            The fit height to use for the image target
+     * @return The Image View container for the supplied Image file
      */
     public static ImageView getImageView( final String jarRelativeImageFilename,
                                           final boolean backgroundLoading,
@@ -318,7 +341,9 @@ public final class ImageUtilities {
 
     /**
      * @param node
-     * @return
+     *            The Node in the Scene Graph to use as scope for a screen shot
+     * @return A Writable Image corresponding to a screen shot of the supplied
+     *         Node
      */
     public static WritableImage getWritableImageSnapshot( final Node node ) {
         // Render the snapshot source with no compression.
@@ -335,9 +360,11 @@ public final class ImageUtilities {
     public static Image loadImage( final byte[] imageBytes,
                                    final double fitWidth,
                                    final double fitHeight ) {
-        try ( final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream( imageBytes ) ) {
+        try ( final ByteArrayInputStream byteArrayInputStream =
+                                                              new ByteArrayInputStream( imageBytes ) ) {
             return loadImage( byteArrayInputStream, fitWidth, fitHeight );
-        } catch ( final IOException e ) {
+        }
+        catch ( final IOException e ) {
             e.printStackTrace();
         }
 
@@ -351,13 +378,7 @@ public final class ImageUtilities {
         // image can have poor quality and perpetuate that when re-scaled.
         // :NOTE: We no longer apply smoothing, as things can get much blurrier
         // if the source image is mostly vector graphics vs. a raster bitmap.
-        return loadImageFromStream(
-                inputStream,
-                true,
-                -1d,
-                fitWidth,
-                fitHeight,
-                false );
+        return loadImageFromStream( inputStream, true, -1d, fitWidth, fitHeight, false );
     }
 
     /**
@@ -366,8 +387,11 @@ public final class ImageUtilities {
      * :TODO: Algorithmically tag the Image size to a partially specified name?
      * 
      * @param jarRelativeImageFilename
+     *            The file name of an image file contained in this JAR
      * @param backgroundLoading
-     * @return
+     *            Flag for whether to use background loading or immediate
+     *            loading of the Image
+     * @return An Image loaded from a file contained in this JAR
      */
     public static Image loadImageAsJarResource( final String jarRelativeImageFilename,
                                                 final boolean backgroundLoading ) {
@@ -402,13 +426,19 @@ public final class ImageUtilities {
      * anti-aliasing the pixels.
      *
      * @param inputStream
+     *            The Input Stream to use for loading the Image
      * @param preserveSourceImageRatio
+     *            Flag for preserving source image ratio
      * @param derivedImageAspectRatio
+     *            Value of derived image aspect ratio
      * @param fitWidth
+     *            The fit width to use for the image target
      * @param fitHeight
-     * @param smooth {@code true} if you want a smooth quality image; {@code false}
-     *                           if you care more about the speed of image loading
-     * @return
+     *            The fit height to use for the image target
+     * @param smooth
+     *            {@code true} if you want a smooth quality image; {@code false}
+     *            if you care more about the speed of image loading
+     * @return The Image that contains the supplied Image file
      */
     public static Image loadImageFromStream( final InputStream inputStream,
                                              final boolean preserveSourceImageRatio,
@@ -447,11 +477,17 @@ public final class ImageUtilities {
 
     /**
      * @param imageView
+     *            The Image View container for the Image
      * @param image
+     *            The actual Image itself
      * @param preserveSourceImageRatio
+     *            Flag for preserving source image ratio
      * @param derivedImageAspectRatio
+     *            Value of derived image aspect ratio
      * @param fitWidth
+     *            The fit width to use for the image target
      * @param fitHeight
+     *            The fit height to use for the image target
      */
     public static void setImageView( final ImageView imageView,
                                      final Image image,
@@ -498,8 +534,12 @@ public final class ImageUtilities {
      * Put an Image into an Image View container for use in Layouts.
      * 
      * @param imageView
+     *            The Image View container for the Image
      * @param image
+     *            The actual Image itself
      * @param backgroundLoading
+     *            Flag for whether to use background loading or immediate
+     *            loading of the Image
      */
     public static void updateImageView( final ImageView imageView,
                                         final Image image,
@@ -517,18 +557,26 @@ public final class ImageUtilities {
      * Update an Image View container with a pre-loaded Image.
      * 
      * @param imageView
+     *            The Image View container for the Image
      * @param image
+     *            The actual Image itself
      * @param backgroundLoading
-     * @param preserveRatio
-     * @param aspectRatio
+     *            Flag for whether to use background loading or immediate
+     *            loading of the Image
+     * @param preserveSourceImageRatio
+     *            Flag for preserving source image ratio
+     * @param derivedImageAspectRatio
+     *            Value of derived image aspect ratio
      * @param fitWidth
+     *            The fit width to use for the image target
      * @param fitHeight
+     *            The fit height to use for the image target
      */
     public static void updateImageView( final ImageView imageView,
                                         final Image image,
                                         final boolean backgroundLoading,
-                                        final boolean preserveRatio,
-                                        final double aspectRatio,
+                                        final boolean preserveSourceImageRatio,
+                                        final double derivedImageAspectRatio,
                                         final double fitWidth,
                                         final double fitHeight ) {
         // Track the Image's loading progress, so we can safely set it on the
@@ -541,8 +589,8 @@ public final class ImageUtilities {
                         if ( !image.isError() ) {
                             setImageView( imageView,
                                           image,
-                                          preserveRatio,
-                                          aspectRatio,
+                                          preserveSourceImageRatio,
+                                          derivedImageAspectRatio,
                                           fitWidth,
                                           fitHeight );
                         }
@@ -550,7 +598,12 @@ public final class ImageUtilities {
                 } );
             }
             else {
-                setImageView( imageView, image, preserveRatio, aspectRatio, fitWidth, fitHeight );
+                setImageView( imageView,
+                              image,
+                              preserveSourceImageRatio,
+                              derivedImageAspectRatio,
+                              fitWidth,
+                              fitHeight );
             }
         }
     }
@@ -559,8 +612,12 @@ public final class ImageUtilities {
      * Update an Image View container, using a JAR-resident resource.
      * 
      * @param imageView
+     *            The Image View container for the Image
      * @param jarRelativeImageFilename
+     *            The file name of an image file contained in this JAR
      * @param backgroundLoading
+     *            Flag for whether to use background loading or immediate
+     *            loading of the Image
      */
     public static void updateImageView( final ImageView imageView,
                                         final String jarRelativeImageFilename,
@@ -575,9 +632,10 @@ public final class ImageUtilities {
     /**
      * Placeholder for drag/drop of images; needs File Handler class written.
      * 
-     * @return
+     * @return An Event Handler for image drag events
      */
-    //public static EventHandler< DragEvent > getImageDragHandler( final FileHandler fileHandler ) {
+    // public static EventHandler< DragEvent > getImageDragHandler( final
+    // FileHandler fileHandler ) {
     public static EventHandler< DragEvent > getImageDragHandler() {
         return dragEvent -> {
             final Dragboard dragboard = dragEvent.getDragboard();
@@ -586,16 +644,18 @@ public final class ImageUtilities {
 
             boolean dropCompleted = false;
             if ( dragboard.hasFiles() ) {
-                // Block unless there is just one file and it has the proper file
+                // Block unless there is just one file and it has the proper
+                // file
                 // extension for the supported image formats (PNG, GIF, JPEG).
                 final List< File > files = dragboard.getFiles();
                 if ( files.size() == 1 ) {
                     final File file = files.get( 0 );
                     if ( isSupportedImageFile( file ) ) {
-                        if (  DragEvent.DRAG_OVER.equals( eventType ) ) {
+                        if ( DragEvent.DRAG_OVER.equals( eventType ) ) {
                             dragEvent.acceptTransferModes( TransferMode.ANY );
-                        } else if ( DragEvent.DRAG_DROPPED.equals( eventType ) ) {
-                            //dropCompleted = fileHandler.fileOpen( file );
+                        }
+                        else if ( DragEvent.DRAG_DROPPED.equals( eventType ) ) {
+                            // dropCompleted = fileHandler.fileOpen( file );
                         }
                     }
                 }

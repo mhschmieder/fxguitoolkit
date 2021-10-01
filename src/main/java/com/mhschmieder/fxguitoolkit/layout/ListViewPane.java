@@ -47,15 +47,15 @@ import javafx.scene.paint.Color;
 
 // This is a working example of a stylized List View layout pane that applies
 // certain LAF and constraints that are far from the defaults in JavaFX.
-public class ListViewPane  extends BorderPane {
+public class ListViewPane extends BorderPane {
 
-    private Label headerLabel;
-    private ListView< String > itemList;
+    private Label                headerLabel;
+    private ListView< String >   itemList;
 
     // This is just an empty placeholder for a bottom layout element that would
     // likely have hard constraints, maybe host buttons, and in turn would help
     // constrain the ListView's sizing and spacing.
-    private Pane bottomButtonPane;
+    private Pane                 bottomButtonPane;
 
     // Cache the context for OS etc. in case it affects layout or functionality.
     private final SessionContext sessionContext;
@@ -79,23 +79,19 @@ public class ListViewPane  extends BorderPane {
         }
     }
 
-    private final void initPane( final String listHeader,
-                                 final String[] items ) {
+    private final void initPane( final String listHeader, final String[] items ) {
         // Make the large stylized masthead label and place at top.
         headerLabel = FxGuiUtilities.getTitleLabel( listHeader );
         final HBox masthead = FxGuiUtilities.getTitlePane( headerLabel );
 
         // Make the scrollable List View for Delay Integration Product Types.
         itemList = new ListView<>();
-        final ObservableList< String > observableItems = FXCollections
-                .observableArrayList( items );
+        final ObservableList< String > observableItems = FXCollections.observableArrayList( items );
         itemList.setItems( observableItems );
 
         // Try to style the list to use semi-transparent forest green to
         // highlight selected items, as an initial LAF placeholder.
-        FxGuiUtilities
-                .addStylesheetAsJarResource( itemList,
-                        "/css/listView.css" ); //$NON-NLS-1$
+        FxGuiUtilities.addStylesheetAsJarResource( itemList, "/css/listView.css" ); //$NON-NLS-1$
 
         // :TODO: Make a useful bottom pane, maybe with buttons, or pass one
         // in to the constructor if this avoids having to subclass this class.
@@ -115,14 +111,13 @@ public class ListViewPane  extends BorderPane {
         // Due to so many factors, including different platforms and screens, it
         // is better to explicitly set the size that we want.
         itemList.minWidthProperty().bind( masthead.prefWidthProperty() );
-        bottomButtonPane.minWidthProperty()
-                    .bind( itemList.widthProperty() );
+        bottomButtonPane.minWidthProperty().bind( itemList.widthProperty() );
 
         // Check for Product Type list selection events, to enable relevant
         // Phase Curve Frequency Buttons and set the selection style.
         // :NOTE: it's not clear if we can grab the list cell from here, so we
         // may need to apply the Compass 4.x list selection styling via CSS.
-        itemList.setOnMouseClicked(mouseEvent -> {
+        itemList.setOnMouseClicked( mouseEvent -> {
             final String item = itemList.getSelectionModel().getSelectedItem();
             if ( ( item == null ) || item.isEmpty() ) {
                 return;
@@ -152,7 +147,7 @@ public class ListViewPane  extends BorderPane {
     }
 
     // :TODO: Use Generics at the class definition level for the data type
-    //  modeled by the List, and use Generics for this method argument.
+    // modeled by the List, and use Generics for this method argument.
     public final void updateSelectedItem( final String selectedItem ) {
         itemList.getSelectionModel().select( selectedItem );
 

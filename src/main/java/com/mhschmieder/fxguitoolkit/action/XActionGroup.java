@@ -45,7 +45,7 @@ public class XActionGroup extends ActionGroup {
     private final boolean choiceGroup;
 
     // Keep track of whether we want disabled actions to be hidden or not.
-    private boolean hideIfDisabled;
+    private boolean       hideIfDisabled;
 
     public XActionGroup( final String text, final Collection< Action > actions ) {
         this( text, actions, false );

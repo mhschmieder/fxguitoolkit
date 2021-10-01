@@ -97,11 +97,11 @@ public final class ActionUtilities {
                                                    final String groupName,
                                                    final String jarRelativeIconFilename ) {
         applyActionAttributes( sessionContext,
-                actionGroup,
-                bundleName,
-                groupName,
-                null,
-                jarRelativeIconFilename );
+                               actionGroup,
+                               bundleName,
+                               groupName,
+                               null,
+                               jarRelativeIconFilename );
     }
 
     // If an accelerator is assigned, get it from a resource bundle.
@@ -122,9 +122,7 @@ public final class ActionUtilities {
 
         // Generate the resource lookup key for the action accelerator.
         final String resourceKey = actionName + ".accelerator"
-                + ( SystemType.MACOS.equals( sessionContext.systemType )
-                ? ".mac"
-                : "" );
+                + ( SystemType.MACOS.equals( sessionContext.systemType ) ? ".mac" : "" );
 
         try {
             // :NOTE: Not all actions have Accelerators, so we have to check
@@ -158,12 +156,12 @@ public final class ActionUtilities {
                                       final String itemName,
                                       final String jarRelativeIconFilename ) {
         return getAction( sessionContext,
-                actionVerb,
-                bundleName,
-                groupName,
-                itemName,
-                jarRelativeIconFilename,
-                false );
+                          actionVerb,
+                          bundleName,
+                          groupName,
+                          itemName,
+                          jarRelativeIconFilename,
+                          false );
     }
 
     private static XAction getAction( final SessionContext sessionContext,
@@ -177,11 +175,11 @@ public final class ActionUtilities {
 
         // Set the menu item attributes from the resource bundle.
         applyActionAttributes( sessionContext,
-                action,
-                bundleName,
-                groupName,
-                itemName,
-                jarRelativeIconFilename );
+                               action,
+                               bundleName,
+                               groupName,
+                               itemName,
+                               jarRelativeIconFilename );
 
         // To simplify constructors, for now we set this later if non-default.
         action.setHideIfDisabled( hideIfDisabled );
@@ -195,11 +193,11 @@ public final class ActionUtilities {
                                      final String itemName,
                                      final String jarRelativeIconFilename ) {
         return getAction( sessionContext,
-                ActionVerb.DO,
-                bundleName,
-                groupName,
-                itemName,
-                jarRelativeIconFilename );
+                          ActionVerb.DO,
+                          bundleName,
+                          groupName,
+                          itemName,
+                          jarRelativeIconFilename );
     }
 
     public static XAction getAction( final SessionContext sessionContext,
@@ -209,12 +207,12 @@ public final class ActionUtilities {
                                      final String jarRelativeIconFilename,
                                      final boolean hideIfDisabled ) {
         return getAction( sessionContext,
-                ActionVerb.DO,
-                bundleName,
-                groupName,
-                itemName,
-                jarRelativeIconFilename,
-                hideIfDisabled );
+                          ActionVerb.DO,
+                          bundleName,
+                          groupName,
+                          itemName,
+                          jarRelativeIconFilename,
+                          hideIfDisabled );
     }
 
     private static XActionGroup getActionGroup( final SessionContext sessionContext,
@@ -224,12 +222,12 @@ public final class ActionUtilities {
                                                 final String groupName,
                                                 final String jarRelativeIconFilename ) {
         return getActionGroup( sessionContext,
-                actions,
-                choiceGroup,
-                bundleName,
-                groupName,
-                jarRelativeIconFilename,
-                false );
+                               actions,
+                               choiceGroup,
+                               bundleName,
+                               groupName,
+                               jarRelativeIconFilename,
+                               false );
     }
 
     @SuppressWarnings("nls")
@@ -244,10 +242,10 @@ public final class ActionUtilities {
 
         // Set the menu attributes from the resource bundle.
         applyActionGroupAttributes( sessionContext,
-                actionGroup,
-                bundleName,
-                groupName,
-                jarRelativeIconFilename );
+                                    actionGroup,
+                                    bundleName,
+                                    groupName,
+                                    jarRelativeIconFilename );
 
         // To simplify constructors, for now we set this later if non-default.
         actionGroup.setHideIfDisabled( hideIfDisabled );
@@ -261,11 +259,11 @@ public final class ActionUtilities {
                                                final String groupName,
                                                final String jarRelativeIconFilename ) {
         return getActionGroup( sessionContext,
-                actions,
-                bundleName,
-                groupName,
-                jarRelativeIconFilename,
-                false );
+                               actions,
+                               bundleName,
+                               groupName,
+                               jarRelativeIconFilename,
+                               false );
     }
 
     public static XActionGroup getActionGroup( final SessionContext sessionContext,
@@ -275,12 +273,12 @@ public final class ActionUtilities {
                                                final String jarRelativeIconFilename,
                                                final boolean hideIfDisabled ) {
         return getActionGroup( sessionContext,
-                actions,
-                false,
-                bundleName,
-                groupName,
-                jarRelativeIconFilename,
-                hideIfDisabled );
+                               actions,
+                               false,
+                               bundleName,
+                               groupName,
+                               jarRelativeIconFilename,
+                               hideIfDisabled );
     }
 
     public static XAction getCheck( final SessionContext sessionContext,
@@ -289,11 +287,11 @@ public final class ActionUtilities {
                                     final String itemName,
                                     final String jarRelativeIconFilename ) {
         return getAction( sessionContext,
-                ActionVerb.CHECK,
-                bundleName,
-                groupName,
-                itemName,
-                jarRelativeIconFilename );
+                          ActionVerb.CHECK,
+                          bundleName,
+                          groupName,
+                          itemName,
+                          jarRelativeIconFilename );
     }
 
     public static XAction getCheck( final SessionContext sessionContext,
@@ -303,12 +301,12 @@ public final class ActionUtilities {
                                     final String jarRelativeIconFilename,
                                     final boolean hideIfDisabled ) {
         return getAction( sessionContext,
-                ActionVerb.CHECK,
-                bundleName,
-                groupName,
-                itemName,
-                jarRelativeIconFilename,
-                hideIfDisabled );
+                          ActionVerb.CHECK,
+                          bundleName,
+                          groupName,
+                          itemName,
+                          jarRelativeIconFilename,
+                          hideIfDisabled );
     }
 
     // :NOTE: This is also a stand-in for now, for toggle groups, as ControlsFX
@@ -319,11 +317,11 @@ public final class ActionUtilities {
                                      final String itemName,
                                      final String jarRelativeIconFilename ) {
         return getAction( sessionContext,
-                ActionVerb.CHOOSE,
-                bundleName,
-                groupName,
-                itemName,
-                jarRelativeIconFilename );
+                          ActionVerb.CHOOSE,
+                          bundleName,
+                          groupName,
+                          itemName,
+                          jarRelativeIconFilename );
     }
 
     // :NOTE: This is also a stand-in for now, for toggle groups, as ControlsFX
@@ -335,12 +333,12 @@ public final class ActionUtilities {
                                      final String jarRelativeIconFilename,
                                      final boolean hideIfDisabled ) {
         return getAction( sessionContext,
-                ActionVerb.CHOOSE,
-                bundleName,
-                groupName,
-                itemName,
-                jarRelativeIconFilename,
-                hideIfDisabled );
+                          ActionVerb.CHOOSE,
+                          bundleName,
+                          groupName,
+                          itemName,
+                          jarRelativeIconFilename,
+                          hideIfDisabled );
     }
 
     public static XActionGroup getChoiceGroup( final SessionContext sessionContext,
@@ -349,11 +347,11 @@ public final class ActionUtilities {
                                                final String groupName,
                                                final String jarRelativeIconFilename ) {
         return getActionGroup( sessionContext,
-                choices,
-                true,
-                bundleName,
-                groupName,
-                jarRelativeIconFilename );
+                               choices,
+                               true,
+                               bundleName,
+                               groupName,
+                               jarRelativeIconFilename );
     }
 
     public static XActionGroup getChoiceGroup( final SessionContext sessionContext,
@@ -363,12 +361,12 @@ public final class ActionUtilities {
                                                final String jarRelativeIconFilename,
                                                final boolean hideIfDisabled ) {
         return getActionGroup( sessionContext,
-                choices,
-                true,
-                bundleName,
-                groupName,
-                jarRelativeIconFilename,
-                hideIfDisabled );
+                               choices,
+                               true,
+                               bundleName,
+                               groupName,
+                               jarRelativeIconFilename,
+                               hideIfDisabled );
     }
 
     public static XAction getToggle( final SessionContext sessionContext,
@@ -377,11 +375,11 @@ public final class ActionUtilities {
                                      final String itemName,
                                      final String jarRelativeIconFilename ) {
         return getAction( sessionContext,
-                ActionVerb.TOGGLE,
-                bundleName,
-                groupName,
-                itemName,
-                jarRelativeIconFilename );
+                          ActionVerb.TOGGLE,
+                          bundleName,
+                          groupName,
+                          itemName,
+                          jarRelativeIconFilename );
     }
 
     // If an accelerator is assigned, set it by platform.
@@ -395,15 +393,15 @@ public final class ActionUtilities {
             return;
         }
 
-        final ResourceBundle resourceBundle = ResourceUtilities.getResourceBundle( sessionContext,
-                bundleName );
+        final ResourceBundle resourceBundle = ResourceUtilities
+                .getResourceBundle( sessionContext, bundleName, true );
 
         // If an accelerator is assigned, get it from a resource bundle.
         final KeyCombination acceleratorKeyCombination =
-                getAcceleratorKeyCombination( sessionContext,
-                        groupName,
-                        itemName,
-                        resourceBundle );
+                                                       getAcceleratorKeyCombination( sessionContext,
+                                                                                     groupName,
+                                                                                     itemName,
+                                                                                     resourceBundle );
         if ( acceleratorKeyCombination != null ) {
             action.setAccelerator( acceleratorKeyCombination );
         }
@@ -420,8 +418,8 @@ public final class ActionUtilities {
             return;
         }
 
-        final ResourceBundle resourceBundle = ResourceUtilities.getResourceBundle( sessionContext,
-                bundleName );
+        final ResourceBundle resourceBundle = ResourceUtilities
+                .getResourceBundle( sessionContext, bundleName, true );
 
         // If long text is assigned, get it from a resource bundle.
         final String longText = SceneGraphUtilities

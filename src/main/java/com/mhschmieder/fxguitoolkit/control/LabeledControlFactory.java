@@ -47,7 +47,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 /**
- * {@code LabeledControlFactory} is a factory class for minimizing copy/paste code
+ * {@code LabeledControlFactory} is a factory class for minimizing copy/paste
+ * code
  * for shared design patterns regarding controls such as action buttons.
  */
 public final class LabeledControlFactory {
@@ -87,14 +88,13 @@ public final class LabeledControlFactory {
                                     final String backColorCss,
                                     final String borderColorCss,
                                     final String borderWidthCss ) {
-        return getButton(
-                label,
-                font,
-                buttonWidth,
-                backColorCss,
-                borderColorCss,
-                borderWidthCss,
-                "6" );
+        return getButton( label,
+                          font,
+                          buttonWidth,
+                          backColorCss,
+                          borderColorCss,
+                          borderWidthCss,
+                          "6" );
     }
 
     public static Button getButton( final String label,
@@ -106,12 +106,11 @@ public final class LabeledControlFactory {
                                     final String borderRadiusCss ) {
         final Button button = getButton( label, font, buttonWidth );
 
-        FxGuiUtilities.applyLabeledButtonStyle(
-                button,
-                backColorCss,
-                borderColorCss,
-                borderWidthCss,
-                borderRadiusCss );
+        FxGuiUtilities.applyLabeledButtonStyle( button,
+                                                backColorCss,
+                                                borderColorCss,
+                                                borderWidthCss,
+                                                borderRadiusCss );
 
         return button;
     }
@@ -125,13 +124,12 @@ public final class LabeledControlFactory {
                                     final String iconFilename,
                                     final double iconWidth,
                                     final double iconHeight ) {
-        final Button button = getButton(
-                label,
-                font,
-                buttonWidth,
-                backColorCss,
-                borderColorCss,
-                borderWidthCss );
+        final Button button = getButton( label,
+                                         font,
+                                         buttonWidth,
+                                         backColorCss,
+                                         borderColorCss,
+                                         borderWidthCss );
 
         final ImageView icon = ImageUtilities.createIcon( iconFilename, iconWidth, iconHeight );
         button.setGraphic( icon );
@@ -178,14 +176,11 @@ public final class LabeledControlFactory {
         return toggleButton;
     }
 
-    public static Label getLabel( final String labelText,
-                                  final Font font ) {
+    public static Label getLabel( final String labelText, final Font font ) {
         return getLabel( labelText, font, Pos.CENTER );
     }
 
-    public static Label getLabel( final String labelText,
-                                  final Font font,
-                                  final Paint textFill ) {
+    public static Label getLabel( final String labelText, final Font font, final Paint textFill ) {
         final Label label = getLabel( labelText, font );
         label.setTextFill( textFill );
 
@@ -211,9 +206,7 @@ public final class LabeledControlFactory {
         return label;
     }
 
-    public static Label getLabel( final String labelText,
-                                  final Font font,
-                                  final Pos position ) {
+    public static Label getLabel( final String labelText, final Font font, final Pos position ) {
         final Label label = new Label( labelText );
         if ( font != null ) {
             label.setFont( font );

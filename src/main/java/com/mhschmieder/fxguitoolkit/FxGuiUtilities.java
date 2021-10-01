@@ -139,60 +139,60 @@ public final class FxGuiUtilities {
     /**
      *
      */
-    public static final int                             FRAME_TITLE_ICON_SIZE       = 16;
+    public static final int                             FRAME_TITLE_ICON_SIZE           = 16;
 
     /**
      *
      */
-    public static final int                             FRAME_TITLE_ICON_INSET      = 2;
+    public static final int                             FRAME_TITLE_ICON_INSET          = 2;
 
     /**
      *
      */
-    public static final int                             MENU_ICON_SIZE              = 16;
+    public static final int                             MENU_ICON_SIZE                  = 16;
 
     /**
      *
      */
-    public static final int                             MENU_ICON_INSET             = 2;
+    public static final int                             MENU_ICON_INSET                 = 2;
 
     /**
      *
      */
-    public static final int                             TOOL_BAR_HEIGHT             = 40;
+    public static final int                             TOOL_BAR_HEIGHT                 = 40;
 
     /**
      *
      */
-    public static final int                             TOOLBAR_ICON_SIZE           = 24;
+    public static final int                             TOOLBAR_ICON_SIZE               = 24;
 
     /**
      *
      */
-    public static final int                             TOOLBAR_ICON_INSET          = 4;
+    public static final int                             TOOLBAR_ICON_INSET              = 4;
 
     /**
      *
      */
-    public static final int                             CONTROL_PANEL_ICON_SIZE     = 32;
+    public static final int                             CONTROL_PANEL_ICON_SIZE         = 32;
 
     /**
      *
      */
-    public static final int                             CONTROL_PANEL_ICON_INSET    = 6;
+    public static final int                             CONTROL_PANEL_ICON_INSET        = 6;
 
     // Predetermined Splash Screen dimensions; image will scale to fit.
-    public static final int                             SPLASH_WIDTH                = 600;
-    public static final int                             SPLASH_HEIGHT               = 400;
+    public static final int                             SPLASH_WIDTH                    = 600;
+    public static final int                             SPLASH_HEIGHT                   = 400;
 
-    public static final int                             LABEL_EDITOR_WIDTH_DEFAULT  = 320;
+    public static final int                             LABEL_EDITOR_WIDTH_DEFAULT      = 320;
 
     /**
      * Labels by default are made as small as possible to contain their text,
      * but we prefer to have sufficient horizontal and vertical gaps for
      * legibility and separation of neighboring controls.
      */
-    public static final Insets                          STATUS_LABEL_INSETS_DEFAULT =
+    public static final Insets                          STATUS_LABEL_INSETS_DEFAULT     =
                                                                                     new Insets( 3d,
                                                                                                 10d,
                                                                                                 3d,
@@ -202,27 +202,28 @@ public final class FxGuiUtilities {
      * Define a label delimiter for when a label is horizontally paired with a
      * user input control.
      */
-    @SuppressWarnings("nls") public static final String LABEL_DELIMITER             = ": ";
+    @SuppressWarnings("nls") public static final String LABEL_DELIMITER                 = ": ";
 
     /**
      * This is the most common inset for most contexts of icon hosting, to avoid
      * clutter, but if we add menus later on, those usually use an inset of 2.
      */
-    public static final double DEFAULT_ICON_INSET = 4;
+    public static final double                          DEFAULT_ICON_INSET              = 4;
 
     // We have chosen the ampersand as the mnemonic marker, to be compatible
     // with Qt and other GUI toolkits, so that it is more likely that resource
     // bundles can be shared.
-    public static final char                            SWING_MNEMONIC_MARKER       = '&';
+    public static final char                            SWING_MNEMONIC_MARKER           = '&';
 
     // JavaFX has its own built-in mnemonic marker.
-    public static final char                            JAVAFX_MNEMONIC_MARKER      = '_';
+    public static final char                            JAVAFX_MNEMONIC_MARKER          = '_';
 
-    // :TODO: Make a bunch of partial CSS string constants, to reduce copy/paste.
-    public static final String UNDECORATED_BORDERED_REGION_CSS
-            = "-fx-content-display: center; -fx-padding: 16; -fx-background-color: black; -fx-border-color: white; -fx-border-width: 1; -fx-border-radius: 7.5;";
-    public static final String UNDECORATED_LABELED_CSS
-            = "-fx-content-display: center; -fx-padding: 4 8 4 8; -fx-background-color: black; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 1; -fx-border-radius: 7.5;";
+    // :TODO: Make a bunch of partial CSS string constants, to reduce
+    // copy/paste.
+    public static final String                          UNDECORATED_BORDERED_REGION_CSS =
+                                                                                        "-fx-content-display: center; -fx-padding: 16; -fx-background-color: black; -fx-border-color: white; -fx-border-width: 1; -fx-border-radius: 7.5;";
+    public static final String                          UNDECORATED_LABELED_CSS         =
+                                                                                "-fx-content-display: center; -fx-padding: 4 8 4 8; -fx-background-color: black; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 1; -fx-border-radius: 7.5;";
 
     public static void addStylesheetAsJarResource( final ObservableList< String > stylesheetFilenames,
                                                    final String jarRelativeStylesheetFilename ) {
@@ -285,15 +286,15 @@ public final class FxGuiUtilities {
         }
     }
 
-    public static List<String> getJarRelativeStylesheetFilenames(final SystemType systemType) {
+    public static List< String > getJarRelativeStylesheetFilenames( final SystemType systemType ) {
         // :NOTE: The CSS files are copied from FxGuiToolkit as a starting point
         // and thus doesn't even begin to yet match our LAF for Society Desktop.
-        final List<String> jarRelativeStylesheetFilenames = new ArrayList<>();
-        jarRelativeStylesheetFilenames.add("/css/societySkin.css");
-        final String fontStylesheet = SystemType.MACOS.equals(systemType)
-                ? "/css/font-mac.css"
-                : "/css/font.css";
-        jarRelativeStylesheetFilenames.add(fontStylesheet);
+        final List< String > jarRelativeStylesheetFilenames = new ArrayList<>();
+        jarRelativeStylesheetFilenames.add( "/css/societySkin.css" );
+        final String fontStylesheet = SystemType.MACOS.equals( systemType )
+            ? "/css/font-mac.css"
+            : "/css/font.css";
+        jarRelativeStylesheetFilenames.add( fontStylesheet );
         return jarRelativeStylesheetFilenames;
     }
 
@@ -308,8 +309,8 @@ public final class FxGuiUtilities {
 
         // Composite the button name from the group and item names.
         final String buttonName = ( ( itemName == null ) || itemName.trim().isEmpty() )
-                ? groupName
-                : groupName + "." + itemName;
+            ? groupName
+            : groupName + "." + itemName;
 
         // Generate the resource lookup key for the button label.
         final String resourceKey = buttonName + ".label";
@@ -324,13 +325,14 @@ public final class FxGuiUtilities {
     }
 
     @SuppressWarnings("nls")
-    public static Label getTitleLabel(final String title) {
+    public static Label getTitleLabel( final String title ) {
         final Label titleLabel = new Label( title );
 
         // :NOTE: This is temporary until we figure out why the CSS style from
         // the main stylesheet doesn't appear to be loaded when this is invoked.
         // titleLabel.getStyleClass().add( "title-text" );
-        titleLabel.setStyle("-fx-font-family: 'sans-serif'; -fx-font-size: 150.0%; -fx-font-style: normal; -fx-font-weight: bold; -fx-alignment: center;");
+        titleLabel
+                .setStyle( "-fx-font-family: 'sans-serif'; -fx-font-size: 150.0%; -fx-font-style: normal; -fx-font-weight: bold; -fx-alignment: center;" );
 
         return titleLabel;
     }
@@ -409,7 +411,7 @@ public final class FxGuiUtilities {
                                                 final String backColorCss,
                                                 final String borderColorCss,
                                                 final String borderWidthCss ) {
-        applyLabeledButtonStyle(button, backColorCss, borderColorCss, borderWidthCss, "7.5" );
+        applyLabeledButtonStyle( button, backColorCss, borderColorCss, borderWidthCss, "7.5" );
     }
 
     public static void applyLabeledButtonStyle( final Button button,
@@ -417,13 +419,12 @@ public final class FxGuiUtilities {
                                                 final String borderColorCss,
                                                 final String borderWidthCss,
                                                 final String borderRadiusCss ) {
-        applyLabeledButtonStyle(
-                button,
-                backgroundColorCss,
-                borderColorCss,
-                borderWidthCss,
-                borderRadiusCss,
-                null );
+        applyLabeledButtonStyle( button,
+                                 backgroundColorCss,
+                                 borderColorCss,
+                                 borderWidthCss,
+                                 borderRadiusCss,
+                                 null );
     }
 
     public static void applyLabeledButtonStyle( final Button button,
@@ -436,43 +437,29 @@ public final class FxGuiUtilities {
         // that causes buttons with both text and graphics to stack them
         // both in the center of the button, thus obscuring each other.
         final String padding = ( borderInsetsCss == null ) ? "-fx-padding: 6 8 6 8" : "";
-        final String backgroundInsets = ( borderInsetsCss != null ) ? "-fx-background-insets: " + borderInsetsCss : "";
-        final String borderInsets = ( borderInsetsCss != null ) ? "-fx-border-insets: " + borderInsetsCss : "";
-        button.setStyle(
-                "-fx-background-color: "
-                        + backgroundColorCss
-                        + "; "
-                        + backgroundInsets
-                        + "; -fx-background-radius: "
-                        + borderRadiusCss
-                        + "; -fx-border-color: "
-                        + borderColorCss
-                        + "; "
-                        + borderInsets
-                        + "; -fx-border-radius: "
-                        + borderRadiusCss
-                        + "; -fx-border-width: "
-                        + borderWidthCss
-                        + "; "
-                        + padding
-                        + "; -fx-text-fill: white;");
+        final String backgroundInsets = ( borderInsetsCss != null )
+            ? "-fx-background-insets: " + borderInsetsCss
+            : "";
+        final String borderInsets = ( borderInsetsCss != null )
+            ? "-fx-border-insets: " + borderInsetsCss
+            : "";
+        button.setStyle( "-fx-background-color: " + backgroundColorCss + "; " + backgroundInsets
+                + "; -fx-background-radius: " + borderRadiusCss + "; -fx-border-color: "
+                + borderColorCss + "; " + borderInsets + "; -fx-border-radius: " + borderRadiusCss
+                + "; -fx-border-width: " + borderWidthCss + "; " + padding
+                + "; -fx-text-fill: white;" );
     }
 
     public static void applyApplicationButtonStyle( final Button button,
                                                     final String backColorCss,
                                                     final String borderColorCss,
-                                                    final String borderWidthCss) {
+                                                    final String borderWidthCss ) {
         // :NOTE: Do not apply the fx-content-display as centered here, as
         // that causes buttons with both text and graphics to stack them
         // both in the center of the button, thus obscuring each other.
         // :TODO: Move this into CSS as state-specific styles, to avoid
         // so much copy/paste code in the toggle button action handlers.
-        applyLabeledButtonStyle(
-                button,
-                backColorCss,
-                borderColorCss,
-                borderWidthCss,
-                "45" );
+        applyLabeledButtonStyle( button, backColorCss, borderColorCss, borderWidthCss, "45" );
     }
 
     public static void applyTextFieldStyle( final TextField textField,
@@ -482,15 +469,9 @@ public final class FxGuiUtilities {
         // :NOTE: Do not apply the fx-content-display as centered here, as
         // that causes buttons with both text and graphics to stack them
         // both in the center of the button, thus obscuring each other.
-        textField.setStyle("-fx-padding: 6 8 6 8"
-                + "; -fx-background-color: "
-                + backColorCss
-                + "; -fx-text-fill: white; -fx-border-color: "
-                + borderColorCss
-                + "; -fx-border-width: "
-                + borderWidthCss
-                + "; -fx-border-radius: 45;"
-        );
+        textField.setStyle( "-fx-padding: 6 8 6 8" + "; -fx-background-color: " + backColorCss
+                + "; -fx-text-fill: white; -fx-border-color: " + borderColorCss
+                + "; -fx-border-width: " + borderWidthCss + "; -fx-border-radius: 45;" );
     }
 
     public static void applyCustomTextFieldStyle( final CustomTextField customTextField,
@@ -502,244 +483,220 @@ public final class FxGuiUtilities {
         // both in the center of the button, thus obscuring each other.
         // :NOTE: This variant assumes a Node is added to the right side
         // of the Custom Text Field, and thus leaves no inset padding there.
-        customTextField.setStyle("-fx-padding: 6 0 6 8"
-                + "; -fx-background-color: "
-                + backColorCss
-                + "; -fx-text-fill: white; -fx-border-color: "
-                + borderColorCss
-                + "; -fx-border-width: "
-                + borderWidthCss
-                + "; -fx-border-radius: 45;"
-        );
+        customTextField.setStyle( "-fx-padding: 6 0 6 8" + "; -fx-background-color: " + backColorCss
+                + "; -fx-text-fill: white; -fx-border-color: " + borderColorCss
+                + "; -fx-border-width: " + borderWidthCss + "; -fx-border-radius: 45;" );
     }
 
-    public static void applyRoundButtonStyle(final Button button,
-                                             final String backColorCss,
-                                             final int radiusPixels,
-                                             final String borderColorCss,
-                                             final int borderWidthPixels) {
+    public static void applyRoundButtonStyle( final Button button,
+                                              final String backColorCss,
+                                              final int radiusPixels,
+                                              final String borderColorCss,
+                                              final int borderWidthPixels ) {
         final int spanPixels = 2 * radiusPixels;
 
         // :TODO: Review whether units these are in pixels by default, and
         // remove the "px" suffix in the CSS parameters if so.
-        final String radiusPixelsCss = Integer.toString(radiusPixels) + "px";
-        final String spanPixelsCss = Integer.toString(spanPixels) + "px";
-        final String borderWidthPixelsCss = Integer.toString(borderWidthPixels) + "px";
+        final String radiusPixelsCss = Integer.toString( radiusPixels ) + "px";
+        final String spanPixelsCss = Integer.toString( spanPixels ) + "px";
+        final String borderWidthPixelsCss = Integer.toString( borderWidthPixels ) + "px";
 
-        button.setStyle(
-                "-fx-content-display: center"
-                + "; -fx-base: "
-                + backColorCss
-                + "; -fx-background-color: "
-                + backColorCss
-                + "; -fx-background-size: "
-                + spanPixelsCss
-                + ", "
-                + spanPixelsCss
-                + "; -fx-background-radius: "
-                + radiusPixelsCss
-                + "; -fx-border-color: "
-                + borderColorCss
-                + "; -fx-border-width: "
-                + borderWidthPixelsCss
-                + "; -fx-border-radius: "
-                + radiusPixelsCss
-                + "; -fx-min-width: "
-                + spanPixelsCss
-                + "; -fx-min-height: "
-                + spanPixelsCss
-                + "; -fx-max-width: "
-                + spanPixelsCss
-                + "; -fx-max-height: "
-                + spanPixelsCss
-                + "; -fx-pref-width: "
-                + spanPixelsCss
-                + "; -fx-pref-height: "
-                + spanPixelsCss
-                + ";"
-        );
+        button.setStyle( "-fx-content-display: center" + "; -fx-base: " + backColorCss
+                + "; -fx-background-color: " + backColorCss + "; -fx-background-size: "
+                + spanPixelsCss + ", " + spanPixelsCss + "; -fx-background-radius: "
+                + radiusPixelsCss + "; -fx-border-color: " + borderColorCss + "; -fx-border-width: "
+                + borderWidthPixelsCss + "; -fx-border-radius: " + radiusPixelsCss
+                + "; -fx-min-width: " + spanPixelsCss + "; -fx-min-height: " + spanPixelsCss
+                + "; -fx-max-width: " + spanPixelsCss + "; -fx-max-height: " + spanPixelsCss
+                + "; -fx-pref-width: " + spanPixelsCss + "; -fx-pref-height: " + spanPixelsCss
+                + ";" );
     }
 
-    public static void applySolidRoundButtonStyle(final Button button,
-                                                  final String backColorCss,
-                                                  final int radiusPixels) {
+    public static void applySolidRoundButtonStyle( final Button button,
+                                                   final String backColorCss,
+                                                   final int radiusPixels ) {
         final int borderWidthPixels = 1;
-        applyRoundButtonStyle(button, backColorCss, radiusPixels, backColorCss, borderWidthPixels);
+        applyRoundButtonStyle( button,
+                               backColorCss,
+                               radiusPixels,
+                               backColorCss,
+                               borderWidthPixels );
     }
 
-    public static void applyRegionStyle(final Region region,
-                                        final String backColorCss,
-                                        final String borderColorCss,
-                                        final String borderWidthCss) {
+    public static void applyRegionStyle( final Region region,
+                                         final String backColorCss,
+                                         final String borderColorCss,
+                                         final String borderWidthCss ) {
         applyRegionStyle( region, backColorCss, borderColorCss, borderWidthCss, " 7.5" );
     }
 
-    public static void applyRegionStyle(final Region region,
-                                        final String backColorCss,
-                                        final String borderColorCss,
-                                        final String borderWidthCss,
-                                        final String borderRadiusCss) {
-        region.setStyle("-fx-content-display: center"
-                + "; -fx-padding: 6 8 6 8"
-                + "; -fx-background-color: "
-                + backColorCss
-                + "; -fx-border-color: "
-                + borderColorCss
-                + "; -fx-border-width: "
-                + borderWidthCss
-                + "; -fx-border-radius: "
-                + borderRadiusCss
-                + ";"
-        );
+    public static void applyRegionStyle( final Region region,
+                                         final String backColorCss,
+                                         final String borderColorCss,
+                                         final String borderWidthCss,
+                                         final String borderRadiusCss ) {
+        region.setStyle( "-fx-content-display: center" + "; -fx-padding: 6 8 6 8"
+                + "; -fx-background-color: " + backColorCss + "; -fx-border-color: "
+                + borderColorCss + "; -fx-border-width: " + borderWidthCss + "; -fx-border-radius: "
+                + borderRadiusCss + ";" );
     }
 
-    public static VBox getImageBox(final Label imageLabel, final double imageSize) {
+    public static VBox getImageBox( final Label imageLabel, final double imageSize ) {
         final VBox imageVBox = new VBox();
-        imageVBox.getChildren().addAll(imageLabel);
-        imageVBox.setAlignment(Pos.CENTER);
-        imageVBox.setMinSize(imageSize, imageSize);
-        imageVBox.setMaxSize(imageSize, imageSize);
-        imageVBox.setPrefSize(imageSize, imageSize);
+        imageVBox.getChildren().addAll( imageLabel );
+        imageVBox.setAlignment( Pos.CENTER );
+        imageVBox.setMinSize( imageSize, imageSize );
+        imageVBox.setMaxSize( imageSize, imageSize );
+        imageVBox.setPrefSize( imageSize, imageSize );
 
         return imageVBox;
     }
 
-    public static SVGPath getSvgImage( final String svgContent)  {
+    public static SVGPath getSvgImage( final String svgContent ) {
         final SVGPath svgImage = new SVGPath();
         svgImage.setContent( svgContent );
 
         return svgImage;
     }
 
-    public static Label getSvgImageLabel(final SVGPath svgImage,
-                                         final Color svgColor,
-                                         final double imageSize) {
+    public static Label getSvgImageLabel( final SVGPath svgImage,
+                                          final Color svgColor,
+                                          final double imageSize ) {
         final Label svgImageLabel = new Label();
-        svgImageLabel.setAlignment(Pos.CENTER);
-        svgImageLabel.setBackground(
-                LayoutFactory.makeRegionBackground(svgColor));
+        svgImageLabel.setAlignment( Pos.CENTER );
+        svgImageLabel.setBackground( LayoutFactory.makeRegionBackground( svgColor ) );
         svgImageLabel.setOpacity( 100d );
-        svgImageLabel.setMinSize(imageSize, imageSize);
-        svgImageLabel.setMaxSize(imageSize, imageSize);
-        svgImageLabel.setPrefSize(imageSize, imageSize);
-        svgImageLabel.setShape(svgImage);
+        svgImageLabel.setMinSize( imageSize, imageSize );
+        svgImageLabel.setMaxSize( imageSize, imageSize );
+        svgImageLabel.setPrefSize( imageSize, imageSize );
+        svgImageLabel.setShape( svgImage );
 
         return svgImageLabel;
     }
 
-    public static Label getSvgImageLabel(final String svgContent,
-                                         final Color svgColor,
-                                         final double imageSize) {
-        final SVGPath svgImage = getSvgImage(svgContent);
+    public static Label getSvgImageLabel( final String svgContent,
+                                          final Color svgColor,
+                                          final double imageSize ) {
+        final SVGPath svgImage = getSvgImage( svgContent );
 
-        return getSvgImageLabel(svgImage, svgColor, imageSize);
+        return getSvgImageLabel( svgImage, svgColor, imageSize );
     }
 
-    public static VBox getSvgImageBox(final String svgContent,
-                                      final Color svgColor,
-                                      final double imageSize) {
-        final Label svgImageLabel = getSvgImageLabel(svgContent,svgColor,imageSize);
+    public static VBox getSvgImageBox( final String svgContent,
+                                       final Color svgColor,
+                                       final double imageSize ) {
+        final Label svgImageLabel = getSvgImageLabel( svgContent, svgColor, imageSize );
 
-        return getImageBox(svgImageLabel, imageSize);
+        return getImageBox( svgImageLabel, imageSize );
     }
 
-    public static ToggleButton getSvgToggleButton(final SVGPath svgImage,
-                                                  final Color svgColor,
-                                                  final double imageSize,
-                                                  final String tooltipText) {
+    public static ToggleButton getSvgToggleButton( final SVGPath svgImage,
+                                                   final Color svgColor,
+                                                   final double imageSize,
+                                                   final String tooltipText ) {
         final ToggleButton svgToggleButton = new ToggleButton();
-        if ((tooltipText != null) && !tooltipText.isEmpty()) {
-            svgToggleButton.setTooltip(new Tooltip(tooltipText));
+        if ( ( tooltipText != null ) && !tooltipText.isEmpty() ) {
+            svgToggleButton.setTooltip( new Tooltip( tooltipText ) );
         }
-        svgToggleButton.setBackground(LayoutFactory.makeRegionBackground(svgColor));
-        svgToggleButton.setMinSize(imageSize, imageSize);
-        svgToggleButton.setMaxSize(imageSize, imageSize);
-        svgToggleButton.setPrefSize(imageSize, imageSize);
-        svgToggleButton.setShape(svgImage);
+        svgToggleButton.setBackground( LayoutFactory.makeRegionBackground( svgColor ) );
+        svgToggleButton.setMinSize( imageSize, imageSize );
+        svgToggleButton.setMaxSize( imageSize, imageSize );
+        svgToggleButton.setPrefSize( imageSize, imageSize );
+        svgToggleButton.setShape( svgImage );
 
         return svgToggleButton;
     }
 
-    public static ToggleButton getSvgToggleButton(final String svgContent,
-                                                  final Color svgColor,
-                                                  final double imageSize,
-                                                  final String tooltipText) {
-        final SVGPath svgImage = getSvgImage(svgContent);
+    public static ToggleButton getSvgToggleButton( final String svgContent,
+                                                   final Color svgColor,
+                                                   final double imageSize,
+                                                   final String tooltipText ) {
+        final SVGPath svgImage = getSvgImage( svgContent );
 
-        return getSvgToggleButton(svgImage, svgColor, imageSize, tooltipText);
+        return getSvgToggleButton( svgImage, svgColor, imageSize, tooltipText );
     }
 
     /**
      * Applies an {@link ImageView} hosted icon to a supplied {@link Labeled}
      * container, and then applies a drop-shadow effect to the container.
      *
-     * @param labeled  The {@link Labeled} container for the supplied icon
-     * @param iconOnly {@code true} if the {@link Labeled} container is to
-     *                 contain only the icon and no text; {@code false} otherwise
-     * @param icon     The {@link ImageView} that hosts the icon to apply
+     * @param labeled
+     *            The {@link Labeled} container for the supplied icon
+     * @param iconOnly
+     *            {@code true} if the {@link Labeled} container is to
+     *            contain only the icon and no text; {@code false} otherwise
+     * @param icon
+     *            The {@link ImageView} that hosts the icon to apply
      */
-    public static void applyIcon(final Labeled labeled,
-                                 final boolean iconOnly,
-                                 final Node icon) {
+    public static void applyIcon( final Labeled labeled, final boolean iconOnly, final Node icon ) {
         try {
             // Set the icon, if it is a unique node in the scene graph.
-            labeled.setGraphic(icon);
-        } catch (final IllegalArgumentException iae) {
+            labeled.setGraphic( icon );
+        }
+        catch ( final IllegalArgumentException iae ) {
             iae.printStackTrace();
         }
 
-        if (iconOnly) {
+        if ( iconOnly ) {
             // An icon container sometimes has no text, such as in a toolbar
             // context.
-            labeled.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            labeled.setContentDisplay( ContentDisplay.GRAPHIC_ONLY );
         }
 
         // Style the icon to use consistent insets on all sides.
-        labeled.setPadding(new Insets(DEFAULT_ICON_INSET));
+        labeled.setPadding( new Insets( DEFAULT_ICON_INSET ) );
 
         // Apply drop-shadow effects when the mouse enters a node.
-        applyDropShadowEffect(labeled);
+        applyDropShadowEffect( labeled );
     }
 
     /**
      * Applies an icon to a supplied {@link Labeled} container, using a
      * resource filename to load the icon into an {@link ImageView}.
      *
-     * @param labeled      The {@link Labeled} container for the supplied icon
-     * @param iconOnly     {@code true} if the {@link Labeled} container is to
-     *                     contain only the icon and no text; {@code false} otherwise
-     * @param iconFilename The resource filename for the icon
+     * @param labeled
+     *            The {@link Labeled} container for the supplied icon
+     * @param iconOnly
+     *            {@code true} if the {@link Labeled} container is to
+     *            contain only the icon and no text; {@code false} otherwise
+     * @param iconFilename
+     *            The resource filename for the icon
      */
-    public static void applyIcon(final Labeled labeled,
-                                 final boolean iconOnly,
-                                 final String iconFilename) {
+    public static void applyIcon( final Labeled labeled,
+                                  final boolean iconOnly,
+                                  final String iconFilename ) {
         // Get the button icon from JAR-resident resources and apply it.
-        final ImageView icon = ImageUtilities.createIcon(iconFilename);
-        applyIcon(labeled, iconOnly, icon);
+        final ImageView icon = ImageUtilities.createIcon( iconFilename );
+        applyIcon( labeled, iconOnly, icon );
     }
 
     /**
      * Applies an icon to a supplied {@link Labeled} container, using a
      * resource filename to load the icon into an {@link ImageView}.
      *
-     * @param labeled      The {@link Labeled} container for the supplied icon
-     * @param iconOnly     {@code true} if the {@link Labeled} container is to
-     *                     contain only the icon and no text; {@code false} otherwise
-     * @param iconFilename The resource filename for the icon
-     * @param fitWidth     The desired resulting width of the loaded icon
-     * @param fitHeight    The desired resulting height of the loaded icon
+     * @param labeled
+     *            The {@link Labeled} container for the supplied icon
+     * @param iconOnly
+     *            {@code true} if the {@link Labeled} container is to
+     *            contain only the icon and no text; {@code false} otherwise
+     * @param iconFilename
+     *            The resource filename for the icon
+     * @param fitWidth
+     *            The desired resulting width of the loaded icon
+     * @param fitHeight
+     *            The desired resulting height of the loaded icon
      */
-    public static void applyIcon(final Labeled labeled,
-                                 final boolean iconOnly,
-                                 final String iconFilename,
-                                 final double fitWidth,
-                                 final double fitHeight) {
+    public static void applyIcon( final Labeled labeled,
+                                  final boolean iconOnly,
+                                  final String iconFilename,
+                                  final double fitWidth,
+                                  final double fitHeight ) {
         // Get the button icon from JAR-resident resources and apply it.
-        final ImageView icon = ImageUtilities.createIcon(iconFilename, fitWidth, fitHeight);
-        applyIcon(labeled, iconOnly, icon);
+        final ImageView icon = ImageUtilities.createIcon( iconFilename, fitWidth, fitHeight );
+        applyIcon( labeled, iconOnly, icon );
     }
 
-   /**
+    /**
      * Apply drop-shadow effects when the mouse enters the specified
      * {@link Node}
      *
@@ -778,9 +735,9 @@ public final class FxGuiUtilities {
      */
     public static Paint randomColor() {
         Random random = new Random();
-        int r = random.nextInt(255 );
-        int g = random.nextInt(255 );
-        int b = random.nextInt(255 );
+        int r = random.nextInt( 255 );
+        int g = random.nextInt( 255 );
+        int b = random.nextInt( 255 );
 
         return Color.rgb( r, g, b );
     }
@@ -790,10 +747,7 @@ public final class FxGuiUtilities {
                                                    final Region region ) {
         final Insets insets = region.getInsets();
 
-        return detectResizeTarget(
-                mouseEvent,
-                scene,
-                insets );
+        return detectResizeTarget( mouseEvent, scene, insets );
     }
 
     public static ResizeTarget detectResizeTarget( final MouseEvent mouseEvent,
@@ -801,11 +755,7 @@ public final class FxGuiUtilities {
                                                    final Insets insets ) {
         final double borderWidth = 8d;
 
-        return detectResizeTarget(
-                mouseEvent,
-                scene,
-                insets,
-                borderWidth );
+        return detectResizeTarget( mouseEvent, scene, insets, borderWidth );
     }
 
     public static ResizeTarget detectResizeTarget( final MouseEvent mouseEvent,
@@ -817,13 +767,12 @@ public final class FxGuiUtilities {
         final double resizeMarginBottom = Math.max( borderWidth, 0.5d * insets.getBottom() );
         final double resizeMarginRight = Math.max( borderWidth, 0.5d * insets.getRight() );
 
-        return detectResizeTarget(
-                mouseEvent,
-                scene,
-                resizeMarginTop,
-                resizeMarginRight,
-                resizeMarginBottom,
-                resizeMarginLeft );
+        return detectResizeTarget( mouseEvent,
+                                   scene,
+                                   resizeMarginTop,
+                                   resizeMarginRight,
+                                   resizeMarginBottom,
+                                   resizeMarginLeft );
     }
 
     public static ResizeTarget detectResizeTarget( final MouseEvent mouseEvent,
@@ -837,15 +786,14 @@ public final class FxGuiUtilities {
         final double yMax = scene.getHeight() - yMin;
         final double xMax = scene.getWidth() - xMin;
 
-        return ResizeTarget.detectResizeTarget(
-                yMin,
-                xMin,
-                yMax,
-                xMax,
-                resizeMarginTop,
-                resizeMarginRight,
-                resizeMarginBottom,
-                resizeMarginLeft );
+        return ResizeTarget.detectResizeTarget( yMin,
+                                                xMin,
+                                                yMax,
+                                                xMax,
+                                                resizeMarginTop,
+                                                resizeMarginRight,
+                                                resizeMarginBottom,
+                                                resizeMarginLeft );
     }
 
     public static ResizeTarget detectResizeTarget( final MouseEvent mouseEvent,
@@ -867,39 +815,38 @@ public final class FxGuiUtilities {
         final double resizeMarginBottom = Math.max( borderWidth, 0.5d * insets.getBottom() );
         final double resizeMarginRight = Math.max( borderWidth, 0.5d * insets.getRight() );
 
-        return ResizeTarget.detectResizeTarget(
-                diffMinY,
-                diffMinX,
-                diffMaxY,
-                diffMaxX,
-                resizeMarginTop,
-                resizeMarginRight,
-                resizeMarginBottom,
-                resizeMarginLeft );
+        return ResizeTarget.detectResizeTarget( diffMinY,
+                                                diffMinX,
+                                                diffMaxY,
+                                                diffMaxX,
+                                                resizeMarginTop,
+                                                resizeMarginRight,
+                                                resizeMarginBottom,
+                                                resizeMarginLeft );
     }
 
     public static Cursor getCursorForResizeTarget( final ResizeTarget resizeTarget ) {
         switch ( resizeTarget ) {
-            case NONE:
-                return Cursor.DEFAULT;
-            case TOP:
-                return Cursor.N_RESIZE;
-            case TOP_RIGHT:
-                return Cursor.NE_RESIZE;
-            case RIGHT:
-                return Cursor.E_RESIZE;
-            case BOTTOM_RIGHT:
-                return Cursor.SE_RESIZE;
-            case BOTTOM:
-                return Cursor.S_RESIZE;
-            case BOTTOM_LEFT:
-                return Cursor.SW_RESIZE;
-            case LEFT:
-                return Cursor.W_RESIZE;
-            case TOP_LEFT:
-                return Cursor.NW_RESIZE;
-            default:
-                break;
+        case NONE:
+            return Cursor.DEFAULT;
+        case TOP:
+            return Cursor.N_RESIZE;
+        case TOP_RIGHT:
+            return Cursor.NE_RESIZE;
+        case RIGHT:
+            return Cursor.E_RESIZE;
+        case BOTTOM_RIGHT:
+            return Cursor.SE_RESIZE;
+        case BOTTOM:
+            return Cursor.S_RESIZE;
+        case BOTTOM_LEFT:
+            return Cursor.SW_RESIZE;
+        case LEFT:
+            return Cursor.W_RESIZE;
+        case TOP_LEFT:
+            return Cursor.NW_RESIZE;
+        default:
+            break;
         }
 
         return Cursor.DEFAULT;
@@ -920,61 +867,63 @@ public final class FxGuiUtilities {
 
     }
 
-    public static double getClampedWidth(final Stage stage,
-                                         final double resizeWidthCandidate ) {
+    public static double getClampedWidth( final Stage stage, final double resizeWidthCandidate ) {
         final Screen activeScreen = findActiveScreen( stage );
         final Rectangle2D screenBounds = activeScreen.getVisualBounds();
 
         return getClampedWidth( stage, resizeWidthCandidate, screenBounds );
     }
 
-    public static double getClampedWidth(final Stage stage,
-                                         final double resizeWidthCandidate,
-                                         final Rectangle2D bounds ) {
+    public static double getClampedWidth( final Stage stage,
+                                          final double resizeWidthCandidate,
+                                          final Rectangle2D bounds ) {
         final double allowedWidth = bounds.getWidth();
 
         return getClampedWidth( stage, resizeWidthCandidate, allowedWidth );
     }
 
-    public static double getClampedWidth(final Stage stage,
-                                         final double resizeWidthCandidate,
-                                         final double allowedWidth ) {
+    public static double getClampedWidth( final Stage stage,
+                                          final double resizeWidthCandidate,
+                                          final double allowedWidth ) {
         return ( resizeWidthCandidate > stage.getMaxWidth() )
-                ? stage.getMaxWidth() : ( resizeWidthCandidate < stage.getMinWidth() )
-                ? stage.getMinWidth() : Math.min( resizeWidthCandidate, allowedWidth );
+            ? stage.getMaxWidth()
+            : ( resizeWidthCandidate < stage.getMinWidth() )
+                ? stage.getMinWidth()
+                : Math.min( resizeWidthCandidate, allowedWidth );
     }
 
-    public static double getClampedHeight(final Stage stage,
-                                          final double resizeHeightCandidate ) {
+    public static double getClampedHeight( final Stage stage, final double resizeHeightCandidate ) {
         final Screen activeScreen = findActiveScreen( stage );
         final Rectangle2D screenBounds = activeScreen.getVisualBounds();
 
         return getClampedHeight( stage, resizeHeightCandidate, screenBounds );
     }
 
-    public static double getClampedHeight(final Stage stage,
-                                          final double resizeHeightCandidate,
-                                          final Rectangle2D bounds ) {
+    public static double getClampedHeight( final Stage stage,
+                                           final double resizeHeightCandidate,
+                                           final Rectangle2D bounds ) {
         final double allowedHeight = bounds.getHeight();
         return getClampedHeight( stage, resizeHeightCandidate, allowedHeight );
     }
 
-    public static double getClampedHeight(final Stage stage,
-                                          final double resizeHeightCandidate,
-                                          final double allowedHeight ) {
+    public static double getClampedHeight( final Stage stage,
+                                           final double resizeHeightCandidate,
+                                           final double allowedHeight ) {
         return ( resizeHeightCandidate > stage.getMaxHeight() )
-                ? stage.getMaxHeight() : ( resizeHeightCandidate < stage.getMinHeight() )
-                ? stage.getMinHeight() : Math.min( resizeHeightCandidate, allowedHeight );
+            ? stage.getMaxHeight()
+            : ( resizeHeightCandidate < stage.getMinHeight() )
+                ? stage.getMinHeight()
+                : Math.min( resizeHeightCandidate, allowedHeight );
     }
 
-    public static Screen findActiveScreen(final Window window ) {
+    public static Screen findActiveScreen( final Window window ) {
         final double minX = window.getX();
         final double minY = window.getY();
         final double width = window.getWidth();
         final double height = window.getHeight();
         final Rectangle2D bounds = new Rectangle2D( minX, minY, width, height );
 
-        final List<Screen> screens = Screen.getScreens();
+        final List< Screen > screens = Screen.getScreens();
 
         for ( final Screen screen : screens ) {
             final Rectangle2D screenRect = screen.getVisualBounds();
@@ -1014,15 +963,10 @@ public final class FxGuiUtilities {
     // As with some other methods here, this one actually comes from
     // FxGuiToolkit's ColorUtilities class, which we use very little of.
     public static String colorToRgba( final Color color ) {
-        return "rgba("
-                + String.valueOf( Math.floor( color.getRed() * 255d ) )
-                + ", "
-                + String.valueOf( Math.floor( color.getGreen() * 255d ) )
-                + ", "
-                + String.valueOf( Math.floor( color.getBlue() * 255d ) )
-                + ", "
-                + String.valueOf( color.getOpacity() )
-                + ")";
+        return "rgba(" + String.valueOf( Math.floor( color.getRed() * 255d ) ) + ", "
+                + String.valueOf( Math.floor( color.getGreen() * 255d ) ) + ", "
+                + String.valueOf( Math.floor( color.getBlue() * 255d ) ) + ", "
+                + String.valueOf( color.getOpacity() ) + ")";
     }
 
     // Never speak of this code... ever again!
@@ -1032,8 +976,7 @@ public final class FxGuiUtilities {
     }
 
     // Never speak of this code... ever again!
-    public static void resizeTextAreaHeight( final TextArea textArea,
-                                             final double totalWidth ) {
+    public static void resizeTextAreaHeight( final TextArea textArea, final double totalWidth ) {
         final String text = textArea.getText();
 
         final Label l = new Label( text );
@@ -1079,20 +1022,18 @@ public final class FxGuiUtilities {
             final Color white0 = Color.web( "white", 0d );
 
             final Stop[] dividerStops = new Stop[] {
-                    new Stop( 0d, Color.WHITE ),
-                    new Stop( 0.5d, white0 ),
-                    new Stop( 1d, white0 )
-            };
+                                                     new Stop( 0d, Color.WHITE ),
+                                                     new Stop( 0.5d, white0 ),
+                                                     new Stop( 1d, white0 ) };
 
-            RadialGradient dividerGradient = new RadialGradient(
-                    0d,
-                    0d,
-                    x,
-                    y,
-                    newValue.getWidth(),
-                    false,
-                    CycleMethod.NO_CYCLE,
-                    dividerStops );
+            RadialGradient dividerGradient = new RadialGradient( 0d,
+                                                                 0d,
+                                                                 x,
+                                                                 y,
+                                                                 newValue.getWidth(),
+                                                                 false,
+                                                                 CycleMethod.NO_CYCLE,
+                                                                 dividerStops );
 
             region.setBackground( LayoutFactory.makeRegionBackground( dividerGradient ) );
         } );
@@ -1136,8 +1077,11 @@ public final class FxGuiUtilities {
 
     /**
      * @param spinner
+     *            The spinner to apply attributes to
      * @param tooltipText
+     *            The tool tip text to use for the spinner
      * @param maximumSpinnerWidth
+     *            Maximum spinner width in pixels
      */
     public static void applyNumberSpinnerAttributes( final Spinner< ? extends Number > spinner,
                                                      final String tooltipText,
@@ -1172,7 +1116,10 @@ public final class FxGuiUtilities {
 
     /**
      * @param labeled
+     *            The Labeled component that needs an icon in a tool bar context
      * @param icon
+     *            The icon to apply to the Labeled component in a tool bar
+     *            context
      */
     public static void applyToolbarIcon( final Labeled labeled, final Node icon ) {
         try {
@@ -1195,7 +1142,10 @@ public final class FxGuiUtilities {
 
     /**
      * @param labeled
+     *            The Labeled component that needs an icon in a tool bar context
      * @param iconFilename
+     *            The file name of the icon to apply to the Labeled component in
+     *            a tool bar context
      */
     public static void applyToolbarIcon( final Labeled labeled, final String iconFilename ) {
         // Get the button icon from JAR-resident resources and apply it.
@@ -1341,8 +1291,10 @@ public final class FxGuiUtilities {
 
     /**
      * @param label
+     *            The label to apply to the Check Box
      * @param selected
-     * @return
+     *            The initial selected status of the Check Box
+     * @return The newly constructed Check Box
      */
     public static CheckBox getCheckBox( final String label, final boolean selected ) {
         final CheckBox checkBox = new CheckBox( label );
@@ -1356,7 +1308,8 @@ public final class FxGuiUtilities {
 
     /**
      * @param labelText
-     * @return
+     *            The text to use for a Column Header
+     * @return The Label to use for a Column Header
      */
     @SuppressWarnings("nls")
     public static Label getColumnHeader( final String labelText ) {
@@ -1371,7 +1324,8 @@ public final class FxGuiUtilities {
 
     /**
      * @param labelText
-     * @return
+     *            The text to use for a Control label
+     * @return The Label to use for a Control
      */
     @SuppressWarnings("nls")
     public static Label getControlLabel( final String labelText ) {
@@ -1421,7 +1375,8 @@ public final class FxGuiUtilities {
 
     /**
      * @param iconContext
-     * @return
+     *            The icon type to use as context for the inset dimension
+     * @return The inset dimension to use for the supplied icon type
      */
     public static int getIconInset( final IconContext iconContext ) {
         switch ( iconContext ) {
@@ -1440,7 +1395,8 @@ public final class FxGuiUtilities {
 
     /**
      * @param iconContext
-     * @return
+     *            The icon type to use as context for the icon size
+     * @return The icon size to use for the supplied icon type
      */
     public static int getIconSize( final IconContext iconContext ) {
         switch ( iconContext ) {
@@ -1624,8 +1580,11 @@ public final class FxGuiUtilities {
 
     /**
      * @param labelText
+     *            The text to use for the Choice Box label
      * @param choiceBox
-     * @return
+     *            The Choice Box to apply the label to
+     * @return An {@link HBox} layout pane container for the Choice Box with its
+     *         Label
      */
     public static HBox getLabeledChoiceBoxPane( final String labelText,
                                                 final ChoiceBox< ? > choiceBox ) {
@@ -1645,8 +1604,11 @@ public final class FxGuiUtilities {
 
     /**
      * @param labelText
+     *            The text to use for the Combo Box label
      * @param comboBox
-     * @return
+     *            The Combo Box to apply the label to
+     * @return An {@link HBox} layout pane container for the Combo Box with its
+     *         Label
      */
     public static HBox getLabeledComboBoxPane( final String labelText,
                                                final ComboBox< ? > comboBox ) {
@@ -1666,8 +1628,11 @@ public final class FxGuiUtilities {
 
     /**
      * @param labelLabel
+     *            The Label to use for a labeled Label
      * @param label
-     * @return
+     *            The Label to which to apply the supplied Label
+     * @return An {@link HBox} layout pane container for the Label with its
+     *         Label
      */
     public static HBox getLabeledLabelPane( final Label labelLabel, final Label label ) {
         final HBox labeledLabelPane = new HBox();
@@ -1685,8 +1650,11 @@ public final class FxGuiUtilities {
 
     /**
      * @param labelText
+     *            The text to use for a labeled Label
      * @param label
-     * @return
+     *            The Label to which to apply the supplied text
+     * @return An {@link HBox} layout pane container for the Label with its
+     *         Label
      */
     public static HBox getLabeledLabelPane( final String labelText, final Label label ) {
         final Label labelLabel = getControlLabel( labelText );
@@ -1706,8 +1674,11 @@ public final class FxGuiUtilities {
 
     /**
      * @param labelText
+     *            The text to use for a labeled Spinner
      * @param spinner
-     * @return
+     *            The Spinner to which to apply the supplied text
+     * @return An {@link HBox} layout pane container for the Spinner with its
+     *         Label
      */
     public static HBox getLabeledSpinnerPane( final String labelText, final Spinner< ? > spinner ) {
         final Label labelLabel = getControlLabel( labelText );
@@ -1724,8 +1695,11 @@ public final class FxGuiUtilities {
 
     /**
      * @param labelText
+     *            The text to use for a labeled Text Field
      * @param textField
-     * @return
+     *            The Text Field to which to apply the supplied text
+     * @return An {@link HBox} layout pane container for the Text Field with its
+     *         Label
      */
     public static HBox getLabeledTextFieldPane( final String labelText,
                                                 final TextField textField ) {
@@ -1872,8 +1846,8 @@ public final class FxGuiUtilities {
      * styled for application consistency of Look-and-Feel. It automatically
      * applies the CSS Style ID.
      *
-     * @return A Label that meets the Meyer Sound style guidelines set forth by
-     *         Compass software for display-only status and values
+     * @return A Label that meets the style guidelines set forth by this library
+     *         for display-only status and values
      */
     public static Label getStatusLabel() {
         // Get a status Label with the custom CSS Style ID applied.
@@ -1888,13 +1862,13 @@ public final class FxGuiUtilities {
      * option of skipping the CSS styling, as some contexts are too complex to
      * just have one setting. It assumes an initially empty text label.
      *
-     * @param applyStyleId
+     * @param applyCssStyleId
      *            Flag for whether or not to apply the CSS Style ID
      * @param applyPadding
      *            Flag for whether or not to apply left and right side padding
      *
-     * @return A Label that meets the Meyer Sound style guidelines set forth by
-     *         Compass software for display-only status and values
+     * @return A Label that meets the style guidelines set forth by this library
+     *         for display-only status and values
      */
     public static Label getStatusLabel( final boolean applyCssStyleId,
                                         final boolean applyPadding ) {
@@ -1912,8 +1886,8 @@ public final class FxGuiUtilities {
      * @param labelText
      *            The text to apply to the Label
      *
-     * @return A Label that meets the Meyer Sound style guidelines set forth by
-     *         Compass software for display-only status and values
+     * @return A Label that meets the style guidelines set forth by this library
+     *         for display-only status and values
      */
     public static Label getStatusLabel( final String labelText ) {
         // Get a status Label without the custom CSS Style ID applied.
@@ -1930,7 +1904,7 @@ public final class FxGuiUtilities {
      *
      * @param labelText
      *            The text to apply to the Label
-     * @param applyStyleId
+     * @param applyCssStyleId
      *            Flag for whether or not to apply the CSS Style ID
      * @param applyPadding
      *            Flag for whether or not to apply left and right side padding

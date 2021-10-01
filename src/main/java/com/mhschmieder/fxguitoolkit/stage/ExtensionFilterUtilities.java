@@ -40,7 +40,8 @@ import javafx.stage.FileChooser.ExtensionFilter;
  * {@code ExtensionFilterUtilities} is a static utilities class for generating
  * file extension filters that can be used by a JavaFX File Chooser.
  * <p>
- * :NOTE: This code is copied from GraphicsToolkit on GitHub until it is published
+ * :NOTE: This code is copied from GraphicsToolkit on GitHub until it is
+ * published
  * to Maven Central from where it can be pulled via Gradle.
  */
 public final class ExtensionFilterUtilities {
@@ -48,8 +49,7 @@ public final class ExtensionFilterUtilities {
     /**
      * The default constructor is disabled, as this is a static utilities class.
      */
-    private ExtensionFilterUtilities() {
-    }
+    private ExtensionFilterUtilities() {}
 
     public static ExtensionFilter getExtensionFilter( final String description,
                                                       final String extension ) {
@@ -163,14 +163,15 @@ public final class ExtensionFilterUtilities {
     public static List< ExtensionFilter > getRasterImageExtensionFilters() {
         final Vector< ExtensionFilter > extensionFilterAdditions = new Vector<>();
 
-        extensionFilterAdditions.add( new ExtensionFilter( FileExtensions.RASTER_IMAGE_DESCRIPTION,
-                FileExtensions.RASTER_IMAGE_EXTENSIONS ) );
+        extensionFilterAdditions
+                .add( new ExtensionFilter( FileExtensions.RASTER_IMAGE_DESCRIPTION,
+                                           FileExtensions.RASTER_IMAGE_EXTENSIONS ) );
         extensionFilterAdditions.add( new ExtensionFilter( FileExtensions.PNG_DESCRIPTION,
-                FileExtensions.PNG_EXTENSIONS ) );
+                                                           FileExtensions.PNG_EXTENSIONS ) );
         extensionFilterAdditions.add( new ExtensionFilter( FileExtensions.GIF_DESCRIPTION,
-                FileExtensions.GIF_EXTENSIONS ) );
+                                                           FileExtensions.GIF_EXTENSIONS ) );
         extensionFilterAdditions.add( new ExtensionFilter( FileExtensions.JPEG_DESCRIPTION,
-                FileExtensions.JPEG_EXTENSIONS ) );
+                                                           FileExtensions.JPEG_EXTENSIONS ) );
 
         return extensionFilterAdditions;
     }

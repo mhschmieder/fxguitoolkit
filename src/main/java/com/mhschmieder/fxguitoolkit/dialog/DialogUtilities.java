@@ -100,7 +100,8 @@ public final class DialogUtilities {
      * @return A @Background object targeted to setBackground()
      */
     public static Background makeDialogBackground( final Insets insets ) {
-        final Background background = LayoutFactory.makeRegionBackground( WINDOW_BACKGROUND_COLOR, insets );
+        final Background background = LayoutFactory.makeRegionBackground( WINDOW_BACKGROUND_COLOR,
+                                                                          insets );
 
         return background;
     }
@@ -113,8 +114,8 @@ public final class DialogUtilities {
      * @param masthead
      *            if not null, passed into {@link Alert#setHeaderText(String)}
      * @param title
-     *            passed into {@link Alert#setTitle(String)
-     * @return the response from {@link Alert#showAndWait()}
+     *            passed into {@link Alert#setTitle(String)}
+     * @return The response from {@link Alert#showAndWait()}
      */
     private static final Optional< ButtonType > showAlertDialog( final Alert alert,
                                                                  final String masthead,
@@ -234,6 +235,7 @@ public final class DialogUtilities {
      * Blocks while showing an error message.
      *
      * @param message
+     *            The message to display for File Open error alerts
      */
     public static final void showFileOpenErrorAlert( final String message ) {
         final String masthead = MessageFactory.getFileNotOpenedMasthead();
@@ -257,6 +259,7 @@ public final class DialogUtilities {
      * Blocks while showing an error message.
      *
      * @param message
+     *            The message to display for File Read error alerts
      */
     public static final void showFileReadErrorAlert( final String message ) {
         final String title = MessageFactory.getFileReadErrorTitle();
@@ -279,6 +282,7 @@ public final class DialogUtilities {
      * Blocks while showing an error message.
      *
      * @param message
+     *            The message to display for File Save error alerts
      */
     public static final void showFileSaveErrorAlert( final String message ) {
         final String masthead = MessageFactory.getFileNotSavedMasthead();
@@ -290,6 +294,7 @@ public final class DialogUtilities {
      * Blocks while showing an error message.
      *
      * @param message
+     *            The message to display for File Save warning alerts
      */
     public static final void showFileSaveWarningAlert( final String message ) {
         final String masthead = MessageFactory.getFilePartiallySavedMasthead();
@@ -331,6 +336,7 @@ public final class DialogUtilities {
      * Blocks while showing an error message.
      *
      * @param message
+     *            The message to display in the alert
      * @param masthead
      *            header text
      * @param title

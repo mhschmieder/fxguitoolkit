@@ -54,8 +54,8 @@ public class SceneGraphUtilities {
 
         // Composite the button name from the group and item names.
         final String buttonName = ( ( itemName == null ) || itemName.trim().isEmpty() )
-                ? groupName
-                : groupName + "." + itemName;
+            ? groupName
+            : groupName + "." + itemName;
 
         // Generate the resource lookup key for the Button Tool Tip.
         final String resourceKey = buttonName + ".toolTip";
@@ -82,18 +82,20 @@ public class SceneGraphUtilities {
                                                  final String groupName,
                                                  final String itemName,
                                                  final boolean replaceMnemonic ) {
-        final ResourceBundle resourceBundle = ResourceUtilities.getResourceBundle( sessionContext,
-                bundleName );
+        final ResourceBundle resourceBundle = ResourceUtilities
+                .getResourceBundle( sessionContext, bundleName, true );
 
         // Get the control label from the resource bundle, if applicable.
-        final String buttonLabel = FxGuiUtilities.getButtonLabel( groupName, itemName, resourceBundle );
+        final String buttonLabel = FxGuiUtilities
+                .getButtonLabel( groupName, itemName, resourceBundle );
         if ( buttonLabel.trim().isEmpty() ) {
             return null;
         }
 
         // Conditionally strip the mnemonic marker from the label, or
         // replace the Swing mnemonic marker with the JavaFX version.
-        final String buttonText = FxGuiUtilities.handleMnemonicMarker( buttonLabel, replaceMnemonic );
+        final String buttonText =
+                                FxGuiUtilities.handleMnemonicMarker( buttonLabel, replaceMnemonic );
         if ( ( buttonText == null ) || buttonText.trim().isEmpty() ) {
             return null;
         }

@@ -105,13 +105,13 @@ public final class LayoutFactory {
      *
      * @param fill
      *            The desired background {@link Paint} for the {@code Region}
-     * @param radii The corner radii for the {@code Region}
+     * @param radii
+     *            The corner radii for the {@code Region}
      *            The {@link Insets} to use for the background
      * @return A {@link Background} object designed to be passed to
      *         {@code Region.setBackground()}
      */
-    public static Background makeRegionBackground( final Paint fill,
-                                                   final CornerRadii radii ) {
+    public static Background makeRegionBackground( final Paint fill, final CornerRadii radii ) {
         final BackgroundFill backgroundFill = new BackgroundFill( fill, radii, Insets.EMPTY );
 
         return new Background( backgroundFill );
@@ -132,8 +132,7 @@ public final class LayoutFactory {
      * @return A {@link Background} object designed to be passed to
      *         {@code Region.setBackground()}
      */
-    public static Background makeRegionBackground( final Paint fill,
-                                                   final Insets insets ) {
+    public static Background makeRegionBackground( final Paint fill, final Insets insets ) {
         return makeRegionBackground( fill, CornerRadii.EMPTY, insets );
     }
 
@@ -147,7 +146,8 @@ public final class LayoutFactory {
      *
      * @param fill
      *            The desired background {@link Paint} for the {@code Region}
-     * @param radii The corner radii for the {@code Region}
+     * @param radii
+     *            The corner radii for the {@code Region}
      * @param insets
      *            The {@link Insets} to use for the background
      * @return A {@link Background} object designed to be passed to
@@ -166,8 +166,10 @@ public final class LayoutFactory {
      * to {@code Region.setBackground()}
      * <p>
      * This method is designed to produce a consistent linear gradient style for
-     * use on all {@code Region} derived nodes, using a supplied background color,
-     * gradient color, and no corner radii or insets (for a flush fill against the
+     * use on all {@code Region} derived nodes, using a supplied background
+     * color,
+     * gradient color, and no corner radii or insets (for a flush fill against
+     * the
      * parent).
      * <p>
      * :NOTE: Even if this is applied after setting a CSS style using Java calls
@@ -183,11 +185,15 @@ public final class LayoutFactory {
      */
     public static Background makeRegionBackground( final Color backColor,
                                                    final Color gradientColor ) {
-        final Stop[]  stops = new Stop[] {
-                new Stop (0d, backColor),
-                new Stop(1d, gradientColor) } ;
-        final LinearGradient gradient = new LinearGradient(
-                0d, 0d, 0d, 1d, true, CycleMethod.NO_CYCLE, stops );
+        final Stop[] stops =
+                           new Stop[] { new Stop( 0d, backColor ), new Stop( 1d, gradientColor ) };
+        final LinearGradient gradient = new LinearGradient( 0d,
+                                                            0d,
+                                                            0d,
+                                                            1d,
+                                                            true,
+                                                            CycleMethod.NO_CYCLE,
+                                                            stops );
 
         return makeRegionBackground( gradient );
     }
@@ -197,8 +203,10 @@ public final class LayoutFactory {
      * to {@code Region.setBackground()}
      * <p>
      * This method is designed to produce a consistent linear gradient style for
-     * use on all {@code Region} derived nodes, using a supplied background color,
-     * gradient color, and no corner radii or insets (for a flush fill against the
+     * use on all {@code Region} derived nodes, using a supplied background
+     * color,
+     * gradient color, and no corner radii or insets (for a flush fill against
+     * the
      * parent).
      * <p>
      * :NOTE: Even if this is applied after setting a CSS style using Java calls
@@ -209,7 +217,8 @@ public final class LayoutFactory {
      *            The desired background {@link Color} for the {@code Region}
      * @param gradientColor
      *            The desired gradient {@link Color} for the {@code Region}
-     * @param radii The corner radii for the {@code Region}
+     * @param radii
+     *            The corner radii for the {@code Region}
      * @param insets
      *            The {@link Insets} to use for the background
      * @return A linear gradient {@link Background} object designed to be passed
@@ -219,11 +228,15 @@ public final class LayoutFactory {
                                                    final Color gradientColor,
                                                    final CornerRadii radii,
                                                    final Insets insets ) {
-        final Stop[]  stops = new Stop[] {
-                new Stop (0d, backColor),
-                new Stop(1d, gradientColor) } ;
-        final LinearGradient gradient = new LinearGradient(
-                0d, 0d, 0d, 1d, true, CycleMethod.NO_CYCLE, stops );
+        final Stop[] stops =
+                           new Stop[] { new Stop( 0d, backColor ), new Stop( 1d, gradientColor ) };
+        final LinearGradient gradient = new LinearGradient( 0d,
+                                                            0d,
+                                                            0d,
+                                                            1d,
+                                                            true,
+                                                            CycleMethod.NO_CYCLE,
+                                                            stops );
 
         return makeRegionBackground( gradient, radii, insets );
     }

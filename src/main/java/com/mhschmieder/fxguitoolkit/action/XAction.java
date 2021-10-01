@@ -48,7 +48,7 @@ public class XAction extends Action {
     private final ActionVerb actionVerb;
 
     // Keep track of whether we want disabled actions to be hidden or not.
-    private boolean hideIfDisabled;
+    private boolean          hideIfDisabled;
 
     public XAction() {
         this( ActionVerb.defaultValue() );

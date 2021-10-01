@@ -84,13 +84,14 @@ public class HoveredThresholdNode extends StackPane {
     }
 
     /**
+     * Default constructor.
+     * 
      * @param colorTag
      *            The CSS color tag lookup name associated with the data series.
      * @param d
      *            The previous data value, used for comparisons with current.
      * @param y
      *            The current data value, used for comparisons with previous.
-     * @return An instance of this class, fully initialized.
      */
     public HoveredThresholdNode( final String colorTag, final double d, final double y ) {
         setPrefSize( 15, 15 );

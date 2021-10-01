@@ -34,18 +34,11 @@ package com.mhschmieder.fxguitoolkit;
  * {@code ResizeTarget} enumerates the full set of possible targets for resizing
  * a window or other component, including "none" for when there is no resizing
  * target (such as when moving instead). This terminology is more appropriate to
- * the context than the commonly used terms "Resize Mode" and "Resize Direction".
+ * the context than the commonly used terms "Resize Mode" and "Resize
+ * Direction".
  */
 public enum ResizeTarget {
-    NONE,
-    TOP,
-    TOP_LEFT,
-    LEFT,
-    BOTTOM_LEFT,
-    BOTTOM,
-    BOTTOM_RIGHT,
-    RIGHT,
-    TOP_RIGHT;
+    NONE, TOP, TOP_LEFT, LEFT, BOTTOM_LEFT, BOTTOM, BOTTOM_RIGHT, RIGHT, TOP_RIGHT;
 
     public static ResizeTarget detectResizeTarget( final double yMin,
                                                    final double xMin,
@@ -67,15 +60,19 @@ public enum ResizeTarget {
 
         // Prioritize the four corner cases so we can then drop down
         // confidently to the simpler single-side cases.
-        final ResizeTarget resizeTarget = isTopLeftCornerResize ? TOP_LEFT
-                : isBottomLeftCornerResize ? BOTTOM_LEFT
-                : isBottomRightCornerResize ? BOTTOM_RIGHT
-                : isTopRightCornerResize ? TOP_RIGHT
-                : isTopSideResize ? TOP
-                : isLeftSideResize ? LEFT
-                : isBottomSideResize ? BOTTOM
-                : isRightSideResize ? RIGHT
-                : NONE;
+        final ResizeTarget resizeTarget = isTopLeftCornerResize
+            ? TOP_LEFT
+            : isBottomLeftCornerResize
+                ? BOTTOM_LEFT
+                : isBottomRightCornerResize
+                    ? BOTTOM_RIGHT
+                    : isTopRightCornerResize
+                        ? TOP_RIGHT
+                        : isTopSideResize
+                            ? TOP
+                            : isLeftSideResize
+                                ? LEFT
+                                : isBottomSideResize ? BOTTOM : isRightSideResize ? RIGHT : NONE;
 
         return resizeTarget;
     }

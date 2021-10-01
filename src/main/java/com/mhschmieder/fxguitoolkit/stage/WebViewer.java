@@ -56,9 +56,9 @@ public class WebViewer extends Stage {
 
         try {
             initStage( jarRelativeIconFilename,
-                    jarRelativeHtmlFilename,
-                    preferredWidth,
-                    preferredHeight );
+                       jarRelativeHtmlFilename,
+                       preferredWidth,
+                       preferredHeight );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -70,7 +70,8 @@ public class WebViewer extends Stage {
                                     final double defaultWidth,
                                     final double defaultHeight ) {
         // First have the superclass initialize its content.
-        // initStage( jarRelativeIconFilename, defaultWidth, defaultHeight, false );
+        // initStage( jarRelativeIconFilename, defaultWidth, defaultHeight,
+        // false );
 
         final Parent contentPane = loadContent();
 

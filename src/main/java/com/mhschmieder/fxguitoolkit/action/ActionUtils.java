@@ -115,7 +115,7 @@ public final class ActionUtils {
     public static final class ButtonPropertiesMapChangeListener< T extends ButtonBase >
             implements MapChangeListener< Object, Object > {
         private final WeakReference< T > _buttonWeakReference;
-        private final Action _action;
+        private final Action             _action;
 
         public ButtonPropertiesMapChangeListener( final T pButton, final Action pAction ) {
             _buttonWeakReference = new WeakReference<>( pButton );
@@ -132,7 +132,7 @@ public final class ActionUtils {
             }
 
             final ButtonPropertiesMapChangeListener< ? > otherListener =
-                    ( ButtonPropertiesMapChangeListener< ? > ) otherObject;
+                                                                       ( ButtonPropertiesMapChangeListener< ? > ) otherObject;
 
             final T button = _buttonWeakReference.get();
             final ButtonBase otherButton = otherListener._buttonWeakReference.get();
@@ -183,13 +183,13 @@ public final class ActionUtils {
             }
 
             final MenuItemPropertiesMapChangeListener< ? > otherListener =
-                    ( MenuItemPropertiesMapChangeListener< ? > ) otherObject;
+                                                                         ( MenuItemPropertiesMapChangeListener< ? > ) otherObject;
 
             final T menuItem = _menuItemWeakReference.get();
             final MenuItem otherMenuItem = otherListener._menuItemWeakReference.get();
             return menuItem != null
-                    ? menuItem.equals( otherMenuItem )
-                    : ( otherMenuItem == null ) && _action.equals( otherListener._action );
+                ? menuItem.equals( otherMenuItem )
+                : ( otherMenuItem == null ) && _action.equals( otherListener._action );
         }
 
         @Override
@@ -221,18 +221,18 @@ public final class ActionUtils {
      * See {@link ActionGroup} for example of action tree creation
      */
     public static Action ACTION_SEPARATOR = new Action( null, null ) {
-        @Override
-        public String toString() {
-            return "Separator";              //$NON-NLS-1$
-        }
-    };
+                                              @Override
+                                              public String toString() {
+                                                  return "Separator";              //$NON-NLS-1$
+                                              }
+                                          };
 
     public static Action ACTION_SPAN      = new Action( null, null ) {
-        @Override
-        public String toString() {
-            return "Span";                   //$NON-NLS-1$
-        }
-    };
+                                              @Override
+                                              public String toString() {
+                                                  return "Span";                   //$NON-NLS-1$
+                                              }
+                                          };
 
     // Carry over action style classes changes to the @Styleable
     //
@@ -253,8 +253,7 @@ public final class ActionUtils {
                 } );
     }
 
-    public static < T extends MenuItem > T configure( final T menuItem,
-                                                      final Action action ) {
+    public static < T extends MenuItem > T configure( final T menuItem, final Action action ) {
         if ( action == null ) {
             throw new NullPointerException( "Action cannot be null" ); //$NON-NLS-1$
         }
@@ -351,9 +350,9 @@ public final class ActionUtils {
         button.tooltipProperty().bind( new ObjectBinding< Tooltip >() {
             private final Tooltip       tooltip     = new Tooltip();
             private final StringBinding textBinding =
-                    new When( action.longTextProperty().isEmpty() )
-                            .then( action.textProperty() )
-                            .otherwise( action.longTextProperty() );
+                                                    new When( action.longTextProperty().isEmpty() )
+                                                            .then( action.textProperty() )
+                                                            .otherwise( action.longTextProperty() );
 
             {
                 bind( textBinding );
@@ -621,8 +620,8 @@ public final class ActionUtils {
     public static MenuItem createMenuItem( final Action action ) {
 
         final MenuItem menuItem = action.getClass().isAnnotationPresent( ActionCheck.class )
-                ? new CheckMenuItem()
-                : new MenuItem();
+            ? new CheckMenuItem()
+            : new MenuItem();
 
         return configure( menuItem, action );
     }

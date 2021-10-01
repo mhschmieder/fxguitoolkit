@@ -48,22 +48,23 @@ public final class FxWindowUtilities {
     /**
      * The default constructor is disabled, as this is a static utilities class.
      */
-    private FxWindowUtilities() {
-    }
+    private FxWindowUtilities() {}
 
     /**
      * If this window is a {@link Stage}, set Full Screen and Maximized Modes.
      *
      * @param window
      *            The window to set Maximized Modes (if a {@link Stage}).
-     * @param fullScreenMode {@code true} if Full Screen Mode should be set;
-     *     {@code false} otherwise
-     * @param maximizedMode {@code true} if Maximized Mode should be set;
-     *     {@code false} otherwise
+     * @param fullScreenMode
+     *            {@code true} if Full Screen Mode should be set;
+     *            {@code false} otherwise
+     * @param maximizedMode
+     *            {@code true} if Maximized Mode should be set;
+     *            {@code false} otherwise
      */
     public static void setWindowMaximizedModes( final Window window,
                                                 final boolean fullScreenMode,
-                                                final boolean maximizedMode) {
+                                                final boolean maximizedMode ) {
         if ( window instanceof Stage ) {
             final Stage stage = ( ( Stage ) window );
 
@@ -104,7 +105,7 @@ public final class FxWindowUtilities {
         final double minX = windowBounds.getMinX();
         final double minY = windowBounds.getMinY();
         final List< Screen > screenList =
-                Screen.getScreensForRectangle( minX, minY, width, height );
+                                        Screen.getScreensForRectangle( minX, minY, width, height );
 
         // If the window is not even partially visible on any of the screens,
         // it is considered completely out of bounds.
@@ -143,7 +144,8 @@ public final class FxWindowUtilities {
             }
         }
 
-        return upperLeftOutOfBounds || upperRightOutOfBounds || lowerLeftOutOfBounds || lowerRightOutOfBounds;
+        return upperLeftOutOfBounds || upperRightOutOfBounds || lowerLeftOutOfBounds
+                || lowerRightOutOfBounds;
     }
 
     /**
@@ -157,11 +159,10 @@ public final class FxWindowUtilities {
      *         available, plugged in, or turned on
      */
     public static boolean isWindowOutOfBounds( final Window window ) {
-        final Rectangle2D windowBounds = new Rectangle2D(
-                window.getX(),
-                window.getY(),
-                window.getWidth(),
-                window.getHeight() );
+        final Rectangle2D windowBounds = new Rectangle2D( window.getX(),
+                                                          window.getY(),
+                                                          window.getWidth(),
+                                                          window.getHeight() );
 
         return FxWindowUtilities.isWindowOutOfBounds( windowBounds );
     }
@@ -175,7 +176,8 @@ public final class FxWindowUtilities {
     /**
      * This method sets the supplied window size as the new window size.
      *
-     * @param window The window to resize
+     * @param window
+     *            The window to resize
      * @param windowSize
      *            The window size to set as current window size
      */
@@ -188,8 +190,7 @@ public final class FxWindowUtilities {
         window.setHeight( windowSize.getHeight() );
     }
 
-    public static Point2D getAdjustedWindowLocation( final double windowX,
-                                                     final double windowY ) {
+    public static Point2D getAdjustedWindowLocation( final double windowX, final double windowY ) {
         // Get the full list of screens that are currently accessible.
         final List< Screen > screenList = Screen.getScreens();
 
@@ -228,11 +229,11 @@ public final class FxWindowUtilities {
         // minimal Frame Title Bar and no Content Pane (due to exceptions or
         // other problems), we enforce minimum dimensions.
         double windowWidthAdjusted = ( windowWidth > minimumWindowSize.getWidth() )
-                ? windowWidth
-                : defaultWindowSize.getWidth();
+            ? windowWidth
+            : defaultWindowSize.getWidth();
         double windowHeightAdjusted = ( windowHeight > minimumWindowSize.getHeight() )
-                ? windowHeight
-                : defaultWindowSize.getHeight();
+            ? windowHeight
+            : defaultWindowSize.getHeight();
 
         // Likewise, as the Screen Size or resolution may have changed since the
         // previous session, we ensure that the Preferred Size can still fit.
@@ -273,12 +274,11 @@ public final class FxWindowUtilities {
         setWindowLocation( window, adjustedWindowLocation );
 
         // Attempt to explicitly set the adjusted preferred window size.
-        final Dimension2D adjustedWindowSize = getAdjustedWindowSize(
-                adjustedWidth,
-                adjustedHeight,
-                preferredWindowSize,
-                minimumWindowSize,
-                maximumWindowSize );
+        final Dimension2D adjustedWindowSize = getAdjustedWindowSize( adjustedWidth,
+                                                                      adjustedHeight,
+                                                                      preferredWindowSize,
+                                                                      minimumWindowSize,
+                                                                      maximumWindowSize );
         exitWindowMaximizedModes( window );
         setWindowSize( window, adjustedWindowSize );
 
@@ -292,7 +292,13 @@ public final class FxWindowUtilities {
      * selected, does it also store the current window size as a preference.
      *
      * @param prefs
-     *            The @Preferences reference for the key/value pairs
+     *            The {@link Preferences} reference for the key/value pairs
+     * @param windowKeyPrefix
+     *            The prefix to use for the window key lookup
+     * @param window
+     *            The Window whose layout should be saved
+     * @param preferredWindowSize
+     *            The preferred size for the supplied Window
      */
     @SuppressWarnings("nls")
     public static void saveWindowLayout( final Preferences prefs,
@@ -314,11 +320,13 @@ public final class FxWindowUtilities {
 
         // Determine whether the user was in Full Screen Mode when they exited.
         final String fullScreenModeKey = windowKeyPrefix + "FullScreenMode";
-        final boolean fullScreenMode = window instanceof Stage && ( ( Stage ) window ).isFullScreen();
+        final boolean fullScreenMode =
+                                     window instanceof Stage && ( ( Stage ) window ).isFullScreen();
         prefs.putBoolean( fullScreenModeKey, fullScreenMode );
 
         // Determine whether the user was in Maximized Mode when they exited.
-        // :TODO: Figure out why maximized is always true for undecorated stages.
+        // :TODO: Figure out why maximized is always true for undecorated
+        // stages.
         final String maximizedModeKey = windowKeyPrefix + "MaximizedMode";
         final boolean maximizedMode = window instanceof Stage && ( ( Stage ) window ).isMaximized();
         prefs.putBoolean( maximizedModeKey, maximizedMode );
@@ -328,16 +336,18 @@ public final class FxWindowUtilities {
         // save the last cached Preferred Size instead, as Full Screen Mode Size
         // and Maximized Mode Size should only be modes and never used directly
         // (the OS knows best how to apply them).
-        // :TODO: Figure out why maximized is always true for undecorated stages.
+        // :TODO: Figure out why maximized is always true for undecorated
+        // stages.
         final String windowWidthKey = windowKeyPrefix + "Width";
         final double windowWidthValue = ( fullScreenMode ) // || maximizedMode )
-                ? preferredWindowSize.getWidth()
-                : window.getWidth();
+            ? preferredWindowSize.getWidth()
+            : window.getWidth();
         prefs.putDouble( windowWidthKey, windowWidthValue );
         final String windowHeightKey = windowKeyPrefix + "Height";
-        final double windowHeightValue = ( fullScreenMode ) // || maximizedMode )
-                ? preferredWindowSize.getHeight()
-                : window.getHeight();
+        final double windowHeightValue = ( fullScreenMode ) // || maximizedMode
+                                                            // )
+            ? preferredWindowSize.getHeight()
+            : window.getHeight();
         prefs.putDouble( windowHeightKey, windowHeightValue );
     }
 
@@ -352,9 +362,19 @@ public final class FxWindowUtilities {
      * application.
      *
      * @param prefs
-     *            The @Preferences reference for the key/value pairs
+     *            The {@link Preferences} reference for the key/value pairs
+     * @param windowKeyPrefix
+     *            The prefix to use for the window key lookup
+     * @param window
+     *            The Window whose layout should be saved
+     * @param defaultWindowSize
+     *            The default size for the supplied Window
+     * @param minimumWindowSize
+     *            The minimum size for the supplied Window
+     * @param maximumWindowSize
+     *            The maximum size for the supplied Window
      * @return The adjusted and bounded window size to use as the new
-     *     preferred size, or {@code null} if overruled by maximized modes
+     *         preferred size, or {@code null} if overruled by maximized modes
      */
     @SuppressWarnings("nls")
     public static Dimension2D restoreWindowLayout( final Preferences prefs,
@@ -376,9 +396,11 @@ public final class FxWindowUtilities {
         final boolean fullScreenMode = prefs.getBoolean( fullScreenModeKey, false );
 
         // Determine whether the user was in Maximized Mode when they exited.
-        // :TODO: Figure out why this flag is always true for undecorated stages.
+        // :TODO: Figure out why this flag is always true for undecorated
+        // stages.
         final String maximizedModeKey = windowKeyPrefix + "MaximizedMode";
-        final boolean maximizedMode = false; // prefs.getBoolean( maximizedModeKey, false );
+        final boolean maximizedMode = false; // prefs.getBoolean(
+                                             // maximizedModeKey, false );
 
         // It is important to exit window maximized modes before setting the
         // restored location and size preferences.
@@ -397,34 +419,32 @@ public final class FxWindowUtilities {
         final double windowXValue = prefs.getDouble( windowXKey, 100d );
         final String windowYKey = windowKeyPrefix + "Y";
         final double windowYValue = prefs.getDouble( windowYKey, 100d );
-        final Point2D adjustedWindowLocation = getAdjustedWindowLocation( windowXValue, windowYValue );
+        final Point2D adjustedWindowLocation = getAdjustedWindowLocation( windowXValue,
+                                                                          windowYValue );
         if ( adjustedWindowLocation != null ) {
             setWindowLocation( window, adjustedWindowLocation );
         }
 
         // Restore the preferred window size from the last session.
         final String windowWidthKey = windowKeyPrefix + "Width";
-        final double windowWidth = prefs.getDouble( windowWidthKey,
-                defaultWindowSize.getWidth() );
+        final double windowWidth = prefs.getDouble( windowWidthKey, defaultWindowSize.getWidth() );
         final String windowHeightKey = windowKeyPrefix + "Height";
-        final double windowHeight = prefs.getDouble( windowHeightKey,
-                defaultWindowSize.getHeight() );
-        final Dimension2D adjustedWindowSize = getAdjustedWindowSize(
-                windowWidth,
-                windowHeight,
-                defaultWindowSize,
-                minimumWindowSize,
-                maximumWindowSize );
+        final double windowHeight =
+                                  prefs.getDouble( windowHeightKey, defaultWindowSize.getHeight() );
+        final Dimension2D adjustedWindowSize = getAdjustedWindowSize( windowWidth,
+                                                                      windowHeight,
+                                                                      defaultWindowSize,
+                                                                      minimumWindowSize,
+                                                                      maximumWindowSize );
 
         // Attempt to explicitly set the adjusted preferred window size.
         setWindowSize( window, adjustedWindowSize );
 
         // If necessary, adjust this adjusted window size to be within bounds.
-        return adjustWindowWithinBounds(
-                window,
-                adjustedWindowSize,
-                minimumWindowSize,
-                maximumWindowSize );
+        return adjustWindowWithinBounds( window,
+                                         adjustedWindowSize,
+                                         minimumWindowSize,
+                                         maximumWindowSize );
     }
 
 }
