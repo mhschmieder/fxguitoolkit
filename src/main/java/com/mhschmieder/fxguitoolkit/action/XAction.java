@@ -31,9 +31,11 @@
 package com.mhschmieder.fxguitoolkit.action;
 
 import java.util.function.Consumer;
+
+import org.controlsfx.control.action.Action;
+
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import org.controlsfx.control.action.Action;
 
 /**
  * This is effectively a copy of ControlsFX sample code for DummyAction and

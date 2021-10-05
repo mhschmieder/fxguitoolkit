@@ -30,10 +30,11 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import com.mhschmieder.iotoolkit.io.FileExtensions;
-
 import java.util.List;
 import java.util.Vector;
+
+import com.mhschmieder.commonstoolkit.io.FileExtensions;
+
 import javafx.stage.FileChooser.ExtensionFilter;
 
 /**

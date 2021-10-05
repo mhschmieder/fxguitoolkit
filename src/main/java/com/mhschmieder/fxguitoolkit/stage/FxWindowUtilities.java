@@ -32,6 +32,7 @@ package com.mhschmieder.fxguitoolkit.stage;
 
 import java.util.List;
 import java.util.prefs.Preferences;
+
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;

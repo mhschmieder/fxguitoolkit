@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
+import com.mhschmieder.commonstoolkit.net.SessionContext;
 import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
-import com.mhschmieder.iotoolkit.net.SessionContext;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;

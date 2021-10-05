@@ -33,8 +33,8 @@ package com.mhschmieder.fxguitoolkit;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -45,12 +45,13 @@ import org.controlsfx.control.SegmentedButton;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.action.ActionUtils;
 import org.controlsfx.control.action.ActionUtils.ActionTextBehavior;
+import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.tools.Borders;
 
+import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
 import com.mhschmieder.fxguitoolkit.image.ImageUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
-import com.mhschmieder.iotoolkit.util.SystemType;
 
 import javafx.application.HostServices;
 import javafx.collections.ObservableList;
@@ -118,8 +119,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
-import org.controlsfx.control.textfield.CustomTextField;
 
 /**
  * {@code FxGuiUtilities} is a utility class for methods related to top-level

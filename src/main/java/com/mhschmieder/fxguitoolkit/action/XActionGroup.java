@@ -31,6 +31,7 @@
 package com.mhschmieder.fxguitoolkit.action;
 
 import java.util.Collection;
+
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.action.ActionGroup;
 

@@ -28,5 +28,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/server/deployment/jars/controlsfx-8.40.16-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/commonstoolkit"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

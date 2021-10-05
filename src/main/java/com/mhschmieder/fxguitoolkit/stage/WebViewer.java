@@ -31,6 +31,7 @@
 package com.mhschmieder.fxguitoolkit.stage;
 
 import java.net.URL;
+
 import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

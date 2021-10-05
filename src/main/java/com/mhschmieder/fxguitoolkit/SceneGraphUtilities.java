@@ -30,10 +30,10 @@
  */
 package com.mhschmieder.fxguitoolkit;
 
-import com.mhschmieder.iotoolkit.net.SessionContext;
-import com.mhschmieder.iotoolkit.util.ResourceUtilities;
-
 import java.util.ResourceBundle;
+
+import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.util.ResourceUtilities;
 
 // :TODO: Split this up into more specialized utilities for Buttons, etc.?
 public class SceneGraphUtilities {
