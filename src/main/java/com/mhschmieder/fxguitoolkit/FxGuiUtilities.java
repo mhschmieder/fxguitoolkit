@@ -49,8 +49,8 @@ import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.tools.Borders;
 
 import com.mhschmieder.commonstoolkit.util.SystemType;
+import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
-import com.mhschmieder.fxguitoolkit.image.ImageUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
 import javafx.application.HostServices;

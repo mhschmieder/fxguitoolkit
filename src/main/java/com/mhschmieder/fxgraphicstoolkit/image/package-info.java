@@ -35,4 +35,4 @@
  *
  * @author Mark Schmieder
  */
-package com.mhschmieder.fxguitoolkit.image;
+package com.mhschmieder.fxgraphicstoolkit.image;

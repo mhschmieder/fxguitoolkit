@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
+import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
-import com.mhschmieder.fxguitoolkit.image.ImageUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
 import javafx.geometry.Pos;

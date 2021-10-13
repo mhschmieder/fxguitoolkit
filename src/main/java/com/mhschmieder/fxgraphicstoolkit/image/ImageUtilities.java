@@ -28,7 +28,7 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxguitoolkit.image;
+package com.mhschmieder.fxgraphicstoolkit.image;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
