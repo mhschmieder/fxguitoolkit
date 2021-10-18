@@ -51,9 +51,10 @@ import javafx.scene.web.WebView;
  * class derivation where that is not necessary for altering the default
  * behavior of the core JavaFX controls -- especially for stuff like spinners.
  * <p>
- * One of its roles is to enforce preferred style guidelines and common behavior.
+ * One of its roles is to enforce preferred style guidelines and common
+ * behavior.
  *
- * @version 1.0
+ * @version 0.1
  *
  * @author Mark Schmieder
  */
@@ -163,6 +164,43 @@ public class ControlFactory {
                                                         angleSlider.getValue() );
 
         return angleEditor;
+    }
+
+    // Helper method to get an Opacity Editor, standalone or paired.
+    public static final OpacityEditor getOpacityEditor( final SessionContext sessionContext,
+                                                        final String tooltipText,
+                                                        final String measurementUnit,
+                                                        final double minimumValue,
+                                                        final double maximumValue,
+                                                        final double initialValue ) {
+        // Get the current value and format it as initial text.
+        final String initialText = Double.toString( initialValue );
+
+        final OpacityEditor opacityEditor = new OpacityEditor( sessionContext,
+                                                               initialText,
+                                                               tooltipText,
+                                                               minimumValue,
+                                                               maximumValue,
+                                                               initialValue );
+
+        opacityEditor.setMeasurementUnitString( measurementUnit );
+
+        return opacityEditor;
+    }
+
+    // Helper method to get an Opacity Editor to pair with a slider.
+    public static final OpacityEditor getOpacitySliderEditor( final SessionContext sessionContext,
+                                                              final OpacitySlider opacitySlider ) {
+        // Use the current slider value and limits to set the number editor.
+        final OpacityEditor opacityEditor = getOpacityEditor( sessionContext,
+                                                              null,
+                                                              opacitySlider
+                                                                      .getMeasurementUnitString(),
+                                                              opacitySlider.getMin(),
+                                                              opacitySlider.getMax(),
+                                                              opacitySlider.getValue() );
+
+        return opacityEditor;
     }
 
     public static final Spinner< Double > getDoubleSpinner( final SessionContext sessionContext,

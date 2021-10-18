@@ -36,7 +36,7 @@ import java.util.Locale;
 
 import javafx.geometry.Pos;
 
-// :TODO: Use our NumberEditor class instead, and pass the measurement unit?
+// :TODO: Use our DoubleEditor class instead, and pass the measurement unit?
 public class NumberEditorTableCell< RT, VT > extends EditorTableCell< RT, Double > {
 
     // Maintain a reference to the Measurement Unit label (can be blank).

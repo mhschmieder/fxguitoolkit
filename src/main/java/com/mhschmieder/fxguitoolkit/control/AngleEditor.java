@@ -32,7 +32,7 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import com.mhschmieder.commonstoolkit.net.SessionContext;
 
-public class AngleEditor extends NumberEditor {
+public class AngleEditor extends DoubleEditor {
 
     // Declare value increment/decrement amount for up and down arrow keys.
     // NOTE: We increment by 0.1 degrees as this is a common default.

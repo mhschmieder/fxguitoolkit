@@ -29,10 +29,11 @@
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
 /**
- * This package contains the FxGuiToolkit Library's utilities for JavaFX Images.
+ * This package contains the FxGraphicsToolkit Library's utilities for core
+ * graphics. Temporarily in FxGuiToolkit until FxGraphicsToolkit launches.
  *
  * @version 0.1
  *
  * @author Mark Schmieder
  */
-package com.mhschmieder.fxgraphicstoolkit.image;
+package com.mhschmieder.fxgraphicstoolkit.graphics;

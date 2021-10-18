@@ -34,6 +34,18 @@ import java.util.ResourceBundle;
 
 import com.mhschmieder.commonstoolkit.net.SessionContext;
 import com.mhschmieder.commonstoolkit.util.ResourceUtilities;
+import com.mhschmieder.fxguitoolkit.control.DoubleEditor;
+import com.mhschmieder.fxguitoolkit.control.NumberSlider;
+import com.mhschmieder.fxguitoolkit.control.XToggleButton;
+import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
+
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.GridPane;
 
 // :TODO: Split this up into more specialized utilities for Buttons, etc.?
 public class SceneGraphUtilities {
@@ -77,6 +89,27 @@ public class SceneGraphUtilities {
         }
     }
 
+    public static ToggleButton getIconToggleButton( final ToggleGroup toggleGroup,
+                                                    final String iconFilename,
+                                                    final String tooltipText,
+                                                    final String cssStyleClass ) {
+        final ToggleButton toggleButton = new XToggleButton( tooltipText,
+                                                             cssStyleClass,
+                                                             false,
+                                                             false );
+
+        // Add the toggle button to its toggle group.
+        // NOTE: SegmentedButtons subsume this task; check for null!
+        if ( toggleGroup != null ) {
+            toggleButton.setToggleGroup( toggleGroup );
+        }
+
+        // Apply the icon from JAR-resident resources and set its style.
+        FxGuiUtilities.applyToolbarIcon( toggleButton, iconFilename );
+
+        return toggleButton;
+    }
+
     public static String getLabeledControlLabel( final SessionContext sessionContext,
                                                  final String bundleName,
                                                  final String groupName,
@@ -101,6 +134,164 @@ public class SceneGraphUtilities {
         }
 
         return buttonText;
+    }
+
+    @SuppressWarnings("nls")
+    public static GridPane getLabeledTextAreaPane( final String labelText,
+                                                   final TextArea textArea,
+                                                   final SessionContext sessionContext ) {
+        final GridPane grid = LayoutFactory
+                .makeGridPane( Pos.CENTER_LEFT, new Insets( 0d, 6d, 0d, 6d ), 6, 6 );
+
+        // Although we put the label above the control, the size difference is
+        // so huge that it won't be clear what the label is for unless we add a
+        // colon as with horizontally paired controls.
+        final Label labelLabel = FxGuiUtilities.getControlLabel( labelText );
+
+        // TODO: Provide mnemonic and/or accelerator for this?
+        labelLabel.setLabelFor( textArea );
+
+        labelLabel.getStyleClass().add( "text-area-label" );
+
+        grid.add( labelLabel, 0, 0 );
+        grid.add( textArea, 0, 1 );
+
+        return grid;
+    }
+
+    /**
+     * This method returns a completely initialized and styled toggle button.
+     *
+     * Use this version when needing custom background and/or foreground colors,
+     * and when resource lookup is not necessary as the label text is already at
+     * hand. All other parameters are optional and check for null pointers.
+     *
+     * @param toggleGroup
+     *            The @ToggleGroup to which this @ToggleButton is to be assigned
+     * @param buttonLabel
+     *            The @Label text used for both selected and unselected status
+     * @param tooltipText
+     *            Optional @Tooltip text
+     * @param cssStyleId
+     *            The CSS Style ID used for all button colors in all states
+     * @return A labeled @ToggleButton adhering to MSLI style guidelines
+     */
+    public static ToggleButton getLabeledToggleButton( final ToggleGroup toggleGroup,
+                                                       final String buttonLabel,
+                                                       final String tooltipText,
+                                                       final String cssStyleId ) {
+        final ToggleButton toggleButton = new XToggleButton( buttonLabel,
+                                                             tooltipText,
+                                                             cssStyleId,
+                                                             true,
+                                                             3d,
+                                                             false,
+                                                             false );
+
+        // Add the toggle button to its toggle group, if it exists.
+        if ( toggleGroup != null ) {
+            toggleButton.setToggleGroup( toggleGroup );
+        }
+
+        return toggleButton;
+    }
+
+    /**
+     * This method returns a completely initialized and styled toggle button.
+     *
+     * Use this version when needing custom selected/deselected background
+     * colors, and when resource lookup is not necessary as the label text is
+     * already at hand. All other parameters are optional and check for null
+     * pointers. Foreground colors are matched automatically by CSS.
+     *
+     * @param toggleGroup
+     *            The @ToggleGroup to which this @ToggleButton is to be assigned
+     * @param selectedText
+     *            The @Label text used for both selected status
+     * @param deselectedText
+     *            The @Label text used for unselected status
+     * @param tooltipText
+     *            Optional @Tooltip text
+     * @param cssStyleId
+     *            The CSS Style ID used for all button colors in all states
+     * @return A labeled @ToggleButton adhering to MSLI style guidelines
+     */
+    public static ToggleButton getLabeledToggleButton( final ToggleGroup toggleGroup,
+                                                       final String selectedText,
+                                                       final String deselectedText,
+                                                       final String tooltipText,
+                                                       final String cssStyleId ) {
+        final ToggleButton toggleButton = new XToggleButton( selectedText,
+                                                             deselectedText,
+                                                             tooltipText,
+                                                             cssStyleId,
+                                                             true,
+                                                             4.5d,
+                                                             false,
+                                                             false );
+
+        // Add the toggle button to its toggle group, if it exists.
+        if ( toggleGroup != null ) {
+            toggleButton.setToggleGroup( toggleGroup );
+        }
+
+        return toggleButton;
+    }
+
+    // Helper method to get a number editor, stand-alone or paired.
+    public static DoubleEditor getNumberSliderEditor( final SessionContext sessionContext,
+                                                      final int minFractionDigitsFormat,
+                                                      final int maxFractionDigitsFormat,
+                                                      final int minFractionDigitsParse,
+                                                      final int maxFractionDigitsParse,
+                                                      final String measurementUnit,
+                                                      final double minimumValue,
+                                                      final double maximumValue,
+                                                      final double initialValue,
+                                                      final double valueIncrement ) {
+        // Get the current value and format it as initial text.
+        final String initialText = Double.toString( initialValue );
+
+        final DoubleEditor doubleEditor = new DoubleEditor( sessionContext,
+                                                            initialText,
+                                                            null,
+                                                            minFractionDigitsFormat,
+                                                            maxFractionDigitsFormat,
+                                                            minFractionDigitsParse,
+                                                            maxFractionDigitsParse,
+                                                            minimumValue,
+                                                            maximumValue,
+                                                            initialValue,
+                                                            valueIncrement );
+
+        doubleEditor.setMeasurementUnitString( measurementUnit );
+
+        return doubleEditor;
+    }
+
+    // Helper method to get a number editor to pair with a slider.
+    public static DoubleEditor getNumberSliderEditor( final SessionContext sessionContext,
+                                                      final NumberSlider numberSlider,
+                                                      final int minFractionDigitsFormat,
+                                                      final int maxFractionDigitsFormat,
+                                                      final int minFractionDigitsParse,
+                                                      final int maxFractionDigitsParse,
+                                                      final double valueIncrement ) {
+        // Use the current slider value and limits to set the number editor.
+        final DoubleEditor doubleEditor =
+                                        getNumberSliderEditor( sessionContext,
+                                                               minFractionDigitsFormat,
+                                                               maxFractionDigitsFormat,
+                                                               minFractionDigitsParse,
+                                                               maxFractionDigitsParse,
+                                                               numberSlider
+                                                                       .getMeasurementUnitString(),
+                                                               numberSlider.getMin(),
+                                                               numberSlider.getMax(),
+                                                               numberSlider.getValue(),
+                                                               valueIncrement );
+
+        return doubleEditor;
     }
 
 }

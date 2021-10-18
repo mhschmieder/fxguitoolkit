@@ -34,7 +34,7 @@ import com.mhschmieder.commonstoolkit.math.DistanceUnit;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
 import com.mhschmieder.commonstoolkit.physics.UnitConversion;
 
-public class DistanceEditor extends NumberEditor {
+public class DistanceEditor extends DoubleEditor {
 
     // Declare value increment/decrement amount for up and down arrow keys.
     // NOTE: We increment by 0.5 meters as this works well for most units.
