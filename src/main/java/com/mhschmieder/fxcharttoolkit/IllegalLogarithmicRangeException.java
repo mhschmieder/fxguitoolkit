@@ -28,41 +28,29 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxguitoolkit;
-
-import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+package com.mhschmieder.fxcharttoolkit;
 
 /**
- * This is a utility class for dealing with common group functionality.
+ * Exception to be thrown when a bound value isn't supported by the logarithmic
+ * axis<br>
  *
- * @version 0.1
+ * This class is modified from Kevin's dooApp, part of JRebirth. <br>
  *
- * @author Mark Schmieder
+ * @author Kevin Senechal mailto: kevin.senechal@dooapp.com
+ *
  */
-public final class GroupUtilities {
+public class IllegalLogarithmicRangeException extends Exception {
 
-    // NOTE: The constructor is disabled, as this is a static utilities class.
-    private GroupUtilities() {}
+    /**
+     *
+     */
+    private static final long serialVersionUID = 9036903131703009485L;
 
-    public static Group getBackgroundColorIcon( final Color backgroundColor ) {
-        final Group group = new Group();
-
-        // First, get the icon size and insets for the menu context.
-        final int inset = FxGuiUtilities.getIconInset( IconContext.MENU );
-        final int boxSideLength = FxGuiUtilities.MENU_ICON_SIZE - ( inset * 2 );
-        final int startX = inset;
-        final int startY = FxGuiUtilities.MENU_ICON_SIZE - inset;
-
-        // Fill the icon with the specified background color.
-        final Rectangle box = new Rectangle( startX, startY, boxSideLength, boxSideLength );
-        box.setFill( backgroundColor );
-
-        // Add the box to the Node Group.
-        group.getChildren().addAll( box );
-
-        return group;
+    /**
+     * @param message The message to pass to the standard exception handler
+     */
+    public IllegalLogarithmicRangeException( final String message ) {
+        super( message );
     }
 
 }

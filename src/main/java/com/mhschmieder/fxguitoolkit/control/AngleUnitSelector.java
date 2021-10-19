@@ -34,10 +34,10 @@ import com.mhschmieder.commonstoolkit.math.AngleUnit;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
 
 /**
- * The Angle Units selector supports all Angle Units that are currently
+ * The Angle Unit selector supports all Angle Units that are currently
  * implemented in our core Math Library.
  */
-public final class AngleUnitsSelector extends TextSelector {
+public final class AngleUnitSelector extends TextSelector {
 
     // Default Angle Unit, for best "out of box" experience.
     public static final String    ANGLE_UNIT_DEFAULT = AngleUnit.defaultValue().toCanonicalString();
@@ -48,8 +48,7 @@ public final class AngleUnitsSelector extends TextSelector {
                                                              AngleUnit.RADIANS
                                                                      .toCanonicalString() };
 
-    public AngleUnitsSelector( final SessionContext sessionContext,
-                               final boolean toolbarContext ) {
+    public AngleUnitSelector( final SessionContext sessionContext, final boolean toolbarContext ) {
         // Always call the superclass constructor first!
         super( sessionContext,
                "Supported Angle Units", //$NON-NLS-1$

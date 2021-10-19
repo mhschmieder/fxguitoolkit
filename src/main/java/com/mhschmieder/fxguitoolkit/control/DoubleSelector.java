@@ -97,12 +97,6 @@ public class DoubleSelector extends NumberSelector {
         }
     }
 
-    public final double getDoubleValue() {
-        final String formattedValue = getValue();
-        final double doubleValue = MathUtilities.parseDouble( formattedValue, _numberFormat );
-        return doubleValue;
-    }
-
     @SuppressWarnings("nls")
     private final void initComboBox( final double minimumValue,
                                      final double maximumValue,
@@ -134,6 +128,12 @@ public class DoubleSelector extends NumberSelector {
                 keyEvent.consume();
             }
         } );
+    }
+
+    public final double getDoubleValue() {
+        final String formattedValue = getValue();
+        final double doubleValue = MathUtilities.parseDouble( formattedValue, _numberFormat );
+        return doubleValue;
     }
 
     public final void setDoubleValue( final double doubleValue ) {

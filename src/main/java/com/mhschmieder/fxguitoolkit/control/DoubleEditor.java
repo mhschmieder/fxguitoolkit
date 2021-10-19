@@ -38,7 +38,6 @@ import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 /**
  * This class formalizes aspects of text editing that are specific to doubles.
@@ -137,126 +136,6 @@ public class DoubleEditor extends NumberEditor {
         }
     }
 
-    public double adjustPrecision( final double doubleValue ) {
-        // By default, unless overridden, there is no further adjustment beyond
-        // what is already set in the Number Parser.
-        return doubleValue;
-    }
-
-    @Override
-    public final void clampValue() {
-        // Get the clamped, edited value, stripped of decorations and
-        // formatting.
-        final double clampedValue = getClampedValue();
-
-        // Update the cached property from the clamped, edited value.
-        setValue( clampedValue );
-    }
-
-    /**
-     * Converts the specified {@link String} into its double value.
-     * <p>
-     * A {@code null}, empty, or otherwise invalid argument returns zero and
-     * also executes the editor reset callback, if any.
-     *
-     * @param stringValue
-     *            The {@link String} to convert
-     * @return The double value of {@code stringValue}
-     * @see #setReset
-     */
-    public double fromString( final String stringValue ) {
-        // Return with current value vs. penalizing user for internal errors.
-        final double currentValue = getValue();
-        if ( ( stringValue == null ) || stringValue.trim().isEmpty() ) {
-            return currentValue;
-        }
-
-        // If the user typed a formatted number with units, parse it exactly;
-        // otherwise strip the units and try to directly convert the string to a
-        // double precision floating-point number.
-        double doubleValue = currentValue;
-        try {
-            final Number numericValue = _numberParse.parse( stringValue );
-            doubleValue = numericValue.doubleValue();
-        }
-        catch ( final ParseException pe ) {
-            final int measurementUnitIndex = stringValue.indexOf( _measurementUnitString );
-            try {
-                final String numericString = ( measurementUnitIndex < 0 )
-                    ? stringValue
-                    : stringValue.substring( 0, measurementUnitIndex + 1 );
-                doubleValue = Double.parseDouble( numericString );
-            }
-            catch ( IndexOutOfBoundsException | NumberFormatException | NullPointerException e ) {
-                if ( _reset != null ) {
-                    _reset.run();
-                }
-            }
-        }
-
-        // If necessary, adjust the precision level based on magnitude ranges.
-        final double precisionAdjustedValue = adjustPrecision( doubleValue );
-
-        // If limits were established, enforce them by range-checking and
-        // restricting the parsed or defaulted value. Always check though, to
-        // avoid overflow and underflow conditions.
-        final double clampedValue = getClampedValue( precisionAdjustedValue );
-
-        return clampedValue;
-    }
-
-    public final double getClampedValue() {
-        // The fromString method performs input validation.
-        final String undecoratedText = getUndecoratedText();
-        final double clampedValue = fromString( undecoratedText );
-
-        return clampedValue;
-    }
-
-    public double getClampedValue( final double unclampedValue ) {
-        final double clampedValue = Math.min( Math.max( unclampedValue, _minimumValue ),
-                                              _maximumValue );
-        return clampedValue;
-    }
-
-    @Override
-    public final String getDecoratedText() {
-        // Get the most recently committed value.
-        final double savedValue = getValue();
-
-        // Show the number with units to indicate we committed edits.
-        final String formattedText = toString( savedValue );
-
-        // Decorate the text as that is the context of interest.
-        final String decoratedText = getDecoratedText( savedValue, formattedText );
-
-        return decoratedText;
-    }
-
-    // NOTE: This is an opportunity to pre-parse the typed text before
-    // converting to a number, such as when we disallow positive numbers (e.g.).
-    public String getDecoratedText( final double savedValue, final String savedText ) {
-        final String decoratedText = savedText;
-
-        return decoratedText;
-    }
-
-    public final double getMaximumValue() {
-        return _maximumValue;
-    }
-
-    public final String getMeasurementUnitString() {
-        return _measurementUnitString;
-    }
-
-    public final double getMinimumValue() {
-        return _minimumValue;
-    }
-
-    public final double getValue() {
-        return value.get();
-    }
-
     @SuppressWarnings("nls")
     private final void initEditor( final int minFractionDigitsFormat,
                                    final int maxFractionDigitsFormat,
@@ -269,16 +148,6 @@ public class DoubleEditor extends NumberEditor {
         // Set the precision for floating-point text formatting.
         _numberParse.setMinimumFractionDigits( minFractionDigitsParse );
         _numberParse.setMaximumFractionDigits( maxFractionDigitsParse );
-
-        // Restrict keyboard input to numerals, sign, and delimiters.
-        final String allowedCharacters = ( _minimumValue < 0 )
-            ? ( _maximumValue > 0 ) ? "[0-9.,+-]" : "[0-9.,-]"
-            : ( _maximumValue > 0 ) ? "[0-9.,+]" : "[0-9.,]";
-        addEventFilter( KeyEvent.KEY_TYPED, keyEvent -> {
-            if ( !keyEvent.getCharacter().matches( allowedCharacters ) ) {
-                keyEvent.consume();
-            }
-        } );
 
         // Make sure the value property is clamped to the required range, then
         // update the text field to be in sync with the clamped value.
@@ -342,20 +211,160 @@ public class DoubleEditor extends NumberEditor {
         } );
     }
 
-    public final void setMaximumValue( final double maximumValue ) {
-        _maximumValue = maximumValue;
+    @Override
+    public String getAllowedCharacters() {
+        // Restrict keyboard input to numerals, sign, and delimiters.
+        final String allowedCharacters = ( _minimumValue < 0 )
+            ? ( _maximumValue > 0 ) ? "[0-9.,+-]" : "[0-9.,-]"
+            : ( _maximumValue > 0 ) ? "[0-9.,+]" : "[0-9.,]";
+        return allowedCharacters;
+    }
+
+    @Override
+    public final String getDecoratedText() {
+        // Get the most recently committed value.
+        final double savedValue = getValue();
+
+        // Show the number with units to indicate we committed edits.
+        final String formattedText = toString( savedValue );
+
+        // Decorate the text as that is the context of interest.
+        final String decoratedText = getDecoratedText( savedValue, formattedText );
+
+        return decoratedText;
+    }
+
+    // NOTE: This is an opportunity to pre-parse the typed text before
+    // converting to a number, such as when we disallow positive numbers (e.g.).
+    public String getDecoratedText( final double savedValue, final String savedText ) {
+        final String decoratedText = savedText;
+
+        return decoratedText;
+    }
+
+    @Override
+    public final void updateText() {
+        // Get the most recently committed value.
+        final double savedValue = getValue();
+
+        // Update the displayed text to match the cached value.
+        updateText( savedValue );
+    }
+
+    public final void updateText( final double savedValue ) {
+        // Show the number with units to indicate we committed edits.
+        final String formattedValue = toString( savedValue );
+
+        // Update the displayed text to match the cached value.
+        setText( formattedValue );
+    }
+
+    @Override
+    public final void clampValue() {
+        // Get the clamped, edited value, stripped of decorations and
+        // formatting.
+        final double clampedValue = getClampedValue();
+
+        // Update the cached property from the clamped, edited value.
+        setValue( clampedValue );
+    }
+
+    public final double getClampedValue() {
+        // The fromString method performs input validation.
+        final String undecoratedText = getUndecoratedText();
+        final double clampedValue = fromString( undecoratedText );
+
+        return clampedValue;
+    }
+
+    public double getClampedValue( final double unclampedValue ) {
+        final double clampedValue = Math.min( Math.max( unclampedValue, _minimumValue ),
+                                              _maximumValue );
+        return clampedValue;
+    }
+
+    public final double getMinimumValue() {
+        return _minimumValue;
     }
 
     public final void setMinimumValue( final double minimumValue ) {
         _minimumValue = minimumValue;
     }
 
-    public final void setValue( final double pValue ) {
-        value.set( pValue );
+    public final double getMaximumValue() {
+        return _maximumValue;
+    }
+
+    public final void setMaximumValue( final double maximumValue ) {
+        _maximumValue = maximumValue;
     }
 
     public final void setValueIncrement( final double pValueIncrement ) {
         _valueIncrement = pValueIncrement;
+    }
+
+    public final double getValue() {
+        return value.get();
+    }
+
+    public final void setValue( final double pValue ) {
+        value.set( pValue );
+    }
+
+    public final DoubleProperty valueProperty() {
+        return value;
+    }
+
+    /**
+     * Converts the specified {@link String} into its double value.
+     * <p>
+     * A {@code null}, empty, or otherwise invalid argument returns zero and
+     * also executes the editor reset callback, if any.
+     *
+     * @param stringValue
+     *            The {@link String} to convert
+     * @return The double value of {@code stringValue}
+     * @see #setReset
+     */
+    public double fromString( final String stringValue ) {
+        // Return with current value vs. penalizing user for internal errors.
+        final double currentValue = getValue();
+        if ( ( stringValue == null ) || stringValue.trim().isEmpty() ) {
+            return currentValue;
+        }
+
+        // If the user typed a formatted number with units, parse it exactly;
+        // otherwise strip the units and try to directly convert the string to a
+        // double precision floating-point number.
+        double doubleValue = currentValue;
+        try {
+            final Number numericValue = _numberParse.parse( stringValue );
+            doubleValue = numericValue.doubleValue();
+        }
+        catch ( final ParseException pe ) {
+            final int measurementUnitIndex = stringValue.indexOf( _measurementUnitString );
+            try {
+                final String numericString = ( measurementUnitIndex < 0 )
+                    ? stringValue
+                    : stringValue.substring( 0, measurementUnitIndex + 1 );
+                doubleValue = Double.parseDouble( numericString );
+            }
+            catch ( IndexOutOfBoundsException | NumberFormatException | NullPointerException e ) {
+                if ( _reset != null ) {
+                    _reset.run();
+                }
+            }
+        }
+
+        // If necessary, adjust the precision level based on magnitude ranges.
+        final double precisionAdjustedValue = adjustPrecision( doubleValue );
+
+        // If limits were established, enforce them by range-checking and
+        // restricting the parsed or defaulted value. Always check though, to
+        // avoid overflow and underflow conditions.
+        final double clampedValue = getClampedValue( precisionAdjustedValue );
+
+        return clampedValue;
     }
 
     /**
@@ -384,25 +393,10 @@ public class DoubleEditor extends NumberEditor {
         return stringValue;
     }
 
-    @Override
-    public final void updateText() {
-        // Get the most recently committed value.
-        final double savedValue = getValue();
-
-        // Update the displayed text to match the cached value.
-        updateText( savedValue );
-    }
-
-    public final void updateText( final double savedValue ) {
-        // Show the number with units to indicate we committed edits.
-        final String formattedValue = toString( savedValue );
-
-        // Update the displayed text to match the cached value.
-        setText( formattedValue );
-    }
-
-    public final DoubleProperty valueProperty() {
-        return value;
+    public double adjustPrecision( final double doubleValue ) {
+        // By default, unless overridden, there is no further adjustment beyond
+        // what is already set in the Number Parser.
+        return doubleValue;
     }
 
 }

@@ -34,7 +34,7 @@ import com.mhschmieder.commonstoolkit.math.DistanceUnit;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
 
 /**
- * The Distance Units selector supports all Distance Units that are currently
+ * The Distance Unit selector supports all Distance Units that are currently
  * implemented in our core Math Library.
  */
 public class DistanceUnitSelector extends TextSelector {

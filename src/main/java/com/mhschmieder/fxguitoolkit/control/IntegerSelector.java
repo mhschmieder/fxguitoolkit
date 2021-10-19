@@ -80,12 +80,6 @@ public class IntegerSelector extends NumberSelector {
         }
     }
 
-    public final int getIntegerValue() {
-        final String formattedValue = getValue();
-        final int integerValue = MathUtilities.parseInteger( formattedValue, _numberFormat );
-        return integerValue;
-    }
-
     @SuppressWarnings("nls")
     private final void initComboBox( final int minimumValue,
                                      final int maximumValue,
@@ -117,6 +111,12 @@ public class IntegerSelector extends NumberSelector {
                 keyEvent.consume();
             }
         } );
+    }
+
+    public final int getIntegerValue() {
+        final String formattedValue = getValue();
+        final int integerValue = MathUtilities.parseInteger( formattedValue, _numberFormat );
+        return integerValue;
     }
 
     public final void setIntegerValue( final int integerValue ) {

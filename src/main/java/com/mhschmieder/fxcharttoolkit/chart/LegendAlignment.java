@@ -28,41 +28,53 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxguitoolkit;
+package com.mhschmieder.fxcharttoolkit.chart;
 
-import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import java.util.Locale;
 
 /**
- * This is a utility class for dealing with common group functionality.
- *
- * @version 0.1
- *
- * @author Mark Schmieder
+ * This is an enumeration of Legend Alignments, which are relative terms that
+ * refer to how the Legend relates to a Chart or Charts.
  */
-public final class GroupUtilities {
+public enum LegendAlignment {
 
-    // NOTE: The constructor is disabled, as this is a static utilities class.
-    private GroupUtilities() {}
+    /**
+     * Represents that the legend is to be placed above the charts.
+     */
+    ABOVE,
 
-    public static Group getBackgroundColorIcon( final Color backgroundColor ) {
-        final Group group = new Group();
+    /**
+     * Represents that the legend is to be placed below the charts.
+     */
+    BELOW,
 
-        // First, get the icon size and insets for the menu context.
-        final int inset = FxGuiUtilities.getIconInset( IconContext.MENU );
-        final int boxSideLength = FxGuiUtilities.MENU_ICON_SIZE - ( inset * 2 );
-        final int startX = inset;
-        final int startY = FxGuiUtilities.MENU_ICON_SIZE - inset;
+    /**
+     * Represents that the legend is to be placed between the charts.
+     */
+    BETWEEN,
 
-        // Fill the icon with the specified background color.
-        final Rectangle box = new Rectangle( startX, startY, boxSideLength, boxSideLength );
-        box.setFill( backgroundColor );
+    /**
+     * Represents that the legend is to be placed to the left of the charts.
+     */
+    LEFT,
 
-        // Add the box to the Node Group.
-        group.getChildren().addAll( box );
+    /**
+     * Represents that the legend is to be placed to the right of the charts.
+     */
+    RIGHT;
 
-        return group;
+    public static LegendAlignment canonicalValueOf( final String canonicalLegendAlignment ) {
+        return ( canonicalLegendAlignment != null )
+            ? valueOf( canonicalLegendAlignment.toUpperCase( Locale.ENGLISH ) )
+            : defaultValue();
+    }
+
+    public static LegendAlignment defaultValue() {
+        return RIGHT;
+    }
+
+    public final String toCanonicalString() {
+        return toString().toLowerCase( Locale.ENGLISH );
     }
 
 }

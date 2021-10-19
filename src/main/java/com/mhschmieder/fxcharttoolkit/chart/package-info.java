@@ -28,41 +28,12 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxguitoolkit;
-
-import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-
 /**
- * This is a utility class for dealing with common group functionality.
+ * This package contains the FxChartToolkit Library's utilities for core
+ * charting. Temporarily in FxGuiToolkit until FxChartToolkit launches.
  *
  * @version 0.1
  *
  * @author Mark Schmieder
  */
-public final class GroupUtilities {
-
-    // NOTE: The constructor is disabled, as this is a static utilities class.
-    private GroupUtilities() {}
-
-    public static Group getBackgroundColorIcon( final Color backgroundColor ) {
-        final Group group = new Group();
-
-        // First, get the icon size and insets for the menu context.
-        final int inset = FxGuiUtilities.getIconInset( IconContext.MENU );
-        final int boxSideLength = FxGuiUtilities.MENU_ICON_SIZE - ( inset * 2 );
-        final int startX = inset;
-        final int startY = FxGuiUtilities.MENU_ICON_SIZE - inset;
-
-        // Fill the icon with the specified background color.
-        final Rectangle box = new Rectangle( startX, startY, boxSideLength, boxSideLength );
-        box.setFill( backgroundColor );
-
-        // Add the box to the Node Group.
-        group.getChildren().addAll( box );
-
-        return group;
-    }
-
-}
+package com.mhschmieder.fxcharttoolkit.chart;

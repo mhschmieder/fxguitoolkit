@@ -37,6 +37,7 @@ import com.mhschmieder.commonstoolkit.text.StringUtilities;
 
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 
 /**
  * This class formalizes aspects of text editing that are specific to numbers.
@@ -77,6 +78,14 @@ public abstract class NumberEditor extends XTextField {
 
         _numberFormat.setGroupingUsed( true );
         _numberParse.setGroupingUsed( true );
+
+        // Restrict keyboard input to numerals, sign, and delimiters.
+        final String allowedCharacters = getAllowedCharacters();
+        addEventFilter( KeyEvent.KEY_TYPED, keyEvent -> {
+            if ( !keyEvent.getCharacter().matches( allowedCharacters ) ) {
+                keyEvent.consume();
+            }
+        } );
 
         // Use a TextFormatter to wrap and bind the provided number format.
         // NOTE: This stops measurement unit changes from falsely triggering
@@ -125,7 +134,34 @@ public abstract class NumberEditor extends XTextField {
         } );
     }
 
-    public abstract void clampValue();
+    public final String getMeasurementUnitString() {
+        return _measurementUnitString;
+    }
+
+    public final void setMeasurementUnitString( final String measurementUnitString ) {
+        _measurementUnitString = measurementUnitString;
+
+        // Make sure to redisplay with the new Measurement Unit suffix.
+        decorateText();
+    }
+
+    /**
+     * Sets the editor reset callback.
+     * <p>
+     * Specify {@code null} to clear a previously set {@link Runnable}. When
+     * creating a {@link TextField}, this callback is automatically defined to
+     * reset invalid input to the supplied default value (zero if not provided).
+     * Setting a different callback will overwrite this functionality.
+     *
+     * @param reset
+     *            The {@link Runnable} to call upon
+     *            {@link NumberFormatException}
+     */
+    public final void setReset( final Runnable reset ) {
+        _reset = reset;
+    }
+
+    public abstract String getAllowedCharacters();
 
     public final void decorateText() {
         // Get the most recently committed value, restoring decorations etc.
@@ -161,29 +197,8 @@ public abstract class NumberEditor extends XTextField {
         clampValue();
     }
 
-    public final void setMeasurementUnitString( final String measurementUnitString ) {
-        _measurementUnitString = measurementUnitString;
-
-        // Make sure to redisplay with the new Measurement Unit suffix.
-        decorateText();
-    }
-
-    /**
-     * Sets the editor reset callback.
-     * <p>
-     * Specify {@code null} to clear a previously set {@link Runnable}. When
-     * creating a {@link TextField}, this callback is automatically defined to
-     * reset invalid input to the supplied default value (zero if not provided).
-     * Setting a different callback will overwrite this functionality.
-     *
-     * @param reset
-     *            The {@link Runnable} to call upon
-     *            {@link NumberFormatException}
-     */
-    public final void setReset( final Runnable reset ) {
-        _reset = reset;
-    }
-
     public abstract void updateText();
+
+    public abstract void clampValue();
 
 }

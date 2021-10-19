@@ -28,41 +28,39 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxguitoolkit;
+package com.mhschmieder.fxgraphicstoolkit.print;
 
-import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.print.JobSettings;
+import javafx.print.PageLayout;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
+import javafx.scene.transform.Scale;
 
-/**
- * This is a utility class for dealing with common group functionality.
- *
- * @version 0.1
- *
- * @author Mark Schmieder
- */
-public final class GroupUtilities {
+public final class PrintUtilities {
 
     // NOTE: The constructor is disabled, as this is a static utilities class.
-    private GroupUtilities() {}
+    private PrintUtilities() {}
 
-    public static Group getBackgroundColorIcon( final Color backgroundColor ) {
-        final Group group = new Group();
+    /**
+     * Gets the Print Job Scales for a target Node, based on the current page
+     * layout and attributes.
+     *
+     * @param printerJob
+     *            The pre-established Printer Job for this print task
+     * @param node
+     *            The scene node to be printed
+     * @return The Scale to be applied to the Node so it fits on the Page
+     */
+    public static Scale getPrintJobScale( final PrinterJob printerJob, final Node node ) {
+        final JobSettings jobSettings = printerJob.getJobSettings();
+        final PageLayout pageLayout = jobSettings.getPageLayout();
+        final double scaleX = pageLayout.getPrintableWidth() / node.getBoundsInParent().getWidth();
+        final double scaleY =
+                            pageLayout.getPrintableHeight() / node.getBoundsInParent().getHeight();
+        final double minimumScale = Math.min( scaleX, scaleY );
+        final Scale printJobScale = new Scale( minimumScale, minimumScale );
 
-        // First, get the icon size and insets for the menu context.
-        final int inset = FxGuiUtilities.getIconInset( IconContext.MENU );
-        final int boxSideLength = FxGuiUtilities.MENU_ICON_SIZE - ( inset * 2 );
-        final int startX = inset;
-        final int startY = FxGuiUtilities.MENU_ICON_SIZE - inset;
-
-        // Fill the icon with the specified background color.
-        final Rectangle box = new Rectangle( startX, startY, boxSideLength, boxSideLength );
-        box.setFill( backgroundColor );
-
-        // Add the box to the Node Group.
-        group.getChildren().addAll( box );
-
-        return group;
+        return printJobScale;
     }
 
 }

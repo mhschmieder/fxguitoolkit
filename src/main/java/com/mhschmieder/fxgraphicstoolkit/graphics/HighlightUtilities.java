@@ -28,41 +28,40 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxguitoolkit;
+package com.mhschmieder.fxgraphicstoolkit.graphics;
 
-import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.shape.Shape;
 
 /**
- * This is a utility class for dealing with common group functionality.
- *
- * @version 0.1
- *
- * @author Mark Schmieder
+ * This is a utility class for highlighting utilities and methods.
  */
-public final class GroupUtilities {
+public class HighlightUtilities {
 
-    // NOTE: The constructor is disabled, as this is a static utilities class.
-    private GroupUtilities() {}
+    public static final void applyHighlight( final Node node,
+                                             final boolean highlightOn,
+                                             final List< Double > highlightDashPattern ) {
+        final Shape shape = ( Shape ) node;
+        final ObservableList< Double > strokeDashArray = shape.getStrokeDashArray();
+        if ( highlightOn ) {
+            strokeDashArray.setAll( highlightDashPattern );
+        }
+        else {
+            strokeDashArray.clear();
+        }
+    }
 
-    public static Group getBackgroundColorIcon( final Color backgroundColor ) {
-        final Group group = new Group();
+    public static final List< Double > getHighlightDashPattern( final double scaleFactor ) {
+        // Define and return the dash pattern to use for highlighting.
+        final List< Double > highlightDashPattern = new ArrayList<>();
+        highlightDashPattern.add( Double.valueOf( 2d * scaleFactor ) );
+        highlightDashPattern.add( Double.valueOf( 4d * scaleFactor ) );
 
-        // First, get the icon size and insets for the menu context.
-        final int inset = FxGuiUtilities.getIconInset( IconContext.MENU );
-        final int boxSideLength = FxGuiUtilities.MENU_ICON_SIZE - ( inset * 2 );
-        final int startX = inset;
-        final int startY = FxGuiUtilities.MENU_ICON_SIZE - inset;
-
-        // Fill the icon with the specified background color.
-        final Rectangle box = new Rectangle( startX, startY, boxSideLength, boxSideLength );
-        box.setFill( backgroundColor );
-
-        // Add the box to the Node Group.
-        group.getChildren().addAll( box );
-
-        return group;
+        return highlightDashPattern;
     }
 
 }
