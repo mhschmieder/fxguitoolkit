@@ -43,7 +43,9 @@ import javafx.scene.shape.Rectangle;
  */
 public final class GroupUtilities {
 
-    // NOTE: The constructor is disabled, as this is a static utilities class.
+    /**
+     * The default constructor is disabled, as this is a static utilities class.
+     */
     private GroupUtilities() {}
 
     public static Group getBackgroundColorIcon( final Color backgroundColor ) {
