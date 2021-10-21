@@ -31,7 +31,7 @@
 package com.mhschmieder.fxguitoolkit.control;
 
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
 import javafx.geometry.Pos;
@@ -106,11 +106,11 @@ public final class LabeledControlFactory {
                                     final String borderRadiusCss ) {
         final Button button = getButton( label, font, buttonWidth );
 
-        FxGuiUtilities.applyLabeledButtonStyle( button,
-                                                backColorCss,
-                                                borderColorCss,
-                                                borderWidthCss,
-                                                borderRadiusCss );
+        GuiUtilities.applyLabeledButtonStyle( button,
+                                              backColorCss,
+                                              borderColorCss,
+                                              borderWidthCss,
+                                              borderRadiusCss );
 
         return button;
     }
@@ -143,7 +143,7 @@ public final class LabeledControlFactory {
                                         final double buttonHeight,
                                         final Color backgroundColor,
                                         final String tooltipText ) {
-        final SVGPath buttonIcon = FxGuiUtilities.getSvgImage( svgImage );
+        final SVGPath buttonIcon = GuiUtilities.getSvgImage( svgImage );
 
         final Button button = new Button();
         button.setShape( buttonIcon );
@@ -218,6 +218,100 @@ public final class LabeledControlFactory {
         label.setWrapText( true );
 
         return label;
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getApplyButton( final String objectType ) {
+        final String buttonLabel = "Apply";
+        final String tooltipText = buttonLabel + " Changes to " + objectType;
+
+        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "apply-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getCancelButton( final String objectType ) {
+        final String buttonLabel = "Cancel";
+        final String tooltipText = buttonLabel + " Changes to " + objectType + " and Close Window";
+
+        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "cancel-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getCancelExportButton() {
+        return GuiUtilities.getLabeledButton( "Cancel Export", null, "cancel-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getCancelImportButton() {
+        return GuiUtilities.getLabeledButton( "Cancel Import", null, "cancel-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getCancelReportButton( final String tooltipText ) {
+        return GuiUtilities.getLabeledButton( "Cancel Report", tooltipText, "cancel-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getDoneButton( final String objectType, final boolean modal ) {
+        final String buttonLabel = modal ? "OK" : "Apply and Close";
+        final String tooltipText = "Apply Changes to " + objectType + " and Close Window";
+
+        final String cssStyleId = modal ? "ok-button" : "apply-and-close-button";
+
+        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, cssStyleId );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getExportGraphicsButton( final String tooltipText ) {
+        return GuiUtilities.getLabeledButton( "Export Graphics", tooltipText, "export-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getGenerateReportButton( final String tooltipText ) {
+        return GuiUtilities
+                .getLabeledButton( "Generate Report", tooltipText, "generate-report-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getGraphicsImportButton( final String tooltipText ) {
+        return GuiUtilities.getLabeledButton( "Import Graphics", tooltipText, "import-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getHelpAlternateButton() {
+        return GuiUtilities.getLabeledButton( "Additional Help", null, "help-alternate-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getInsertButton( final String objectType ) {
+        final String buttonLabel = "Insert";
+        final String tooltipText = buttonLabel + " New " + objectType;
+
+        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "insert-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getResetButton( final String propertiesCategory ) {
+        final String buttonLabel = "Reset";
+        final String tooltipText = "Set Default " + propertiesCategory;
+
+        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "reset-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getRevertButton( final String objectType ) {
+        final String buttonLabel = "Revert";
+        final String tooltipText = buttonLabel + " Changes to " + objectType;
+
+        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "revert-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getSaveButton( final String propertiesCategory ) {
+        final String buttonLabel = "Save";
+        final String tooltipText = "Save Current " + propertiesCategory;
+
+        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "save-button" );
     }
 
 }

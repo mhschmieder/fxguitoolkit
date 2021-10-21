@@ -32,7 +32,7 @@ package com.mhschmieder.fxguitoolkit.layout;
 
 import com.mhschmieder.commonstoolkit.math.AngleUnit;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.ScrollingSensitivity;
 import com.mhschmieder.fxguitoolkit.control.AngleEditor;
 import com.mhschmieder.fxguitoolkit.control.AngleSlider;
@@ -73,7 +73,7 @@ public class AnglePane extends VBox {
         _angleEditor = ControlFactory.getAngleSliderEditor( sessionContext, _angleSlider );
         _angleEditor.setPrefWidth( 70d );
 
-        final Label angleLabel = FxGuiUtilities.getControlLabel( labelText );
+        final Label angleLabel = GuiUtilities.getControlLabel( labelText );
 
         final HBox hbox = new HBox();
         hbox.getChildren().addAll( angleLabel, _angleEditor );

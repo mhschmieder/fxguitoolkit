@@ -31,7 +31,7 @@
 package com.mhschmieder.fxguitoolkit.layout;
 
 import com.mhschmieder.commonstoolkit.net.SessionContext;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.ScrollingSensitivity;
 import com.mhschmieder.fxguitoolkit.control.ControlFactory;
 import com.mhschmieder.fxguitoolkit.control.OpacityEditor;
@@ -94,7 +94,7 @@ public final class OpacityPane extends VBox {
         _opacityEditor = ControlFactory.getOpacitySliderEditor( sessionContext, _opacitySlider );
         _opacityEditor.setPrefWidth( 70d );
 
-        _opacityLabel = FxGuiUtilities.getControlLabel( labelText );
+        _opacityLabel = GuiUtilities.getControlLabel( labelText );
 
         final HBox hbox = new HBox();
         hbox.getChildren().addAll( _opacityLabel, _opacityEditor );

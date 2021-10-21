@@ -34,7 +34,7 @@ import java.net.URL;
 
 import com.mhschmieder.commonstoolkit.math.AngleUnit;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
 import javafx.scene.control.Spinner;
@@ -230,11 +230,11 @@ public class ControlFactory {
 
         if ( toolbarContext ) {
             // Apply drop-shadow effects when the mouse enters this Node.
-            FxGuiUtilities.applyDropShadowEffect( doubleSpinner );
+            GuiUtilities.applyDropShadowEffect( doubleSpinner );
         }
         else {
             // Set the full list of shared Spinner Properties (CSS etc.).
-            FxGuiUtilities.setSpinnerProperties( doubleSpinner );
+            GuiUtilities.setSpinnerProperties( doubleSpinner );
         }
 
         // Return the fully initialized double Spinner.
@@ -268,11 +268,11 @@ public class ControlFactory {
 
         if ( toolbarContext ) {
             // Apply drop-shadow effects when the mouse enters this Node.
-            FxGuiUtilities.applyDropShadowEffect( integerSpinner );
+            GuiUtilities.applyDropShadowEffect( integerSpinner );
         }
         else {
             // Set the full list of shared Spinner Properties (CSS etc.).
-            FxGuiUtilities.setSpinnerProperties( integerSpinner );
+            GuiUtilities.setSpinnerProperties( integerSpinner );
         }
 
         // Return the fully initialized integer Spinner.

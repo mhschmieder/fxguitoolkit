@@ -35,7 +35,7 @@ import java.util.List;
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -96,7 +96,7 @@ public final class AboutBox extends Popup {
                     + productBranding.productVersion + ",  Last Updated: " //$NON-NLS-1$
                     + productBranding.revisionDate;
 
-            final HBox banner = FxGuiUtilities.getBanner( revisionNotice );
+            final HBox banner = GuiUtilities.getBanner( revisionNotice );
             nodes.add( banner );
         }
 
@@ -105,7 +105,7 @@ public final class AboutBox extends Popup {
         if ( useAppInfo ) {
             if ( thirdPartyAttributions != null ) {
                 for ( final String thirdPartyAttribution : thirdPartyAttributions ) {
-                    final HBox attribution = FxGuiUtilities.getBanner( thirdPartyAttribution );
+                    final HBox attribution = GuiUtilities.getBanner( thirdPartyAttribution );
                     nodes.add( attribution );
                 }
             }
@@ -114,7 +114,7 @@ public final class AboutBox extends Popup {
         if ( useAppInfo ) {
             root.getStyleClass().add( "status-box" ); //$NON-NLS-1$
 
-            FxGuiUtilities.applyDropShadowEffect( root );
+            GuiUtilities.applyDropShadowEffect( root );
         }
 
         // Pop-ups add content vs. setting a scene (hidden in implementation).
@@ -164,7 +164,7 @@ public final class AboutBox extends Popup {
 
     public final void show( final Node ownerNode ) {
         // Always center the Splash Screen on the screen.
-        FxGuiUtilities.centerOnScreen( this );
+        GuiUtilities.centerOnScreen( this );
 
         // Show the About Box, focused on the splash image, so that the user can
         // quickly click on it or trivially hide the pop-up window by moving
@@ -177,7 +177,7 @@ public final class AboutBox extends Popup {
     @Override
     public final void show( final Window ownerWindow ) {
         // Always center the Splash Screen on the screen.
-        FxGuiUtilities.centerOnScreen( this );
+        GuiUtilities.centerOnScreen( this );
 
         // Show the About Box, focused on the splash image, so that the user can
         // quickly click on it or trivially hide the pop-up window by moving

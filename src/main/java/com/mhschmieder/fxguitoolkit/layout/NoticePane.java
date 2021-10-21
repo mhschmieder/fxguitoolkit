@@ -32,7 +32,7 @@ package com.mhschmieder.fxguitoolkit.layout;
 
 import java.net.URL;
 
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.ControlFactory;
 
 import javafx.beans.property.StringProperty;
@@ -124,7 +124,7 @@ public class NoticePane extends VBox {
         contentNode.setPickOnBounds( true );
 
         // Use the main pane to host the Banner Label and the Notice Text Area.
-        _titleBar = FxGuiUtilities.getBanner( bannerText );
+        _titleBar = GuiUtilities.getBanner( bannerText );
 
         getChildren().addAll( _titleBar, contentNode );
     }

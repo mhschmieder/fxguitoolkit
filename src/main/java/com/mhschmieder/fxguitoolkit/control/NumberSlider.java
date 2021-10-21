@@ -31,7 +31,7 @@
 package com.mhschmieder.fxguitoolkit.control;
 
 import com.mhschmieder.commonstoolkit.net.SessionContext;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.ScrollingSensitivity;
 
 import javafx.scene.control.CheckMenuItem;
@@ -125,7 +125,7 @@ public class NumberSlider extends Slider {
         setTickResolution( majorTickSpacing, minorTickSpacing );
         setBlockIncrement( blockIncrement );
 
-        FxGuiUtilities.applyDropShadowEffect( this );
+        GuiUtilities.applyDropShadowEffect( this );
 
         // Sliders do not have Context Menus by default, but we may need to
         // present the user with a choice regarding the Snap to Ticks feature.

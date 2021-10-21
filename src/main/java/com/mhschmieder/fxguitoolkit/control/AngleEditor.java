@@ -66,7 +66,7 @@ public class AngleEditor extends DoubleEditor {
     public double getClampedValue( final double unclampedValue ) {
         // If the allowed angle range is a full period or more (360+ degrees),
         // then unwrap the angle. Otherwise, apply standard min/max clamping.
-        final double clampedValue = ( Math.abs( getMaximumValue() - getMinimumValue() ) >= 360d )
+        final double clampedValue = ( Math.abs( _maximumValue - _minimumValue ) >= 360d )
             ? getUnwrappedAngleDegrees( unclampedValue )
             : super.getClampedValue( unclampedValue );
 
@@ -79,11 +79,11 @@ public class AngleEditor extends DoubleEditor {
         // allowed range itself is less than a full period.
         double unwrappedAngleDegrees = unclampedValue;
 
-        while ( unwrappedAngleDegrees < getMinimumValue() ) {
+        while ( unwrappedAngleDegrees < _minimumValue ) {
             unwrappedAngleDegrees += 360d;
         }
 
-        while ( unwrappedAngleDegrees > getMaximumValue() ) {
+        while ( unwrappedAngleDegrees > _maximumValue ) {
             unwrappedAngleDegrees -= 360d;
         }
 

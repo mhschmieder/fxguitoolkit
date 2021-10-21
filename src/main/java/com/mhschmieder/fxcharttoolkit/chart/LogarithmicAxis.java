@@ -58,9 +58,12 @@ public class LogarithmicAxis extends ValueAxis< Number > {
      * Validate the bounds by throwing an exception if the values are not
      * conform to the mathematics log interval: [0, Double.MAX_VALUE]
      *
-     * @param lowerBound The lower bound of the axis
-     * @param upperBound The upper bound of the axis
-     * @throws IllegalLogarithmicRangeException If out of bounds, throw an exception
+     * @param lowerBound
+     *            The lower bound of the axis
+     * @param upperBound
+     *            The upper bound of the axis
+     * @throws IllegalLogarithmicRangeException
+     *             If out of bounds, throw an exception
      */
     private static void validateBounds( final double lowerBound, final double upperBound )
             throws IllegalLogarithmicRangeException {
@@ -299,7 +302,8 @@ public class LogarithmicAxis extends ValueAxis< Number > {
      * simplest case is to set the lower and upper bound properties directly
      * with the new values.
      *
-     * @param range The number range to use for the axis
+     * @param range
+     *            The number range to use for the axis
      * @param animate
      *            ignored. does not animate.
      */

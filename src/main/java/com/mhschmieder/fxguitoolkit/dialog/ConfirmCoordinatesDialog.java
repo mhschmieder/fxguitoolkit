@@ -32,7 +32,7 @@ package com.mhschmieder.fxguitoolkit.dialog;
 
 import com.mhschmieder.commonstoolkit.math.DistanceUnit;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.CartesianPositionPane;
 
 import javafx.geometry.Insets;
@@ -79,7 +79,7 @@ public class ConfirmCoordinatesDialog extends XDialog {
     private final void initDialog() {
         _positionPane = new CartesianPositionPane( _sessionContext );
 
-        final Node positionBorderNode = FxGuiUtilities
+        final Node positionBorderNode = GuiUtilities
                 .getTitledBorderWrappedNode( _positionPane, "Reference Point Position" ); //$NON-NLS-1$
 
         final BorderPane borderPane = new BorderPane();

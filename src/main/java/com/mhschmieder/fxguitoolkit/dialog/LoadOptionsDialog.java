@@ -24,47 +24,46 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxguitoolkit;
+package com.mhschmieder.fxguitoolkit.dialog;
 
-import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import com.mhschmieder.commonstoolkit.net.SessionContext;
 
-/**
- * This is a utility class for dealing with common group functionality.
- *
- * @version 0.1
- *
- * @author Mark Schmieder
- */
-public final class GroupUtilities {
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 
-    /**
-     * The default constructor is disabled, as this is a static utilities class.
-     */
-    private GroupUtilities() {}
+public abstract class LoadOptionsDialog extends XDialog {
 
-    public static Group getBackgroundColorIcon( final Color backgroundColor ) {
-        final Group group = new Group();
+    public ButtonType        _loadButton;
 
-        // First, get the icon size and insets for the menu context.
-        final int inset = GuiUtilities.getIconInset( IconContext.MENU );
-        final int boxSideLength = GuiUtilities.MENU_ICON_SIZE - ( inset * 2 );
-        final int startX = inset;
-        final int startY = GuiUtilities.MENU_ICON_SIZE - inset;
+    protected SessionContext _sessionContext;
 
-        // Fill the icon with the specified background color.
-        final Rectangle box = new Rectangle( startX, startY, boxSideLength, boxSideLength );
-        box.setFill( backgroundColor );
+    public LoadOptionsDialog( final String title,
+                              final String masthead,
+                              final SessionContext sessionContext ) {
+        // Always call the superclass constructor first!
+        super( title, masthead ); // , sessionContext.systemType );
 
-        // Add the box to the Node Group.
-        group.getChildren().addAll( box );
+        _sessionContext = sessionContext;
 
-        return group;
+        try {
+            initDialog();
+        }
+        catch ( final Exception ex ) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void initDialog() {
+        // Replace the standard "OK" button text with "Load".
+        _loadButton = new ButtonType( "Load", ButtonData.OK_DONE ); //$NON-NLS-1$
+
+        final DialogPane dialogPane = getDialogPane();
+        dialogPane.getButtonTypes().addAll( _loadButton, ButtonType.CANCEL );
     }
 
 }

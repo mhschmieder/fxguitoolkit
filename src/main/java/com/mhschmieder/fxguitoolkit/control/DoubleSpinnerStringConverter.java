@@ -36,7 +36,7 @@ import java.util.Locale;
 
 import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
 import com.mhschmieder.commonstoolkit.text.StringUtilities;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -134,7 +134,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
         spinnerValueFactory.setWrapAround( wrapAround );
 
         // Set the attributes and callbacks common to all Number Spinners.
-        FxGuiUtilities
+        GuiUtilities
                 .applyNumberSpinnerAttributes( doubleSpinner, tooltipText, maximumSpinnerWidth );
 
         return converter;

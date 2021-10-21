@@ -32,7 +32,7 @@ package com.mhschmieder.fxguitoolkit.layout;
 
 import com.mhschmieder.commonstoolkit.net.SessionContext;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageSize;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.TextSelector;
 
 import javafx.application.Platform;
@@ -75,10 +75,10 @@ public final class ImageSizePane extends VBox {
 
     private final void initPane( final SessionContext sessionContext,
                                  final boolean initialAutoSize ) {
-        _autoSizeCheckBox = FxGuiUtilities.getCheckBox( "Use On-Screen Image Size", //$NON-NLS-1$
-                                                        initialAutoSize );
+        _autoSizeCheckBox = GuiUtilities.getCheckBox( "Use On-Screen Image Size", //$NON-NLS-1$
+                                                      initialAutoSize );
 
-        final Label pixelWidthLabel = FxGuiUtilities.getControlLabel( "Width" ); //$NON-NLS-1$
+        final Label pixelWidthLabel = GuiUtilities.getControlLabel( "Width" ); //$NON-NLS-1$
 
         // Gather the list of pixel width presets.
         // TODO: Derive a special class from DoubleSelector, and add unit?
@@ -93,7 +93,7 @@ public final class ImageSizePane extends VBox {
                                                 pixelWidths,
                                                 pixelWidthDefault );
 
-        final Label pixelHeightLabel = FxGuiUtilities.getControlLabel( "Height" ); //$NON-NLS-1$
+        final Label pixelHeightLabel = GuiUtilities.getControlLabel( "Height" ); //$NON-NLS-1$
 
         // Gather the list of pixel height presets.
         // TODO: Derive a special class from DoubleSelector, and add unit?
@@ -121,7 +121,7 @@ public final class ImageSizePane extends VBox {
         gridPane.setAlignment( Pos.CENTER );
         gridPane.setPadding( new Insets( 12d ) );
 
-        final Node imageSizeBorderNode = FxGuiUtilities
+        final Node imageSizeBorderNode = GuiUtilities
                 .getTitledBorderWrappedNode( gridPane, "Target Image Size" ); //$NON-NLS-1$
         imageSizeBorderNode.setDisable( initialAutoSize );
 

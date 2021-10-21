@@ -31,7 +31,7 @@
 package com.mhschmieder.fxguitoolkit.layout;
 
 import com.mhschmieder.commonstoolkit.net.SessionContext;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -60,7 +60,7 @@ public class ListViewPane extends BorderPane {
     // Cache the context for OS etc. in case it affects layout or functionality.
     private final SessionContext sessionContext;
 
-    // :TODO: Review the constructor(s) to provide the best choices in
+    // TODO: Review the constructor(s) to provide the best choices in
     // populating the List View, and/or simply add methods that update the
     // list post-construction.
     public ListViewPane( final String listHeader,
@@ -81,8 +81,8 @@ public class ListViewPane extends BorderPane {
 
     private final void initPane( final String listHeader, final String[] items ) {
         // Make the large stylized masthead label and place at top.
-        headerLabel = FxGuiUtilities.getTitleLabel( listHeader );
-        final HBox masthead = FxGuiUtilities.getTitlePane( headerLabel );
+        headerLabel = GuiUtilities.getTitleLabel( listHeader );
+        final HBox masthead = GuiUtilities.getTitlePane( headerLabel );
 
         // Make the scrollable List View for Delay Integration Product Types.
         itemList = new ListView<>();
@@ -91,9 +91,11 @@ public class ListViewPane extends BorderPane {
 
         // Try to style the list to use semi-transparent forest green to
         // highlight selected items, as an initial LAF placeholder.
-        FxGuiUtilities.addStylesheetAsJarResource( itemList, "/css/listView.css" ); //$NON-NLS-1$
+        GuiUtilities
+                .addStylesheetAsJarResource( itemList,
+                                             "/com/mhschmieder/fxguitoolkit/resources/listView.css" ); //$NON-NLS-1$
 
-        // :TODO: Make a useful bottom pane, maybe with buttons, or pass one
+        // TODO: Make a useful bottom pane, maybe with buttons, or pass one
         // in to the constructor if this avoids having to subclass this class.
         bottomButtonPane = new Pane();
 
@@ -115,15 +117,15 @@ public class ListViewPane extends BorderPane {
 
         // Check for Product Type list selection events, to enable relevant
         // Phase Curve Frequency Buttons and set the selection style.
-        // :NOTE: it's not clear if we can grab the list cell from here, so we
-        // may need to apply the Compass 4.x list selection styling via CSS.
+        // NOTE: it's not clear if we can grab the list cell from here, so we
+        // may need to apply the another list selection styling via CSS.
         itemList.setOnMouseClicked( mouseEvent -> {
             final String item = itemList.getSelectionModel().getSelectedItem();
             if ( ( item == null ) || item.isEmpty() ) {
                 return;
             }
 
-            // :TODO: Potentially do some view-to-model syncing here, to cache
+            // TODO: Potentially do some view-to-model syncing here, to cache
             // any valid selected value. Might need to do this in a derived
             // class that is domain specific and which passes in a reference.
 
@@ -138,7 +140,7 @@ public class ListViewPane extends BorderPane {
         setBackground( background );
     }
 
-    // :TODO: Perhaps push this to a subclass, for determining enablement
+    // TODO: Perhaps push this to a subclass, for determining enablement
     // criteria of additional layout elements (such as action buttons) that
     // are shown below the List View, based on the current selection or active
     // highlighted list item.
@@ -146,7 +148,7 @@ public class ListViewPane extends BorderPane {
         // Nothing to do at the moment; this is a placeholder example.
     }
 
-    // :TODO: Use Generics at the class definition level for the data type
+    // TODO: Use Generics at the class definition level for the data type
     // modeled by the List, and use Generics for this method argument.
     public final void updateSelectedItem( final String selectedItem ) {
         itemList.getSelectionModel().select( selectedItem );

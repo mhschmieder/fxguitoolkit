@@ -217,8 +217,8 @@ public class ColorConstants {
     public static final Color DELETE_TABLE_ROW_FOREGROUND_COLOR  = DELETE_ACTION_FOREGROUND_COLOR;
 
     // NOTE: This is sort of an orphan that might apply more generically to
-    // any acoustical object of interest against a color-dense background.
-    public static final Color MICROPHONE_MUTED_COLOR             = Color.MAGENTA;
+    // any targeted object of interest against a color-dense background.
+    public static final Color TARGET_HIGHLIGHTED_COLOR           = Color.MAGENTA;
 
     // NOTE: This is from an old request for indicating locked objects.
     public static final Color OBJECT_LOCKED_COLOR                = Color.rgb( 191, 64, 64 );

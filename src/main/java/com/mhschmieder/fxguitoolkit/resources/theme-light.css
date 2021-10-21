@@ -1,0 +1,708 @@
+/**
+ * MIT License
+ *
+ * Copyright (c) 2020, 2021 Mark Schmieder
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * This file is part of the FxGuiToolkit Library
+ *
+ * You should have received a copy of the MIT License along with the
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ *
+ * Project: https://github.com/mhschmieder/fxguitoolkit
+ */
+
+/*******************************************************************************
+ *                                                                             *
+ * "Black against Light Background" contrast theme.                            *
+ *                                                                             *
+ ******************************************************************************/
+ 
+.root {
+    /* General Chart and Axis Color Palette */
+    CHART_COLOR_TITLE: black;
+    CHART_COLOR_LEGEND: black;
+    CHART_GRID_LINE: derive( gray, -40% ); 
+    CHART_ZERO_LINE: derive( gray, -30% ); 
+    AXIS_COLOR_BASIS: COLOR_GRAY25;
+    AXIS_COLOR_LABEL: black;
+    AXIS_FILL_TICK: null;
+    AXIS_FILL_TICK_LABEL: black;
+    
+    /* Control Color Palette */
+    COLOR_BUTTON: COLOR_GRAY41;
+    FILL_BUTTON: white;
+    
+    COLOR_LABEL: COLOR_GRAY70;
+    FILL_LABEL: black;
+    BORDER_LABEL: COLOR_GRAY60_5;
+    
+    COLOR_EDITOR: COLOR_GRAY80;
+    FILL_EDITOR: black;
+    BORDER_EDITOR: COLOR_GRAY70;
+    
+    COLOR_SELECTOR: COLOR_GRAY45;
+    FILL_SELECTOR: white;
+    
+    COLOR_SPINNER: COLOR_GRAY45;
+    FILL_SPINNER: white;
+
+    /* Control Color Palette */
+    COLOR_TAB: COLOR_GRAY60;
+    FILL_TAB: black;
+    
+    /* Toggle Action Color Palette */
+    COLOR_POLARITY_NORMAL: COLOR_GRAY15;
+    FILL_POLARITY_NORMAL: white;
+    COLOR_POLARITY_REVERSED: COLOR_GRAY85;
+    FILL_POLARITY_REVERSED: black;
+    
+    COLOR_UNMUTED: #621818; /* #701c1c = Persian Plum */
+    FILL_UNMUTED: white;
+    COLOR_MUTED: #ff0000; /* red */
+    FILL_MUTED: black;
+    
+    COLOR_UNSOLOED: #8b4513; /* saddle brown */
+    FILL_UNSOLOED: white;
+    COLOR_SOLOED: #ffa500; /* orange */
+    FILL_SOLOED: white;
+    
+    COLOR_UNSELECTED: #006400; /* #006600 = Pakistan Green */
+    FILL_UNSELECTED: white;
+    COLOR_SELECTED: #adff2f; /* green-yellow */
+    FILL_SELECTED: black;
+    
+    COLOR_HIDDEN: #0000ff; /* blue */
+    FILL_HIDDEN: #ffff0a; /* #ffff33 = Electric Yellow */
+    COLOR_VISIBLE: #ffff0a; /* #ffff33 = Electric Yellow */
+    FILL_VISIBLE: #0000ff; /* blue */
+    
+    COLOR_ENABLED: #808000; /* olive */
+    FILL_ENABLED: white;
+    COLOR_BYPASSED: #ffff0a; /* #ffff33 = Electric Yellow */
+    FILL_BYPASSED: black;
+    
+    COLOR_INACTIVE: #08b8b3; /* #0abab5 = Tiffany Blue */
+    FILL_INACTIVE: black;
+    COLOR_ACTIVE: #00ffff; /* aqua (aka cyan) */
+    FILL_ACTIVE: black;
+    
+    /* Toggle Action Color Palette */
+    COLOR_TOOL_BAR_TOGGLE_OFF: #a4a6a8; /* #a9a9a9 = dark gray */
+    FILL_TOOL_BAR_TOGGLE_OFF: black;
+    COLOR_TOOL_BAR_TOGGLE_ON: #d4d8e0; /* #dcdcdc = gainsboro */
+    FILL_TOOL_BAR_TOGGLE_ON: black;
+    
+    COLOR_LAYER_INACTIVE: COLOR_GRAY30;
+    FILL_LAYER_INACTIVE: white;
+    COLOR_LAYER_ACTIVE: #0aff0a; /* bright green */
+    FILL_LAYER_ACTIVE: #0000ff; /* blue */
+    
+    COLOR_LAYER_HIDDEN: #0000ff; /* blue */
+    FILL_LAYER_HIDDEN: #ffff0a; /* #ffff33 = Electric Yellow */
+    COLOR_LAYER_VISIBLE: #ffff0a; /* #ffff33 = Electric Yellow */
+    FILL_LAYER_VISIBLE: #0000ff; /* blue */
+        
+    COLOR_LAYER_UNLOCKED: #ffff0a; /* #ffff33 = Electric Yellow */
+    FILL_LAYER_UNLOCKED: #0aff0a; /* bright green */
+    COLOR_LAYER_LOCKED: #ff0a0a; /* bright red */
+    FILL_LAYER_LOCKED: #ffff0a; /* #ffff33 = Electric Yellow */
+    
+    /* Action Color Palette */
+    COLOR_SAVE: #20b2aa; /* light sea green */
+    COLOR_LOAD: #ba55d3; /* medium orchid */
+    COLOR_RESET: #8b0000; /* dark red */
+    COLOR_RECALL: #ffa500; /* orange */
+    COLOR_PASTE: COLOR_RECALL;
+    COLOR_CREATE: #1157e1; /* #273be2 = Palatinate Blue */
+    COLOR_STORE: COLOR_CREATE;
+    COLOR_COPY: COLOR_CREATE;
+    COLOR_DELETE: #dc143c; /* crimson */
+    COLOR_REVERT: #00a321; /* #059033 = North Texas Green */
+    
+    /* Action Color Palette */
+    COLOR_HELP: COLOR_GRAY41;
+    COLOR_HELP_ALTERNATE: COLOR_GRAY32_5;
+    COLOR_INSERT: COLOR_CREATE;
+    COLOR_OK: COLOR_STORE;
+    COLOR_APPLY: COLOR_SAVE;
+    COLOR_APPLY_AND_CLOSE: COLOR_STORE;
+    COLOR_CANCEL: COLOR_DELETE;
+    COLOR_IMPORT: COLOR_LOAD;
+    COLOR_EXPORT: COLOR_SAVE;
+    COLOR_EDIT_NOTES: #fffaf0; /* floral white */
+    COLOR_GENERATE_REPORT: COLOR_SAVE;
+    COLOR_ADD_ELEMENT: COLOR_CREATE;
+    COLOR_REMOVE_ELEMENT: COLOR_DELETE;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Tab Panes                                                                   *
+ *                                                                             *
+ ******************************************************************************/
+
+.tab-pane > .tab-header-area > .headers-region > .tab {
+    -fx-background-color: COLOR_TAB;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, derive( COLOR_TAB, 40% );
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: FILL_TAB;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Slider                                                                      *
+ *                                                                             *
+ ******************************************************************************/
+
+/* Try to make the slider tick labels match the preferred text fill color. */
+.slider .axis {
+    -fx-tick-label-fill: black;
+}
+
+/* Make the slider track a bit distracting vs. the knob and the ticks/labels. */
+.slider .track {
+    -fx-control-inner-background: COLOR_GRAY75;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Charts                                                                      *
+ *                                                                             *
+ ******************************************************************************/
+
+/* Set dark chart title  against all light backgrounds, vs. default derivation. */
+.chart-title {
+    -fx-text-background-color: CHART_COLOR_TITLE; 
+ }
+
+/* Set dark chart legend against all light backgrounds, vs. default derivation. */
+.chart-legend {
+    -fx-text-background-color: CHART_COLOR_LEGEND;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Axis                                                                        *
+ *                                                                             *
+ ******************************************************************************/
+
+/* Set dark tick label against all light backgrounds, vs. default derivation. */
+.axis {
+    AXIS_COLOR: AXIS_COLOR_BASIS; /* Local color definition, available to all axis children */
+    -fx-tick-label-font-size: 0.833333em; /* 10px */
+    -fx-tick-label-fill: AXIS_FILL_TICK_LABEL;
+}
+
+.axis:top {
+    -fx-border-color: transparent transparent AXIS_COLOR transparent;
+}
+.axis:right {
+    -fx-border-color: transparent transparent transparent AXIS_COLOR;
+}
+.axis:bottom {
+    -fx-border-color: AXIS_COLOR transparent transparent transparent;
+}
+.axis:left {
+    -fx-border-color: transparent AXIS_COLOR transparent transparent;
+}
+
+/* Set dark axis label against all light backgrounds, vs. default derivation. */
+.axis-label,
+.axis:top > .axis-label,
+.axis:left > .axis-label,
+.axis:bottom > .axis-label,
+.axis:right > .axis-label {
+    -fx-text-background-color: AXIS_COLOR_LABEL;
+}
+
+.axis-tick-mark,
+.axis-minor-tick-mark {
+    -fx-fill: null;
+    -fx-stroke: AXIS_COLOR;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * ChartPlot                                                                   *
+ *                                                                             *
+ ******************************************************************************/
+
+/* Try to make the chart grid lines contrast with the background color. */
+.chart-vertical-grid-lines,
+.chart-horizontal-grid-lines {
+    -fx-stroke: CHART_GRID_LINE;
+    -fx-stroke-dash-array: null;
+}
+
+/* Try to make the chart zero lines contrast with the background color. */
+.chart-vertical-zero-line,
+.chart-horizontal-zero-line {
+    -fx-stroke: CHART_ZERO_LINE;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Custom Styles                                                               *
+ *                                                                             *
+ ******************************************************************************/
+  
+/* Match the "Day Mode" color for General Action Buttons. */
+.compass-button {
+    -fx-background-color: COLOR_BUTTON;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_BUTTON;
+}
+
+/* Match the "Day Mode" color for Status and Value Labels. */
+.compass-label {
+    -fx-border-color: BORDER_LABEL;
+    -fx-background-color: COLOR_LABEL;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_LABEL;
+}
+
+/* Match the "Day Mode" color for Text Fields (don't lose borders). */
+.compass-text-input {
+    -fx-control-inner-background: COLOR_EDITOR;
+    -fx-text-box-border: BORDER_EDITOR;
+    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
+        linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-inner-color: FILL_EDITOR;
+    -fx-text-background-color: -fx-text-inner-color;
+    -fx-text-base-color: -fx-text-background-color;
+    -fx-text-fill: -fx-text-base-color;
+}
+
+/* Match the "Day Mode" color for Combo Boxes. */
+.compass-combo-box {
+    -fx-background-color: COLOR_SELECTOR;
+    -fx-text-fill: FILL_SELECTOR;
+}
+
+.compass-combo-box > .cell:selected {
+    -fx-text-fill: FILL_SELECTOR;
+}
+
+.compass-combo-box > .text-field {
+	-fx-background-color: COLOR_SELECTOR;
+	-fx-text-fill: FILL_SELECTOR;
+}
+
+.compass-combo-box > .arrow-button {
+    -fx-background-color: COLOR_SELECTOR;
+}
+
+.compass-combo-box > .arrow-button > .arrow {
+    -fx-background-color: FILL_SELECTOR; /* Counter-intuitive but correct */
+}
+
+/* Match the "Day Mode" color for Spinners. */
+.compass-spinner {
+    -fx-background-color: COLOR_SPINNER;
+    -fx-text-fill: FILL_SPINNER;
+}
+
+.compass-spinner > .text-field {
+     -fx-text-fill: FILL_SPINNER;
+}
+
+.compass-spinner .increment-arrow-button {
+    -fx-background-color: COLOR_SPINNER;
+}
+
+.compass-spinner .increment-arrow-button .increment-arrow {
+    -fx-background-color: FILL_SPINNER;
+}
+
+.compass-spinner .decrement-arrow-button {
+    -fx-background-color: COLOR_SPINNER;
+}
+
+.compass-spinner .decrement-arrow-button .decrement-arrow {
+    -fx-background-color: FILL_SPINNER; /* Counter-intuitive but correct */
+}
+
+/* Match the "Day Mode" color for Polarity Toggle Buttons. */
+.polarity-toggle {
+    -fx-background-color: COLOR_POLARITY_NORMAL;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_POLARITY_NORMAL;
+}
+
+.polarity-toggle:selected {
+    -fx-background-color: COLOR_POLARITY_REVERSED;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_POLARITY_REVERSED;
+}
+
+/* Match the "Day Mode" color for Mute Toggle Buttons. */
+.mute-toggle {
+    -fx-background-color: COLOR_UNMUTED;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_UNMUTED;
+}
+
+.mute-toggle:selected {
+    -fx-background-color: COLOR_MUTED;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_MUTED;
+}
+
+/* Match the "Day Mode" color for Solo Toggle Buttons. */
+.solo-toggle {
+    -fx-background-color: COLOR_UNSOLOED;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_UNSOLOED;
+}
+
+.solo-toggle:selected {
+    -fx-background-color: COLOR_SOLOED;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_SOLOED;
+}
+
+/* Match the "Day Mode" color for Select Toggle Buttons. */
+.select-toggle {
+    -fx-background-color: COLOR_UNSELECTED;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_UNSELECTED;
+}
+
+.select-toggle:selected {
+    -fx-background-color: COLOR_SELECTED;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_SELECTED;
+}
+
+.select-toggle:disabled {
+    -fx-background-color: COLOR_UNSELECTED;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_UNSELECTED;
+    -fx-opacity: 0.4;
+}
+
+/* Match the "Day Mode" color for Visible Toggle Buttons. */
+.visible-toggle {
+    -fx-background-color: COLOR_HIDDEN;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_HIDDEN;
+}
+
+.visible-toggle:selected {
+    -fx-background-color: COLOR_VISIBLE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_VISIBLE;
+}
+
+/* Match the "Day Mode" color for Bypass Toggle Buttons. */
+.bypass-toggle {
+    -fx-background-color: COLOR_ENABLED;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_ENABLED;
+}
+
+.bypass-toggle:selected {
+    -fx-background-color: COLOR_BYPASSED;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_BYPASSED;
+}
+
+/* Match the "Day Mode" color for Active Toggle Buttons. */
+.active-toggle {
+    -fx-background-color: COLOR_INACTIVE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_INACTIVE;
+}
+
+.active-toggle:selected {
+    -fx-background-color: COLOR_ACTIVE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_ACTIVE;
+}
+
+/* Match the "Day Mode" color for Tool Bar Toggle Buttons. */
+.tool-bar-toggle {
+    -fx-background-color: COLOR_TOOL_BAR_TOGGLE_OFF;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_TOOL_BAR_TOGGLE_OFF;
+}
+
+.tool-bar-toggle:selected {
+    -fx-background-color: COLOR_TOOL_BAR_TOGGLE_ON;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_TOOL_BAR_TOGGLE_ON;
+}
+
+/* Match the "Day Mode" color for Layer Active Toggle Buttons. */
+.layer-active-toggle {
+    -fx-background-color: COLOR_LAYER_INACTIVE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_LAYER_INACTIVE;
+}
+
+.layer-active-toggle:selected {
+    -fx-background-color: COLOR_LAYER_ACTIVE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_LAYER_ACTIVE;
+}
+
+/* Match the "Day Mode" color for Layer Visible Toggle Buttons. */
+.layer-visible-toggle {
+    -fx-background-color: COLOR_LAYER_HIDDEN;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_LAYER_HIDDEN;
+}
+
+.layer-visible-toggle:selected {
+    -fx-background-color: COLOR_LAYER_VISIBLE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_LAYER_VISIBLE;
+}
+
+/* Match the "Day Mode" color for Layer Lock Toggle Buttons. */
+.layer-lock-toggle {
+    -fx-background-color: COLOR_LAYER_UNLOCKED;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_LAYER_UNLOCKED;
+}
+
+.layer-lock-toggle:selected {
+    -fx-background-color: COLOR_LAYER_LOCKED;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_LAYER_LOCKED;
+}
+
+/* Match the "Day Mode" color for Save Action Buttons. */
+.save-button {
+    -fx-background-color: COLOR_SAVE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Load Action Buttons. */
+.load-button {
+    -fx-background-color: COLOR_LOAD;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Reset Action Buttons. */
+.reset-button {
+    -fx-background-color: COLOR_RESET;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Recall Action Buttons. */
+.recall-button {
+    -fx-background-color: COLOR_RECALL;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Paste Action Buttons. */
+.paste-button {
+    -fx-background-color: COLOR_PASTE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Create Action Buttons. */
+.create-button {
+    -fx-background-color: COLOR_CREATE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Store Action Buttons. */
+.store-button {
+    -fx-background-color: COLOR_STORE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Copy Action Buttons. */
+.copy-button {
+    -fx-background-color: COLOR_COPY;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Delete Action Buttons. */
+.delete-button {
+    -fx-background-color: COLOR_DELETE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Revert Action Buttons. */
+.revert-button {
+    -fx-background-color: COLOR_REVERT;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Help Buttons. */
+.help-button {
+    -fx-background-color: COLOR_HELP;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Help Alternate Buttons. */
+.help-alternate-button {
+    -fx-background-color: COLOR_HELP_ALTERNATE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Insert Action Buttons. */
+.insert-button {
+    -fx-background-color: COLOR_INSERT;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for OK Action Buttons. */
+.ok-button {
+    -fx-background-color: COLOR_OK;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Apply Action Buttons. */
+.apply-button {
+    -fx-background-color: COLOR_APPLY;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Apply And Close Action Buttons. */
+.apply-and-close-button {
+    -fx-background-color: COLOR_APPLY_AND_CLOSE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Cancel Action Buttons. */
+.cancel-button {
+    -fx-background-color: COLOR_CANCEL;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Import Action Buttons. */
+.import-button {
+    -fx-background-color: COLOR_IMPORT;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Export Action Buttons. */
+.export-button {
+    -fx-background-color: COLOR_EXPORT;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Edit Notes Buttons. */
+.edit-notes-button {
+    -fx-background-color: COLOR_EDIT_NOTES;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: black;
+}
+
+/* Match the "Day Mode" color for Generate Report Action Buttons. */
+.generate-report-button {
+    -fx-background-color: COLOR_GENERATE_REPORT;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Add Element Action Buttons. */
+.add-element-button {
+    -fx-background-color: COLOR_ADD_ELEMENT;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}
+
+/* Match the "Day Mode" color for Remove Element Action Buttons. */
+.remove-element-button {
+    -fx-background-color: COLOR_REMOVE_ELEMENT;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: white;
+}

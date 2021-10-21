@@ -32,7 +32,7 @@ package com.mhschmieder.fxguitoolkit.layout;
 
 import com.mhschmieder.commonstoolkit.net.SessionContext;
 import com.mhschmieder.fxgraphicstoolkit.geometry.Orientation;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -50,8 +50,7 @@ public class OrientationPane extends BorderPane {
     public RadioButton _orientationVtRadioButton;
     public CheckBox    _orientationInvertedCheckBox;
 
-    public OrientationPane( final SessionContext sessionContext,
-                            final boolean useInvertedbutton ) {
+    public OrientationPane( final SessionContext sessionContext, final boolean useInvertedbutton ) {
         // Always call the superclass constructor first!
         super();
 
@@ -74,12 +73,12 @@ public class OrientationPane extends BorderPane {
     private final void initPane( final SessionContext sessionContext,
                                  final boolean useInvertedbutton ) {
         _orientationToggleGroup = new ToggleGroup();
-        _orientationHzRadioButton = FxGuiUtilities.getRadioButton( Orientation.HORIZONTAL
+        _orientationHzRadioButton = GuiUtilities.getRadioButton( Orientation.HORIZONTAL
                 .toPresentationString(), _orientationToggleGroup, true );
-        _orientationVtRadioButton = FxGuiUtilities.getRadioButton( Orientation.VERTICAL
+        _orientationVtRadioButton = GuiUtilities.getRadioButton( Orientation.VERTICAL
                 .toPresentationString(), _orientationToggleGroup, false );
 
-        _orientationInvertedCheckBox = FxGuiUtilities.getCheckBox( "Inverted", false ); //$NON-NLS-1$
+        _orientationInvertedCheckBox = GuiUtilities.getCheckBox( "Inverted", false ); //$NON-NLS-1$
 
         final GridPane gridPane = new GridPane();
         gridPane.setHgap( 10d );

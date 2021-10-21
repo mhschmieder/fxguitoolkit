@@ -107,10 +107,14 @@ public final class FileChooserUtilities {
      * Get a file for a "File Open" action. Wraps
      * {@link FileChooser#showOpenDialog(javafx.stage.Window) showOpenDialog}.
      *
-     * @param title the title to use for the file chooser
-     * @param initialDirectory the initial default directory for the user
-     * @param extensionFilterAdditions additions to the general file extensions
-     * @param defaultExtensionFilter the default file extension filter to use
+     * @param title
+     *            the title to use for the file chooser
+     * @param initialDirectory
+     *            the initial default directory for the user
+     * @param extensionFilterAdditions
+     *            additions to the general file extensions
+     * @param defaultExtensionFilter
+     *            the default file extension filter to use
      * @param parent
      *            If an invalid or null parent is provided, the dialog will not
      *            be modal.
@@ -172,10 +176,14 @@ public final class FileChooserUtilities {
      * {@link FileChooser#showOpenMultipleDialog(javafx.stage.Window)
      * showOpenMultipleDialog}.
      *
-     * @param title the title to use for the file chooser
-     * @param initialDirectory the initial default directory for the user
-     * @param extensionFilterAdditions additions to the general file extensions
-     * @param defaultExtensionFilter the default file extension filter to use
+     * @param title
+     *            the title to use for the file chooser
+     * @param initialDirectory
+     *            the initial default directory for the user
+     * @param extensionFilterAdditions
+     *            additions to the general file extensions
+     * @param defaultExtensionFilter
+     *            the default file extension filter to use
      * @param parent
      *            If an invalid or null parent is provided, the dialog will not
      *            be modal.

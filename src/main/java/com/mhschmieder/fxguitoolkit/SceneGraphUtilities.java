@@ -105,7 +105,7 @@ public class SceneGraphUtilities {
         }
 
         // Apply the icon from JAR-resident resources and set its style.
-        FxGuiUtilities.applyToolbarIcon( toggleButton, iconFilename );
+        GuiUtilities.applyToolbarIcon( toggleButton, iconFilename );
 
         return toggleButton;
     }
@@ -119,16 +119,15 @@ public class SceneGraphUtilities {
                 .getResourceBundle( sessionContext, bundleName, true );
 
         // Get the control label from the resource bundle, if applicable.
-        final String buttonLabel = FxGuiUtilities
-                .getButtonLabel( groupName, itemName, resourceBundle );
+        final String buttonLabel =
+                                 GuiUtilities.getButtonLabel( groupName, itemName, resourceBundle );
         if ( buttonLabel.trim().isEmpty() ) {
             return null;
         }
 
         // Conditionally strip the mnemonic marker from the label, or
         // replace the Swing mnemonic marker with the JavaFX version.
-        final String buttonText =
-                                FxGuiUtilities.handleMnemonicMarker( buttonLabel, replaceMnemonic );
+        final String buttonText = GuiUtilities.handleMnemonicMarker( buttonLabel, replaceMnemonic );
         if ( ( buttonText == null ) || buttonText.trim().isEmpty() ) {
             return null;
         }
@@ -146,7 +145,7 @@ public class SceneGraphUtilities {
         // Although we put the label above the control, the size difference is
         // so huge that it won't be clear what the label is for unless we add a
         // colon as with horizontally paired controls.
-        final Label labelLabel = FxGuiUtilities.getControlLabel( labelText );
+        final Label labelLabel = GuiUtilities.getControlLabel( labelText );
 
         // TODO: Provide mnemonic and/or accelerator for this?
         labelLabel.setLabelFor( textArea );

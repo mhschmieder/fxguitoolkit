@@ -105,7 +105,8 @@ public interface ShapeContainer {
      * Updates the stroke on child {@link javafx.scene.shape.Shape shapes} to a
      * uniform scale in this node's frame of reference.
      *
-     * See javafx.scene.shape.Shape.setStrokeWidth(double) similar method on Shape.
+     * See javafx.scene.shape.Shape.setStrokeWidth(double) similar method on
+     * Shape.
      *
      * @param pStrokeWidth
      *            The width of the stroke, roughly in pixels

@@ -31,7 +31,7 @@
 package com.mhschmieder.fxguitoolkit.control;
 
 import com.mhschmieder.commonstoolkit.net.SessionContext;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
 import impl.org.controlsfx.skin.SearchableComboBoxSkin;
 import javafx.collections.FXCollections;
@@ -101,11 +101,11 @@ public abstract class XComboBox extends ComboBox< String > {
 
         if ( toolbarContext ) {
             // Apply drop-shadow effects when the mouse enters this Combo Box.
-            FxGuiUtilities.applyDropShadowEffect( this );
+            GuiUtilities.applyDropShadowEffect( this );
         }
         else {
             // Set the full list of shared Combo Box Properties (CSS etc.).
-            FxGuiUtilities.setComboBoxProperties( this );
+            GuiUtilities.setComboBoxProperties( this );
         }
 
         // Attempt to support auto-complete for all list data types.

@@ -32,7 +32,7 @@ package com.mhschmieder.fxguitoolkit.layout;
 
 import com.mhschmieder.commonstoolkit.math.DistanceUnit;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
@@ -76,9 +76,9 @@ public class DualPositionPane extends GridPane {
                                  final String mainPositionLabel,
                                  final String alternatePositionLabel ) {
         final ToggleGroup dualPositionToggleGroup = new ToggleGroup();
-        _mainPositionRadioButton = FxGuiUtilities
+        _mainPositionRadioButton = GuiUtilities
                 .getRadioButton( mainPositionLabel, dualPositionToggleGroup, false );
-        _alternatePositionRadioButton = FxGuiUtilities
+        _alternatePositionRadioButton = GuiUtilities
                 .getRadioButton( alternatePositionLabel, dualPositionToggleGroup, true );
 
         _mainPositionPane = new CartesianPositionPane( sessionContext );

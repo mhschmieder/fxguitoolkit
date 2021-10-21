@@ -33,7 +33,7 @@ package com.mhschmieder.fxguitoolkit.layout;
 import com.mhschmieder.commonstoolkit.math.AngleUnit;
 import com.mhschmieder.commonstoolkit.math.DistanceUnit;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.ScrollingSensitivity;
 import com.mhschmieder.fxguitoolkit.control.DistanceEditor;
 
@@ -70,8 +70,8 @@ public class PolarPositionPane extends BorderPane {
 
         _distanceEditor = new DistanceEditor( sessionContext, "0", null ); //$NON-NLS-1$
 
-        final HBox distanceEditorPane = FxGuiUtilities.getLabeledTextFieldPane( "Radial Distance", //$NON-NLS-1$
-                                                                                _distanceEditor );
+        final HBox distanceEditorPane = GuiUtilities.getLabeledTextFieldPane( "Radial Distance", //$NON-NLS-1$
+                                                                              _distanceEditor );
 
         setTop( _anglePane );
         setBottom( distanceEditorPane );

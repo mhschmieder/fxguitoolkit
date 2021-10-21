@@ -121,19 +121,19 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 /**
- * {@code FxGuiUtilities} is a utility class for methods related to top-level
+ * {@code GuiUtilities} is a utility class for methods related to top-level
  * JavaFX GUI functionality.
  *
  * @version 1.0
  *
  * @author Mark Schmieder
  */
-public final class FxGuiUtilities {
+public final class GuiUtilities {
 
     /**
      * The default constructor is disabled, as this is a static utilities class.
      */
-    private FxGuiUtilities() {}
+    private GuiUtilities() {}
 
     /**
      *
@@ -186,6 +186,27 @@ public final class FxGuiUtilities {
 
     public static final int                             LABEL_EDITOR_WIDTH_DEFAULT      = 320;
 
+    // Default smallest screen size (4:3 AR), based on laptops (not netbooks).
+    // :OTE: The next level up is typically 1280 x 1024, which is more useful.
+    // NOTE: For retina displays, it is more commonly 1366 x 768 (native),
+    // 1344 x 756 or 1280 x 720 (16:9), 1152 x 720 (16:10) or 1024 x 768 (4:3).
+    public static final int                             LEGACY_SCREEN_WIDTH_DEFAULT     = 1024;
+    public static final int                             LEGACY_SCREEN_HEIGHT_DEFAULT    = 768;
+
+    // Modern screen size assumptions are based on 16:10 (in this case) or 16:9.
+    public static final int                             SCREEN_WIDTH_DEFAULT            = 1440;
+    public static final int                             SCREEN_HEIGHT_DEFAULT           = 900;
+
+    // Set the minimum width and height for primary application windows.
+    public static final int                             MINIMUM_WINDOW_WIDTH            = 500;
+    public static final int                             MINIMUM_WINDOW_HEIGHT           = 300;
+
+    // Toggle Buttons tend to be given bindings related to aspect ratio, and
+    // must be given an initial preferred size or the bindings don't kick in on
+    // the first layout round, so we experimented to find the width that is
+    // least likely to make the button get taller -- on Windows 10, at least.
+    public static final int                             TOGGLE_BUTTON_WIDTH_DEFAULT     = 72;
+
     /**
      * Labels by default are made as small as possible to contain their text,
      * but we prefer to have sufficient horizontal and vertical gaps for
@@ -217,12 +238,19 @@ public final class FxGuiUtilities {
     // JavaFX has its own built-in mnemonic marker.
     public static final char                            JAVAFX_MNEMONIC_MARKER          = '_';
 
-    // :TODO: Make a bunch of partial CSS string constants, to reduce
+    // TODO: Make a bunch of partial CSS string constants, to reduce
     // copy/paste.
     public static final String                          UNDECORATED_BORDERED_REGION_CSS =
                                                                                         "-fx-content-display: center; -fx-padding: 16; -fx-background-color: black; -fx-border-color: white; -fx-border-width: 1; -fx-border-radius: 7.5;";
     public static final String                          UNDECORATED_LABELED_CSS         =
                                                                                 "-fx-content-display: center; -fx-padding: 4 8 4 8; -fx-background-color: black; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 1; -fx-border-radius: 7.5;";
+
+    // To avoid cut/paste errors with resource references, make global constants
+    // for the CSS theme to be used for dark vs. light backgrounds.
+    @SuppressWarnings("nls") public static final String DARK_BACKGROUND_CSS             =
+                                                                            "/com/mhschmieder/fxguitoolkit/resources/theme-dark.css";
+    @SuppressWarnings("nls") public static final String LIGHT_BACKGROUND_CSS            =
+                                                                             "/com/mhschmieder/fxguitoolkit/resources/theme-light.css";
 
     public static void addStylesheetAsJarResource( final ObservableList< String > stylesheetFilenames,
                                                    final String jarRelativeStylesheetFilename ) {
@@ -232,7 +260,7 @@ public final class FxGuiUtilities {
             return;
         }
 
-        final URL stylesheetUrl = FxGuiUtilities.class.getResource( jarRelativeStylesheetFilename );
+        final URL stylesheetUrl = GuiUtilities.class.getResource( jarRelativeStylesheetFilename );
         final String stylesheetFilename = stylesheetUrl.toExternalForm();
         try {
             // :NOTE: CSS loading can be timing-sensitive to JavaFX API calls
@@ -289,10 +317,10 @@ public final class FxGuiUtilities {
         // :NOTE: The CSS files are copied from FxGuiToolkit as a starting point
         // and thus doesn't even begin to yet match our LAF for Society Desktop.
         final List< String > jarRelativeStylesheetFilenames = new ArrayList<>();
-        jarRelativeStylesheetFilenames.add( "/css/societySkin.css" );
+        jarRelativeStylesheetFilenames.add( "/com/mhschmieder/fxguitoolkit/resources/skin.css" );
         final String fontStylesheet = SystemType.MACOS.equals( systemType )
-            ? "/css/font-mac.css"
-            : "/css/font.css";
+            ? "/com/mhschmieder/fxguitoolkit/resources/font-mac.css"
+            : "/com/mhschmieder/fxguitoolkit/resources/font.css";
         jarRelativeStylesheetFilenames.add( fontStylesheet );
         return jarRelativeStylesheetFilenames;
     }
@@ -1831,7 +1859,7 @@ public final class FxGuiUtilities {
             toggleButton.setPadding( new Insets( TOOLBAR_ICON_INSET ) );
 
             // Apply drop-shadow effects when the mouse enters a node.
-            FxGuiUtilities.applyDropShadowEffect( toggleButton );
+            GuiUtilities.applyDropShadowEffect( toggleButton );
         }
 
         // Use the dark styling so the selected button is more obvious.
@@ -1940,7 +1968,7 @@ public final class FxGuiUtilities {
         }
 
         // Apply drop-shadow effects when the mouse enters a Status Label.
-        FxGuiUtilities.applyDropShadowEffect( statusLabel );
+        GuiUtilities.applyDropShadowEffect( statusLabel );
 
         // Labels do not have context menus by default, and all we'd want to do
         // anyway is copy the text, just when it's something of interest like a
@@ -2138,7 +2166,7 @@ public final class FxGuiUtilities {
             return;
         }
 
-        final URL stylesheetUrl = FxGuiUtilities.class.getResource( jarRelativeStylesheetFilename );
+        final URL stylesheetUrl = GuiUtilities.class.getResource( jarRelativeStylesheetFilename );
         final String stylesheetFilename = stylesheetUrl.toExternalForm();
         try {
             // :NOTE: CSS loading can be timing-sensitive to JavaFX API calls

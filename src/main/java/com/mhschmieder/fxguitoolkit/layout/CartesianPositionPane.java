@@ -33,7 +33,7 @@ package com.mhschmieder.fxguitoolkit.layout;
 import com.mhschmieder.commonstoolkit.math.DistanceUnit;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorUtilities;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.DistanceEditor;
 
 import javafx.geometry.Insets;
@@ -100,11 +100,11 @@ public class CartesianPositionPane extends BorderPane {
         gridPane.setHgap( 10d );
         gridPane.setVgap( 10d );
 
-        _xPositionLabel = FxGuiUtilities.getControlLabel( xPositionLabelText );
+        _xPositionLabel = GuiUtilities.getControlLabel( xPositionLabelText );
         gridPane.add( _xPositionLabel, 0, 0 );
         gridPane.add( _xPositionEditor, 1, 0 );
 
-        _yPositionLabel = FxGuiUtilities.getControlLabel( yPositionLabelText );
+        _yPositionLabel = GuiUtilities.getControlLabel( yPositionLabelText );
         gridPane.add( _yPositionLabel, 0, 1 );
         gridPane.add( _yPositionEditor, 1, 1 );
 

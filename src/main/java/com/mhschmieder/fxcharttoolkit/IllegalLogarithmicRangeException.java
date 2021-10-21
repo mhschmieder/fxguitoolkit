@@ -47,7 +47,8 @@ public class IllegalLogarithmicRangeException extends Exception {
     private static final long serialVersionUID = 9036903131703009485L;
 
     /**
-     * @param message The message to pass to the standard exception handler
+     * @param message
+     *            The message to pass to the standard exception handler
      */
     public IllegalLogarithmicRangeException( final String message ) {
         super( message );

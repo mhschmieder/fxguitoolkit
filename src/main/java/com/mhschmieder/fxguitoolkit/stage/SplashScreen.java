@@ -33,7 +33,7 @@ package com.mhschmieder.fxguitoolkit.stage;
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -85,7 +85,7 @@ public final class SplashScreen extends Stage {
         final Scene scene = new Scene( root, Color.TRANSPARENT );
 
         // Always center the Splash Screen on the screen.
-        FxGuiUtilities.centerOnScreen( this );
+        GuiUtilities.centerOnScreen( this );
 
         // Set the Splash Screen to top, so it isn't blocked by other
         // applications. It is easy to dismiss, so shouldn't prove annoying.

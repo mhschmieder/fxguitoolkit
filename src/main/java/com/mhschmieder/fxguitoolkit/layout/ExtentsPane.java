@@ -34,7 +34,7 @@ import com.mhschmieder.commonstoolkit.math.DistanceUnit;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
 import com.mhschmieder.fxgraphicstoolkit.graphics.Extents2D;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorUtilities;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
 import javafx.application.Platform;
 import javafx.geometry.HPos;
@@ -176,9 +176,9 @@ public final class ExtentsPane extends GridPane {
                                  final double extentsSizeMinimumMeters,
                                  final double extentsSizeMaximumMeters,
                                  final String propertiesCategory ) {
-        _minimumPaneLabel = FxGuiUtilities.getColumnHeader( "Lower Left Corner" ); //$NON-NLS-1$
+        _minimumPaneLabel = GuiUtilities.getColumnHeader( "Lower Left Corner" ); //$NON-NLS-1$
         _minimumPane = new CartesianPositionPane( sessionContext );
-        _sizePaneLabel = FxGuiUtilities.getColumnHeader( propertiesCategory + " Size" ); //$NON-NLS-1$
+        _sizePaneLabel = GuiUtilities.getColumnHeader( propertiesCategory + " Size" ); //$NON-NLS-1$
         _sizePane = new CartesianPositionPane( sessionContext, "Width", "Height" ); //$NON-NLS-1$ //$NON-NLS-2$
 
         _sizePane.setMinimumDistanceMeters( extentsSizeMinimumMeters );

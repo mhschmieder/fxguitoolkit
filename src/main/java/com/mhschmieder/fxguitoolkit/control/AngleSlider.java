@@ -47,9 +47,8 @@ public final class AngleSlider extends NumberSlider {
     public static final double MINOR_TICK_SPACING_DEGREES    = 10d;
 
     // Declare block increment/decrement amount for left and right arrow keys.
-    // NOTE: We block to 0.5 degrees as this is the most common increment for
-    // Loudspeaker rigging, though we could make the arrow key increments a user
-    // preference as in Compass.
+    // NOTE: We block to 0.5 degrees as this is a common increment value,
+    // though we could make the arrow key increments a user preference.
     public static final double BLOCK_INCREMENT_DEGREES       = 0.5d;
 
     public AngleSlider( final SessionContext sessionContext, final boolean useContextMenu ) {

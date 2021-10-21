@@ -24,58 +24,38 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
 
-/*******************************************************************************
- *                                                                             *
- * Charts                                                                      *
- *                                                                             *
- ******************************************************************************/
-
-/* Make the overlay chart's redundant plotting area background transparent. */
-.chart-plot-background { 
-  -fx-background-color: transparent; 
-}
-
-/* Make the overlay chart's redundant legend background transparent. */
-.chart-legend {
-   -fx-background-color: transparent;
-}
+/*
+ * Style sheet for List View specific LAF.
+ */
 
 /*******************************************************************************
  *                                                                             *
- * ChartPlot                                                                   *
+ * ListView                                                                    *
  *                                                                             *
  ******************************************************************************/
 
-/* Hide the overlay chart's redundant vertical grid lines. */
-.chart-vertical-grid-lines {
-    -fx-stroke: null;
+/* Large, bold fonts for list items */
+.list-cell {
+    -fx-font-family: 'sans-serif';
+    -fx-font-size: 130.0%;
+    -fx-font-style: normal;
+    -fx-font-weight: bold;
+    -fx-padding: 0.583em 0.583em 0.583em 0.583em; /* 7 7 7 7 */
 }
 
-/* Hide the overlay chart's redundant horizontal grid lines. */
-.chart-horizontal-grid-lines {
-    -fx-stroke: null;
+/* Selected rows */
+.list-view:focused > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected {
+    -fx-background: lightgreen;
+    -fx-table-cell-border-color: derive(lightgreen, 20%);
 }
 
-/* Hide the overlay chart's redundant alternate column fill. */
-.chart-alternative-column-fill {
-    -fx-fill: null;
-    -fx-stroke: null;
+/* Selected when control is not focused */
+.list-cell:filled:selected {
+    -fx-background: lightgreen;
+    -fx-table-cell-border-color: derive(lightgreen, 20%);
 }
-
-/* Hide the overlay chart's redundant alternate row fill. */
-.chart-alternative-row-fill {
-    -fx-fill: null;
-    -fx-stroke: null;
-}
-
-/* Hide the overlay chart's redundant zero axis lines. */
-.chart-vertical-zero-line,
-.chart-horizontal-zero-line {
-    -fx-stroke: null;
-}
-

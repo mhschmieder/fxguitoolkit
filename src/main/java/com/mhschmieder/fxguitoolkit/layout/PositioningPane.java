@@ -33,7 +33,7 @@ package com.mhschmieder.fxguitoolkit.layout;
 import com.mhschmieder.commonstoolkit.math.AngleUnit;
 import com.mhschmieder.commonstoolkit.math.DistanceUnit;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.ScrollingSensitivity;
 
 import javafx.geometry.Insets;
@@ -79,12 +79,12 @@ public class PositioningPane extends GridPane {
 
     private final void initPane( final SessionContext sessionContext ) {
         final ToggleGroup dualPositionToggleGroup = new ToggleGroup();
-        _cartesianPositionRadioButton = FxGuiUtilities.getRadioButton( "Cartesian Coordinates", //$NON-NLS-1$
-                                                                       dualPositionToggleGroup,
-                                                                       true );
-        _polarPositionRadioButton = FxGuiUtilities.getRadioButton( "Polar Coordinates", //$NON-NLS-1$
-                                                                   dualPositionToggleGroup,
-                                                                   false );
+        _cartesianPositionRadioButton = GuiUtilities.getRadioButton( "Cartesian Coordinates", //$NON-NLS-1$
+                                                                     dualPositionToggleGroup,
+                                                                     true );
+        _polarPositionRadioButton = GuiUtilities.getRadioButton( "Polar Coordinates", //$NON-NLS-1$
+                                                                 dualPositionToggleGroup,
+                                                                 false );
 
         _cartesianPositionPane = new CartesianPositionPane( sessionContext );
 

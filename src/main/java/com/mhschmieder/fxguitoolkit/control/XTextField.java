@@ -32,7 +32,7 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import com.mhschmieder.commonstoolkit.net.SessionContext;
 import com.mhschmieder.commonstoolkit.util.SystemType;
-import com.mhschmieder.fxguitoolkit.FxGuiUtilities;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -72,8 +72,8 @@ public abstract class XTextField extends TextField {
             setTooltip( new Tooltip( "Use ENTER or TAB Key to Commit Edits, and ESC to Cancel Edits" ) ); //$NON-NLS-1$
         }
 
-        // Match the Compass Look-and-Feel for editable text fields.
-        FxGuiUtilities.setTextFieldProperties( this );
+        // Match the Look-and-Feel used elsewhere for editable text fields.
+        GuiUtilities.setTextFieldProperties( this );
 
         // Try to make sure the text field uses enough height so that commas
         // don't look like periods. More height is required on the Mac for these

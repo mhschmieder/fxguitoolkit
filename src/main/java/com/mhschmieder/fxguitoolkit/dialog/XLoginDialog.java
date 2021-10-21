@@ -73,6 +73,8 @@ public final class XLoginDialog extends Dialog< Pair< String, String > > {
         /**
          * The sole purpose of this constructor is to cache an accessible copy
          * of the dialog owner, for method overrides.
+         * 
+         * @param pLocale The Locale to use for text localization
          */
         public XLoginDialogPane( final Locale pLocale ) {
             // Always call the superclass constructor first!
@@ -204,7 +206,8 @@ public final class XLoginDialog extends Dialog< Pair< String, String > > {
         // goes in the file system such that it works in IntelliJ and Eclipse.
         final Background background = LayoutFactory.makeRegionBackground( ColorConstants.GRAY86 );
         final ImageView loginIcon = new ImageView( XLoginDialog.class
-                .getResource( "/com/everaldo/icons/Password48.png" ).toExternalForm() );
+                .getResource( "/com/mhschmieder/fxguitoolkit/icons/everaldo/Password48.png" )
+                .toExternalForm() );
 
         dialogPane.setHeaderText( headerText );
         dialogPane.setBackground( background );
