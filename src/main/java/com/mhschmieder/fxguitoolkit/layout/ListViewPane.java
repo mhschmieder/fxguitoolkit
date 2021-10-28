@@ -93,7 +93,7 @@ public class ListViewPane extends BorderPane {
         // highlight selected items, as an initial LAF placeholder.
         GuiUtilities
                 .addStylesheetAsJarResource( itemList,
-                                             "/com/mhschmieder/fxguitoolkit/resources/listView.css" ); //$NON-NLS-1$
+                                             "/css/listView.css" ); //$NON-NLS-1$
 
         // TODO: Make a useful bottom pane, maybe with buttons, or pass one
         // in to the constructor if this avoids having to subclass this class.

@@ -248,9 +248,9 @@ public final class GuiUtilities {
     // To avoid cut/paste errors with resource references, make global constants
     // for the CSS theme to be used for dark vs. light backgrounds.
     @SuppressWarnings("nls") public static final String DARK_BACKGROUND_CSS             =
-                                                                            "/com/mhschmieder/fxguitoolkit/resources/theme-dark.css";
+                                                                            "/css/theme-dark.css";
     @SuppressWarnings("nls") public static final String LIGHT_BACKGROUND_CSS            =
-                                                                             "/com/mhschmieder/fxguitoolkit/resources/theme-light.css";
+                                                                             "/css/theme-light.css";
 
     public static void addStylesheetAsJarResource( final ObservableList< String > stylesheetFilenames,
                                                    final String jarRelativeStylesheetFilename ) {
@@ -317,10 +317,10 @@ public final class GuiUtilities {
         // NOTE: The CSS files are copied from FxGuiToolkit as a starting point
         // and thus doesn't even begin to yet match our LAF for main Desktop.
         final List< String > jarRelativeStylesheetFilenames = new ArrayList<>();
-        jarRelativeStylesheetFilenames.add( "/com/mhschmieder/fxguitoolkit/resources/skin.css" );
+        jarRelativeStylesheetFilenames.add( "/css/skin.css" );
         final String fontStylesheet = SystemType.MACOS.equals( systemType )
-            ? "/com/mhschmieder/fxguitoolkit/resources/font-mac.css"
-            : "/com/mhschmieder/fxguitoolkit/resources/font.css";
+            ? "/css/font-mac.css"
+            : "/css/font.css";
         jarRelativeStylesheetFilenames.add( fontStylesheet );
         return jarRelativeStylesheetFilenames;
     }
@@ -1098,7 +1098,7 @@ public final class GuiUtilities {
             xAxis.setTickMarkVisible( false );
 
             addStylesheetAsJarResource( chart,
-                                        "/com/mhschmieder/fxguitoolkit/resources/overlay-chart.css" );
+                                        "/css/overlay-chart.css" );
         }
     }
 
