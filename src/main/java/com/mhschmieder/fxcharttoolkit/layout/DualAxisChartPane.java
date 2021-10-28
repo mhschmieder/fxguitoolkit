@@ -1,24 +1,32 @@
 /**
- * Copyright (c) 1996, 2020, Meyer Sound Laboratories Inc.
- * All rights reserved.
+ * MIT License
  *
- * MEYER SOUND PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS. MEYER SOUND
- * SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF MERCHANTABILITY OR FITNESS FOR
- * A PARTICULAR USE. MEYER SOUND LABORATORIES, INC. DOES NOT WARRANT THAT THE
- * OPERATION OF THE PROGRAM WILL BE UNINTERRUPTED OR ERROR FREE.
+ * Copyright (c) 2020, 2021 Mark Schmieder
  *
- * This is UNPUBLISHED PROPRIETARY SOURCE CODE of Meyer Sound Laboratories,
- * Inc.; the contents of this file may not be disclosed to third parties, copied
- * or duplicated in any form, in whole or in part, without the prior written
- * permission of Meyer Sound Laboratories, Inc.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * RESTRICTED RIGHTS LEGEND: Use, duplication or disclosure by the U.S.
- * Government is subject to restrictions set forth in FAR 52.227.19(c)(2)
- * (Commercial Computer Software - Restricted Rights) or subparagraph (c)(1)(ii)
- * of the Rights in Technical Data and Computer Software clause at DFARS
- * 252.227-7013, and/or in similar or successor clauses in the FAR, DOD or NASA
- * FAR Supplement. Unpublished - rights reserved under the Copyright Laws of the
- * United States.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * This file is part of the CommonsToolkit Library
+ *
+ * You should have received a copy of the MIT License along with the
+ * CommonsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ *
+ * Project: https://github.com/mhschmieder/commonstoolkit
  */
 package com.mhschmieder.fxcharttoolkit.layout;
 

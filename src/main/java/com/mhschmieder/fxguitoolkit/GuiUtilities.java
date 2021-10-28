@@ -263,7 +263,7 @@ public final class GuiUtilities {
         final URL stylesheetUrl = GuiUtilities.class.getResource( jarRelativeStylesheetFilename );
         final String stylesheetFilename = stylesheetUrl.toExternalForm();
         try {
-            // :NOTE: CSS loading can be timing-sensitive to JavaFX API calls
+            // NOTE: CSS loading can be timing-sensitive to JavaFX API calls
             // that also affect style attributes, so it might be safer to defer
             // the CSS loading so that it is applied to a more stable GUI.
             stylesheetFilenames.add( stylesheetFilename );
@@ -314,8 +314,8 @@ public final class GuiUtilities {
     }
 
     public static List< String > getJarRelativeStylesheetFilenames( final SystemType systemType ) {
-        // :NOTE: The CSS files are copied from FxGuiToolkit as a starting point
-        // and thus doesn't even begin to yet match our LAF for Society Desktop.
+        // NOTE: The CSS files are copied from FxGuiToolkit as a starting point
+        // and thus doesn't even begin to yet match our LAF for main Desktop.
         final List< String > jarRelativeStylesheetFilenames = new ArrayList<>();
         jarRelativeStylesheetFilenames.add( "/com/mhschmieder/fxguitoolkit/resources/skin.css" );
         final String fontStylesheet = SystemType.MACOS.equals( systemType )
@@ -355,7 +355,7 @@ public final class GuiUtilities {
     public static Label getTitleLabel( final String title ) {
         final Label titleLabel = new Label( title );
 
-        // :NOTE: This is temporary until we figure out why the CSS style from
+        // NOTE: This is temporary until we figure out why the CSS style from
         // the main stylesheet doesn't appear to be loaded when this is invoked.
         // titleLabel.getStyleClass().add( "title-text" );
         titleLabel
@@ -364,7 +364,7 @@ public final class GuiUtilities {
         return titleLabel;
     }
 
-    // :TODO: Pass in the minimum height as a parameter?
+    // TODO: Pass in the minimum height as a parameter?
     public static HBox getTitlePane( final Label titleLabel ) {
         final HBox titlePane = LayoutFactory.makeCenteredLabeledHBox( titleLabel );
         titlePane.setMinHeight( 32d );
@@ -373,7 +373,7 @@ public final class GuiUtilities {
         return titlePane;
     }
 
-    // :NOTE: This method should only be used for Latin alphanumeric
+    // NOTE: This method should only be used for Latin alphanumeric
     // characters. See the Mnemonics.java example for a more complex and
     // foolproof methodology for finding the key code for a mnemonic. We
     // specify US-English (vs. just "English") to be safe, until support for
@@ -401,7 +401,7 @@ public final class GuiUtilities {
         return getMnemonicMarkerIndex( buttonLabel );
     }
 
-    // :NOTE: The menu label property files would be very time-consuming to edit
+    // NOTE: The menu label property files would be very time-consuming to edit
     // safely for replacing the "&" with "_", so we use the old Swing symbol as
     // the lookup and then replace it with the JavaFX symbol downstream.
     public static int getMnemonicMarkerIndex( final String key ) {
@@ -412,7 +412,7 @@ public final class GuiUtilities {
         final int mnemonicMarkerIndex = getMnemonicMarkerIndex( label );
         final int mnemonicIndex = ( mnemonicMarkerIndex >= 0 ) ? mnemonicMarkerIndex + 1 : 0;
         try {
-            // :NOTE: If no mnemonic marker is found, "-1" is returned, which is
+            // NOTE: If no mnemonic marker is found, "-1" is returned, which is
             // then incremented to use the first character as the mnemonic (by
             // default).
             final String labelPreMnemonic = label.substring( 0, mnemonicMarkerIndex );
@@ -460,7 +460,7 @@ public final class GuiUtilities {
                                                 final String borderWidthCss,
                                                 final String borderRadiusCss,
                                                 final String borderInsetsCss ) {
-        // :NOTE: Do not apply the fx-content-display as centered here, as
+        // NOTE: Do not apply the fx-content-display as centered here, as
         // that causes buttons with both text and graphics to stack them
         // both in the center of the button, thus obscuring each other.
         final String padding = ( borderInsetsCss == null ) ? "-fx-padding: 6 8 6 8" : "";
@@ -481,10 +481,10 @@ public final class GuiUtilities {
                                                     final String backColorCss,
                                                     final String borderColorCss,
                                                     final String borderWidthCss ) {
-        // :NOTE: Do not apply the fx-content-display as centered here, as
+        // NOTE: Do not apply the fx-content-display as centered here, as
         // that causes buttons with both text and graphics to stack them
         // both in the center of the button, thus obscuring each other.
-        // :TODO: Move this into CSS as state-specific styles, to avoid
+        // TODO: Move this into CSS as state-specific styles, to avoid
         // so much copy/paste code in the toggle button action handlers.
         applyLabeledButtonStyle( button, backColorCss, borderColorCss, borderWidthCss, "45" );
     }
@@ -493,7 +493,7 @@ public final class GuiUtilities {
                                             final String backColorCss,
                                             final String borderColorCss,
                                             final String borderWidthCss ) {
-        // :NOTE: Do not apply the fx-content-display as centered here, as
+        // NOTE: Do not apply the fx-content-display as centered here, as
         // that causes buttons with both text and graphics to stack them
         // both in the center of the button, thus obscuring each other.
         textField.setStyle( "-fx-padding: 6 8 6 8" + "; -fx-background-color: " + backColorCss
@@ -505,7 +505,7 @@ public final class GuiUtilities {
                                                   final String backColorCss,
                                                   final String borderColorCss,
                                                   final String borderWidthCss ) {
-        // :NOTE: Do not apply the fx-content-display as centered here, as
+        // NOTE: Do not apply the fx-content-display as centered here, as
         // that causes buttons with both text and graphics to stack them
         // both in the center of the button, thus obscuring each other.
         // :NOTE: This variant assumes a Node is added to the right side
@@ -522,7 +522,7 @@ public final class GuiUtilities {
                                               final int borderWidthPixels ) {
         final int spanPixels = 2 * radiusPixels;
 
-        // :TODO: Review whether units these are in pixels by default, and
+        // TODO: Review whether units these are in pixels by default, and
         // remove the "px" suffix in the CSS parameters if so.
         final String radiusPixelsCss = Integer.toString( radiusPixels ) + "px";
         final String spanPixelsCss = Integer.toString( spanPixels ) + "px";
@@ -734,12 +734,12 @@ public final class GuiUtilities {
     public static void applyDropShadowEffect( final Node node ) {
         // Apply a drop-shadow effect if a node was focus traversed via TAB, or
         // if the mouse is hovering over the node (even in passing through).
-        // :NOTE: If the current background is black, we need to make sure the
+        // NOTE: If the current background is black, we need to make sure the
         // drop-shadow color is different as otherwise it won't show up. But as
         // we can't easily query that on the node inside the callback, we take a
         // one-shoe-fits-all approach with a color that shows up against all
         // background color choices as well as colors used throughout the app.
-        // :NOTE: We also must supply the blur radius, set to slightly more than
+        // NOTE: We also must supply the blur radius, set to slightly more than
         // the default of 10%, as otherwise it doesn't show up against similar
         // backgrounds, and as 20% causes the mouse to select the wrong control.
         final DropShadow dropShadow = new DropShadow( 12d, Color.NAVY );
@@ -1082,7 +1082,7 @@ public final class GuiUtilities {
         // It is safer to turn off animation while the chart is initializing.
         chart.setAnimated( false );
 
-        // :NOTE: The overlay attribute could be for dual axis charts or for
+        // NOTE: The overlay attribute could be for dual axis charts or for
         // charts with the same y-axis data range, but the underlying assumption
         // is a shared x-axis for all charts; only the bottom chart shows all.
         chart.setAlternativeRowFillVisible( !isOverlayChart );

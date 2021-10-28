@@ -76,11 +76,10 @@ public final class MainApplicationLoadTask extends Task< Void > {
 
             // If the main application stage has finished initializing, exit the
             // Splash Screen timer loop.
-            // :TODO: Once there is more going on with the main Society Desktop
-            // window, implement the "isInitialized()" function and ass it to
-            // the
-            // logic here.
-            // :TODO: Make this an observable, if bindings help.
+            // TODO: Once there is more going on with the main Desktop
+            // Application window, implement the "isInitialized()" function and
+            // pass it to the logic here.
+            // TODO: Make this an observable, if bindings help.
             // if ( ( mainApplicationStage != null ) &&
             // mainApplicationStage.isInitialized() ) {
             if ( mainApplicationStage != null ) {
