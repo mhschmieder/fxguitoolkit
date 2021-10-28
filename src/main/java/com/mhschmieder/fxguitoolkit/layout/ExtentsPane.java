@@ -75,7 +75,7 @@ public final class ExtentsPane extends GridPane {
         }
     }
 
-    private final void bindProperties() {
+    private void bindProperties() {
         // NOTE: Editors sync to the exact value of JavaFX Bean Properties,
         // only passing through the unit conversion.
         extents.xProperty()
@@ -156,26 +156,26 @@ public final class ExtentsPane extends GridPane {
                 } );
     }
 
-    public final double getMinimumX() {
+    public double getMinimumX() {
         return extents.getX();
     }
 
-    public final double getMinimumY() {
+    public double getMinimumY() {
         return extents.getY();
     }
 
-    public final double getSizeX() {
+    public double getSizeX() {
         return extents.getWidth();
     }
 
-    public final double getSizeY() {
+    public double getSizeY() {
         return extents.getHeight();
     }
 
-    private final void initPane( final SessionContext sessionContext,
-                                 final double extentsSizeMinimumMeters,
-                                 final double extentsSizeMaximumMeters,
-                                 final String propertiesCategory ) {
+    private void initPane( final SessionContext sessionContext,
+                           final double extentsSizeMinimumMeters,
+                           final double extentsSizeMaximumMeters,
+                           final String propertiesCategory ) {
         _minimumPaneLabel = GuiUtilities.getColumnHeader( "Lower Left Corner" ); //$NON-NLS-1$
         _minimumPane = new CartesianPositionPane( sessionContext );
         _sizePaneLabel = GuiUtilities.getColumnHeader( propertiesCategory + " Size" ); //$NON-NLS-1$
@@ -201,7 +201,7 @@ public final class ExtentsPane extends GridPane {
     }
 
     // Reset all fields to the default values, regardless of state.
-    public final void reset() {
+    public void reset() {
         _minimumPane._xPositionEditor.setValue( Extents2D.X_METERS_DEFAULT );
         _minimumPane._yPositionEditor.setValue( Extents2D.Y_METERS_DEFAULT );
         _sizePane._xPositionEditor.setValue( Extents2D.WIDTH_METERS_DEFAULT );
@@ -210,7 +210,7 @@ public final class ExtentsPane extends GridPane {
 
     // Set and bind the Extents reference.
     // NOTE: This should be done only once, to avoid breaking bindings.
-    public final void setExtents( final Extents2D pExtents ) {
+    public void setExtents( final Extents2D pExtents ) {
         // Cache the new Extents.
         extents = pExtents;
 
@@ -223,7 +223,7 @@ public final class ExtentsPane extends GridPane {
         bindProperties();
     }
 
-    public final void setForegroundFromBackground( final Color backColor ) {
+    public void setForegroundFromBackground( final Color backColor ) {
         // Set the new Background first, so it sets context for CSS derivations.
         final Background background = LayoutFactory.makeRegionBackground( backColor );
         setBackground( background );
@@ -238,23 +238,23 @@ public final class ExtentsPane extends GridPane {
         _sizePane.setForegroundFromBackground( backColor );
     }
 
-    public final void setMinimumX( final double minimumX ) {
+    public void setMinimumX( final double minimumX ) {
         extents.setX( minimumX );
     }
 
-    public final void setMinimumY( final double minimumY ) {
+    public void setMinimumY( final double minimumY ) {
         extents.setY( minimumY );
     }
 
-    public final void setSizeX( final double sizeX ) {
+    public void setSizeX( final double sizeX ) {
         extents.setWidth( sizeX );
     }
 
-    public final void setSizeY( final double sizeY ) {
+    public void setSizeY( final double sizeY ) {
         extents.setHeight( sizeY );
     }
 
-    public final void updateDistanceUnit( final DistanceUnit distanceUnit ) {
+    public void updateDistanceUnit( final DistanceUnit distanceUnit ) {
         // Forward this method to the subcomponents.
         _minimumPane.updateDistanceUnit( distanceUnit );
         _sizePane.updateDistanceUnit( distanceUnit );

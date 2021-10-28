@@ -133,7 +133,7 @@ public class NumberSlider extends Slider {
             initContextMenu();
         }
 
-        setOnScroll( evt -> scroll( evt ) );
+        setOnScroll( this::scroll );
     }
 
     public final boolean isGesturesEnabled() {

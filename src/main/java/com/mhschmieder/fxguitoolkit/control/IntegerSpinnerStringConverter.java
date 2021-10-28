@@ -348,7 +348,7 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
         } );
     }
 
-    public final void clampValue() {
+    public void clampValue() {
         final int restrictedValue = getRestrictedValue();
 
         try {
@@ -382,7 +382,7 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
      * @see #setReset
      */
     @Override
-    public final Integer fromString( final String stringValue ) {
+    public Integer fromString( final String stringValue ) {
         // Return with default value vs. penalizing user for internal errors.
         final int defaultValue = _defaultNumericValue;
         if ( ( stringValue == null ) || stringValue.trim().isEmpty() ) {
@@ -426,7 +426,7 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
         return clampedValue;
     }
 
-    public final int getRestrictedValue() {
+    public int getRestrictedValue() {
         // The fromString method performs input validation.
         final String text = _editor.getText();
         final int restrictedValue = fromString( text );
@@ -449,7 +449,7 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
      *            {@link NumberFormatException}
      * @see #fromString
      */
-    public final void setReset( final Runnable reset ) {
+    public void setReset( final Runnable reset ) {
         _reset = reset;
     }
 
@@ -463,7 +463,7 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
      * @return The {@link String} form of {@code intValue}
      */
     @Override
-    public final String toString( final Integer intValue ) {
+    public String toString( final Integer intValue ) {
         String stringValue = Integer.toString( _defaultNumericValue );
 
         if ( intValue == null ) {

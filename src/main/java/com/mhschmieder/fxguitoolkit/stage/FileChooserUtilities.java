@@ -69,10 +69,10 @@ public final class FileChooserUtilities {
     }
 
     // Get a File Chooser with fully initialized properties.
-    public static final FileChooser getFileChooser( final String title,
-                                                    final File initialDirectory,
-                                                    final List< ExtensionFilter > extensionFilterAdditions,
-                                                    final ExtensionFilter defaultExtensionFilter ) {
+    public static FileChooser getFileChooser( final String title,
+                                              final File initialDirectory,
+                                              final List< ExtensionFilter > extensionFilterAdditions,
+                                              final ExtensionFilter defaultExtensionFilter ) {
         final FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle( title );
         try {
@@ -120,11 +120,11 @@ public final class FileChooserUtilities {
      *            be modal.
      * @return a file corresponding to the one selected in the chooser
      */
-    public static final File getFileForOpen( final String title,
-                                             final File initialDirectory,
-                                             final List< ExtensionFilter > extensionFilterAdditions,
-                                             final ExtensionFilter defaultExtensionFilter,
-                                             final Stage parent ) {
+    public static File getFileForOpen( final String title,
+                                       final File initialDirectory,
+                                       final List< ExtensionFilter > extensionFilterAdditions,
+                                       final ExtensionFilter defaultExtensionFilter,
+                                       final Stage parent ) {
         // Get a file chooser with fully initialized properties.
         final FileChooser fileChooser = getFileChooser( title,
                                                         initialDirectory,
@@ -139,12 +139,12 @@ public final class FileChooserUtilities {
     }
 
     // Get a file for a "File Save As" action.
-    public static final File getFileForSave( final String title,
-                                             final File initialDirectory,
-                                             final List< ExtensionFilter > extensionFilterAdditions,
-                                             final ExtensionFilter defaultExtensionFilter,
-                                             final File defaultFile,
-                                             final Stage parent ) {
+    public static File getFileForSave( final String title,
+                                       final File initialDirectory,
+                                       final List< ExtensionFilter > extensionFilterAdditions,
+                                       final ExtensionFilter defaultExtensionFilter,
+                                       final File defaultFile,
+                                       final Stage parent ) {
         // Get a file chooser with fully initialized properties.
         final FileChooser fileChooser = getFileChooser( title,
                                                         initialDirectory,
@@ -189,11 +189,11 @@ public final class FileChooserUtilities {
      *            be modal.
      * @return a file corresponding to the one selected in the chooser
      */
-    public static final List< File > getFilesForOpen( final String title,
-                                                      final File initialDirectory,
-                                                      final List< ExtensionFilter > extensionFilterAdditions,
-                                                      final ExtensionFilter defaultExtensionFilter,
-                                                      final Stage parent ) {
+    public static List< File > getFilesForOpen( final String title,
+                                                final File initialDirectory,
+                                                final List< ExtensionFilter > extensionFilterAdditions,
+                                                final ExtensionFilter defaultExtensionFilter,
+                                                final Stage parent ) {
         // Get a file chooser with fully initialized properties.
         final FileChooser fileChooser = getFileChooser( title,
                                                         initialDirectory,
@@ -347,7 +347,7 @@ public final class FileChooserUtilities {
     }
 
     // Verify a selected file can be opened for read. Returns an error message.
-    public static final String verifyForRead( final File file ) {
+    public static String verifyForRead( final File file ) {
         // Verify that the chosen file exists and is read-enabled.
         try {
             // Verify that the chosen file exists.
@@ -376,7 +376,7 @@ public final class FileChooserUtilities {
     }
 
     // Verify a selected file can be opened for write. Returns an error message.
-    public static final String verifyForWrite( final File file ) {
+    public static String verifyForWrite( final File file ) {
         // Verify that the chosen file exists and is write-enabled.
         try {
             // Verify that the chosen file exists.

@@ -65,7 +65,7 @@ public final class OpacityPane extends VBox {
         initPane( sessionContext, labelText );
     }
 
-    private final void bindProperties() {
+    private void bindProperties() {
         // Bidirectionally bind the Opacity property to its associated text
         // input control's value property (which reflects committed edits).
         // :NOTE: This is OK because we embed unit conversion in DoubleEditor.
@@ -82,11 +82,11 @@ public final class OpacityPane extends VBox {
         _opacitySlider.valueProperty().bindBidirectional( opacityPercentProperty() );
     }
 
-    public final double getOpacityPercent() {
+    public double getOpacityPercent() {
         return opacityPercent.get();
     }
 
-    private final void initPane( final SessionContext sessionContext, final String labelText ) {
+    private void initPane( final SessionContext sessionContext, final String labelText ) {
         // Create a default Opacity Slider.
         _opacitySlider = new OpacitySlider( sessionContext );
 
@@ -134,11 +134,11 @@ public final class OpacityPane extends VBox {
         // .getMax() ) );
     }
 
-    public final DoubleProperty opacityPercentProperty() {
+    public DoubleProperty opacityPercentProperty() {
         return opacityPercent;
     }
 
-    public final void saveEdits() {
+    public void saveEdits() {
         // Save and/or correct the current edited value.
         final double editedValue = _opacityEditor.getClampedValue();
         if ( editedValue != _opacityEditor.getValue() ) {
@@ -150,33 +150,33 @@ public final class OpacityPane extends VBox {
         }
     }
 
-    public final void setGesturesEnabled( final boolean gesturesEnabled ) {
+    public void setGesturesEnabled( final boolean gesturesEnabled ) {
         _opacitySlider.setGesturesEnabled( gesturesEnabled );
     }
 
-    public final void setMaximum( final double maximumopacity ) {
+    public void setMaximum( final double maximumopacity ) {
         _opacitySlider.setMax( maximumopacity );
         _opacityEditor.setMaximumValue( maximumopacity );
     }
 
-    public final void setMinimum( final double minimumopacity ) {
+    public void setMinimum( final double minimumopacity ) {
         _opacitySlider.setMin( minimumopacity );
         _opacityEditor.setMinimumValue( minimumopacity );
     }
 
-    public final void setNumericRange( final double minimumopacity, final double maximumopacity ) {
+    public void setNumericRange( final double minimumopacity, final double maximumopacity ) {
         setMinimum( minimumopacity );
         setMaximum( maximumopacity );
     }
 
-    public final void setOpacityPercent( final double pOpacityPercent ) {
+    public void setOpacityPercent( final double pOpacityPercent ) {
         // Forward this to the Opacity Slider to keep it in sync.
         opacityPercent.set( pOpacityPercent );
     }
 
     // Set and bind the Opacity Percent property reference.
     // :NOTE: This should be done only once, to avoid breaking bindings.
-    public final void setOpacityPercentProperty( final DoubleProperty pOpacityPercent ) {
+    public void setOpacityPercentProperty( final DoubleProperty pOpacityPercent ) {
         // Cache the Opacity Percent property reference.
         opacityPercent = pOpacityPercent;
 
@@ -190,11 +190,11 @@ public final class OpacityPane extends VBox {
      * @param scrollingSensitivity
      *            The sensitivity of the mouse scroll wheel
      */
-    public final void setScrollingSensitivity( final ScrollingSensitivity scrollingSensitivity ) {
+    public void setScrollingSensitivity( final ScrollingSensitivity scrollingSensitivity ) {
         _opacitySlider.setScrollingSensitivity( scrollingSensitivity );
     }
 
-    public final void toggleGestures() {
+    public void toggleGestures() {
         _opacitySlider.toggleGestures();
     }
 

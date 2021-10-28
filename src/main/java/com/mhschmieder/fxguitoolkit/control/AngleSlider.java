@@ -115,7 +115,7 @@ public final class AngleSlider extends NumberSlider {
         return unwrappedAngleDegrees;
     }
 
-    private final void initSlider() {
+    private void initSlider() {
         // Angles are generally presented as horizontal bar sliders.
         setOrientation( Orientation.HORIZONTAL );
 
@@ -131,7 +131,7 @@ public final class AngleSlider extends NumberSlider {
         setMeasurementUnitString( AngleUnit.DEGREES.toPresentationString() );
     }
 
-    public final void setAngleDegrees( final double angleDegrees ) {
+    public void setAngleDegrees( final double angleDegrees ) {
         // If the allowed angle range is a full period or more (360+ degrees),
         // then unwrap the angle. Otherwise, apply standard min/max clamping.
         final double clampedValue = getClampedValue( angleDegrees );

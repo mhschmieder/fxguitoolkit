@@ -321,15 +321,16 @@ public final class FxWindowUtilities {
 
         // Determine whether the user was in Full Screen Mode when they exited.
         final String fullScreenModeKey = windowKeyPrefix + "FullScreenMode";
-        final boolean fullScreenMode =
-                                     window instanceof Stage && ( ( Stage ) window ).isFullScreen();
+        final boolean fullScreenMode = ( window instanceof Stage )
+                && ( ( Stage ) window ).isFullScreen();
         prefs.putBoolean( fullScreenModeKey, fullScreenMode );
 
         // Determine whether the user was in Maximized Mode when they exited.
         // :TODO: Figure out why maximized is always true for undecorated
         // stages.
         final String maximizedModeKey = windowKeyPrefix + "MaximizedMode";
-        final boolean maximizedMode = window instanceof Stage && ( ( Stage ) window ).isMaximized();
+        final boolean maximizedMode = ( window instanceof Stage )
+                && ( ( Stage ) window ).isMaximized();
         prefs.putBoolean( maximizedModeKey, maximizedMode );
 
         // Save the window's current size as the new preferred layout bounds,

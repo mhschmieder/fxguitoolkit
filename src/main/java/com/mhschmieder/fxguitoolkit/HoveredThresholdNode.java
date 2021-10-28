@@ -85,7 +85,7 @@ public class HoveredThresholdNode extends StackPane {
 
     /**
      * Default constructor.
-     * 
+     *
      * @param colorTag
      *            The CSS color tag lookup name associated with the data series.
      * @param d

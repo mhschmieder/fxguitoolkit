@@ -66,9 +66,9 @@ public final class TableControlPane extends BorderPane {
         }
     }
 
-    private final void initPane( final SessionContext sessionContext,
-                                 final Orientation orientation,
-                                 final boolean deleteButtonDisabledDefault ) {
+    private void initPane( final SessionContext sessionContext,
+                           final Orientation orientation,
+                           final boolean deleteButtonDisabledDefault ) {
         // Conditionally disable the Delete Button initially.
         _deleteRowButton.setDisable( deleteButtonDisabledDefault );
 

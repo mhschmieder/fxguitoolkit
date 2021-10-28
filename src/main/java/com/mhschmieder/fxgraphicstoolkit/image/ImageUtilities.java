@@ -95,14 +95,14 @@ public final class ImageUtilities {
                                                                      imageHeight,
                                                                      BufferedImage.TYPE_INT_RGB );
 
-        int pixelMask = maskColor.getRGB();
-        int pixelBlack = java.awt.Color.BLACK.getRGB();
-        int pixelWhite = java.awt.Color.WHITE.getRGB();
+        final int pixelMask = maskColor.getRGB();
+        final int pixelBlack = java.awt.Color.BLACK.getRGB();
+        final int pixelWhite = java.awt.Color.WHITE.getRGB();
 
         for ( int y = 0; y < imageHeight; y++ ) {
             for ( int x = 0; x < imageWidth; x++ ) {
-                int pixelOriginal = originalImage.getRGB( x, y );
-                int pixelInvertedMasked = ( pixelBlack == pixelOriginal )
+                final int pixelOriginal = originalImage.getRGB( x, y );
+                final int pixelInvertedMasked = ( pixelBlack == pixelOriginal )
                     ? pixelMask
                     : ( pixelWhite == pixelOriginal ) ? pixelBlack : pixelWhite;
                 invertedMaskedImage.setRGB( x, y, pixelInvertedMasked );
@@ -126,13 +126,13 @@ public final class ImageUtilities {
         final int pixelBlack = java.awt.Color.BLACK.getRGB();
         final int pixelWhite = java.awt.Color.WHITE.getRGB();
 
-        int pixelBlackReplacement = replacementColorForBlack.getRGB();
-        int pixelWhiteReplacement = replacementColorForWhite.getRGB();
+        final int pixelBlackReplacement = replacementColorForBlack.getRGB();
+        final int pixelWhiteReplacement = replacementColorForWhite.getRGB();
 
         for ( int y = 0; y < imageHeight; y++ ) {
             for ( int x = 0; x < imageWidth; x++ ) {
                 final int pixelOriginal = monochromeImage.getRGB( x, y );
-                int pixelInvertedMasked = ( pixelBlack == pixelOriginal )
+                final int pixelInvertedMasked = ( pixelBlack == pixelOriginal )
                     ? pixelBlackReplacement
                     : ( pixelWhite == pixelOriginal ) ? pixelWhiteReplacement : pixelWhite;
                 duotoneImage.setRGB( x, y, pixelInvertedMasked );
@@ -144,7 +144,7 @@ public final class ImageUtilities {
 
     /**
      * Create an Icon as an Image View, using a JAR-resident resource.
-     * 
+     *
      * @param jarRelativeIconFilename
      *            The file name of the image icon file contained in this JAR
      * @return An Image View that loads the supplied image icon file
@@ -164,7 +164,7 @@ public final class ImageUtilities {
 
     /**
      * Create a Legend as an Image View, using a JAR-resident resource.
-     * 
+     *
      * @param jarRelativeLegendFilename
      *            The file name of the image icon file contained in this JAR
      * @param preserveSourceImageRatio
@@ -193,7 +193,7 @@ public final class ImageUtilities {
 
     /**
      * Create a Logo as an Image View, using a JAR-resident resource.
-     * 
+     *
      * @param jarRelativeLogoFilename
      *            The file name of the image icon file contained in this JAR
      * @return The Image View created from the supplied file name
@@ -224,7 +224,7 @@ public final class ImageUtilities {
 
     /**
      * Put an Image into an Image View container for use in Layouts.
-     * 
+     *
      * @param image
      *            The Image to use for an Image View container
      * @param backgroundLoading
@@ -245,7 +245,7 @@ public final class ImageUtilities {
 
     /**
      * Put an Image into an Image View container for use in Layouts.
-     * 
+     *
      * @param image
      *            The Image to use for loading the Image View container
      * @param backgroundLoading
@@ -283,7 +283,7 @@ public final class ImageUtilities {
 
     /**
      * Direct-load or background-load an Image as a JAR-resident resource.
-     * 
+     *
      * @param jarRelativeImageFilename
      *            The file name of an image file contained in this JAR
      * @param backgroundLoading
@@ -304,7 +304,7 @@ public final class ImageUtilities {
 
     /**
      * Direct-load or background-load an Image as a JAR-resident resource.
-     * 
+     *
      * @param jarRelativeImageFilename
      *            The file name of an image file contained in this JAR
      * @param backgroundLoading
@@ -386,7 +386,7 @@ public final class ImageUtilities {
      * Load an Image as an Application JAR-resident resource.
      * <p>
      * :TODO: Algorithmically tag the Image size to a partially specified name?
-     * 
+     *
      * @param jarRelativeImageFilename
      *            The file name of an image file contained in this JAR
      * @param backgroundLoading
@@ -533,7 +533,7 @@ public final class ImageUtilities {
 
     /**
      * Put an Image into an Image View container for use in Layouts.
-     * 
+     *
      * @param imageView
      *            The Image View container for the Image
      * @param image
@@ -556,7 +556,7 @@ public final class ImageUtilities {
 
     /**
      * Update an Image View container with a pre-loaded Image.
-     * 
+     *
      * @param imageView
      *            The Image View container for the Image
      * @param image
@@ -611,7 +611,7 @@ public final class ImageUtilities {
 
     /**
      * Update an Image View container, using a JAR-resident resource.
-     * 
+     *
      * @param imageView
      *            The Image View container for the Image
      * @param jarRelativeImageFilename
@@ -632,7 +632,7 @@ public final class ImageUtilities {
 
     /**
      * Placeholder for drag/drop of images; needs File Handler class written.
-     * 
+     *
      * @return An Event Handler for image drag events
      */
     // public static EventHandler< DragEvent > getImageDragHandler( final
@@ -643,7 +643,7 @@ public final class ImageUtilities {
 
             final EventType< DragEvent > eventType = dragEvent.getEventType();
 
-            boolean dropCompleted = false;
+            final boolean dropCompleted = false;
             if ( dragboard.hasFiles() ) {
                 // Block unless there is just one file and it has the proper
                 // file
@@ -672,7 +672,7 @@ public final class ImageUtilities {
         };
     }
 
-    private static boolean isSupportedImageFile( File file ) {
+    private static boolean isSupportedImageFile( final File file ) {
         // TODO: Implement the logic here for acceptance or rejection.
         return true;
     }

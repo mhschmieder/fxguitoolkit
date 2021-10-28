@@ -761,10 +761,10 @@ public final class GuiUtilities {
      * @return A random Color with full opacity
      */
     public static Paint randomColor() {
-        Random random = new Random();
-        int r = random.nextInt( 255 );
-        int g = random.nextInt( 255 );
-        int b = random.nextInt( 255 );
+        final Random random = new Random();
+        final int r = random.nextInt( 255 );
+        final int g = random.nextInt( 255 );
+        final int b = random.nextInt( 255 );
 
         return Color.rgb( r, g, b );
     }
@@ -832,8 +832,8 @@ public final class GuiUtilities {
 
         final Insets insets = region.getInsets();
 
-        final double diffMinY = Math.abs( layoutBounds.getMinY() - mouseY + insets.getTop() );
-        final double diffMinX = Math.abs( layoutBounds.getMinX() - mouseX + insets.getLeft() );
+        final double diffMinY = Math.abs( ( layoutBounds.getMinY() - mouseY ) + insets.getTop() );
+        final double diffMinX = Math.abs( ( layoutBounds.getMinX() - mouseX ) + insets.getLeft() );
         final double diffMaxY = Math.abs( layoutBounds.getMaxY() - mouseY - insets.getBottom() );
         final double diffMaxX = Math.abs( layoutBounds.getMaxX() - mouseX - insets.getRight() );
 
@@ -1053,14 +1053,14 @@ public final class GuiUtilities {
                                                      new Stop( 0.5d, white0 ),
                                                      new Stop( 1d, white0 ) };
 
-            RadialGradient dividerGradient = new RadialGradient( 0d,
-                                                                 0d,
-                                                                 x,
-                                                                 y,
-                                                                 newValue.getWidth(),
-                                                                 false,
-                                                                 CycleMethod.NO_CYCLE,
-                                                                 dividerStops );
+            final RadialGradient dividerGradient = new RadialGradient( 0d,
+                                                                       0d,
+                                                                       x,
+                                                                       y,
+                                                                       newValue.getWidth(),
+                                                                       false,
+                                                                       CycleMethod.NO_CYCLE,
+                                                                       dividerStops );
 
             region.setBackground( LayoutFactory.makeRegionBackground( dividerGradient ) );
         } );
@@ -1097,8 +1097,7 @@ public final class GuiUtilities {
             xAxis.setTickLabelsVisible( false );
             xAxis.setTickMarkVisible( false );
 
-            addStylesheetAsJarResource( chart,
-                                        "/css/overlay-chart.css" );
+            addStylesheetAsJarResource( chart, "/css/overlay-chart.css" );
         }
     }
 

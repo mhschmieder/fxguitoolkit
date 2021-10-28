@@ -46,15 +46,15 @@ import javafx.scene.chart.XYChart.Series;
  */
 public final class ChartUtilities {
 
-    public static final String getDataPointValue( final double xValueShared,
-                                                  final double yValueBottom,
-                                                  final double yValueTop,
-                                                  final NumberFormat xValueSharedNumberFormat,
-                                                  final NumberFormat yValueBottomNumberFormat,
-                                                  final NumberFormat yValueTopNumberFormat,
-                                                  final String xUnitLabelShared,
-                                                  final String yUnitLabelBottom,
-                                                  final String yUnitLabelTop ) {
+    public static String getDataPointValue( final double xValueShared,
+                                            final double yValueBottom,
+                                            final double yValueTop,
+                                            final NumberFormat xValueSharedNumberFormat,
+                                            final NumberFormat yValueBottomNumberFormat,
+                                            final NumberFormat yValueTopNumberFormat,
+                                            final String xUnitLabelShared,
+                                            final String yUnitLabelBottom,
+                                            final String yUnitLabelTop ) {
         final String dataPointValue = Double.isNaN( yValueTop )
             ? StringUtilities.getFormattedQuantityPair( xValueShared,
                                                         yValueBottom,
@@ -74,8 +74,8 @@ public final class ChartUtilities {
         return dataPointValue;
     }
 
-    public static final double[] getDataSetXValues( final XYChart< Number, Number > xyChart,
-                                                    final int dataSetIndex ) {
+    public static double[] getDataSetXValues( final XYChart< Number, Number > xyChart,
+                                              final int dataSetIndex ) {
         if ( !isDataSetValid( xyChart, dataSetIndex ) ) {
             return new double[ 0 ];
         }
@@ -95,8 +95,8 @@ public final class ChartUtilities {
         return xValues;
     }
 
-    public static final double[] getDataSetYValues( final XYChart< Number, Number > xyChart,
-                                                    final int dataSetIndex ) {
+    public static double[] getDataSetYValues( final XYChart< Number, Number > xyChart,
+                                              final int dataSetIndex ) {
         if ( !isDataSetValid( xyChart, dataSetIndex ) ) {
             return new double[ 0 ];
         }
@@ -117,16 +117,16 @@ public final class ChartUtilities {
     }
 
     @SuppressWarnings("nls")
-    public static final String getFormattedDataPoint( final Series< Number, Number > chartSeries,
-                                                      final double xValueShared,
-                                                      final double yValueBottom,
-                                                      final double yValueTop,
-                                                      final NumberFormat xValueSharedNumberFormat,
-                                                      final NumberFormat yValueBottomNumberFormat,
-                                                      final NumberFormat yValueTopNumberFormat,
-                                                      final String xUnitLabelShared,
-                                                      final String yUnitLabelBottom,
-                                                      final String yUnitLabelTop ) {
+    public static String getFormattedDataPoint( final Series< Number, Number > chartSeries,
+                                                final double xValueShared,
+                                                final double yValueBottom,
+                                                final double yValueTop,
+                                                final NumberFormat xValueSharedNumberFormat,
+                                                final NumberFormat yValueBottomNumberFormat,
+                                                final NumberFormat yValueTopNumberFormat,
+                                                final String xUnitLabelShared,
+                                                final String yUnitLabelBottom,
+                                                final String yUnitLabelTop ) {
         final String dataSetName = chartSeries.getName();
         final String dataPointValue = getDataPointValue( xValueShared,
                                                          yValueBottom,
@@ -145,7 +145,7 @@ public final class ChartUtilities {
         return formattedDataPoint.toString();
     }
 
-    public static final boolean isChartEmpty( final XYChart< Number, Number > xyChart ) {
+    public static boolean isChartEmpty( final XYChart< Number, Number > xyChart ) {
         // First, check first for null charts (i.e. not initialized).
         if ( xyChart == null ) {
             return true;
@@ -182,8 +182,8 @@ public final class ChartUtilities {
      *            The data set index.
      * @return True if the specified data set is valid; false if not.
      */
-    public static final boolean isDataSetValid( final XYChart< Number, Number > xyChart,
-                                                final int dataSetIndex ) {
+    public static boolean isDataSetValid( final XYChart< Number, Number > xyChart,
+                                          final int dataSetIndex ) {
         if ( ( xyChart == null ) || ( dataSetIndex < 0 ) ) {
             return false;
         }
@@ -204,8 +204,8 @@ public final class ChartUtilities {
     }
 
     @SuppressWarnings("nls")
-    public static final void syncLegendToDataSeries( final ChartLegend legend,
-                                                     final XYChart< Number, Number > chart ) {
+    public static void syncLegendToDataSeries( final ChartLegend legend,
+                                               final XYChart< Number, Number > chart ) {
         final ObservableList< ChartLegendItem > legendItems = legend.getItems();
         legendItems.clear();
 

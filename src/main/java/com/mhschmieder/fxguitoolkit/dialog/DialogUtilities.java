@@ -115,9 +115,9 @@ public final class DialogUtilities {
      *            passed into {@link Alert#setTitle(String)}
      * @return The response from {@link Alert#showAndWait()}
      */
-    private static final Optional< ButtonType > showAlertDialog( final Alert alert,
-                                                                 final String masthead,
-                                                                 final String title ) {
+    private static Optional< ButtonType > showAlertDialog( final Alert alert,
+                                                           final String masthead,
+                                                           final String title ) {
         if ( masthead != null ) {
             alert.setHeaderText( masthead );
         }
@@ -143,10 +143,10 @@ public final class DialogUtilities {
      *            Whether the confirmation dialog shows a cancel button
      * @return the result of {@link Alert#showAndWait()}
      */
-    public static final Optional< ButtonType > showConfirmationAlert( final String message,
-                                                                      final String masthead,
-                                                                      final String title,
-                                                                      final boolean showCancel ) {
+    public static Optional< ButtonType > showConfirmationAlert( final String message,
+                                                                final String masthead,
+                                                                final String title,
+                                                                final boolean showCancel ) {
         final Optional< ButtonType > response = showConfirmationAlert( message,
                                                                        masthead,
                                                                        title,
@@ -170,11 +170,11 @@ public final class DialogUtilities {
      *            The type of alert to indicate with the banner icon
      * @return the result of {@link Alert#showAndWait()}
      */
-    public static final Optional< ButtonType > showConfirmationAlert( final String message,
-                                                                      final String masthead,
-                                                                      final String title,
-                                                                      final boolean showCancel,
-                                                                      final AlertType alertType ) {
+    public static Optional< ButtonType > showConfirmationAlert( final String message,
+                                                                final String masthead,
+                                                                final String title,
+                                                                final boolean showCancel,
+                                                                final AlertType alertType ) {
         // Most confirmation dialogs do not need a Cancel button.
         final ArrayList< ButtonType > buttonTypes = new ArrayList<>();
         buttonTypes.add( ButtonType.YES );
@@ -202,22 +202,22 @@ public final class DialogUtilities {
      * @param title
      *            the title of the alert
      */
-    public static final void showErrorAlert( final String message,
-                                             final String masthead,
-                                             final String title ) {
+    public static void showErrorAlert( final String message,
+                                       final String masthead,
+                                       final String title ) {
         final Alert alert = new Alert( AlertType.ERROR, message );
         showAlertDialog( alert, masthead, title );
     }
 
-    public static final void showInformationAlert( final String message,
-                                                   final String masthead,
-                                                   final String title ) {
+    public static void showInformationAlert( final String message,
+                                             final String masthead,
+                                             final String title ) {
         final Alert alert = new Alert( AlertType.INFORMATION, message );
         showAlertDialog( alert, masthead, title );
     }
 
-    public static final Optional< ButtonType > showFileExitConfirmationAlert( final File file,
-                                                                              final String productName ) {
+    public static Optional< ButtonType > showFileExitConfirmationAlert( final File file,
+                                                                        final String productName ) {
         final String message = MessageFactory.getSaveFileChangesMessage( file );
         final String masthead = MessageFactory.getFileExitMasthead();
         final String title = MessageFactory.getFileExitTitle( productName );
@@ -235,7 +235,7 @@ public final class DialogUtilities {
      * @param message
      *            The message to display for File Open error alerts
      */
-    public static final void showFileOpenErrorAlert( final String message ) {
+    public static void showFileOpenErrorAlert( final String message ) {
         final String masthead = MessageFactory.getFileNotOpenedMasthead();
         showFileOpenErrorAlert( message, masthead );
     }
@@ -248,7 +248,7 @@ public final class DialogUtilities {
      * @param masthead
      *            header text
      */
-    public static final void showFileOpenErrorAlert( final String message, final String masthead ) {
+    public static void showFileOpenErrorAlert( final String message, final String masthead ) {
         final String title = MessageFactory.getFileOpenErrorTitle();
         showErrorAlert( message, masthead, title );
     }
@@ -259,13 +259,13 @@ public final class DialogUtilities {
      * @param message
      *            The message to display for File Read error alerts
      */
-    public static final void showFileReadErrorAlert( final String message ) {
+    public static void showFileReadErrorAlert( final String message ) {
         final String title = MessageFactory.getFileReadErrorTitle();
         showErrorAlert( message, null, title );
     }
 
-    public static final Optional< ButtonType > showFileSaveConfirmationAlert( final File file,
-                                                                              final String title ) {
+    public static Optional< ButtonType > showFileSaveConfirmationAlert( final File file,
+                                                                        final String title ) {
         final String message = MessageFactory.getSaveFileChangesMessage( file );
         final String masthead = MessageFactory.getSaveFileChangesMasthead();
         final Optional< ButtonType > response = showConfirmationAlert( message,
@@ -282,7 +282,7 @@ public final class DialogUtilities {
      * @param message
      *            The message to display for File Save error alerts
      */
-    public static final void showFileSaveErrorAlert( final String message ) {
+    public static void showFileSaveErrorAlert( final String message ) {
         final String masthead = MessageFactory.getFileNotSavedMasthead();
         final String title = MessageFactory.getFileSaveErrorTitle();
         showErrorAlert( message, masthead, title );
@@ -294,7 +294,7 @@ public final class DialogUtilities {
      * @param message
      *            The message to display for File Save warning alerts
      */
-    public static final void showFileSaveWarningAlert( final String message ) {
+    public static void showFileSaveWarningAlert( final String message ) {
         final String masthead = MessageFactory.getFilePartiallySavedMasthead();
         final String title = MessageFactory.getFileSaveErrorTitle();
         showWarningAlert( message, masthead, title );
@@ -340,9 +340,9 @@ public final class DialogUtilities {
      * @param title
      *            title of the alert
      */
-    public static final void showWarningAlert( final String message,
-                                               final String masthead,
-                                               final String title ) {
+    public static void showWarningAlert( final String message,
+                                         final String masthead,
+                                         final String title ) {
         final Alert alert = new Alert( AlertType.WARNING, message );
         showAlertDialog( alert, masthead, title );
     }

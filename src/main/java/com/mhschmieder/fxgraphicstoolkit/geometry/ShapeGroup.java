@@ -293,7 +293,7 @@ public class ShapeGroup extends Group implements ShapeContainer {
 
     /**
      * It is sometimes necessary to bind one stroke width with another.
-     * 
+     *
      * @return The Stroke Width Property
      */
     public final DoubleProperty strokeWidthProperty() {

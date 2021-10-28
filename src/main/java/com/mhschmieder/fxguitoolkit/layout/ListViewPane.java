@@ -91,9 +91,7 @@ public class ListViewPane extends BorderPane {
 
         // Try to style the list to use semi-transparent forest green to
         // highlight selected items, as an initial LAF placeholder.
-        GuiUtilities
-                .addStylesheetAsJarResource( itemList,
-                                             "/css/listView.css" ); //$NON-NLS-1$
+        GuiUtilities.addStylesheetAsJarResource( itemList, "/css/listView.css" ); //$NON-NLS-1$
 
         // TODO: Make a useful bottom pane, maybe with buttons, or pass one
         // in to the constructor if this avoids having to subclass this class.

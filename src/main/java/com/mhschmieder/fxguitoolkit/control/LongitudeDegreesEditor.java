@@ -24,7 +24,7 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
@@ -34,37 +34,37 @@ import com.mhschmieder.commonstoolkit.net.SessionContext;
 import com.mhschmieder.commonstoolkit.physics.AngleUnit;
 
 /**
- * The Angle Unit selector supports all Angle Units that are currently
- * implemented in our core Math Library.
+ * {@code LongitudeDegreesEditor} is a specialized editor for longitude values
+ * expressed in degrees using integers, in the context of a DMS triplet.
+ * <p>
+ * TODO: Replace class inheritance with a refinement on the factory method.
  */
-public final class AngleUnitSelector extends TextSelector {
+public class LongitudeDegreesEditor extends IntegerEditor {
 
-    // Default Angle Unit, for best "out of box" experience.
-    public static final String    ANGLE_UNIT_DEFAULT = AngleUnit.defaultValue().toCanonicalString();
+    // Declare value increment/decrement amount for up and down arrow keys.
+    // NOTE: We increment by 1 degree as we are using DMS as separate values.
+    public static final int VALUE_INCREMENT_DEGREES = 1;
 
-    private static final String[] ANGLE_UNITS        =
-                                              new String[] {
-                                                             AngleUnit.DEGREES.toCanonicalString(),
-                                                             AngleUnit.RADIANS
-                                                                     .toCanonicalString() };
-
-    public AngleUnitSelector( final SessionContext sessionContext, final boolean toolbarContext ) {
+    public LongitudeDegreesEditor( final SessionContext sessionContext, final String tooltipText ) {
         // Always call the superclass constructor first!
         super( sessionContext,
-               "Supported Angle Units", //$NON-NLS-1$
-               toolbarContext,
-               false,
-               false,
-               ANGLE_UNITS,
-               ANGLE_UNIT_DEFAULT );
+               "0", //$NON-NLS-1$
+               tooltipText,
+               -179,
+               179,
+               0,
+               VALUE_INCREMENT_DEGREES );
+
+        setMeasurementUnitString( AngleUnit.DEGREES.toPresentationString() );
     }
 
-    public AngleUnit getAngleUnit() {
-        return AngleUnit.canonicalValueOf( getTextValue() );
-    }
+    @Override
+    public int getClampedValue( final int unclampedValue ) {
+        // If the value is outside the allowed angle range of an E/W hemisphere
+        // (-179 degrees to +179 degrees), apply standard min/max clamping.
+        final int clampedValue = super.getClampedValue( unclampedValue );
 
-    public void setAngleUnit( final AngleUnit angleUnit ) {
-        setTextValue( angleUnit.toCanonicalString() );
+        return clampedValue;
     }
 
 }

@@ -58,7 +58,7 @@ public final class MainApplicationLoadTask extends Task< Void > {
 
         this.progressText = progressText;
 
-        this.mainApplicationStage = null;
+        mainApplicationStage = null;
     }
 
     @Override
@@ -96,14 +96,14 @@ public final class MainApplicationLoadTask extends Task< Void > {
      * @param mainApplicationStage
      *            The main stage for this application
      */
-    public final void setMainApplicationStage( final Stage mainApplicationStage ) {
+    public void setMainApplicationStage( final Stage mainApplicationStage ) {
         this.mainApplicationStage = mainApplicationStage;
     }
 
     /**
      * Show the main application stage (if set).
      */
-    public final void showMainApplicationStage() {
+    public void showMainApplicationStage() {
         // Start an application session. This also shows the main stage.
         // :NOTE: We run this on a deferred thread, to give the GUI
         // initialization more time to complete any deferred tasks.

@@ -32,6 +32,8 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import java.net.URL;
 
+import com.mhschmieder.commonstoolkit.geo.LatitudeCardinalDirection;
+import com.mhschmieder.commonstoolkit.geo.LongitudeCardinalDirection;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
 import com.mhschmieder.commonstoolkit.physics.AngleUnit;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
@@ -61,8 +63,30 @@ import javafx.scene.web.WebView;
 public class ControlFactory {
 
     // Predefine the notes/notices colors.
-    public static final Color NOTES_BACKGROUND_COLOR = Color.FLORALWHITE;
-    public static final Color NOTES_FOREGROUND_COLOR = Color.BLACK;
+    public static final Color     NOTES_BACKGROUND_COLOR        = Color.FLORALWHITE;
+    public static final Color     NOTES_FOREGROUND_COLOR        = Color.BLACK;
+
+    /**
+     * Add the two latitude cardinal directions in presentation format, listing
+     * the positive direction first (as the default).
+     */
+    private static final String[] LATITUDE_CARDINAL_DIRECTIONS  =
+                                                               new String[] {
+                                                                              LatitudeCardinalDirection.NORTH
+                                                                                      .toAbbreviatedString(),
+                                                                              LatitudeCardinalDirection.SOUTH
+                                                                                      .toAbbreviatedString() };
+
+    /**
+     * Add the two longitude cardinal directions in presentation format, listing
+     * the positive direction first (as the default).
+     */
+    private static final String[] LONGITUDE_CARDINAL_DIRECTIONS =
+                                                                new String[] {
+                                                                               LongitudeCardinalDirection.EAST
+                                                                                       .toAbbreviatedString(),
+                                                                               LongitudeCardinalDirection.WEST
+                                                                                       .toAbbreviatedString() };
 
     // Helper method to get an Angle Editor, standalone or paired.
     public static final AngleEditor getAngleEditor( final SessionContext sessionContext,
@@ -277,6 +301,82 @@ public class ControlFactory {
 
         // Return the fully initialized integer Spinner.
         return integerSpinner;
+    }
+
+    public static final TextSelector getLatitudeCardinalDirectionSelector( final SessionContext sessionContext ) {
+        final TextSelector selector = new TextSelector( sessionContext,
+                                                        "Latitude Cardinal Directions", //$NON-NLS-1$
+                                                        false,
+                                                        false,
+                                                        false,
+                                                        LATITUDE_CARDINAL_DIRECTIONS,
+                                                        LatitudeCardinalDirection.defaultValue()
+                                                                .toAbbreviatedString() );
+
+        return selector;
+    }
+
+    public static final TextSelector getLongitudeCardinalDirectionSelector( final SessionContext sessionContext ) {
+        final TextSelector selector = new TextSelector( sessionContext,
+                                                        "Longitude Cardinal Directions", //$NON-NLS-1$
+                                                        false,
+                                                        false,
+                                                        false,
+                                                        LONGITUDE_CARDINAL_DIRECTIONS,
+                                                        LongitudeCardinalDirection.defaultValue()
+                                                                .toAbbreviatedString() );
+
+        return selector;
+    }
+
+    // Helper method to get a Latitude Degrees Editor, standalone or paired.
+    public static final LatitudeDegreesEditor getLatitudeDegreesEditor( final SessionContext sessionContext ) {
+        final LatitudeDegreesEditor latitudeDegreesEditor =
+                                                          new LatitudeDegreesEditor( sessionContext,
+                                                                                     "Latitude Degrees" ); //$NON-NLS-1$
+
+        return latitudeDegreesEditor;
+    }
+
+    // Helper method to get a Longitude Degrees Editor, standalone or paired.
+    public static final LongitudeDegreesEditor getLongitudeDegreesEditor( final SessionContext sessionContext ) {
+        final LongitudeDegreesEditor longitudeDegreesEditor =
+                                                            new LongitudeDegreesEditor( sessionContext,
+                                                                                        "Longitude Degrees" ); //$NON-NLS-1$
+
+        return longitudeDegreesEditor;
+    }
+
+    // Helper method to get a Latitude Minutes Editor, standalone or paired.
+    public static final MinutesEditor getLatitudeMinutesEditor( final SessionContext sessionContext ) {
+        final MinutesEditor latitudeMinutesEditor = new MinutesEditor( sessionContext,
+                                                                       "Latitude Minutes" ); //$NON-NLS-1$
+
+        return latitudeMinutesEditor;
+    }
+
+    // Helper method to get a Longitude Minutes Editor, standalone or paired.
+    public static final MinutesEditor getLongitudeMinutesEditor( final SessionContext sessionContext ) {
+        final MinutesEditor longitudeMinutesEditor = new MinutesEditor( sessionContext,
+                                                                        "Longitude Minutes" ); //$NON-NLS-1$
+
+        return longitudeMinutesEditor;
+    }
+
+    // Helper method to get a Latitude Seconds Editor, standalone or paired.
+    public static final SecondsEditor getLatitudeSecondsEditor( final SessionContext sessionContext ) {
+        final SecondsEditor latitudeSecondsEditor = new SecondsEditor( sessionContext,
+                                                                       "Latitude Seconds" ); //$NON-NLS-1$
+
+        return latitudeSecondsEditor;
+    }
+
+    // Helper method to get a Longitude Seconds Editor, standalone or paired.
+    public static final SecondsEditor getLongitudeSecondsEditor( final SessionContext sessionContext ) {
+        final SecondsEditor longitudeSecondsEditor = new SecondsEditor( sessionContext,
+                                                                        "Longitude Seconds" ); //$NON-NLS-1$
+
+        return longitudeSecondsEditor;
     }
 
     public static final TextArea getNoticeTextArea( final String noticeTextContent,

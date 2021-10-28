@@ -73,8 +73,9 @@ public final class XLoginDialog extends Dialog< Pair< String, String > > {
         /**
          * The sole purpose of this constructor is to cache an accessible copy
          * of the dialog owner, for method overrides.
-         * 
-         * @param pLocale The Locale to use for text localization
+         *
+         * @param pLocale
+         *            The Locale to use for text localization
          */
         public XLoginDialogPane( final Locale pLocale ) {
             // Always call the superclass constructor first!
@@ -171,32 +172,32 @@ public final class XLoginDialog extends Dialog< Pair< String, String > > {
      * behavior, so that we can invoke the equivalent sequence here, from the
      * authorization service, once it has a valid server response.
      */
-    public final void commit() {
+    public void commit() {
         final Pair< String, String > loginInformation = getLoginInformation();
         setResult( loginInformation );
         hide();
     }
 
-    public final Pair< String, String > getLoginInformation() {
+    public Pair< String, String > getLoginInformation() {
         final String userName = getUserName();
         final String password = getPassword();
         final Pair< String, String > loginInformation = new Pair<>( userName, password );
         return loginInformation;
     }
 
-    public final String getPassword() {
+    public String getPassword() {
         return passwordField.getText();
     }
 
-    public final String getUserName() {
+    public String getUserName() {
         return userNameField.getText();
     }
 
     @SuppressWarnings("nls")
-    private final void initDialog( final String title,
-                                   final String headerText,
-                                   final Locale locale,
-                                   final Pair< String, String > initialUserInfo ) {
+    private void initDialog( final String title,
+                             final String headerText,
+                             final Locale locale,
+                             final Pair< String, String > initialUserInfo ) {
         setTitle( title );
 
         final DialogPane dialogPane = new XLoginDialogPane( locale );
@@ -322,7 +323,7 @@ public final class XLoginDialog extends Dialog< Pair< String, String > > {
     }
 
     @SuppressWarnings("nls")
-    public final void setLoginInformation( final Pair< String, String > loginInformation ) {
+    public void setLoginInformation( final Pair< String, String > loginInformation ) {
         final String userName = loginInformation == null ? "" : loginInformation.getKey();
         setUserName( userName );
 
@@ -330,11 +331,11 @@ public final class XLoginDialog extends Dialog< Pair< String, String > > {
         setPassword( password );
     }
 
-    public final void setPassword( final String password ) {
+    public void setPassword( final String password ) {
         passwordField.setText( password );
     }
 
-    public final void setUserName( final String userName ) {
+    public void setUserName( final String userName ) {
         userNameField.setText( userName );
     }
 

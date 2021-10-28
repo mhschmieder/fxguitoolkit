@@ -61,7 +61,7 @@ public abstract class XDialog extends Dialog< ButtonType > {
      * Default constructor. This is the preferred constructor for this class.
      * <p>
      * Creates a new {@code XDialog} instance.
-     * 
+     *
      * @param title
      *            The title bar text to use for the Dialog
      * @param headerText
@@ -95,7 +95,7 @@ public abstract class XDialog extends Dialog< ButtonType > {
      * The method is declared final, as any derived classes should avoid
      * unwanted side effects and simply write their own GUI initialization
      * method that adds any extended behaviour or components to the layout.
-     * 
+     *
      * @param title
      *            The title bar text to use for the Dialog
      * @param headerText
@@ -126,7 +126,7 @@ public abstract class XDialog extends Dialog< ButtonType > {
      * This method is essentially a wrapper around the usual showAndWait() call
      * for a modal dialog, ensuring that the model and view are first synced
      * before displaying the dialog.
-     * 
+     *
      * @return The {@link ButtonType} of the button that the user clicked to
      *         dismiss this dialog
      */

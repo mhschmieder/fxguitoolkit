@@ -75,7 +75,7 @@ public final class ServerLoginStatusBar extends StackPane {
     }
 
     @SuppressWarnings("nls")
-    private final void initPane( final String loggedInMessage, final String loggedOutMessage ) {
+    private void initPane( final String loggedInMessage, final String loggedOutMessage ) {
         // final String longLoadMessage = "Projects with Stored IFFT Traces May
         // Take a While to Load... Please Wait...";
         // _longLoadStatusBar = new HBox();
@@ -127,7 +127,7 @@ public final class ServerLoginStatusBar extends StackPane {
         setMaxHeight( 24d );
     }
 
-    public final void setForegroundFromBackground( final Color backColor ) {
+    public void setForegroundFromBackground( final Color backColor ) {
         // Set the new Background first, so it sets context for CSS derivations.
         final Background background = LayoutFactory.makeRegionBackground( backColor );
         setBackground( background );
@@ -159,7 +159,7 @@ public final class ServerLoginStatusBar extends StackPane {
     // }
     // }
 
-    public final void updateServerLoginStatus( final boolean authorizedOnServer ) {
+    public void updateServerLoginStatus( final boolean authorizedOnServer ) {
         // Update the status message and icon for server login status.
         if ( authorizedOnServer ) {
             // _longLoadStatusBar.setVisible( false );

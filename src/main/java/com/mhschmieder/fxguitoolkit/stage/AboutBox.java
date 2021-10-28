@@ -74,12 +74,12 @@ public final class AboutBox extends Popup {
         }
     }
 
-    protected final void initPopup( final Image splashScreenImage,
-                                    final boolean backgroundLoading,
-                                    final SystemType systemType,
-                                    final ProductBranding productBranding,
-                                    final List< String > thirdPartyAttributions,
-                                    final boolean useAppInfo ) {
+    protected void initPopup( final Image splashScreenImage,
+                              final boolean backgroundLoading,
+                              final SystemType systemType,
+                              final ProductBranding productBranding,
+                              final List< String > thirdPartyAttributions,
+                              final boolean useAppInfo ) {
         // Place the Splash Screen Image in a JavaFX ImageView container, so it
         // can be displayed and scaled.
         _splashImageView = ImageUtilities.getImageView( splashScreenImage, backgroundLoading );
@@ -162,7 +162,7 @@ public final class AboutBox extends Popup {
         } );
     }
 
-    public final void show( final Node ownerNode ) {
+    public void show( final Node ownerNode ) {
         // Always center the Splash Screen on the screen.
         GuiUtilities.centerOnScreen( this );
 
@@ -175,7 +175,7 @@ public final class AboutBox extends Popup {
     }
 
     @Override
-    public final void show( final Window ownerWindow ) {
+    public void show( final Window ownerWindow ) {
         // Always center the Splash Screen on the screen.
         GuiUtilities.centerOnScreen( this );
 

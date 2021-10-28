@@ -24,47 +24,37 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
 package com.mhschmieder.fxguitoolkit.control;
 
 import com.mhschmieder.commonstoolkit.net.SessionContext;
-import com.mhschmieder.commonstoolkit.physics.AngleUnit;
 
 /**
- * The Angle Unit selector supports all Angle Units that are currently
- * implemented in our core Math Library.
+ * {@code SecondsEditor} is a specialized editor for entering the seconds part
+ * of a DMS formatted angle.
+ * <p>
+ * TODO: Replace class inheritance with a refinement on the factory method.
  */
-public final class AngleUnitSelector extends TextSelector {
+public class SecondsEditor extends IntegerEditor {
 
-    // Default Angle Unit, for best "out of box" experience.
-    public static final String    ANGLE_UNIT_DEFAULT = AngleUnit.defaultValue().toCanonicalString();
+    // Declare value increment/decrement amount for up and down arrow keys.
+    // NOTE: We increment by 1 second as we are using DMS as separate values.
+    public static final int VALUE_INCREMENT_SECONDS = 1;
 
-    private static final String[] ANGLE_UNITS        =
-                                              new String[] {
-                                                             AngleUnit.DEGREES.toCanonicalString(),
-                                                             AngleUnit.RADIANS
-                                                                     .toCanonicalString() };
-
-    public AngleUnitSelector( final SessionContext sessionContext, final boolean toolbarContext ) {
+    public SecondsEditor( final SessionContext sessionContext, final String tooltipText ) {
         // Always call the superclass constructor first!
         super( sessionContext,
-               "Supported Angle Units", //$NON-NLS-1$
-               toolbarContext,
-               false,
-               false,
-               ANGLE_UNITS,
-               ANGLE_UNIT_DEFAULT );
-    }
+               "0", //$NON-NLS-1$
+               tooltipText,
+               0,
+               59,
+               0,
+               VALUE_INCREMENT_SECONDS );
 
-    public AngleUnit getAngleUnit() {
-        return AngleUnit.canonicalValueOf( getTextValue() );
-    }
-
-    public void setAngleUnit( final AngleUnit angleUnit ) {
-        setTextValue( angleUnit.toCanonicalString() );
+        setMeasurementUnitString( "\"" ); //$NON-NLS-1$
     }
 
 }

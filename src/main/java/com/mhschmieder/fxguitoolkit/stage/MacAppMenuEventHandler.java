@@ -37,16 +37,16 @@ package com.mhschmieder.fxguitoolkit.stage;
  */
 public interface MacAppMenuEventHandler {
 
-    public void about();
+    void about();
 
-    public void hide();
+    void hide();
 
-    public void open( final String filePath );
+    void open( final String filePath );
 
-    public void preferences();
+    void preferences();
 
-    public void quit();
+    void quit();
 
-    public void toFront();
+    void toFront();
 
 }

@@ -309,9 +309,8 @@ public class XYChartOverlayGroup extends ChartContentGroup {
 
     /*
      * Setup vertical and horizontal lines, based on major tick spacing.
-     *
      * @see javafx.scene.chart.XYChart#layoutChartChildren(double, double,
-     *      double, double)
+     * double, double)
      */
     public final void recalculateGridLines( final Region region,
                                             final CartesianAxis xAxis,

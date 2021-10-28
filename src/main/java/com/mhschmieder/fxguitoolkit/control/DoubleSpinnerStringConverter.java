@@ -348,7 +348,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
         } );
     }
 
-    public final void clampValue() {
+    public void clampValue() {
         final double restrictedValue = getRestrictedValue();
 
         try {
@@ -382,7 +382,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
      * @see #setReset
      */
     @Override
-    public final Double fromString( final String stringValue ) {
+    public Double fromString( final String stringValue ) {
         // Return with default value vs. penalizing user for internal errors.
         final double defaultValue = _defaultNumericValue;
         if ( ( stringValue == null ) || stringValue.trim().isEmpty() ) {
@@ -426,7 +426,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
         return clampedValue;
     }
 
-    public final double getRestrictedValue() {
+    public double getRestrictedValue() {
         // The fromString method performs input validation.
         final String text = _editor.getText();
         final double restrictedValue = fromString( text );
@@ -449,7 +449,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
      *            {@link NumberFormatException}
      * @see #fromString
      */
-    public final void setReset( final Runnable reset ) {
+    public void setReset( final Runnable reset ) {
         _reset = reset;
     }
 
@@ -463,7 +463,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
      * @return The {@link String} form of {@code doubleValue}
      */
     @Override
-    public final String toString( final Double doubleValue ) {
+    public String toString( final Double doubleValue ) {
         String stringValue = Double.toString( _defaultNumericValue );
 
         if ( doubleValue == null ) {

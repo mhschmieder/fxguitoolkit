@@ -67,14 +67,13 @@ public final class ImageSizePane extends VBox {
         }
     }
 
-    private final void bindProperties() {
+    private void bindProperties() {
         if ( imageSize != null ) {
             _autoSizeCheckBox.selectedProperty().bindBidirectional( imageSize.autoSizeProperty() );
         }
     }
 
-    private final void initPane( final SessionContext sessionContext,
-                                 final boolean initialAutoSize ) {
+    private void initPane( final SessionContext sessionContext, final boolean initialAutoSize ) {
         _autoSizeCheckBox = GuiUtilities.getCheckBox( "Use On-Screen Image Size", //$NON-NLS-1$
                                                       initialAutoSize );
 
@@ -208,7 +207,7 @@ public final class ImageSizePane extends VBox {
         } );
     }
 
-    public final void setImageSize( final ImageSize pImageSize ) {
+    public void setImageSize( final ImageSize pImageSize ) {
         // Temporarily unbind the properties so we can set new Image Size.
         unbindProperties();
 
@@ -223,7 +222,7 @@ public final class ImageSizePane extends VBox {
         bindProperties();
     }
 
-    private final void unbindProperties() {
+    private void unbindProperties() {
         if ( imageSize != null ) {
             _autoSizeCheckBox.selectedProperty()
                     .unbindBidirectional( imageSize.autoSizeProperty() );

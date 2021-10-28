@@ -70,16 +70,16 @@ public final class AngleSelector extends DoubleSelector {
         }
     }
 
-    public final double getAngle() {
+    public double getAngle() {
         final double angle = MathUtilities.parseAngle( getValue(), _numberFormat, _angleUnit );
         return angle;
     }
 
-    public final int getNumberOfAllowedAngles() {
+    public int getNumberOfAllowedAngles() {
         return getItems().size();
     }
 
-    private final void initComboBox() {
+    private void initComboBox() {
         // :NOTE: Groupings are turned off, and we force US locale for now,
         // due to specifics about the implementation of the pattern-matcher.
         // :TODO: Alternately, cast to DecimalFormat, query the decimal and
@@ -100,7 +100,7 @@ public final class AngleSelector extends DoubleSelector {
      * @param defaultToLastAngle
      *            Flag for whether to default to last angle or first angle
      */
-    public final void selectDefaultAngle( final boolean defaultToLastAngle ) {
+    public void selectDefaultAngle( final boolean defaultToLastAngle ) {
         // Select the first or last angle in the list of allowed angles.
         final SingleSelectionModel< String > selectionModel = getSelectionModel();
         if ( defaultToLastAngle ) {
@@ -133,11 +133,11 @@ public final class AngleSelector extends DoubleSelector {
      * @param defaultToLastAngle
      *            Flag for whether to default to last angle or first angle
      */
-    public final void setAllowedAngles( final double[] allowedAngles,
-                                        final boolean preserveSelectedValue,
-                                        final boolean preserveSelectedIndex,
-                                        final boolean adjustSelectedIndex,
-                                        final boolean defaultToLastAngle ) {
+    public void setAllowedAngles( final double[] allowedAngles,
+                                  final boolean preserveSelectedValue,
+                                  final boolean preserveSelectedIndex,
+                                  final boolean adjustSelectedIndex,
+                                  final boolean defaultToLastAngle ) {
         // Save the selection to reinstate after replacing the drop-list.
         final String angleCurrent = getValue();
 
@@ -213,12 +213,12 @@ public final class AngleSelector extends DoubleSelector {
         }
     }
 
-    public final void setAngle( final double angle ) {
+    public void setAngle( final double angle ) {
         final String angleFormatted = MathUtilities.formatAngle( angle, _numberFormat, _angleUnit );
         setValue( angleFormatted );
     }
 
-    public final void updateAngleUnit( final AngleUnit angleUnit ) {
+    public void updateAngleUnit( final AngleUnit angleUnit ) {
         _angleUnit = angleUnit;
     }
 

@@ -87,7 +87,7 @@ public final class OpacitySlider extends NumberSlider {
     }
 
     @SuppressWarnings("nls")
-    private final void initSlider() {
+    private void initSlider() {
         // Opacity is generally presented as horizontal bar sliders.
         setOrientation( Orientation.HORIZONTAL );
 

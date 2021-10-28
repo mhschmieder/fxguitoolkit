@@ -65,7 +65,7 @@ public class TextFlowAlert extends Alert {
      * Default constructor. This is the preferred constructor for this class.
      * <p>
      * Creates a new {@code TextFlowAlert} instance.
-     * 
+     *
      * @param alertType
      *            The basic Alert Type
      * @param contentText

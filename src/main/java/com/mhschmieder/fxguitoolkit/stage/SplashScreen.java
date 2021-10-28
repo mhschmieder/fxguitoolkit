@@ -69,10 +69,10 @@ public final class SplashScreen extends Stage {
         }
     }
 
-    protected final void initStage( final Image splashScreenImage,
-                                    final boolean backgroundLoading,
-                                    final SystemType systemType,
-                                    final ProductBranding productBranding ) {
+    protected void initStage( final Image splashScreenImage,
+                              final boolean backgroundLoading,
+                              final SystemType systemType,
+                              final ProductBranding productBranding ) {
         // Place the Splash Screen Image in an ImageView container, so it can be
         // displayed and scaled.
         _splashImageView = ImageUtilities.getImageView( splashScreenImage, backgroundLoading );
