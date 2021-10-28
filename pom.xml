@@ -1,61 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.mhschmieder</groupId>
+	<groupId>com.mhschmieder</groupId>
     <artifactId>fxguitoolkit</artifactId>
-    <version>0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+	<version>0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-    <name>FxGuiToolkit</name>
-    <url>https://github.com/mhschmieder/fxguitoolkit</url>
-    <description>Utilities and custom classes for JavaFX based GUI work.</description>
+	<name>FxGuiToolkit</name>
+	<url>https://github.com/mhschmieder/fxguitoolkit</url>
+	<description>Utilities and custom classes for JavaFX based GUI work.</description>
 
-    <licenses>
-        <license>
-            <name>MIT License</name>
-            <url>https://opensource.org/licenses/MIT</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://opensource.org/licenses/MIT</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
-    <scm>
-        <url>https://github.com/mhschmieder/fxguitoolkit</url>
-        <connection>scm:git:git://github.com/mhschmieder/fxguitoolkit.git</connection>
-        <developerConnection>scm:git:git@github.com:mhschmieder/fxguitoolkit.git</developerConnection>
-    </scm>
+	<scm>
+		<url>https://github.com/mhschmieder/fxguitoolkit</url>
+		<connection>scm:git:git://github.com/mhschmieder/fxguitoolkit.git</connection>
+		<developerConnection>scm:git:git@github.com:mhschmieder/fxguitoolkit.git</developerConnection>
+	</scm>
 
-    <developers>
-        <developer>
-            <email>markhschmieder@gmail.com</email>
-            <name>Mark Schmieder</name>
-            <url>https://github.com/mhschmieder</url>
-        </developer>
-    </developers>
+	<developers>
+		<developer>
+			<email>markhschmieder@gmail.com</email>
+			<name>Mark Schmieder</name>
+			<url>https://github.com/mhschmieder</url>
+		</developer>
+	</developers>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
-     <dependencies>
-        <dependency>
-            <groupId>com.mhschmieder</groupId>
-            <artifactId>commonstoolkit</artifactId>
-            <version>0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.controlsfx/controlsfx -->
-        <dependency>
-            <groupId>org.controlsfx</groupId>
-            <artifactId>controlsfx</artifactId>
-            <version>8.40.18</version>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>com.mhschmieder</groupId>
+			<artifactId>commonstoolkit</artifactId>
+			<version>0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.controlsfx/controlsfx -->
+		<dependency>
+			<groupId>org.controlsfx</groupId>
+			<artifactId>controlsfx</artifactId>
+			<version>8.40.18</version>
+		</dependency>
+	</dependencies>
 
-    <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <plugins>
+	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<resources>
+		    <resource>
+		        <directory>src/main/resources</directory>
+		    </resource>
+		</resources>
+		<plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
