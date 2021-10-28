@@ -32,7 +32,7 @@ package com.mhschmieder.fxgraphicstoolkit.geometry;
 
 import java.util.List;
 
-import com.mhschmieder.commonstoolkit.math.DistanceUnit;
+import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.commonstoolkit.physics.UnitConversion;
 import com.mhschmieder.fxgraphicstoolkit.graphics.HighlightUtilities;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;

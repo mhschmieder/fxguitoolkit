@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxcharttoolkit;
 
-import com.mhschmieder.commonstoolkit.math.DistanceUnit;
+import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.fxgraphicstoolkit.geometry.ShapeContainer;
 
 import javafx.scene.Group;

@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.dialog;
 
-import com.mhschmieder.commonstoolkit.math.DistanceUnit;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.CartesianPositionPane;
 

@@ -32,8 +32,8 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import java.net.URL;
 
-import com.mhschmieder.commonstoolkit.math.AngleUnit;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.physics.AngleUnit;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
