@@ -132,12 +132,14 @@ public class DoubleSelector extends NumberSelector {
 
     public final double getDoubleValue() {
         final String formattedValue = getValue();
-        final double doubleValue = NumberFormatUtilities.parseDouble( formattedValue, _numberFormat );
+        final double doubleValue =
+                                 NumberFormatUtilities.parseDouble( formattedValue, _numberFormat );
         return doubleValue;
     }
 
     public final void setDoubleValue( final double doubleValue ) {
-        final String formattedValue = NumberFormatUtilities.formatDouble( doubleValue, _numberFormat );
+        final String formattedValue = NumberFormatUtilities.formatDouble( doubleValue,
+                                                                          _numberFormat );
         setValue( formattedValue );
     }
 

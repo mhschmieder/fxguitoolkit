@@ -214,7 +214,8 @@ public final class AngleSelector extends DoubleSelector {
     }
 
     public void setAngle( final double angle ) {
-        final String angleFormatted = PhysicsUtilities.formatAngle( angle, _numberFormat, _angleUnit );
+        final String angleFormatted = PhysicsUtilities
+                .formatAngle( angle, _numberFormat, _angleUnit );
         setValue( angleFormatted );
     }
 

@@ -80,8 +80,7 @@ public final class ServerLoginStatusBar extends StackPane {
         // Take a While to Load... Please Wait...";
         // _longLoadStatusBar = new HBox();
         // _longLoadIcon = ImageConversionUtilities.createIcon(
-        // "/com/mhschmieder/fxguitoolkit/icons/sketchdock/LoggedOutRed16.png"
-        // );
+        // /icons/sketchdock/LoggedOutRed16.png" );
         // _longLoadStatusLabel = SceneGraphUtilities
         // .getStatusLabel( LONG_LOAD_STATUS_HEADER + longLoadMessage );
         //
@@ -92,8 +91,7 @@ public final class ServerLoginStatusBar extends StackPane {
         // _longLoadStatusBar.setSpacing( 12d );
 
         _loggedInStatusBar = new HBox();
-        _loggedInIcon = ImageUtilities
-                .createIcon( "/com/mhschmieder/fxguitoolkit/icons/sketchdock/LoggedInBlue16.png" );
+        _loggedInIcon = ImageUtilities.createIcon( "/icons/sketchdock/LoggedInBlue16.png" );
         _loggedInStatusLabel = GuiUtilities
                 .getStatusLabel( SERVER_LOGIN_STATUS_HEADER + loggedInMessage );
 
@@ -103,8 +101,7 @@ public final class ServerLoginStatusBar extends StackPane {
         _loggedInStatusBar.setSpacing( 16d );
 
         _loggedOutStatusBar = new HBox();
-        _loggedOutIcon = ImageUtilities
-                .createIcon( "/com/mhschmieder/fxguitoolkit/icons/sketchdock/LoggedOutRed16.png" );
+        _loggedOutIcon = ImageUtilities.createIcon( "/icons/sketchdock/LoggedOutRed16.png" );
         _loggedOutStatusLabel = GuiUtilities
                 .getStatusLabel( SERVER_LOGIN_STATUS_HEADER + loggedOutMessage );
 

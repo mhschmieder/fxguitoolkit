@@ -115,12 +115,14 @@ public class IntegerSelector extends NumberSelector {
 
     public final int getIntegerValue() {
         final String formattedValue = getValue();
-        final int integerValue = NumberFormatUtilities.parseInteger( formattedValue, _numberFormat );
+        final int integerValue =
+                               NumberFormatUtilities.parseInteger( formattedValue, _numberFormat );
         return integerValue;
     }
 
     public final void setIntegerValue( final int integerValue ) {
-        final String formattedValue = NumberFormatUtilities.formatInteger( integerValue, _numberFormat );
+        final String formattedValue = NumberFormatUtilities.formatInteger( integerValue,
+                                                                           _numberFormat );
         setValue( formattedValue );
     }
 

@@ -207,8 +207,7 @@ public final class XLoginDialog extends Dialog< Pair< String, String > > {
         // goes in the file system such that it works in IntelliJ and Eclipse.
         final Background background = LayoutFactory.makeRegionBackground( ColorConstants.GRAY86 );
         final ImageView loginIcon = new ImageView( XLoginDialog.class
-                .getResource( "/com/mhschmieder/fxguitoolkit/icons/everaldo/Password48.png" )
-                .toExternalForm() );
+                .getResource( "/icons/everaldo/Password48.png" ).toExternalForm() );
 
         dialogPane.setHeaderText( headerText );
         dialogPane.setBackground( background );

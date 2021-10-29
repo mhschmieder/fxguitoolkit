@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020 Mark Schmieder
+ * Copyright (c) 2020, 2021 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -377,6 +377,61 @@ public class ControlFactory {
                                                                         "Longitude Seconds" ); //$NON-NLS-1$
 
         return longitudeSecondsEditor;
+    }
+
+    // Helper method to get a custom Temperature Editor.
+    public static final TemperatureEditor getTemperatureEditor( final SessionContext sessionContext ) {
+        // Format the default Temperature value as the initial text.
+        final double initialValue = TemperatureSlider.INITIAL_TEMPERATURE_KELVIN_DEFAULT;
+        final String initialText = Double.toString( initialValue );
+
+        final TemperatureEditor temperatureEditor =
+                                                  new TemperatureEditor( sessionContext,
+                                                                         initialText,
+                                                                         null,
+                                                                         TemperatureSlider.MINIMUM_TEMPERATURE_KELVIN_DEFAULT,
+                                                                         TemperatureSlider.MAXIMUM_TEMPERATURE_KELVIN_DEFAULT,
+                                                                         initialValue );
+
+        return temperatureEditor;
+    }
+
+    // Helper method to get a custom Pressure Editor.
+    public static final PressureEditor getPressureEditor( final SessionContext sessionContext ) {
+        // Format the default Pressure value as the initial text.
+        final double initialValue = PressureSlider.INITIAL_PRESSURE_PASCALS_DEFAULT;
+        final String initialText = Double.toString( initialValue );
+
+        final PressureEditor pressureEditor =
+                                            new PressureEditor( sessionContext,
+                                                                initialText,
+                                                                null,
+                                                                PressureSlider.MINIMUM_PRESSURE_PASCALS_DEFAULT,
+                                                                PressureSlider.MAXIMUM_PRESSURE_PASCALS_DEFAULT,
+                                                                initialValue );
+
+        return pressureEditor;
+    }
+
+    // Helper method to get a humidity editor to pair with a slider.
+    public static final HumidityEditor getHumiditySliderEditor( final SessionContext sessionContext,
+                                                                final HumiditySlider humiditySlider ) {
+        // Get the current slider value and format it as initial text.
+        final double initialValue = HumiditySlider.INITIAL_RELATIVE_HUMIDITY_DEFAULT;
+        final String initialText = Double.toString( initialValue );
+
+        final HumidityEditor humidityEditor =
+                                            new HumidityEditor( sessionContext,
+                                                                initialText,
+                                                                null,
+                                                                HumiditySlider.MINIMUM_RELATIVE_HUMIDITY_DEFAULT,
+                                                                HumiditySlider.MAXIMUM_RELATIVE_HUMIDITY_DEFAULT,
+                                                                initialValue );
+
+        final String measurementUnitString = humiditySlider.getMeasurementUnitString();
+        humidityEditor.setMeasurementUnitString( measurementUnitString );
+
+        return humidityEditor;
     }
 
     public static final TextArea getNoticeTextArea( final String noticeTextContent,
