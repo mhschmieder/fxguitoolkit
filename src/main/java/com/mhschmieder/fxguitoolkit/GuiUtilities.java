@@ -1616,7 +1616,7 @@ public final class GuiUtilities {
                                                 final ChoiceBox< ? > choiceBox ) {
         final Label labelLabel = getControlLabel( labelText );
 
-        // :TODO: Provide mnemonic and/or accelerator for this?
+        // TODO: Provide mnemonic and/or accelerator for this?
         labelLabel.setLabelFor( choiceBox );
 
         final HBox labeledChoiceBoxPane = new HBox();
@@ -1640,7 +1640,7 @@ public final class GuiUtilities {
                                                final ComboBox< ? > comboBox ) {
         final Label labelLabel = getControlLabel( labelText );
 
-        // :TODO: Provide mnemonic and/or accelerator for this?
+        // TODO: Provide mnemonic and/or accelerator for this?
         labelLabel.setLabelFor( comboBox );
 
         final HBox labeledComboBoxPane = new HBox();
@@ -1663,7 +1663,7 @@ public final class GuiUtilities {
     public static HBox getLabeledLabelPane( final Label labelLabel, final Label label ) {
         final HBox labeledLabelPane = new HBox();
 
-        // :TODO: Provide mnemonic and/or accelerator for this?
+        // TODO: Provide mnemonic and/or accelerator for this?
         labelLabel.setLabelFor( label );
 
         labeledLabelPane.getChildren().addAll( labelLabel, label );
@@ -1687,7 +1687,7 @@ public final class GuiUtilities {
 
         final HBox labeledLabelPane = new HBox();
 
-        // :TODO: Provide mnemonic and/or accelerator for this?
+        // TODO: Provide mnemonic and/or accelerator for this?
         labelLabel.setLabelFor( label );
 
         labeledLabelPane.getChildren().addAll( labelLabel, label );
@@ -1709,7 +1709,7 @@ public final class GuiUtilities {
     public static HBox getLabeledSpinnerPane( final String labelText, final Spinner< ? > spinner ) {
         final Label labelLabel = getControlLabel( labelText );
 
-        // :TODO: Provide mnemonic and/or accelerator for this?
+        // TODO: Provide mnemonic and/or accelerator for this?
         labelLabel.setLabelFor( spinner );
 
         final HBox labeledSpinnerPane = new HBox();
@@ -1731,7 +1731,7 @@ public final class GuiUtilities {
                                                 final TextField textField ) {
         final Label labelLabel = getControlLabel( labelText );
 
-        // :TODO: Provide mnemonic and/or accelerator for this?
+        // TODO: Provide mnemonic and/or accelerator for this?
         labelLabel.setLabelFor( textField );
 
         final HBox labeledTextFieldPane = new HBox();

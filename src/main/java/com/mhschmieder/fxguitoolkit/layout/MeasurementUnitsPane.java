@@ -178,7 +178,7 @@ public final class MeasurementUnitsPane extends VBox {
 
         // TODO: Give some thoughts to Angle Units and implement.
         // gridPane.add( angleUnitLabel, 0, row );
-        // gridPane.add( _angleUnitChoiceBox, 1, row++ );
+        // gridPane.add( _angleUnitSelector, 1, row++ );
 
         gridPane.add( weightUnitLabel, 0, row );
         gridPane.add( _weightUnitSelector, 1, row++ );
@@ -214,7 +214,8 @@ public final class MeasurementUnitsPane extends VBox {
 
         // Bind the data model to the respective GUI components.
         // TODO: Determine whether the listeners below are rendered redundant.
-        // TODO: Re-enable this after figuring out why it wasn't part of 1.1.4.
+        // TODO: Re-enable this after figuring out why it wasn't part of the
+        // previous release.
         // bindProperties();
 
         // Load the event handler for the Distance Unit Selector.
