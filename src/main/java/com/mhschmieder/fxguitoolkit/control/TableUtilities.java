@@ -66,7 +66,7 @@ public final class TableUtilities {
      */
     @SuppressWarnings("nls")
     public static void setTableColumnHeaderProperties( final TableColumn< ? extends Object, ? > column ) {
-        // Apply MSLI style guidelines to table headers and make them wrap.
+        // Apply custom style guidelines to table headers and make them wrap.
         //
         // Larger fonts are used on the Mac in general, by default.
         //

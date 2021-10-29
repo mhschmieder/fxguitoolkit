@@ -1533,7 +1533,7 @@ public final class GuiUtilities {
      *            The color to use for the background of the button
      * @param foreColor
      *            The color to use for the label text on the button
-     * @return A labeled @Button adhering to MSLI style guidelines
+     * @return A labeled @Button adhering to custom style guidelines
      */
     public static Button getLabeledButton( final String buttonText,
                                            final String tooltipText,
@@ -1580,7 +1580,7 @@ public final class GuiUtilities {
      * @param cssStyleClass
      *            The Style Class of the CSS attributes that customize the
      *            button
-     * @return A labeled @Button adhering to MSLI style guidelines
+     * @return A labeled @Button adhering to custom style guidelines
      */
     public static Button getLabeledButton( final String buttonText,
                                            final String tooltipText,

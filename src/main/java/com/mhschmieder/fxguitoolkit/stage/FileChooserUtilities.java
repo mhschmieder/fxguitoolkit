@@ -286,9 +286,9 @@ public final class FileChooserUtilities {
         }
         catch ( final IllegalArgumentException iae ) {
             // NOTE: We guarantee this error cannot occur by providing a prefix
-            // that is greater than three characters (in our case, the program
-            // name of "MAPP"), but have to catch this exception in order to
-            // compile with no errors.
+            // that is greater than three characters (such as an abbreviated or
+            // full application name), but have to catch this exception in order
+            // to compile with no errors.
             iae.printStackTrace();
         }
         catch ( final SecurityException se ) {

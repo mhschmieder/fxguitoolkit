@@ -173,7 +173,7 @@ public class SceneGraphUtilities {
      *            Optional @Tooltip text
      * @param cssStyleId
      *            The CSS Style ID used for all button colors in all states
-     * @return A labeled @ToggleButton adhering to MSLI style guidelines
+     * @return A labeled @ToggleButton adhering to custom style guidelines
      */
     public static ToggleButton getLabeledToggleButton( final ToggleGroup toggleGroup,
                                                        final String buttonLabel,
@@ -213,7 +213,7 @@ public class SceneGraphUtilities {
      *            Optional @Tooltip text
      * @param cssStyleId
      *            The CSS Style ID used for all button colors in all states
-     * @return A labeled @ToggleButton adhering to MSLI style guidelines
+     * @return A labeled @ToggleButton adhering to custom style guidelines
      */
     public static ToggleButton getLabeledToggleButton( final ToggleGroup toggleGroup,
                                                        final String selectedText,

@@ -271,7 +271,7 @@
  ******************************************************************************/
   
 /* Match the "Day Mode" color for General Action Buttons. */
-.compass-button {
+.custom-button {
     -fx-background-color: COLOR_BUTTON;
     -fx-background-insets: 0, 1;
     -fx-background-radius: 3, 2;
@@ -279,7 +279,7 @@
 }
 
 /* Match the "Day Mode" color for Status and Value Labels. */
-.compass-label {
+.custom-label {
     -fx-border-color: BORDER_LABEL;
     -fx-background-color: COLOR_LABEL;
     -fx-background-insets: 0, 1;
@@ -288,7 +288,7 @@
 }
 
 /* Match the "Day Mode" color for Text Fields (don't lose borders). */
-.compass-text-input {
+.custom-text-input {
     -fx-control-inner-background: COLOR_EDITOR;
     -fx-text-box-border: BORDER_EDITOR;
     -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
@@ -302,51 +302,51 @@
 }
 
 /* Match the "Day Mode" color for Combo Boxes. */
-.compass-combo-box {
+.custom-combo-box {
     -fx-background-color: COLOR_SELECTOR;
     -fx-text-fill: FILL_SELECTOR;
 }
 
-.compass-combo-box > .cell:selected {
+.custom-combo-box > .cell:selected {
     -fx-text-fill: FILL_SELECTOR;
 }
 
-.compass-combo-box > .text-field {
+.custom-combo-box > .text-field {
 	-fx-background-color: COLOR_SELECTOR;
 	-fx-text-fill: FILL_SELECTOR;
 }
 
-.compass-combo-box > .arrow-button {
+.custom-combo-box > .arrow-button {
     -fx-background-color: COLOR_SELECTOR;
 }
 
-.compass-combo-box > .arrow-button > .arrow {
+.custom-combo-box > .arrow-button > .arrow {
     -fx-background-color: FILL_SELECTOR; /* Counter-intuitive but correct */
 }
 
 /* Match the "Day Mode" color for Spinners. */
-.compass-spinner {
+.custom-spinner {
     -fx-background-color: COLOR_SPINNER;
     -fx-text-fill: FILL_SPINNER;
 }
 
-.compass-spinner > .text-field {
+.custom-spinner > .text-field {
      -fx-text-fill: FILL_SPINNER;
 }
 
-.compass-spinner .increment-arrow-button {
+.custom-spinner .increment-arrow-button {
     -fx-background-color: COLOR_SPINNER;
 }
 
-.compass-spinner .increment-arrow-button .increment-arrow {
+.custom-spinner .increment-arrow-button .increment-arrow {
     -fx-background-color: FILL_SPINNER;
 }
 
-.compass-spinner .decrement-arrow-button {
+.custom-spinner .decrement-arrow-button {
     -fx-background-color: COLOR_SPINNER;
 }
 
-.compass-spinner .decrement-arrow-button .decrement-arrow {
+.custom-spinner .decrement-arrow-button .decrement-arrow {
     -fx-background-color: FILL_SPINNER; /* Counter-intuitive but correct */
 }
 

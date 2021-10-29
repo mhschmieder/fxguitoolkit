@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.math.MathUtilities;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
 import com.mhschmieder.commonstoolkit.physics.AngleUnit;
+import com.mhschmieder.commonstoolkit.physics.PhysicsUtilities;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -71,7 +71,7 @@ public final class AngleSelector extends DoubleSelector {
     }
 
     public double getAngle() {
-        final double angle = MathUtilities.parseAngle( getValue(), _numberFormat, _angleUnit );
+        final double angle = PhysicsUtilities.parseAngle( getValue(), _numberFormat, _angleUnit );
         return angle;
     }
 
@@ -152,7 +152,7 @@ public final class AngleSelector extends DoubleSelector {
         // selection field, or do not generate a callback.
         final ObservableList< String > allowedAnglesFormatted = FXCollections.observableArrayList();
         for ( final double allowedAngle : allowedAngles ) {
-            final String allowedAngleFormatted = MathUtilities
+            final String allowedAngleFormatted = PhysicsUtilities
                     .formatAngle( allowedAngle, _numberFormat, _angleUnit );
             allowedAnglesFormatted.add( allowedAngleFormatted );
         }
@@ -214,7 +214,7 @@ public final class AngleSelector extends DoubleSelector {
     }
 
     public void setAngle( final double angle ) {
-        final String angleFormatted = MathUtilities.formatAngle( angle, _numberFormat, _angleUnit );
+        final String angleFormatted = PhysicsUtilities.formatAngle( angle, _numberFormat, _angleUnit );
         setValue( angleFormatted );
     }
 

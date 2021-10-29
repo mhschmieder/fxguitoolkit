@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.math.MathUtilities;
 import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
 
 import javafx.collections.FXCollections;
 import javafx.scene.input.KeyEvent;
@@ -91,7 +91,7 @@ public class IntegerSelector extends NumberSelector {
 
         int integerValue = minimumValue;
         for ( int i = 0; i < numberOfChoices; i++ ) {
-            integerValues[ i ] = MathUtilities.formatInteger( integerValue, _numberFormat );
+            integerValues[ i ] = NumberFormatUtilities.formatInteger( integerValue, _numberFormat );
             integerValue += increment;
         }
 
@@ -115,12 +115,12 @@ public class IntegerSelector extends NumberSelector {
 
     public final int getIntegerValue() {
         final String formattedValue = getValue();
-        final int integerValue = MathUtilities.parseInteger( formattedValue, _numberFormat );
+        final int integerValue = NumberFormatUtilities.parseInteger( formattedValue, _numberFormat );
         return integerValue;
     }
 
     public final void setIntegerValue( final int integerValue ) {
-        final String formattedValue = MathUtilities.formatInteger( integerValue, _numberFormat );
+        final String formattedValue = NumberFormatUtilities.formatInteger( integerValue, _numberFormat );
         setValue( formattedValue );
     }
 
