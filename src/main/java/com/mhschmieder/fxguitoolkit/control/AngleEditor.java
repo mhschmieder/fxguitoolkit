@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 public class AngleEditor extends DoubleEditor {
 
@@ -38,7 +38,7 @@ public class AngleEditor extends DoubleEditor {
     // NOTE: We increment by 0.1 degrees as this is a common default.
     public static final double VALUE_INCREMENT_DEGREES = 0.1d;
 
-    public AngleEditor( final SessionContext sessionContext,
+    public AngleEditor( final ClientProperties clientProperties,
                         final String initialText,
                         final String tooltipText,
                         final int minFractionDigitsFormat,
@@ -49,7 +49,7 @@ public class AngleEditor extends DoubleEditor {
                         final double maximumValue,
                         final double initialValue ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                initialText,
                tooltipText,
                minFractionDigitsFormat,

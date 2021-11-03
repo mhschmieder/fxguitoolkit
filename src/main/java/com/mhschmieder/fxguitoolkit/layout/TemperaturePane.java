@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.NaturalEnvironment;
 import com.mhschmieder.commonstoolkit.physics.PhysicsConstants;
 import com.mhschmieder.commonstoolkit.physics.TemperatureUnit;
@@ -64,13 +64,13 @@ public final class TemperaturePane extends VBox {
     // when the Temperature Unit changes.
     // protected NumberConverter _numberConverter;
 
-    public TemperaturePane( final SessionContext sessionContext ) {
+    public TemperaturePane( final ClientProperties clientProperties ) {
         // Always call the superclass constructor first!
         super( 6d );
 
         temperatureK = new SimpleDoubleProperty();
 
-        initPane( sessionContext );
+        initPane( clientProperties );
     }
 
     private void bindProperties() {
@@ -108,15 +108,15 @@ public final class TemperaturePane extends VBox {
         return temperatureK.get();
     }
 
-    private void initPane( final SessionContext sessionContext ) {
+    private void initPane( final ClientProperties clientProperties ) {
         // Make a bolded label to clearly identify the functionality.
         _temperatureLabel = GuiUtilities.getColumnHeader( "Temperature" ); //$NON-NLS-1$
 
         // Create a default Temperature Slider.
-        _temperatureSlider = new TemperatureSlider( sessionContext );
+        _temperatureSlider = new TemperatureSlider( clientProperties );
 
         // Conform the associated editor (text field) to the slider attributes.
-        _temperatureEditor = ControlFactory.getTemperatureEditor( sessionContext );
+        _temperatureEditor = ControlFactory.getTemperatureEditor( clientProperties );
         _temperatureEditor.setPrefWidth( 100d );
         _temperatureEditor.setMaxWidth( 100d );
 

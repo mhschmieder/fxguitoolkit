@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -53,24 +53,24 @@ public class TextEditor extends XTextField {
     private final StringProperty value;
 
     @SuppressWarnings("nls")
-    public TextEditor( final SessionContext pSessionContext ) {
+    public TextEditor( final ClientProperties pSessionContext ) {
         this( "", null, true, pSessionContext );
     }
 
     public TextEditor( final String initialText,
                        final boolean pBlankTextAllowed,
-                       final SessionContext pSessionContext ) {
+                       final ClientProperties pSessionContext ) {
         this( initialText, null, pBlankTextAllowed, pSessionContext );
     }
 
-    public TextEditor( final String initialText, final SessionContext pSessionContext ) {
+    public TextEditor( final String initialText, final ClientProperties pSessionContext ) {
         this( initialText, null, pSessionContext );
     }
 
     public TextEditor( final String pInitialText,
                        final String pTooltipText,
                        final boolean pBlankTextAllowed,
-                       final SessionContext pSessionContext ) {
+                       final ClientProperties pSessionContext ) {
         // Always call the superclass constructor first!
         super( pInitialText, pTooltipText, pSessionContext );
 
@@ -88,7 +88,7 @@ public class TextEditor extends XTextField {
 
     public TextEditor( final String initialText,
                        final String tooltipText,
-                       final SessionContext pSessionContext ) {
+                       final ClientProperties pSessionContext ) {
         this( initialText, tooltipText, false, pSessionContext );
     }
 

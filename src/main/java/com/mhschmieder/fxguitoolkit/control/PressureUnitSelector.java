@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.PressureUnit;
 
 /**
@@ -47,11 +47,11 @@ public final class PressureUnitSelector extends TextSelector {
                                                                   PressureUnit.MILLIBARS
                                                                           .toCanonicalString() };
 
-    public PressureUnitSelector( final SessionContext sessionContext,
+    public PressureUnitSelector( final ClientProperties clientProperties,
                                  final boolean toolbarContext,
                                  final PressureUnit pressureUnitDefault ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                "Supported Pressure Units", //$NON-NLS-1$
                toolbarContext,
                false,

@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageSize;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.TextSelector;
@@ -55,12 +55,12 @@ public final class ImageSizePane extends VBox {
 
     // //////////////////////////////////////////////////////////////////////////
     // Constructors and Initialization
-    public ImageSizePane( final SessionContext sessionContext, final boolean initialAutoSize ) {
+    public ImageSizePane( final ClientProperties clientProperties, final boolean initialAutoSize ) {
         // Always call the superclass constructor first!
         super();
 
         try {
-            initPane( sessionContext, initialAutoSize );
+            initPane( clientProperties, initialAutoSize );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -73,7 +73,8 @@ public final class ImageSizePane extends VBox {
         }
     }
 
-    private void initPane( final SessionContext sessionContext, final boolean initialAutoSize ) {
+    private void initPane( final ClientProperties clientProperties,
+                           final boolean initialAutoSize ) {
         _autoSizeCheckBox = GuiUtilities.getCheckBox( "Use On-Screen Image Size", //$NON-NLS-1$
                                                       initialAutoSize );
 
@@ -84,7 +85,7 @@ public final class ImageSizePane extends VBox {
         final String[] pixelWidths = ImageSize.getPixelWidthPresetsAsStrings();
         final String pixelWidthDefault = ImageSize
                 .getPixelDimensionAsString( ImageSize.PIXEL_DIMENSIONS_WIDTH_DEFAULT );
-        _pixelWidthSelector = new TextSelector( sessionContext,
+        _pixelWidthSelector = new TextSelector( clientProperties,
                                                 "Image Width in Pixels", //$NON-NLS-1$
                                                 false,
                                                 true,
@@ -99,7 +100,7 @@ public final class ImageSizePane extends VBox {
         final String[] pixelHeights = ImageSize.getPixelHeightPresetsAsStrings();
         final String pixelHeightDefault = ImageSize
                 .getPixelDimensionAsString( ImageSize.PIXEL_DIMENSIONS_HEIGHT_DEFAULT );
-        _pixelHeightSelector = new TextSelector( sessionContext,
+        _pixelHeightSelector = new TextSelector( clientProperties,
                                                  "Image Height in Pixels", //$NON-NLS-1$
                                                  false,
                                                  true,

@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.AngleUnit;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
@@ -50,12 +50,12 @@ public class PositioningPane extends GridPane {
     public RadioButton           _polarPositionRadioButton;
     public PolarPositionPane     _polarPositionPane;
 
-    public PositioningPane( final SessionContext sessionContext ) {
+    public PositioningPane( final ClientProperties clientProperties ) {
         // Always call the superclass constructor first!
         super();
 
         try {
-            initPane( sessionContext );
+            initPane( clientProperties );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -77,7 +77,7 @@ public class PositioningPane extends GridPane {
         return _polarPositionPane.getRotationAngle();
     }
 
-    private final void initPane( final SessionContext sessionContext ) {
+    private final void initPane( final ClientProperties clientProperties ) {
         final ToggleGroup dualPositionToggleGroup = new ToggleGroup();
         _cartesianPositionRadioButton = GuiUtilities.getRadioButton( "Cartesian Coordinates", //$NON-NLS-1$
                                                                      dualPositionToggleGroup,
@@ -86,9 +86,9 @@ public class PositioningPane extends GridPane {
                                                                  dualPositionToggleGroup,
                                                                  false );
 
-        _cartesianPositionPane = new CartesianPositionPane( sessionContext );
+        _cartesianPositionPane = new CartesianPositionPane( clientProperties );
 
-        _polarPositionPane = new PolarPositionPane( sessionContext );
+        _polarPositionPane = new PolarPositionPane( clientProperties );
 
         setHgap( 10d );
         setVgap( 10d );

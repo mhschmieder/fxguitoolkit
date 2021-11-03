@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 import javafx.geometry.Orientation;
 
@@ -51,8 +51,8 @@ public final class OpacitySlider extends NumberSlider {
     // Declare block increment/decrement amount for left and right arrows.
     private static final double BLOCK_INCREMENT_PERCENT    = 2d;
 
-    public OpacitySlider( final SessionContext sessionContext ) {
-        this( sessionContext,
+    public OpacitySlider( final ClientProperties clientProperties ) {
+        this( clientProperties,
               MINIMUM_OPACITY_DEFAULT,
               MAXIMUM_OPACITY_DEFAULT,
               INITIAL_OPACITY_DEFAULT,
@@ -61,7 +61,7 @@ public final class OpacitySlider extends NumberSlider {
               BLOCK_INCREMENT_PERCENT );
     }
 
-    public OpacitySlider( final SessionContext sessionContext,
+    public OpacitySlider( final ClientProperties clientProperties,
                           final double minimumOpacity,
                           final double maximumOpacity,
                           final double initialOpacity,
@@ -69,7 +69,7 @@ public final class OpacitySlider extends NumberSlider {
                           final double minorTickSpacingPercent,
                           final double blockIncrementPercent ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                minimumOpacity,
                maximumOpacity,
                initialOpacity,

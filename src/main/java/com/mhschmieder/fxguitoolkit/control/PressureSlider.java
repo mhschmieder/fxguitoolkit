@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.PhysicsConstants;
 import com.mhschmieder.commonstoolkit.physics.PressureUnit;
 import com.mhschmieder.commonstoolkit.physics.UnitConversion;
@@ -57,8 +57,8 @@ public class PressureSlider extends NumberSlider {
     // Store the Pressure Unit so we'll know when we need to convert.
     private PressureUnit        _pressureUnit;
 
-    public PressureSlider( final SessionContext sessionContext ) {
-        this( sessionContext,
+    public PressureSlider( final ClientProperties clientProperties ) {
+        this( clientProperties,
               MINIMUM_PRESSURE_PASCALS_DEFAULT,
               MAXIMUM_PRESSURE_PASCALS_DEFAULT,
               INITIAL_PRESSURE_PASCALS_DEFAULT,
@@ -67,7 +67,7 @@ public class PressureSlider extends NumberSlider {
               BLOCK_INCREMENT_PASCALS );
     }
 
-    public PressureSlider( final SessionContext sessionContext,
+    public PressureSlider( final ClientProperties clientProperties,
                            final double minimumPressurePa,
                            final double maximumPressurePa,
                            final double initialPressurePa,
@@ -75,7 +75,7 @@ public class PressureSlider extends NumberSlider {
                            final double minorTickSpacingPa,
                            final double blockIncrementPa ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                minimumPressurePa,
                maximumPressurePa,
                initialPressurePa,

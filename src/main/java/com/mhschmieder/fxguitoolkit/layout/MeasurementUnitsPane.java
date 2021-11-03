@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.commonstoolkit.physics.MeasurementUnits;
 import com.mhschmieder.commonstoolkit.physics.PressureUnit;
@@ -60,12 +60,12 @@ public final class MeasurementUnitsPane extends VBox {
     // Cache a reference to the global Measurement Units.
     protected MeasurementUnits        measurementUnits;
 
-    public MeasurementUnitsPane( final SessionContext sessionContext ) {
+    public MeasurementUnitsPane( final ClientProperties clientProperties ) {
         // Always call the superclass constructor first!
         super();
 
         try {
-            initPane( sessionContext );
+            initPane( clientProperties );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -139,9 +139,9 @@ public final class MeasurementUnitsPane extends VBox {
         } );
     }
 
-    private void initPane( final SessionContext sessionContext ) {
+    private void initPane( final ClientProperties clientProperties ) {
         final Label distanceUnitLabel = GuiUtilities.getControlLabel( "Distance Unit" ); //$NON-NLS-1$
-        _distanceUnitSelector = new DistanceUnitSelector( sessionContext,
+        _distanceUnitSelector = new DistanceUnitSelector( clientProperties,
                                                           false,
                                                           false,
                                                           DistanceUnit.defaultValue() );
@@ -152,17 +152,17 @@ public final class MeasurementUnitsPane extends VBox {
         // AngleUnit.defaultValue() );
 
         final Label weightUnitLabel = GuiUtilities.getControlLabel( "Weight Unit" ); //$NON-NLS-1$
-        _weightUnitSelector = new WeightUnitSelector( sessionContext,
+        _weightUnitSelector = new WeightUnitSelector( clientProperties,
                                                       false,
                                                       WeightUnit.defaultValue() );
 
         final Label temperatureUnitLabel = GuiUtilities.getControlLabel( "Temperature Unit" ); //$NON-NLS-1$
-        _temperatureUnitSelector = new TemperatureUnitSelector( sessionContext,
+        _temperatureUnitSelector = new TemperatureUnitSelector( clientProperties,
                                                                 false,
                                                                 TemperatureUnit.defaultValue() );
 
         final Label pressureUnitLabel = GuiUtilities.getControlLabel( "Pressure Unit" ); //$NON-NLS-1$
-        _pressureUnitSelector = new PressureUnitSelector( sessionContext,
+        _pressureUnitSelector = new PressureUnitSelector( clientProperties,
                                                           false,
                                                           PressureUnit.defaultValue() );
 

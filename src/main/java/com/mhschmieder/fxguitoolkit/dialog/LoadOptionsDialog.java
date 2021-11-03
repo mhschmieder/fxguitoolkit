@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.dialog;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
@@ -38,17 +38,20 @@ import javafx.scene.control.DialogPane;
 
 public abstract class LoadOptionsDialog extends XDialog {
 
-    public ButtonType        _loadButton;
+    public ButtonType       _loadButton;
 
-    protected SessionContext _sessionContext;
+    /**
+     * Cache the Client Properties (System Type, Locale, etc.).
+     */
+    public ClientProperties clientProperties;
 
     public LoadOptionsDialog( final String title,
                               final String masthead,
-                              final SessionContext sessionContext ) {
+                              final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
         super( title, masthead ); // , sessionContext.systemType );
 
-        _sessionContext = sessionContext;
+        clientProperties = pClientProperties;
 
         try {
             initDialog();

@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
 import impl.org.controlsfx.skin.SearchableComboBoxSkin;
@@ -52,15 +52,17 @@ import javafx.scene.control.Tooltip;
 public abstract class XComboBox extends ComboBox< String > {
 
     // We need to know at all times whether we are marked as Searchable.
-    protected boolean        _searchable;
+    protected boolean       _searchable;
 
     // Cache a backup list to replace after auto-complete.
     // protected ObservableList< String > _backupList;
 
-    // Cache the full Session Context (System Type, Locale, etc.).
-    protected SessionContext _sessionContext;
+    /**
+     * Cache the Client Properties (System Type, Locale, etc.).
+     */
+    public ClientProperties clientProperties;
 
-    public XComboBox( final SessionContext sessionContext,
+    public XComboBox( final ClientProperties pClientProperties,
                       final String tooltipText,
                       final boolean toolbarContext,
                       final boolean editable,
@@ -68,7 +70,7 @@ public abstract class XComboBox extends ComboBox< String > {
         // Always call the superclass constructor first!
         super();
 
-        _sessionContext = sessionContext;
+        clientProperties = pClientProperties;
 
         _searchable = searchable;
 

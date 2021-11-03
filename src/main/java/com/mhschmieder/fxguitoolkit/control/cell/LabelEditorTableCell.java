@@ -33,7 +33,7 @@ package com.mhschmieder.fxguitoolkit.control.cell;
 import java.text.NumberFormat;
 import java.util.List;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -50,14 +50,14 @@ public class LabelEditorTableCell< RT, VT > extends EditorTableCell< RT, String 
     public NumberFormat          _uniquefierNumberFormat;
 
     public LabelEditorTableCell( final boolean pBlankTextAllowed,
-                                 final SessionContext pSessionContext ) {
+                                 final ClientProperties pSessionContext ) {
         this( null, pBlankTextAllowed, pSessionContext );
     }
 
     @SuppressWarnings("nls")
     public LabelEditorTableCell( final List< Integer > pUneditableRows,
                                  final boolean pBlankTextAllowed,
-                                 final SessionContext pSessionContext ) {
+                                 final ClientProperties pSessionContext ) {
         // Always call the superclass constructor first!
         super( pUneditableRows, pBlankTextAllowed );
 
@@ -112,7 +112,7 @@ public class LabelEditorTableCell< RT, VT > extends EditorTableCell< RT, String 
         return value.get();
     }
 
-    private final void initTableCell( final SessionContext pSessionContext ) {
+    private final void initTableCell( final ClientProperties pSessionContext ) {
         _uniquefierNumberFormat = NumberFormatUtilities
                 .getUniquefierNumberFormat( pSessionContext.locale );
     }

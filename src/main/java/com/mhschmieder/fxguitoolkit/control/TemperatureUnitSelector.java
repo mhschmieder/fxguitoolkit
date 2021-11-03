@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.TemperatureUnit;
 
 /**
@@ -47,11 +47,11 @@ public final class TemperatureUnitSelector extends TextSelector {
                                                                      TemperatureUnit.FAHRENHEIT
                                                                              .toCanonicalString() };
 
-    public TemperatureUnitSelector( final SessionContext sessionContext,
+    public TemperatureUnitSelector( final ClientProperties clientProperties,
                                     final boolean toolbarContext,
                                     final TemperatureUnit temperatureUnitDefault ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                "Supported Temperature Units", //$NON-NLS-1$
                toolbarContext,
                false,

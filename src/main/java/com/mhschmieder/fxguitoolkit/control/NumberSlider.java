@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.ScrollingSensitivity;
 
@@ -51,11 +51,13 @@ public class NumberSlider extends Slider {
     // Maintain a reference to the Measurement Unit label (can be blank).
     private String                 _measurementUnitString;
 
-    // Cache the full Session Context (System Type, Locale).
-    protected final SessionContext _sessionContext;
+    /**
+     * Cache the Client Properties (System Type, Locale, etc.).
+     */
+    public ClientProperties        clientProperties;
 
     @SuppressWarnings("nls")
-    public NumberSlider( final SessionContext sessionContext,
+    public NumberSlider( final ClientProperties pClientProperties,
                          final double minimumValue,
                          final double maximumValue,
                          final double initialValue,
@@ -66,7 +68,7 @@ public class NumberSlider extends Slider {
         // Always call the superclass constructor first!
         super( minimumValue, maximumValue, initialValue );
 
-        _sessionContext = sessionContext;
+        clientProperties = pClientProperties;
 
         _gesturesEnabled = false;
         _scrollingSensitivity = ScrollingSensitivity.defaultValue();
@@ -183,7 +185,7 @@ public class NumberSlider extends Slider {
         }
 
         // NOTE: The scroll direction convention on macOS tends to be inverted.
-        switch ( _sessionContext.systemType ) {
+        switch ( clientProperties.systemType ) {
         case MACOS:
             if ( scrollDeltaY >= 0d ) {
                 scrolledDelta = -scrolledDelta;

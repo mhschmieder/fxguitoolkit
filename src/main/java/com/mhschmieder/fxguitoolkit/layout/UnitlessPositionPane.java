@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.DoubleEditor;
 
@@ -47,18 +47,18 @@ public class UnitlessPositionPane extends BorderPane {
     public DoubleEditor _yPositionEditor;
 
     @SuppressWarnings("nls")
-    public UnitlessPositionPane( final SessionContext sessionContext ) {
-        this( sessionContext, "X", "Y" );
+    public UnitlessPositionPane( final ClientProperties clientProperties ) {
+        this( clientProperties, "X", "Y" );
     }
 
-    public UnitlessPositionPane( final SessionContext sessionContext,
+    public UnitlessPositionPane( final ClientProperties clientProperties,
                                  final String xPositionLabelText,
                                  final String yPositionLabelText ) {
         // Always call the superclass constructor first!
         super();
 
         try {
-            initPane( sessionContext, xPositionLabelText, yPositionLabelText );
+            initPane( clientProperties, xPositionLabelText, yPositionLabelText );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -72,10 +72,10 @@ public class UnitlessPositionPane extends BorderPane {
         return cartesianPosition;
     }
 
-    private final void initPane( final SessionContext sessionContext,
+    private final void initPane( final ClientProperties clientProperties,
                                  final String xPositionLabelText,
                                  final String yPositionLabelText ) {
-        _xPositionEditor = new DoubleEditor( sessionContext,
+        _xPositionEditor = new DoubleEditor( clientProperties,
                                              "0", //$NON-NLS-1$
                                              null,
                                              0,
@@ -84,7 +84,7 @@ public class UnitlessPositionPane extends BorderPane {
                                              10 );
         _xPositionEditor.setValueIncrement( 0.5d );
 
-        _yPositionEditor = new DoubleEditor( sessionContext,
+        _yPositionEditor = new DoubleEditor( clientProperties,
                                              "0", //$NON-NLS-1$
                                              null,
                                              0,

@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,23 +42,21 @@ import javafx.collections.ObservableList;
 public class TextSelector extends XComboBox {
 
     // Default constructor, when nothing much is known at creation time.
-    public TextSelector( final SessionContext sessionContext ) {
-        this( sessionContext, null, false, false, false, 16 );
+    public TextSelector( final ClientProperties pClientProperties ) {
+        this( pClientProperties, null, false, false, false, 16 );
     }
 
     // This is the constructor to use when we don't know the initial drop-list
     // right away, or when it is too awkward to construct or reference inside a
     // constructor hierarchy (super() and this() have to be the first code).
-    public TextSelector( final SessionContext sessionContext,
+    public TextSelector( final ClientProperties pClientProperties,
                          final String tooltipText,
                          final boolean toolbarContext,
                          final boolean editable,
                          final boolean searchable,
                          final int visibleRowCount ) {
         // Always call the superclass constructor first!
-        super( sessionContext, tooltipText, toolbarContext, editable, searchable );
-
-        _sessionContext = sessionContext;
+        super( pClientProperties, tooltipText, toolbarContext, editable, searchable );
 
         try {
             initComboBox( visibleRowCount );
@@ -69,7 +67,7 @@ public class TextSelector extends XComboBox {
     }
 
     // This is the constructor to call when we know the initial drop-list.
-    public TextSelector( final SessionContext sessionContext,
+    public TextSelector( final ClientProperties pClientProperties,
                          final String tooltipText,
                          final boolean toolbarContext,
                          final boolean editable,
@@ -77,7 +75,7 @@ public class TextSelector extends XComboBox {
                          final String[] textValues,
                          final String defaultValue ) {
         // By default, make sure the list displays all items without scrolling.
-        this( sessionContext,
+        this( pClientProperties,
               tooltipText,
               toolbarContext,
               editable,

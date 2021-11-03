@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.ScrollingSensitivity;
 import com.mhschmieder.fxguitoolkit.control.ControlFactory;
@@ -56,13 +56,13 @@ public final class OpacityPane extends VBox {
 
     private DoubleProperty opacityPercent;
 
-    public OpacityPane( final SessionContext sessionContext, final String labelText ) {
+    public OpacityPane( final ClientProperties clientProperties, final String labelText ) {
         // Always call the superclass constructor first!
         super();
 
         opacityPercent = new SimpleDoubleProperty();
 
-        initPane( sessionContext, labelText );
+        initPane( clientProperties, labelText );
     }
 
     private void bindProperties() {
@@ -86,12 +86,12 @@ public final class OpacityPane extends VBox {
         return opacityPercent.get();
     }
 
-    private void initPane( final SessionContext sessionContext, final String labelText ) {
+    private void initPane( final ClientProperties clientProperties, final String labelText ) {
         // Create a default Opacity Slider.
-        _opacitySlider = new OpacitySlider( sessionContext );
+        _opacitySlider = new OpacitySlider( clientProperties );
 
         // Conform the associated editor (text field) to the slider attributes.
-        _opacityEditor = ControlFactory.getOpacitySliderEditor( sessionContext, _opacitySlider );
+        _opacityEditor = ControlFactory.getOpacitySliderEditor( clientProperties, _opacitySlider );
         _opacityEditor.setPrefWidth( 70d );
 
         _opacityLabel = GuiUtilities.getControlLabel( labelText );

@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
@@ -48,14 +48,14 @@ public class DualPositionPane extends GridPane {
     public RadioButton           _alternatePositionRadioButton;
     public CartesianPositionPane _alternatePositionPane;
 
-    public DualPositionPane( final SessionContext sessionContext,
+    public DualPositionPane( final ClientProperties clientProperties,
                              final String mainPositionLabel,
                              final String alternatePositionLabel ) {
         // Always call the superclass constructor first!
         super();
 
         try {
-            initPane( sessionContext, mainPositionLabel, alternatePositionLabel );
+            initPane( clientProperties, mainPositionLabel, alternatePositionLabel );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -72,7 +72,7 @@ public class DualPositionPane extends GridPane {
         return _mainPositionPane.getCartesianPosition2D();
     }
 
-    private final void initPane( final SessionContext sessionContext,
+    private final void initPane( final ClientProperties clientProperties,
                                  final String mainPositionLabel,
                                  final String alternatePositionLabel ) {
         final ToggleGroup dualPositionToggleGroup = new ToggleGroup();
@@ -81,9 +81,9 @@ public class DualPositionPane extends GridPane {
         _alternatePositionRadioButton = GuiUtilities
                 .getRadioButton( alternatePositionLabel, dualPositionToggleGroup, true );
 
-        _mainPositionPane = new CartesianPositionPane( sessionContext );
+        _mainPositionPane = new CartesianPositionPane( clientProperties );
 
-        _alternatePositionPane = new CartesianPositionPane( sessionContext );
+        _alternatePositionPane = new CartesianPositionPane( clientProperties );
 
         setHgap( 10d );
         setVgap( 10d );

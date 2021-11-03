@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.AngleUnit;
 import com.mhschmieder.commonstoolkit.physics.PhysicsUtilities;
 
@@ -54,11 +54,11 @@ public final class AngleSelector extends DoubleSelector {
     // Maintain a reference to the Angle Unit.
     protected AngleUnit     _angleUnit;
 
-    public AngleSelector( final SessionContext sessionContext,
+    public AngleSelector( final ClientProperties clientProperties,
                           final String tooltipText,
                           final boolean toolbarContext ) {
         // Always call the superclass constructor first!
-        super( sessionContext, 0, 1, 0, 1, true, tooltipText, toolbarContext, false, false );
+        super( clientProperties, 0, 1, 0, 1, true, tooltipText, toolbarContext, false, false );
 
         _angleUnit = AngleUnit.defaultValue();
 

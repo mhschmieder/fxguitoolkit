@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.PhysicsConstants;
 import com.mhschmieder.commonstoolkit.physics.PressureUnit;
 import com.mhschmieder.commonstoolkit.physics.UnitConversion;
@@ -47,7 +47,7 @@ public class PressureEditor extends DoubleEditor {
 
     // //////////////////////////////////////////////////////////////////////////
     // Constructors and Initialization
-    public PressureEditor( final SessionContext sessionContext,
+    public PressureEditor( final ClientProperties clientProperties,
                            final String initialText,
                            final String tooltipText,
                            final double minimumPressurePa,
@@ -56,7 +56,7 @@ public class PressureEditor extends DoubleEditor {
         // Always call the superclass constructor first!
         // NOTE: We use up to four decimal places of precision for displaying
         // pressure, and ten decimal places for parsing Pressure.
-        super( sessionContext,
+        super( clientProperties,
                initialText,
                tooltipText,
                0,

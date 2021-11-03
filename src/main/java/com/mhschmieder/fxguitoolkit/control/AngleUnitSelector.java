@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.AngleUnit;
 
 /**
@@ -48,9 +48,10 @@ public final class AngleUnitSelector extends TextSelector {
                                                              AngleUnit.RADIANS
                                                                      .toCanonicalString() };
 
-    public AngleUnitSelector( final SessionContext sessionContext, final boolean toolbarContext ) {
+    public AngleUnitSelector( final ClientProperties clientProperties,
+                              final boolean toolbarContext ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                "Supported Angle Units", //$NON-NLS-1$
                toolbarContext,
                false,

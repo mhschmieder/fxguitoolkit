@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.PhysicsConstants;
 import com.mhschmieder.commonstoolkit.physics.TemperatureUnit;
 import com.mhschmieder.commonstoolkit.physics.UnitConversion;
@@ -47,7 +47,7 @@ public final class TemperatureEditor extends DoubleEditor {
 
     // //////////////////////////////////////////////////////////////////////////
     // Constructors and Initialization
-    public TemperatureEditor( final SessionContext sessionContext,
+    public TemperatureEditor( final ClientProperties clientProperties,
                               final String initialText,
                               final String tooltipText,
                               final double minimumTemperatureK,
@@ -56,7 +56,7 @@ public final class TemperatureEditor extends DoubleEditor {
         // Always call the superclass constructor first!
         // NOTE: We use up to two decimal places of precision for displaying
         // temperature, and six decimal places for parsing Temperature.
-        super( sessionContext,
+        super( clientProperties,
                initialText,
                tooltipText,
                0,

@@ -32,7 +32,7 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import java.text.NumberFormat;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.text.StringUtilities;
 
 import javafx.application.Platform;
@@ -56,11 +56,11 @@ public abstract class NumberEditor extends XTextField {
     // This is a functional interface for resetting the control.
     protected Runnable     _reset;
 
-    public NumberEditor( final SessionContext sessionContext,
+    public NumberEditor( final ClientProperties clientProperties,
                          final String initialText,
                          final String tooltipText ) {
         // Always call the superclass constructor first!
-        super( initialText, tooltipText, sessionContext );
+        super( initialText, tooltipText, clientProperties );
 
         _measurementUnitString = ""; //$NON-NLS-1$
 
@@ -73,7 +73,7 @@ public abstract class NumberEditor extends XTextField {
     }
 
     private final void initEditor() {
-        _numberFormat = NumberFormat.getNumberInstance( _sessionContext.locale );
+        _numberFormat = NumberFormat.getNumberInstance( clientProperties.locale );
         _numberParse = ( NumberFormat ) _numberFormat.clone();
 
         _numberFormat.setGroupingUsed( true );

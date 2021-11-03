@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
@@ -44,16 +44,18 @@ import javafx.scene.input.KeyCode;
  */
 public abstract class XTextField extends TextField {
 
-    // Cache the full Session Context (System Type, Locale, Client Type).
-    protected final SessionContext _sessionContext;
+    /**
+     * Cache the Client Properties (System Type, Locale, etc.).
+     */
+    public ClientProperties clientProperties;
 
     public XTextField( final String initialText,
                        final String tooltipText,
-                       final SessionContext sessionContext ) {
+                       final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
         super( initialText );
 
-        _sessionContext = sessionContext;
+        clientProperties = pClientProperties;
 
         try {
             initEditor( tooltipText );
@@ -78,8 +80,8 @@ public abstract class XTextField extends TextField {
         // Try to make sure the text field uses enough height so that commas
         // don't look like periods. More height is required on the Mac for these
         // and other characters involving descenders, to avoid clipping.
-        setPrefHeight( SystemType.MACOS.equals( _sessionContext.systemType ) ? 24d : 22d );
-        setMinHeight( SystemType.MACOS.equals( _sessionContext.systemType ) ? 24d : 22d );
+        setPrefHeight( SystemType.MACOS.equals( clientProperties.systemType ) ? 24d : 22d );
+        setMinHeight( SystemType.MACOS.equals( clientProperties.systemType ) ? 24d : 22d );
 
         // Just in case we use or derive this class without overriding special
         // key handling, add some rudimentary behavior that minimizes surprises.

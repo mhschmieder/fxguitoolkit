@@ -32,7 +32,7 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import java.text.ParseException;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
@@ -60,21 +60,21 @@ public class IntegerEditor extends NumberEditor {
     // NOTE: This field has to follow JavaFX Property Beans conventions.
     private final IntegerProperty value;
 
-    public IntegerEditor( final SessionContext sessionContext,
+    public IntegerEditor( final ClientProperties clientProperties,
                           final String initialText,
                           final String tooltipText ) {
-        this( sessionContext, initialText, tooltipText, -Integer.MAX_VALUE, Integer.MAX_VALUE );
+        this( clientProperties, initialText, tooltipText, -Integer.MAX_VALUE, Integer.MAX_VALUE );
     }
 
-    public IntegerEditor( final SessionContext sessionContext,
+    public IntegerEditor( final ClientProperties clientProperties,
                           final String initialText,
                           final String tooltipText,
                           final int minimumValue,
                           final int maximumValue ) {
-        this( sessionContext, initialText, tooltipText, minimumValue, maximumValue, 0, 0 );
+        this( clientProperties, initialText, tooltipText, minimumValue, maximumValue, 0, 0 );
     }
 
-    public IntegerEditor( final SessionContext sessionContext,
+    public IntegerEditor( final ClientProperties clientProperties,
                           final String initialText,
                           final String tooltipText,
                           final int minimumValue,
@@ -82,7 +82,7 @@ public class IntegerEditor extends NumberEditor {
                           final int defaultValue,
                           final int valueIncrement ) {
         // Always call the superclass constructor first!
-        super( sessionContext, initialText, tooltipText );
+        super( clientProperties, initialText, tooltipText );
 
         _defaultValue = defaultValue;
 

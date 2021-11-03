@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -47,7 +47,7 @@ public final class TableControlPane extends BorderPane {
     public Button _deleteRowButton;
 
     // Fully qualified constructor.
-    public TableControlPane( final SessionContext sessionContext,
+    public TableControlPane( final ClientProperties clientProperties,
                              final Orientation orientation,
                              final Button insertRowButton,
                              final Button deleteRowButton,
@@ -59,14 +59,14 @@ public final class TableControlPane extends BorderPane {
         _deleteRowButton = deleteRowButton;
 
         try {
-            initPane( sessionContext, orientation, deleteButtonDisabledDefault );
+            initPane( clientProperties, orientation, deleteButtonDisabledDefault );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
         }
     }
 
-    private void initPane( final SessionContext sessionContext,
+    private void initPane( final ClientProperties clientProperties,
                            final Orientation orientation,
                            final boolean deleteButtonDisabledDefault ) {
         // Conditionally disable the Delete Button initially.

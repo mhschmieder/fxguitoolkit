@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.AngleUnit;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.ScrollingSensitivity;
@@ -50,27 +50,27 @@ public class AnglePane extends VBox {
     public AngleSlider _angleSlider;
     public AngleEditor _angleEditor;
 
-    public AnglePane( final SessionContext sessionContext,
+    public AnglePane( final ClientProperties clientProperties,
                       final String labelText,
                       final boolean useContextMenu ) {
         // Always call the superclass constructor first!
         super();
 
-        initPane( sessionContext, labelText, useContextMenu );
+        initPane( clientProperties, labelText, useContextMenu );
     }
 
     public final double getAngleDegrees() {
         return _angleSlider.getValue();
     }
 
-    private final void initPane( final SessionContext sessionContext,
+    private final void initPane( final ClientProperties clientProperties,
                                  final String labelText,
                                  final boolean useContextMenu ) {
         // Create a default Angle Slider.
-        _angleSlider = new AngleSlider( sessionContext, useContextMenu );
+        _angleSlider = new AngleSlider( clientProperties, useContextMenu );
 
         // Conform the associated editor (text field) to the slider attributes.
-        _angleEditor = ControlFactory.getAngleSliderEditor( sessionContext, _angleSlider );
+        _angleEditor = ControlFactory.getAngleSliderEditor( clientProperties, _angleSlider );
         _angleEditor.setPrefWidth( 70d );
 
         final Label angleLabel = GuiUtilities.getControlLabel( labelText );

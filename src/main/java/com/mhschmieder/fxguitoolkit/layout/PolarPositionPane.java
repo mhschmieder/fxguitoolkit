@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.AngleUnit;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
@@ -45,12 +45,12 @@ public class PolarPositionPane extends BorderPane {
     public AnglePane      _anglePane;
     public DistanceEditor _distanceEditor;
 
-    public PolarPositionPane( final SessionContext sessionContext ) {
+    public PolarPositionPane( final ClientProperties clientProperties ) {
         // Always call the superclass constructor first!
         super();
 
         try {
-            initPane( sessionContext );
+            initPane( clientProperties );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -65,10 +65,10 @@ public class PolarPositionPane extends BorderPane {
         return _anglePane.getAngleDegrees();
     }
 
-    private final void initPane( final SessionContext sessionContext ) {
-        _anglePane = new AnglePane( sessionContext, "Angle", true ); //$NON-NLS-1$
+    private final void initPane( final ClientProperties clientProperties ) {
+        _anglePane = new AnglePane( clientProperties, "Angle", true ); //$NON-NLS-1$
 
-        _distanceEditor = new DistanceEditor( sessionContext, "0", null ); //$NON-NLS-1$
+        _distanceEditor = new DistanceEditor( clientProperties, "0", null ); //$NON-NLS-1$
 
         final HBox distanceEditorPane = GuiUtilities.getLabeledTextFieldPane( "Radial Distance", //$NON-NLS-1$
                                                                               _distanceEditor );

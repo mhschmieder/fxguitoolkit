@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.NaturalEnvironment;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorUtilities;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
@@ -57,13 +57,13 @@ public final class HumidityPane extends VBox {
 
     private DoubleProperty humidityRelative;
 
-    public HumidityPane( final SessionContext sessionContext ) {
+    public HumidityPane( final ClientProperties clientProperties ) {
         // Always call the superclass constructor first!
         super( 6d );
 
         humidityRelative = new SimpleDoubleProperty();
 
-        initPane( sessionContext );
+        initPane( clientProperties );
     }
 
     private void bindProperties() {
@@ -91,15 +91,16 @@ public final class HumidityPane extends VBox {
         return humidityRelative;
     }
 
-    private void initPane( final SessionContext sessionContext ) {
+    private void initPane( final ClientProperties clientProperties ) {
         // Make a bolded label to clearly identify the functionality.
         _humidityLabel = GuiUtilities.getColumnHeader( "Relative Humidity" ); //$NON-NLS-1$
 
         // Create a Relative Humidity slider.
-        _humiditySlider = new HumiditySlider( sessionContext );
+        _humiditySlider = new HumiditySlider( clientProperties );
 
         // Conform the associated editor (text field) to the slider attributes.
-        _humidityEditor = ControlFactory.getHumiditySliderEditor( sessionContext, _humiditySlider );
+        _humidityEditor =
+                        ControlFactory.getHumiditySliderEditor( clientProperties, _humiditySlider );
         _humidityEditor.setPrefWidth( 100d );
         _humidityEditor.setMaxWidth( 100d );
 

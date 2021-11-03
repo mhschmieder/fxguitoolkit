@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
 
 import javafx.collections.FXCollections;
@@ -42,7 +42,7 @@ import javafx.scene.input.KeyEvent;
  */
 public class DoubleSelector extends NumberSelector {
 
-    public DoubleSelector( final SessionContext sessionContext,
+    public DoubleSelector( final ClientProperties clientProperties,
                            final int minFractionDigitsFormat,
                            final int maxFractionDigitsFormat,
                            final int minFractionDigitsParse,
@@ -53,7 +53,7 @@ public class DoubleSelector extends NumberSelector {
                            final boolean editable,
                            final boolean searchable ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                minFractionDigitsFormat,
                maxFractionDigitsFormat,
                minFractionDigitsParse,
@@ -65,7 +65,7 @@ public class DoubleSelector extends NumberSelector {
                searchable );
     }
 
-    public DoubleSelector( final SessionContext sessionContext,
+    public DoubleSelector( final ClientProperties clientProperties,
                            final int minFractionDigitsFormat,
                            final int maxFractionDigitsFormat,
                            final int minFractionDigitsParse,
@@ -78,7 +78,7 @@ public class DoubleSelector extends NumberSelector {
                            final double minimumValue,
                            final double maximumValue,
                            final double increment ) {
-        this( sessionContext,
+        this( clientProperties,
               minFractionDigitsFormat,
               maxFractionDigitsFormat,
               minFractionDigitsParse,

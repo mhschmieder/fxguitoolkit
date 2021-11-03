@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.fxgraphicstoolkit.graphics.Extents2D;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorUtilities;
@@ -57,7 +57,7 @@ public final class ExtentsPane extends GridPane {
     // Maintain an observable reference to the global Extents.
     protected Extents2D          extents;
 
-    public ExtentsPane( final SessionContext sessionContext,
+    public ExtentsPane( final ClientProperties clientProperties,
                         final double extentsSizeMinimumMeters,
                         final double extentsSizeMaximumMeters,
                         final String propertiesCategory ) {
@@ -65,7 +65,7 @@ public final class ExtentsPane extends GridPane {
         super();
 
         try {
-            initPane( sessionContext,
+            initPane( clientProperties,
                       extentsSizeMinimumMeters,
                       extentsSizeMaximumMeters,
                       propertiesCategory );
@@ -172,14 +172,14 @@ public final class ExtentsPane extends GridPane {
         return extents.getHeight();
     }
 
-    private void initPane( final SessionContext sessionContext,
+    private void initPane( final ClientProperties clientProperties,
                            final double extentsSizeMinimumMeters,
                            final double extentsSizeMaximumMeters,
                            final String propertiesCategory ) {
         _minimumPaneLabel = GuiUtilities.getColumnHeader( "Lower Left Corner" ); //$NON-NLS-1$
-        _minimumPane = new CartesianPositionPane( sessionContext );
+        _minimumPane = new CartesianPositionPane( clientProperties );
         _sizePaneLabel = GuiUtilities.getColumnHeader( propertiesCategory + " Size" ); //$NON-NLS-1$
-        _sizePane = new CartesianPositionPane( sessionContext, "Width", "Height" ); //$NON-NLS-1$ //$NON-NLS-2$
+        _sizePane = new CartesianPositionPane( clientProperties, "Width", "Height" ); //$NON-NLS-1$ //$NON-NLS-2$
 
         _sizePane.setMinimumDistanceMeters( extentsSizeMinimumMeters );
         _sizePane.setMaximumDistanceMeters( extentsSizeMaximumMeters );

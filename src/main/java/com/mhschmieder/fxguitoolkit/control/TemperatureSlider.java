@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.PhysicsConstants;
 import com.mhschmieder.commonstoolkit.physics.TemperatureUnit;
 import com.mhschmieder.commonstoolkit.physics.UnitConversion;
@@ -57,8 +57,8 @@ public class TemperatureSlider extends NumberSlider {
     // Store the Temperature Unit so we'll know when we need to convert.
     private TemperatureUnit     _temperatureUnit;
 
-    public TemperatureSlider( final SessionContext sessionContext ) {
-        this( sessionContext,
+    public TemperatureSlider( final ClientProperties clientProperties ) {
+        this( clientProperties,
               MINIMUM_TEMPERATURE_KELVIN_DEFAULT,
               MAXIMUM_TEMPERATURE_KELVIN_DEFAULT,
               INITIAL_TEMPERATURE_KELVIN_DEFAULT,
@@ -67,7 +67,7 @@ public class TemperatureSlider extends NumberSlider {
               BLOCK_INCREMENT_KELVIN );
     }
 
-    public TemperatureSlider( final SessionContext sessionContext,
+    public TemperatureSlider( final ClientProperties clientProperties,
                               final double minimumTemperatureK,
                               final double maximumTemperatureK,
                               final double initialTemperatureK,
@@ -75,7 +75,7 @@ public class TemperatureSlider extends NumberSlider {
                               final double minorTickSpacingK,
                               final double blockIncrementK ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                minimumTemperatureK,
                maximumTemperatureK,
                initialTemperatureK,

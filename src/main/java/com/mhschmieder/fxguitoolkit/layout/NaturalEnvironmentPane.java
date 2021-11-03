@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.Altitude;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.commonstoolkit.physics.NaturalEnvironment;
@@ -56,23 +56,23 @@ public final class NaturalEnvironmentPane extends HBox {
     // Cache a reference to the global Natural Environment.
     public NaturalEnvironment naturalEnvironment;
 
-    public NaturalEnvironmentPane( final SessionContext sessionContext ) {
+    public NaturalEnvironmentPane( final ClientProperties clientProperties ) {
         // Always call the superclass constructor first!
         super();
 
         try {
-            initPane( sessionContext );
+            initPane( clientProperties );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
         }
     }
 
-    private void initPane( final SessionContext sessionContext ) {
-        _temperaturePane = new TemperaturePane( sessionContext );
-        _humidityPane = new HumidityPane( sessionContext );
-        _pressurePane = new PressurePane( sessionContext );
-        _altitudePane = new AltitudePane( sessionContext );
+    private void initPane( final ClientProperties clientProperties ) {
+        _temperaturePane = new TemperaturePane( clientProperties );
+        _humidityPane = new HumidityPane( clientProperties );
+        _pressurePane = new PressurePane( clientProperties );
+        _altitudePane = new AltitudePane( clientProperties );
 
         getChildren().addAll( _temperaturePane, _humidityPane, _pressurePane, _altitudePane );
 

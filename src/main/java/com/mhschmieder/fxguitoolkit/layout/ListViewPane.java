@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
 import javafx.application.Platform;
@@ -49,27 +49,29 @@ import javafx.scene.paint.Color;
 // certain LAF and constraints that are far from the defaults in JavaFX.
 public class ListViewPane extends BorderPane {
 
-    private Label                headerLabel;
-    private ListView< String >   itemList;
+    private Label              headerLabel;
+    private ListView< String > itemList;
 
     // This is just an empty placeholder for a bottom layout element that would
     // likely have hard constraints, maybe host buttons, and in turn would help
     // constrain the ListView's sizing and spacing.
-    private Pane                 bottomButtonPane;
+    private Pane               bottomButtonPane;
 
-    // Cache the context for OS etc. in case it affects layout or functionality.
-    private final SessionContext sessionContext;
+    /**
+     * Cache the Client Properties (System Type, Locale, etc.).
+     */
+    public ClientProperties    clientProperties;
 
     // TODO: Review the constructor(s) to provide the best choices in
     // populating the List View, and/or simply add methods that update the
     // list post-construction.
     public ListViewPane( final String listHeader,
                          final String[] items,
-                         final SessionContext pSessionContext ) {
+                         final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
         super();
 
-        sessionContext = pSessionContext;
+        clientProperties = pClientProperties;
 
         try {
             initPane( listHeader, items );

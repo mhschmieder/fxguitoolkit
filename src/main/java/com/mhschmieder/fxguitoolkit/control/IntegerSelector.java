@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
 
 import javafx.collections.FXCollections;
@@ -42,14 +42,14 @@ import javafx.scene.input.KeyEvent;
  */
 public class IntegerSelector extends NumberSelector {
 
-    public IntegerSelector( final SessionContext sessionContext,
+    public IntegerSelector( final ClientProperties clientProperties,
                             final boolean useLocale,
                             final String tooltipText,
                             final boolean toolbarContext,
                             final boolean editable,
                             final boolean searchable ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                0,
                0,
                0,
@@ -61,7 +61,7 @@ public class IntegerSelector extends NumberSelector {
                searchable );
     }
 
-    public IntegerSelector( final SessionContext sessionContext,
+    public IntegerSelector( final ClientProperties clientProperties,
                             final boolean useLocale,
                             final String tooltipText,
                             final boolean toolbarContext,
@@ -70,7 +70,7 @@ public class IntegerSelector extends NumberSelector {
                             final int minimumValue,
                             final int maximumValue,
                             final int increment ) {
-        this( sessionContext, useLocale, tooltipText, toolbarContext, editable, searchable );
+        this( clientProperties, useLocale, tooltipText, toolbarContext, editable, searchable );
 
         try {
             initComboBox( minimumValue, maximumValue, increment );

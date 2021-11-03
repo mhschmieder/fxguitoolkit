@@ -32,7 +32,7 @@ package com.mhschmieder.fxguitoolkit;
 
 import java.util.ResourceBundle;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.ResourceUtilities;
 import com.mhschmieder.fxguitoolkit.control.DoubleEditor;
 import com.mhschmieder.fxguitoolkit.control.NumberSlider;
@@ -110,13 +110,13 @@ public class SceneGraphUtilities {
         return toggleButton;
     }
 
-    public static String getLabeledControlLabel( final SessionContext sessionContext,
+    public static String getLabeledControlLabel( final ClientProperties clientProperties,
                                                  final String bundleName,
                                                  final String groupName,
                                                  final String itemName,
                                                  final boolean replaceMnemonic ) {
         final ResourceBundle resourceBundle = ResourceUtilities
-                .getResourceBundle( sessionContext, bundleName, true );
+                .getResourceBundle( clientProperties, bundleName, true );
 
         // Get the control label from the resource bundle, if applicable.
         final String buttonLabel =
@@ -138,7 +138,7 @@ public class SceneGraphUtilities {
     @SuppressWarnings("nls")
     public static GridPane getLabeledTextAreaPane( final String labelText,
                                                    final TextArea textArea,
-                                                   final SessionContext sessionContext ) {
+                                                   final ClientProperties clientProperties ) {
         final GridPane grid = LayoutFactory
                 .makeGridPane( Pos.CENTER_LEFT, new Insets( 0d, 6d, 0d, 6d ), 6, 6 );
 
@@ -238,7 +238,7 @@ public class SceneGraphUtilities {
     }
 
     // Helper method to get a number editor, stand-alone or paired.
-    public static DoubleEditor getNumberSliderEditor( final SessionContext sessionContext,
+    public static DoubleEditor getNumberSliderEditor( final ClientProperties clientProperties,
                                                       final int minFractionDigitsFormat,
                                                       final int maxFractionDigitsFormat,
                                                       final int minFractionDigitsParse,
@@ -251,7 +251,7 @@ public class SceneGraphUtilities {
         // Get the current value and format it as initial text.
         final String initialText = Double.toString( initialValue );
 
-        final DoubleEditor doubleEditor = new DoubleEditor( sessionContext,
+        final DoubleEditor doubleEditor = new DoubleEditor( clientProperties,
                                                             initialText,
                                                             null,
                                                             minFractionDigitsFormat,
@@ -269,7 +269,7 @@ public class SceneGraphUtilities {
     }
 
     // Helper method to get a number editor to pair with a slider.
-    public static DoubleEditor getNumberSliderEditor( final SessionContext sessionContext,
+    public static DoubleEditor getNumberSliderEditor( final ClientProperties clientProperties,
                                                       final NumberSlider numberSlider,
                                                       final int minFractionDigitsFormat,
                                                       final int maxFractionDigitsFormat,
@@ -278,7 +278,7 @@ public class SceneGraphUtilities {
                                                       final double valueIncrement ) {
         // Use the current slider value and limits to set the number editor.
         final DoubleEditor doubleEditor =
-                                        getNumberSliderEditor( sessionContext,
+                                        getNumberSliderEditor( clientProperties,
                                                                minFractionDigitsFormat,
                                                                maxFractionDigitsFormat,
                                                                minFractionDigitsParse,

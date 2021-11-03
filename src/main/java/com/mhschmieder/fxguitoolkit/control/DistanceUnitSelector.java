@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 
 /**
@@ -71,12 +71,12 @@ public class DistanceUnitSelector extends TextSelector {
                                                                           DistanceUnit.INCHES
                                                                                   .toCanonicalString() };
 
-    public DistanceUnitSelector( final SessionContext sessionContext,
+    public DistanceUnitSelector( final ClientProperties clientProperties,
                                  final boolean toolbarContext,
                                  final boolean includeChooseOne,
                                  final DistanceUnit distanceUnit ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                "Supported Distance Units", //$NON-NLS-1$
                toolbarContext,
                false,

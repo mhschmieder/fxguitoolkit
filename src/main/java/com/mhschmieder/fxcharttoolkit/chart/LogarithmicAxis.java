@@ -34,7 +34,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.fxcharttoolkit.IllegalLogarithmicRangeException;
 
 import javafx.beans.binding.DoubleBinding;
@@ -76,18 +76,20 @@ public class LogarithmicAxis extends ValueAxis< Number > {
     // private Object currentAnimationID;
 
     // Define properties for the log lower and upper bounds of the axis.
-    private DoubleProperty   logUpperBound;
-    private DoubleProperty   logLowerBound;
+    private DoubleProperty  logUpperBound;
+    private DoubleProperty  logLowerBound;
 
     // For performance reasons, we only want to make this once, at startup.
-    protected NumberFormat   _numberFormat;
+    protected NumberFormat  _numberFormat;
 
-    // Cache the full Session Context (System Type, Locale, Client Type, etc.).
-    protected SessionContext _sessionContext;
+    /**
+     * Cache the Client Properties (System Type, Locale, etc.).
+     */
+    public ClientProperties clientProperties;
 
     public LogarithmicAxis( final double lowerBound,
                             final double upperBound,
-                            final SessionContext sessionContext ) {
+                            final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
         super( lowerBound, upperBound );
 
@@ -101,7 +103,7 @@ public class LogarithmicAxis extends ValueAxis< Number > {
         }
 
         try {
-            initAxis( sessionContext );
+            initAxis( pClientProperties );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -109,14 +111,14 @@ public class LogarithmicAxis extends ValueAxis< Number > {
     }
 
     // Default constructor.
-    public LogarithmicAxis( final SessionContext sessionContext ) {
+    public LogarithmicAxis( final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
         // NOTE: We use the super-constructor without parameters, which makes
         // the boundaries auto-ranging.
         super();
 
         try {
-            initAxis( sessionContext );
+            initAxis( pClientProperties );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -271,13 +273,13 @@ public class LogarithmicAxis extends ValueAxis< Number > {
                         ( ( ( displayPosition / getWidth() ) * delta ) + logLowerBound.get() ) );
     }
 
-    private final void initAxis( final SessionContext sessionContext ) {
-        _sessionContext = sessionContext;
+    private final void initAxis( final ClientProperties pClientProperties ) {
+        clientProperties = pClientProperties;
 
         // Cache the number formats so that we don't have to get information
         // about locale, language, etc. from the OS each time we format a
         // number.
-        _numberFormat = NumberFormat.getNumberInstance( _sessionContext.locale );
+        _numberFormat = NumberFormat.getNumberInstance( clientProperties.locale );
         _numberFormat.setMinimumIntegerDigits( 1 );
         _numberFormat.setMaximumIntegerDigits( 10 );
 

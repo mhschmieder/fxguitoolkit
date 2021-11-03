@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.AngleUnit;
 
 /**
@@ -45,9 +45,10 @@ public class LongitudeDegreesEditor extends IntegerEditor {
     // NOTE: We increment by 1 degree as we are using DMS as separate values.
     public static final int VALUE_INCREMENT_DEGREES = 1;
 
-    public LongitudeDegreesEditor( final SessionContext sessionContext, final String tooltipText ) {
+    public LongitudeDegreesEditor( final ClientProperties clientProperties,
+                                   final String tooltipText ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                "0", //$NON-NLS-1$
                tooltipText,
                -179,

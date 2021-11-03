@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 public final class HumidityEditor extends DoubleEditor {
 
@@ -39,7 +39,7 @@ public final class HumidityEditor extends DoubleEditor {
     // TODO: Modify this value if units are other than Relative Humidity?
     public static final double VALUE_INCREMENT_PERCENT = 10d;
 
-    public HumidityEditor( final SessionContext sessionContext,
+    public HumidityEditor( final ClientProperties clientProperties,
                            final String initialText,
                            final String tooltipText,
                            final double humidityMinimum,
@@ -48,7 +48,7 @@ public final class HumidityEditor extends DoubleEditor {
         // Always call the superclass constructor first!
         // NOTE: We use up to two decimal places of precision for displaying
         // humidity, and four decimal places for parsing humidity.
-        super( sessionContext,
+        super( clientProperties,
                initialText,
                tooltipText,
                0,

@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.commonstoolkit.physics.UnitConversion;
 
@@ -44,13 +44,13 @@ public class DistanceEditor extends DoubleEditor {
     // Store the Distance Unit so we'll know when we need to convert.
     private DistanceUnit       _distanceUnit;
 
-    public DistanceEditor( final SessionContext sessionContext,
+    public DistanceEditor( final ClientProperties clientProperties,
                            final String initialText,
                            final String tooltipText ) {
         // Always call the superclass constructor first!
         // :NOTE: We use up to two decimal place of precision for displaying
         // distance, and ten decimal places for parsing Distance.
-        super( sessionContext, initialText, tooltipText, 0, 2, 0, 10 );
+        super( clientProperties, initialText, tooltipText, 0, 2, 0, 10 );
 
         _distanceUnit = DistanceUnit.METERS;
 

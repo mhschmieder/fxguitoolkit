@@ -34,7 +34,7 @@ import java.net.URL;
 
 import com.mhschmieder.commonstoolkit.geo.LatitudeCardinalDirection;
 import com.mhschmieder.commonstoolkit.geo.LongitudeCardinalDirection;
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.AngleUnit;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
@@ -89,12 +89,12 @@ public class ControlFactory {
                                                                                        .toAbbreviatedString() };
 
     // Helper method to get an Angle Editor, standalone or paired.
-    public static final AngleEditor getAngleEditor( final SessionContext sessionContext,
+    public static final AngleEditor getAngleEditor( final ClientProperties clientProperties,
                                                     final String tooltipText,
                                                     final double minimumValue,
                                                     final double maximumValue,
                                                     final double initialValue ) {
-        final AngleEditor angleEditor = getAngleEditor( sessionContext,
+        final AngleEditor angleEditor = getAngleEditor( clientProperties,
                                                         tooltipText,
                                                         AngleUnit.DEGREES.toPresentationString(),
                                                         minimumValue,
@@ -105,7 +105,7 @@ public class ControlFactory {
     }
 
     // Helper method to get an Angle Editor, standalone or paired.
-    public static final AngleEditor getAngleEditor( final SessionContext sessionContext,
+    public static final AngleEditor getAngleEditor( final ClientProperties clientProperties,
                                                     final String tooltipText,
                                                     final int minFractionDigitsFormat,
                                                     final int maxFractionDigitsFormat,
@@ -118,7 +118,7 @@ public class ControlFactory {
         // Get the current value and format it as initial text.
         final String initialText = Double.toString( initialValue );
 
-        final AngleEditor angleEditor = new AngleEditor( sessionContext,
+        final AngleEditor angleEditor = new AngleEditor( clientProperties,
                                                          initialText,
                                                          tooltipText,
                                                          minFractionDigitsFormat,
@@ -135,13 +135,13 @@ public class ControlFactory {
     }
 
     // Helper method to get an Angle Editor, standalone or paired.
-    public static final AngleEditor getAngleEditor( final SessionContext sessionContext,
+    public static final AngleEditor getAngleEditor( final ClientProperties clientProperties,
                                                     final String tooltipText,
                                                     final String measurementUnit,
                                                     final double minimumValue,
                                                     final double maximumValue,
                                                     final double initialValue ) {
-        final AngleEditor angleEditor = getAngleEditor( sessionContext,
+        final AngleEditor angleEditor = getAngleEditor( clientProperties,
                                                         tooltipText,
                                                         0,
                                                         2,
@@ -156,9 +156,9 @@ public class ControlFactory {
     }
 
     // Helper method to get an Angle Editor to pair with a slider.
-    public static final AngleEditor getAngleSliderEditor( final SessionContext sessionContext,
+    public static final AngleEditor getAngleSliderEditor( final ClientProperties clientProperties,
                                                           final AngleSlider angleSlider ) {
-        final AngleEditor angleEditor = getAngleSliderEditor( sessionContext,
+        final AngleEditor angleEditor = getAngleSliderEditor( clientProperties,
                                                               angleSlider,
                                                               0,
                                                               2,
@@ -169,14 +169,14 @@ public class ControlFactory {
     }
 
     // Helper method to get an Angle Editor to pair with a slider.
-    public static final AngleEditor getAngleSliderEditor( final SessionContext sessionContext,
+    public static final AngleEditor getAngleSliderEditor( final ClientProperties clientProperties,
                                                           final AngleSlider angleSlider,
                                                           final int minFractionDigitsFormat,
                                                           final int maxFractionDigitsFormat,
                                                           final int minFractionDigitsParse,
                                                           final int maxFractionDigitsParse ) {
         // Use the current slider value and limits to set the number editor.
-        final AngleEditor angleEditor = getAngleEditor( sessionContext,
+        final AngleEditor angleEditor = getAngleEditor( clientProperties,
                                                         null,
                                                         minFractionDigitsFormat,
                                                         maxFractionDigitsFormat,
@@ -191,7 +191,7 @@ public class ControlFactory {
     }
 
     // Helper method to get an Opacity Editor, standalone or paired.
-    public static final OpacityEditor getOpacityEditor( final SessionContext sessionContext,
+    public static final OpacityEditor getOpacityEditor( final ClientProperties clientProperties,
                                                         final String tooltipText,
                                                         final String measurementUnit,
                                                         final double minimumValue,
@@ -200,7 +200,7 @@ public class ControlFactory {
         // Get the current value and format it as initial text.
         final String initialText = Double.toString( initialValue );
 
-        final OpacityEditor opacityEditor = new OpacityEditor( sessionContext,
+        final OpacityEditor opacityEditor = new OpacityEditor( clientProperties,
                                                                initialText,
                                                                tooltipText,
                                                                minimumValue,
@@ -213,10 +213,10 @@ public class ControlFactory {
     }
 
     // Helper method to get an Opacity Editor to pair with a slider.
-    public static final OpacityEditor getOpacitySliderEditor( final SessionContext sessionContext,
+    public static final OpacityEditor getOpacitySliderEditor( final ClientProperties clientProperties,
                                                               final OpacitySlider opacitySlider ) {
         // Use the current slider value and limits to set the number editor.
-        final OpacityEditor opacityEditor = getOpacityEditor( sessionContext,
+        final OpacityEditor opacityEditor = getOpacityEditor( clientProperties,
                                                               null,
                                                               opacitySlider
                                                                       .getMeasurementUnitString(),
@@ -227,7 +227,7 @@ public class ControlFactory {
         return opacityEditor;
     }
 
-    public static final Spinner< Double > getDoubleSpinner( final SessionContext sessionContext,
+    public static final Spinner< Double > getDoubleSpinner( final ClientProperties clientProperties,
                                                             final boolean toolbarContext,
                                                             final String valueDescriptor,
                                                             final double minimumNumericValue,
@@ -250,7 +250,7 @@ public class ControlFactory {
                                                 wrapAround,
                                                 numericFormatterPattern,
                                                 measurementUnit,
-                                                sessionContext.locale );
+                                                clientProperties.locale );
 
         if ( toolbarContext ) {
             // Apply drop-shadow effects when the mouse enters this Node.
@@ -265,7 +265,7 @@ public class ControlFactory {
         return doubleSpinner;
     }
 
-    public static final Spinner< Integer > getIntegerSpinner( final SessionContext sessionContext,
+    public static final Spinner< Integer > getIntegerSpinner( final ClientProperties clientProperties,
                                                               final boolean toolbarContext,
                                                               final String valueDescriptor,
                                                               final int minimumNumericValue,
@@ -288,7 +288,7 @@ public class ControlFactory {
                                                  wrapAround,
                                                  numericFormatterPattern,
                                                  measurementUnit,
-                                                 sessionContext.locale );
+                                                 clientProperties.locale );
 
         if ( toolbarContext ) {
             // Apply drop-shadow effects when the mouse enters this Node.
@@ -303,8 +303,8 @@ public class ControlFactory {
         return integerSpinner;
     }
 
-    public static final TextSelector getLatitudeCardinalDirectionSelector( final SessionContext sessionContext ) {
-        final TextSelector selector = new TextSelector( sessionContext,
+    public static final TextSelector getLatitudeCardinalDirectionSelector( final ClientProperties clientProperties ) {
+        final TextSelector selector = new TextSelector( clientProperties,
                                                         "Latitude Cardinal Directions", //$NON-NLS-1$
                                                         false,
                                                         false,
@@ -316,8 +316,8 @@ public class ControlFactory {
         return selector;
     }
 
-    public static final TextSelector getLongitudeCardinalDirectionSelector( final SessionContext sessionContext ) {
-        final TextSelector selector = new TextSelector( sessionContext,
+    public static final TextSelector getLongitudeCardinalDirectionSelector( final ClientProperties clientProperties ) {
+        final TextSelector selector = new TextSelector( clientProperties,
                                                         "Longitude Cardinal Directions", //$NON-NLS-1$
                                                         false,
                                                         false,
@@ -330,63 +330,63 @@ public class ControlFactory {
     }
 
     // Helper method to get a Latitude Degrees Editor, standalone or paired.
-    public static final LatitudeDegreesEditor getLatitudeDegreesEditor( final SessionContext sessionContext ) {
+    public static final LatitudeDegreesEditor getLatitudeDegreesEditor( final ClientProperties clientProperties ) {
         final LatitudeDegreesEditor latitudeDegreesEditor =
-                                                          new LatitudeDegreesEditor( sessionContext,
+                                                          new LatitudeDegreesEditor( clientProperties,
                                                                                      "Latitude Degrees" ); //$NON-NLS-1$
 
         return latitudeDegreesEditor;
     }
 
     // Helper method to get a Longitude Degrees Editor, standalone or paired.
-    public static final LongitudeDegreesEditor getLongitudeDegreesEditor( final SessionContext sessionContext ) {
+    public static final LongitudeDegreesEditor getLongitudeDegreesEditor( final ClientProperties clientProperties ) {
         final LongitudeDegreesEditor longitudeDegreesEditor =
-                                                            new LongitudeDegreesEditor( sessionContext,
+                                                            new LongitudeDegreesEditor( clientProperties,
                                                                                         "Longitude Degrees" ); //$NON-NLS-1$
 
         return longitudeDegreesEditor;
     }
 
     // Helper method to get a Latitude Minutes Editor, standalone or paired.
-    public static final MinutesEditor getLatitudeMinutesEditor( final SessionContext sessionContext ) {
-        final MinutesEditor latitudeMinutesEditor = new MinutesEditor( sessionContext,
+    public static final MinutesEditor getLatitudeMinutesEditor( final ClientProperties clientProperties ) {
+        final MinutesEditor latitudeMinutesEditor = new MinutesEditor( clientProperties,
                                                                        "Latitude Minutes" ); //$NON-NLS-1$
 
         return latitudeMinutesEditor;
     }
 
     // Helper method to get a Longitude Minutes Editor, standalone or paired.
-    public static final MinutesEditor getLongitudeMinutesEditor( final SessionContext sessionContext ) {
-        final MinutesEditor longitudeMinutesEditor = new MinutesEditor( sessionContext,
+    public static final MinutesEditor getLongitudeMinutesEditor( final ClientProperties clientProperties ) {
+        final MinutesEditor longitudeMinutesEditor = new MinutesEditor( clientProperties,
                                                                         "Longitude Minutes" ); //$NON-NLS-1$
 
         return longitudeMinutesEditor;
     }
 
     // Helper method to get a Latitude Seconds Editor, standalone or paired.
-    public static final SecondsEditor getLatitudeSecondsEditor( final SessionContext sessionContext ) {
-        final SecondsEditor latitudeSecondsEditor = new SecondsEditor( sessionContext,
+    public static final SecondsEditor getLatitudeSecondsEditor( final ClientProperties clientProperties ) {
+        final SecondsEditor latitudeSecondsEditor = new SecondsEditor( clientProperties,
                                                                        "Latitude Seconds" ); //$NON-NLS-1$
 
         return latitudeSecondsEditor;
     }
 
     // Helper method to get a Longitude Seconds Editor, standalone or paired.
-    public static final SecondsEditor getLongitudeSecondsEditor( final SessionContext sessionContext ) {
-        final SecondsEditor longitudeSecondsEditor = new SecondsEditor( sessionContext,
+    public static final SecondsEditor getLongitudeSecondsEditor( final ClientProperties clientProperties ) {
+        final SecondsEditor longitudeSecondsEditor = new SecondsEditor( clientProperties,
                                                                         "Longitude Seconds" ); //$NON-NLS-1$
 
         return longitudeSecondsEditor;
     }
 
     // Helper method to get a custom Temperature Editor.
-    public static final TemperatureEditor getTemperatureEditor( final SessionContext sessionContext ) {
+    public static final TemperatureEditor getTemperatureEditor( final ClientProperties clientProperties ) {
         // Format the default Temperature value as the initial text.
         final double initialValue = TemperatureSlider.INITIAL_TEMPERATURE_KELVIN_DEFAULT;
         final String initialText = Double.toString( initialValue );
 
         final TemperatureEditor temperatureEditor =
-                                                  new TemperatureEditor( sessionContext,
+                                                  new TemperatureEditor( clientProperties,
                                                                          initialText,
                                                                          null,
                                                                          TemperatureSlider.MINIMUM_TEMPERATURE_KELVIN_DEFAULT,
@@ -397,13 +397,13 @@ public class ControlFactory {
     }
 
     // Helper method to get a custom Pressure Editor.
-    public static final PressureEditor getPressureEditor( final SessionContext sessionContext ) {
+    public static final PressureEditor getPressureEditor( final ClientProperties clientProperties ) {
         // Format the default Pressure value as the initial text.
         final double initialValue = PressureSlider.INITIAL_PRESSURE_PASCALS_DEFAULT;
         final String initialText = Double.toString( initialValue );
 
         final PressureEditor pressureEditor =
-                                            new PressureEditor( sessionContext,
+                                            new PressureEditor( clientProperties,
                                                                 initialText,
                                                                 null,
                                                                 PressureSlider.MINIMUM_PRESSURE_PASCALS_DEFAULT,
@@ -414,14 +414,14 @@ public class ControlFactory {
     }
 
     // Helper method to get a humidity editor to pair with a slider.
-    public static final HumidityEditor getHumiditySliderEditor( final SessionContext sessionContext,
+    public static final HumidityEditor getHumiditySliderEditor( final ClientProperties clientProperties,
                                                                 final HumiditySlider humiditySlider ) {
         // Get the current slider value and format it as initial text.
         final double initialValue = HumiditySlider.INITIAL_RELATIVE_HUMIDITY_DEFAULT;
         final String initialText = Double.toString( initialValue );
 
         final HumidityEditor humidityEditor =
-                                            new HumidityEditor( sessionContext,
+                                            new HumidityEditor( clientProperties,
                                                                 initialText,
                                                                 null,
                                                                 HumiditySlider.MINIMUM_RELATIVE_HUMIDITY_DEFAULT,

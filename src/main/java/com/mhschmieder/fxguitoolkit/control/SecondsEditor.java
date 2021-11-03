@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 /**
  * {@code SecondsEditor} is a specialized editor for entering the seconds part
@@ -44,9 +44,9 @@ public class SecondsEditor extends IntegerEditor {
     // NOTE: We increment by 1 second as we are using DMS as separate values.
     public static final int VALUE_INCREMENT_SECONDS = 1;
 
-    public SecondsEditor( final SessionContext sessionContext, final String tooltipText ) {
+    public SecondsEditor( final ClientProperties clientProperties, final String tooltipText ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                "0", //$NON-NLS-1$
                tooltipText,
                0,

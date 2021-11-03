@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 /**
  * This specialized editor is for opacity, in any context.
@@ -40,7 +40,7 @@ public final class OpacityEditor extends DoubleEditor {
     // Declare value increment/decrement amount for up and down arrow keys.
     public static final double VALUE_INCREMENT_PERCENT = 0.5d;
 
-    public OpacityEditor( final SessionContext sessionContext,
+    public OpacityEditor( final ClientProperties clientProperties,
                           final String initialText,
                           final String tooltipText,
                           final double opacityMinimum,
@@ -49,7 +49,7 @@ public final class OpacityEditor extends DoubleEditor {
         // Always call the superclass constructor first!
         // :NOTE: We use up to one decimal place of precision for displaying
         // opacity, and one decimal place for parsing opacity.
-        super( sessionContext,
+        super( clientProperties,
                initialText,
                tooltipText,
                0,

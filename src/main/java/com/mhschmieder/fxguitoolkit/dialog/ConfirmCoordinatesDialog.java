@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.dialog;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.CartesianPositionPane;
@@ -52,16 +52,19 @@ public class ConfirmCoordinatesDialog extends XDialog {
 
     protected Point2D            _coordinatesCandidate;
 
-    protected SessionContext     _sessionContext;
+    /**
+     * Cache the Client Properties (System Type, Locale, etc.).
+     */
+    public ClientProperties      clientProperties;
 
     public ConfirmCoordinatesDialog( final String title,
                                      final String masthead,
-                                     final SessionContext sessionContext,
+                                     final ClientProperties pClientProperties,
                                      final Point2D coordinatesCandidate ) {
         // Always call the superclass constructor first!
         super( title, masthead ); // , sessionContext.systemType );
 
-        _sessionContext = sessionContext;
+        clientProperties = pClientProperties;
         _coordinatesCandidate = coordinatesCandidate;
 
         try {
@@ -77,7 +80,7 @@ public class ConfirmCoordinatesDialog extends XDialog {
     }
 
     private final void initDialog() {
-        _positionPane = new CartesianPositionPane( _sessionContext );
+        _positionPane = new CartesianPositionPane( clientProperties );
 
         final Node positionBorderNode = GuiUtilities
                 .getTitledBorderWrappedNode( _positionPane, "Reference Point Position" ); //$NON-NLS-1$

@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.geometry.Orientation;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
@@ -50,12 +50,13 @@ public class OrientationPane extends BorderPane {
     public RadioButton _orientationVtRadioButton;
     public CheckBox    _orientationInvertedCheckBox;
 
-    public OrientationPane( final SessionContext sessionContext, final boolean useInvertedbutton ) {
+    public OrientationPane( final ClientProperties clientProperties,
+                            final boolean useInvertedbutton ) {
         // Always call the superclass constructor first!
         super();
 
         try {
-            initPane( sessionContext, useInvertedbutton );
+            initPane( clientProperties, useInvertedbutton );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -70,7 +71,7 @@ public class OrientationPane extends BorderPane {
                 : Orientation.defaultValue();
     }
 
-    private final void initPane( final SessionContext sessionContext,
+    private final void initPane( final ClientProperties clientProperties,
                                  final boolean useInvertedbutton ) {
         _orientationToggleGroup = new ToggleGroup();
         _orientationHzRadioButton = GuiUtilities.getRadioButton( Orientation.HORIZONTAL

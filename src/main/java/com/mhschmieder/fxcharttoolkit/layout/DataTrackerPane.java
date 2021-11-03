@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxcharttoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.fxguitoolkit.control.ClickLocation;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
@@ -63,16 +63,18 @@ public abstract class DataTrackerPane extends StackPane {
     // resizing events.
     protected ClickLocation _clickLocation;
 
-    // Cache the full Session Context (System Type, Locale, etc.).
-    public SessionContext   _sessionContext;
+    /**
+     * Cache the Client Properties (System Type, Locale, etc.).
+     */
+    public ClientProperties clientProperties;
 
-    public DataTrackerPane( final SessionContext sessionContext,
+    public DataTrackerPane( final ClientProperties pClientProperties,
                             final ContextMenu contextMenu,
                             final Window contextMenuOwner ) {
         // Always call the superclass constructor first!
         super();
 
-        _sessionContext = sessionContext;
+        clientProperties = pClientProperties;
         _contextMenu = contextMenu;
         _contextMenuOwner = contextMenuOwner;
 

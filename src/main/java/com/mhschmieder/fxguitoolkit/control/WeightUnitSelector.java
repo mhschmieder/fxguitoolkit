@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.WeightUnit;
 
 /**
@@ -50,11 +50,11 @@ public final class WeightUnitSelector extends TextSelector {
                                                               WeightUnit.OUNCES
                                                                       .toCanonicalString() };
 
-    public WeightUnitSelector( final SessionContext sessionContext,
+    public WeightUnitSelector( final ClientProperties clientProperties,
                                final boolean toolbarContext,
                                final WeightUnit weightUnit ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                "Supported Weight Units", //$NON-NLS-1$
                toolbarContext,
                false,

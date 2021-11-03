@@ -32,7 +32,7 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import java.text.ParseException;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
@@ -60,14 +60,14 @@ public class DoubleEditor extends NumberEditor {
     // NOTE: This field has to follow JavaFX Property Beans conventions.
     private final DoubleProperty value;
 
-    public DoubleEditor( final SessionContext sessionContext,
+    public DoubleEditor( final ClientProperties clientProperties,
                          final String initialText,
                          final String tooltipText,
                          final int minFractionDigitsFormat,
                          final int maxFractionDigitsFormat,
                          final int minFractionDigitsParse,
                          final int maxFractionDigitsParse ) {
-        this( sessionContext,
+        this( clientProperties,
               initialText,
               tooltipText,
               minFractionDigitsFormat,
@@ -78,7 +78,7 @@ public class DoubleEditor extends NumberEditor {
               Double.MAX_VALUE );
     }
 
-    public DoubleEditor( final SessionContext sessionContext,
+    public DoubleEditor( final ClientProperties clientProperties,
                          final String initialText,
                          final String tooltipText,
                          final int minFractionDigitsFormat,
@@ -87,7 +87,7 @@ public class DoubleEditor extends NumberEditor {
                          final int maxFractionDigitsParse,
                          final double minimumValue,
                          final double maximumValue ) {
-        this( sessionContext,
+        this( clientProperties,
               initialText,
               tooltipText,
               minFractionDigitsFormat,
@@ -100,7 +100,7 @@ public class DoubleEditor extends NumberEditor {
               0d );
     }
 
-    public DoubleEditor( final SessionContext sessionContext,
+    public DoubleEditor( final ClientProperties clientProperties,
                          final String initialText,
                          final String tooltipText,
                          final int minFractionDigitsFormat,
@@ -112,7 +112,7 @@ public class DoubleEditor extends NumberEditor {
                          final double defaultValue,
                          final double valueIncrement ) {
         // Always call the superclass constructor first!
-        super( sessionContext, initialText, tooltipText );
+        super( clientProperties, initialText, tooltipText );
 
         _defaultValue = defaultValue;
 

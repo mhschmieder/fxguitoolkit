@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.AngleUnit;
 
 import javafx.geometry.Orientation;
@@ -51,8 +51,8 @@ public final class AngleSlider extends NumberSlider {
     // though we could make the arrow key increments a user preference.
     public static final double BLOCK_INCREMENT_DEGREES       = 0.5d;
 
-    public AngleSlider( final SessionContext sessionContext, final boolean useContextMenu ) {
-        this( sessionContext,
+    public AngleSlider( final ClientProperties clientProperties, final boolean useContextMenu ) {
+        this( clientProperties,
               MINIMUM_ANGLE_DEGREES_DEFAULT,
               MAXIMUM_ANGLE_DEGREES_DEFAULT,
               INITIAL_ANGLE_DEGREES_DEFAULT,
@@ -62,7 +62,7 @@ public final class AngleSlider extends NumberSlider {
               useContextMenu );
     }
 
-    public AngleSlider( final SessionContext sessionContext,
+    public AngleSlider( final ClientProperties clientProperties,
                         final double minimumAngleDegrees,
                         final double maximumAngleDegrees,
                         final double initialAngleDegrees,
@@ -71,7 +71,7 @@ public final class AngleSlider extends NumberSlider {
                         final double blockIncrementDegrees,
                         final boolean useContextMenu ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                minimumAngleDegrees,
                maximumAngleDegrees,
                initialAngleDegrees,

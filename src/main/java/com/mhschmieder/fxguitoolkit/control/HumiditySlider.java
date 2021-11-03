@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.HumidityUnit;
 
 import javafx.geometry.Orientation;
@@ -49,8 +49,8 @@ public final class HumiditySlider extends NumberSlider {
     // Declare block increment/decrement amount for left and right arrows.
     private static final double BLOCK_INCREMENT_PERCENT           = 0.5d;
 
-    public HumiditySlider( final SessionContext sessionContext ) {
-        this( sessionContext,
+    public HumiditySlider( final ClientProperties clientProperties ) {
+        this( clientProperties,
               MINIMUM_RELATIVE_HUMIDITY_DEFAULT,
               MAXIMUM_RELATIVE_HUMIDITY_DEFAULT,
               INITIAL_RELATIVE_HUMIDITY_DEFAULT,
@@ -59,7 +59,7 @@ public final class HumiditySlider extends NumberSlider {
               BLOCK_INCREMENT_PERCENT );
     }
 
-    public HumiditySlider( final SessionContext sessionContext,
+    public HumiditySlider( final ClientProperties clientProperties,
                            final double minimumRelativeHumidity,
                            final double maximumRelativeHumidity,
                            final double initialRelativeHumidity,
@@ -67,7 +67,7 @@ public final class HumiditySlider extends NumberSlider {
                            final double minorTickSpacingPercent,
                            final double blockIncrementPercent ) {
         // Always call the superclass constructor first!
-        super( sessionContext,
+        super( clientProperties,
                minimumRelativeHumidity,
                maximumRelativeHumidity,
                initialRelativeHumidity,

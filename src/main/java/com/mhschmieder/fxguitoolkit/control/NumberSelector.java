@@ -33,7 +33,7 @@ package com.mhschmieder.fxguitoolkit.control;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 /**
  * This class formalizes aspects of list selection that are specific to
@@ -47,7 +47,7 @@ public class NumberSelector extends XComboBox {
     // Number format cache used for locale-specific number parsing.
     protected NumberFormat _numberParse;
 
-    public NumberSelector( final SessionContext sessionContext,
+    public NumberSelector( final ClientProperties clientProperties,
                            final int minFractionDigitsFormat,
                            final int maxFractionDigitsFormat,
                            final int minFractionDigitsParse,
@@ -58,7 +58,7 @@ public class NumberSelector extends XComboBox {
                            final boolean editable,
                            final boolean searchable ) {
         // Always call the superclass constructor first!
-        super( sessionContext, tooltipText, toolbarContext, editable, searchable );
+        super( clientProperties, tooltipText, toolbarContext, editable, searchable );
 
         try {
             initComboBox( minFractionDigitsFormat,
@@ -84,7 +84,7 @@ public class NumberSelector extends XComboBox {
         // formatting that is locked to the usage domain; hence the flag. In
         // such cases we are safest with US-English (vs. just "English").
         final Locale numberLocale = useLocale
-            ? _sessionContext.locale
+            ? clientProperties.locale
             : Locale.forLanguageTag( "en-US" );
         _numberFormat = NumberFormat.getNumberInstance( numberLocale );
         _numberParse = ( NumberFormat ) _numberFormat.clone();

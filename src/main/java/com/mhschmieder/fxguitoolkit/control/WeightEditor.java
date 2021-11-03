@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.UnitConversion;
 import com.mhschmieder.commonstoolkit.physics.WeightUnit;
 
@@ -41,13 +41,13 @@ public class WeightEditor extends DoubleEditor {
 
     // //////////////////////////////////////////////////////////////////////////
     // Constructors and Initialization
-    public WeightEditor( final SessionContext sessionContext,
+    public WeightEditor( final ClientProperties clientProperties,
                          final String text,
                          final String tooltipText ) {
         // Always call the superclass constructor first!
         // NOTE: We use up to two decimal place of precision for displaying
         // weight, and ten decimal places for parsing weight.
-        super( sessionContext, text, tooltipText, 0, 2, 0, 10 );
+        super( clientProperties, text, tooltipText, 0, 2, 0, 10 );
 
         _weightUnit = WeightUnit.defaultValue();
 

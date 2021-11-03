@@ -32,7 +32,7 @@ package com.mhschmieder.fxcharttoolkit.layout;
 
 import java.text.NumberFormat;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.fxcharttoolkit.chart.ChartUtilities;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
 import com.mhschmieder.fxguitoolkit.control.ClickLocation;
@@ -98,14 +98,16 @@ public abstract class DualAxisChartPane extends StackPane {
     // Number format cache used for locale-specific number formatting.
     protected NumberFormat            _numberFormat;
 
-    // Cache the full Session Context (System Type, Locale, etc.).
-    public SessionContext             _sessionContext;
+    /**
+     * Cache the Client Properties (System Type, Locale, etc.).
+     */
+    public ClientProperties           clientProperties;
 
     public DualAxisChartPane( final int maximumNumberOfDataSets,
                               final String xUnitLabelShared,
                               final String yUnitLabelBottom,
                               final String yUnitLabelTop,
-                              final SessionContext sessionContext ) {
+                              final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
         super();
 
@@ -113,7 +115,7 @@ public abstract class DualAxisChartPane extends StackPane {
         _yUnitLabelBottom = yUnitLabelBottom;
         _yUnitLabelTop = yUnitLabelTop;
 
-        _sessionContext = sessionContext;
+        clientProperties = pClientProperties;
 
         // Default Data Tracker to a gray tone that is in between ones that
         // might get chosen as the background color, so that it is unlikely to
@@ -571,7 +573,7 @@ public abstract class DualAxisChartPane extends StackPane {
         // Cache the number formats so that we don't have to get information
         // about locale, language, etc. from the OS each time we format a
         // number.
-        _numberFormat = NumberFormat.getNumberInstance( _sessionContext.locale );
+        _numberFormat = NumberFormat.getNumberInstance( clientProperties.locale );
 
         // Set the precision for floating-point text formatting.
         _numberFormat.setMinimumFractionDigits( 0 );

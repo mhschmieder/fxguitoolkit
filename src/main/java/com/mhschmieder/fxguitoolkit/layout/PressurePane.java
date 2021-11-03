@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.NaturalEnvironment;
 import com.mhschmieder.commonstoolkit.physics.PhysicsConstants;
 import com.mhschmieder.commonstoolkit.physics.PressureUnit;
@@ -64,13 +64,13 @@ public final class PressurePane extends VBox {
     // when the Pressure Unit changes.
     // protected NumberConverter _numberConverter;
 
-    public PressurePane( final SessionContext sessionContext ) {
+    public PressurePane( final ClientProperties clientProperties ) {
         // Always call the superclass constructor first!
         super( 6d );
 
         pressurePa = new SimpleDoubleProperty();
 
-        initPane( sessionContext );
+        initPane( clientProperties );
     }
 
     private void bindProperties() {
@@ -108,15 +108,15 @@ public final class PressurePane extends VBox {
         return pressurePa.get();
     }
 
-    private void initPane( final SessionContext sessionContext ) {
+    private void initPane( final ClientProperties clientProperties ) {
         // Make a bolded label to clearly identify the functionality.
         _pressureLabel = GuiUtilities.getColumnHeader( "Atmospheric Pressure" ); //$NON-NLS-1$
 
         // Create a default Pressure Slider.
-        _pressureSlider = new PressureSlider( sessionContext );
+        _pressureSlider = new PressureSlider( clientProperties );
 
         // Conform the associated editor (text field) to the slider attributes.
-        _pressureEditor = ControlFactory.getPressureEditor( sessionContext );
+        _pressureEditor = ControlFactory.getPressureEditor( clientProperties );
         _pressureEditor.setPrefWidth( 100d );
         _pressureEditor.setMaxWidth( 100d );
 

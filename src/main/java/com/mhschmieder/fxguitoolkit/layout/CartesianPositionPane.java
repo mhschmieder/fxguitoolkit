@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorUtilities;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
@@ -54,18 +54,18 @@ public class CartesianPositionPane extends BorderPane {
     public DistanceEditor _yPositionEditor;
 
     @SuppressWarnings("nls")
-    public CartesianPositionPane( final SessionContext sessionContext ) {
-        this( sessionContext, "X", "Y" );
+    public CartesianPositionPane( final ClientProperties clientProperties ) {
+        this( clientProperties, "X", "Y" );
     }
 
-    public CartesianPositionPane( final SessionContext sessionContext,
+    public CartesianPositionPane( final ClientProperties clientProperties,
                                   final String xPositionLabelText,
                                   final String yPositionLabelText ) {
         // Always call the superclass constructor first!
         super();
 
         try {
-            initPane( sessionContext, xPositionLabelText, yPositionLabelText );
+            initPane( clientProperties, xPositionLabelText, yPositionLabelText );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -90,11 +90,11 @@ public class CartesianPositionPane extends BorderPane {
     }
 
     @SuppressWarnings("nls")
-    private final void initPane( final SessionContext sessionContext,
+    private final void initPane( final ClientProperties clientProperties,
                                  final String xPositionLabelText,
                                  final String yPositionLabelText ) {
-        _xPositionEditor = new DistanceEditor( sessionContext, "0", null );
-        _yPositionEditor = new DistanceEditor( sessionContext, "0", null );
+        _xPositionEditor = new DistanceEditor( clientProperties, "0", null );
+        _yPositionEditor = new DistanceEditor( clientProperties, "0", null );
 
         final GridPane gridPane = new GridPane();
         gridPane.setHgap( 10d );

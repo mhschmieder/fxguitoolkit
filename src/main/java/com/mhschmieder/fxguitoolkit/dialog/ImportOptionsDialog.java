@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.dialog;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
@@ -42,7 +42,7 @@ public abstract class ImportOptionsDialog extends XDialog {
 
     public ImportOptionsDialog( final String title,
                                 final String masthead,
-                                final SessionContext sessionContext ) {
+                                final ClientProperties clientProperties ) {
         // Always call the superclass constructor first!
         super( title, masthead ); // , sessionContext.systemType );
 

@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.Altitude;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.commonstoolkit.physics.PhysicsConstants;
@@ -59,12 +59,12 @@ public final class AltitudePane extends BorderPane {
 
     public ToggleGroup _altitudeToggleGroup;
 
-    public AltitudePane( final SessionContext sessionContext ) {
+    public AltitudePane( final ClientProperties clientProperties ) {
         // Always call the superclass constructor first!
         super();
 
         try {
-            initPane( sessionContext );
+            initPane( clientProperties );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -86,7 +86,7 @@ public final class AltitudePane extends BorderPane {
                 : _highAltitudeRadioButton.isSelected() ? Altitude.HIGH : Altitude.defaultValue();
     }
 
-    private void initPane( final SessionContext sessionContext ) {
+    private void initPane( final ClientProperties clientProperties ) {
         // Make a bolded label to clearly identify the functionality.
         _altitudeLabel = GuiUtilities.getColumnHeader( "Altitude" ); //$NON-NLS-1$
 
