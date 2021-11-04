@@ -32,8 +32,8 @@ package com.mhschmieder.fxguitoolkit;
 
 import java.util.ResourceBundle;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
-import com.mhschmieder.commonstoolkit.util.ResourceUtilities;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
 import com.mhschmieder.fxguitoolkit.control.DoubleEditor;
 import com.mhschmieder.fxguitoolkit.control.NumberSlider;
 import com.mhschmieder.fxguitoolkit.control.XToggleButton;
@@ -115,7 +115,7 @@ public class SceneGraphUtilities {
                                                  final String groupName,
                                                  final String itemName,
                                                  final boolean replaceMnemonic ) {
-        final ResourceBundle resourceBundle = ResourceUtilities
+        final ResourceBundle resourceBundle = GlobalUtilities
                 .getResourceBundle( clientProperties, bundleName, true );
 
         // Get the control label from the resource bundle, if applicable.

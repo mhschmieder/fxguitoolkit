@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.HumidityUnit;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.geometry.Orientation;
 

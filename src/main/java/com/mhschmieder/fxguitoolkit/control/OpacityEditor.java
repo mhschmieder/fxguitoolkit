@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 /**
  * This specialized editor is for opacity, in any context.

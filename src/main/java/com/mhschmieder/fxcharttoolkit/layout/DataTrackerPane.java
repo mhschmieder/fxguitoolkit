@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxcharttoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.control.ClickLocation;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 

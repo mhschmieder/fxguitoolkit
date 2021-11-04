@@ -34,7 +34,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxcharttoolkit.IllegalLogarithmicRangeException;
 
 import javafx.beans.binding.DoubleBinding;

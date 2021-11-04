@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 /**
  * The Distance Unit selector supports all Distance Units that are currently

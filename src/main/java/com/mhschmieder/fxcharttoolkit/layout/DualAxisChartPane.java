@@ -32,7 +32,7 @@ package com.mhschmieder.fxcharttoolkit.layout;
 
 import java.text.NumberFormat;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxcharttoolkit.chart.ChartUtilities;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
 import com.mhschmieder.fxguitoolkit.control.ClickLocation;

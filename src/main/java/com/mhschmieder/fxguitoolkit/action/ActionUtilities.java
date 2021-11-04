@@ -36,8 +36,8 @@ import java.util.ResourceBundle;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.action.ActionGroup;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
-import com.mhschmieder.commonstoolkit.util.ResourceUtilities;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxguitoolkit.SceneGraphUtilities;
@@ -395,7 +395,7 @@ public final class ActionUtilities {
             return;
         }
 
-        final ResourceBundle resourceBundle = ResourceUtilities
+        final ResourceBundle resourceBundle = GlobalUtilities
                 .getResourceBundle( clientProperties, bundleName, true );
 
         // If an accelerator is assigned, get it from a resource bundle.
@@ -420,7 +420,7 @@ public final class ActionUtilities {
             return;
         }
 
-        final ResourceBundle resourceBundle = ResourceUtilities
+        final ResourceBundle resourceBundle = GlobalUtilities
                 .getResourceBundle( clientProperties, bundleName, true );
 
         // If long text is assigned, get it from a resource bundle.

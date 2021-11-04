@@ -30,12 +30,12 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.commonstoolkit.physics.MeasurementUnits;
 import com.mhschmieder.commonstoolkit.physics.PressureUnit;
 import com.mhschmieder.commonstoolkit.physics.TemperatureUnit;
 import com.mhschmieder.commonstoolkit.physics.WeightUnit;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.DistanceUnitSelector;
 import com.mhschmieder.fxguitoolkit.control.PressureUnitSelector;

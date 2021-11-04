@@ -34,8 +34,8 @@ import java.net.URL;
 
 import com.mhschmieder.commonstoolkit.geo.LatitudeCardinalDirection;
 import com.mhschmieder.commonstoolkit.geo.LongitudeCardinalDirection;
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.physics.AngleUnit;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 

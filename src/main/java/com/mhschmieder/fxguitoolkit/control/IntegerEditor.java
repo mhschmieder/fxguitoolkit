@@ -32,7 +32,7 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import java.text.ParseException;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;

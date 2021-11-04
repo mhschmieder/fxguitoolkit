@@ -33,7 +33,7 @@ package com.mhschmieder.fxguitoolkit.control;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 /**
  * This class formalizes aspects of list selection that are specific to

@@ -33,8 +33,8 @@ package com.mhschmieder.fxguitoolkit.control.cell;
 import java.text.NumberFormat;
 import java.util.List;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

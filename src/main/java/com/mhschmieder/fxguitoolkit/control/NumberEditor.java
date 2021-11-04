@@ -32,8 +32,8 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import java.text.NumberFormat;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.text.StringUtilities;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
