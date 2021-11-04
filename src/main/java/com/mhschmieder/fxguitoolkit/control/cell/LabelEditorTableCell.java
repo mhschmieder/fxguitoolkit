@@ -50,21 +50,21 @@ public class LabelEditorTableCell< RT, VT > extends EditorTableCell< RT, String 
     public NumberFormat          _uniquefierNumberFormat;
 
     public LabelEditorTableCell( final boolean pBlankTextAllowed,
-                                 final ClientProperties pSessionContext ) {
-        this( null, pBlankTextAllowed, pSessionContext );
+                                 final ClientProperties pClientProperties ) {
+        this( null, pBlankTextAllowed, pClientProperties );
     }
 
     @SuppressWarnings("nls")
     public LabelEditorTableCell( final List< Integer > pUneditableRows,
                                  final boolean pBlankTextAllowed,
-                                 final ClientProperties pSessionContext ) {
+                                 final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
         super( pUneditableRows, pBlankTextAllowed );
 
         value = new SimpleStringProperty( "" );
 
         try {
-            initTableCell( pSessionContext );
+            initTableCell( pClientProperties );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -112,9 +112,9 @@ public class LabelEditorTableCell< RT, VT > extends EditorTableCell< RT, String 
         return value.get();
     }
 
-    private final void initTableCell( final ClientProperties pSessionContext ) {
+    private final void initTableCell( final ClientProperties pClientProperties ) {
         _uniquefierNumberFormat = NumberFormatUtilities
-                .getUniquefierNumberFormat( pSessionContext.locale );
+                .getUniquefierNumberFormat( pClientProperties.locale );
     }
 
     @Override

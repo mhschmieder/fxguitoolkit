@@ -49,7 +49,7 @@ public abstract class LoadOptionsDialog extends XDialog {
                               final String masthead,
                               final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super( title, masthead ); // , sessionContext.systemType );
+        super( title, masthead ); // , pClientProperties.systemType );
 
         clientProperties = pClientProperties;
 

@@ -139,30 +139,30 @@ public final class MeasurementUnitsPane extends VBox {
         } );
     }
 
-    private void initPane( final ClientProperties clientProperties ) {
+    private void initPane( final ClientProperties pClientProperties ) {
         final Label distanceUnitLabel = GuiUtilities.getControlLabel( "Distance Unit" ); //$NON-NLS-1$
-        _distanceUnitSelector = new DistanceUnitSelector( clientProperties,
+        _distanceUnitSelector = new DistanceUnitSelector( pClientProperties,
                                                           false,
                                                           false,
                                                           DistanceUnit.defaultValue() );
 
         // final Label angleUnitLabel = SceneGraphNodeUtilities.getControlLabel(
         // "Angle Unit" ); //$NON-NLS-1$
-        // _angleUnitSelector = new AngleUnitSelector( sessionContext, false,
+        // _angleUnitSelector = new AngleUnitSelector( pClientProperties, false,
         // AngleUnit.defaultValue() );
 
         final Label weightUnitLabel = GuiUtilities.getControlLabel( "Weight Unit" ); //$NON-NLS-1$
-        _weightUnitSelector = new WeightUnitSelector( clientProperties,
+        _weightUnitSelector = new WeightUnitSelector( pClientProperties,
                                                       false,
                                                       WeightUnit.defaultValue() );
 
         final Label temperatureUnitLabel = GuiUtilities.getControlLabel( "Temperature Unit" ); //$NON-NLS-1$
-        _temperatureUnitSelector = new TemperatureUnitSelector( clientProperties,
+        _temperatureUnitSelector = new TemperatureUnitSelector( pClientProperties,
                                                                 false,
                                                                 TemperatureUnit.defaultValue() );
 
         final Label pressureUnitLabel = GuiUtilities.getControlLabel( "Pressure Unit" ); //$NON-NLS-1$
-        _pressureUnitSelector = new PressureUnitSelector( clientProperties,
+        _pressureUnitSelector = new PressureUnitSelector( pClientProperties,
                                                           false,
                                                           PressureUnit.defaultValue() );
 

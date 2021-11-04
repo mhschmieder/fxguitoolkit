@@ -62,7 +62,7 @@ public class ConfirmCoordinatesDialog extends XDialog {
                                      final ClientProperties pClientProperties,
                                      final Point2D coordinatesCandidate ) {
         // Always call the superclass constructor first!
-        super( title, masthead ); // , sessionContext.systemType );
+        super( title, masthead ); // , pClientProperties.systemType );
 
         clientProperties = pClientProperties;
         _coordinatesCandidate = coordinatesCandidate;

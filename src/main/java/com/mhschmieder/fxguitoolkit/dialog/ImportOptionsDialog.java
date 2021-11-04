@@ -44,7 +44,7 @@ public abstract class ImportOptionsDialog extends XDialog {
                                 final String masthead,
                                 final ClientProperties clientProperties ) {
         // Always call the superclass constructor first!
-        super( title, masthead ); // , sessionContext.systemType );
+        super( title, masthead ); // , pClientProperties.systemType );
 
         try {
             initDialog();

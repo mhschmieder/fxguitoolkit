@@ -53,26 +53,26 @@ public class TextEditor extends XTextField {
     private final StringProperty value;
 
     @SuppressWarnings("nls")
-    public TextEditor( final ClientProperties pSessionContext ) {
-        this( "", null, true, pSessionContext );
+    public TextEditor( final ClientProperties pClientProperties ) {
+        this( "", null, true, pClientProperties );
     }
 
     public TextEditor( final String initialText,
                        final boolean pBlankTextAllowed,
-                       final ClientProperties pSessionContext ) {
-        this( initialText, null, pBlankTextAllowed, pSessionContext );
+                       final ClientProperties pClientProperties ) {
+        this( initialText, null, pBlankTextAllowed, pClientProperties );
     }
 
-    public TextEditor( final String initialText, final ClientProperties pSessionContext ) {
-        this( initialText, null, pSessionContext );
+    public TextEditor( final String initialText, final ClientProperties pClientProperties ) {
+        this( initialText, null, pClientProperties );
     }
 
     public TextEditor( final String pInitialText,
                        final String pTooltipText,
                        final boolean pBlankTextAllowed,
-                       final ClientProperties pSessionContext ) {
+                       final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super( pInitialText, pTooltipText, pSessionContext );
+        super( pInitialText, pTooltipText, pClientProperties );
 
         _blankTextAllowed = pBlankTextAllowed;
 
@@ -88,8 +88,8 @@ public class TextEditor extends XTextField {
 
     public TextEditor( final String initialText,
                        final String tooltipText,
-                       final ClientProperties pSessionContext ) {
-        this( initialText, tooltipText, false, pSessionContext );
+                       final ClientProperties pClientProperties ) {
+        this( initialText, tooltipText, false, pClientProperties );
     }
 
     public final void adjustValue() {
