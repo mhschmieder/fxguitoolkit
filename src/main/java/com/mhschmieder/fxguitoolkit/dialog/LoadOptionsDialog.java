@@ -30,10 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit.dialog;
 
-import javafx.scene.control.ButtonBar.ButtonData;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 
