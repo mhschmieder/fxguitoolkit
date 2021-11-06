@@ -392,7 +392,7 @@ public abstract class XSpreadsheetView extends SpreadsheetView {
         }
 
         // Insert an initially similar or identical row after the selected row.
-        // :NOTE: We only support single insertion, so we use the first of the
+        // NOTE: We only support single insertion, so we use the first of the
         // reverse-sorted rows, but it might be better to use the last instead.
         final int selectionIndex = selectedRowIndices.get( 0 );
         final int insertIndex = selectionIndex + 1;
@@ -431,11 +431,11 @@ public abstract class XSpreadsheetView extends SpreadsheetView {
     // :NOTE: There are new methods that do things like select the next row.
     public final void setSelectedRow( final int selectedRowIndex ) {
         // Clear any active row selections, in case the table is empty.
-        // :NOTE: Commented out due to the third-party code treating the visual
+        // NOTE: Commented out due to the third-party code treating the visual
         // highlighting differently from the selection mechanism itself, so we
         // lose our highlighting if we clear the selection, but we basically
         // need to retain the same selection index to keep in sync.
-        // :NOTE: Re-enabled so it doesn't break in contexts other than insert.
+        // NOTE: Re-enabled so it doesn't break in contexts other than insert.
         clearSelection();
 
         // Select the requested row, or auto-select the last row in the
@@ -448,7 +448,7 @@ public abstract class XSpreadsheetView extends SpreadsheetView {
         // we clear and reset the selected rows. This is clearly a bug in the
         // third-party software but it isn't worth fixing as it represents a
         // flaw in how they piggy-back atop JavaFX Table/Cell components.
-        // :NOTE: Re-enabled so it doesn't break in contexts other than insert.
+        // NOTE: Re-enabled so it doesn't break in contexts other than insert.
         final int lastRowIndex = getLastRowIndex();
         final int autoselectRowIndex = ( selectedRowIndex < 0 )
             ? lastRowIndex
@@ -469,4 +469,4 @@ public abstract class XSpreadsheetView extends SpreadsheetView {
         }
     }
 
-}// class MsliSpreadsheetView
+}
