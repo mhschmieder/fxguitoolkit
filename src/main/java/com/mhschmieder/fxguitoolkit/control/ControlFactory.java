@@ -329,54 +329,176 @@ public class ControlFactory {
         return selector;
     }
 
-    // Helper method to get a Latitude Degrees Editor, standalone or paired.
-    public static final LatitudeDegreesEditor getLatitudeDegreesEditor( final ClientProperties clientProperties ) {
-        final LatitudeDegreesEditor latitudeDegreesEditor =
-                                                          new LatitudeDegreesEditor( clientProperties,
-                                                                                     "Latitude Degrees" ); //$NON-NLS-1$
+    /**
+     * Returns an integer-based editor for Latitude Degrees in the context of a
+     * DMS triplet as opposed to floating-point single-number DD (Decimal
+     * Degrees) format. No wrap is supported; only clamping to { -89, +89 }.
+     *
+     * @param clientProperties
+     *            The {@link ClientProperties} for OS, Locale, etc.
+     * @return An {@link IntegerEditor} set to the allowed range for Latitude
+     */
+    public static final IntegerEditor makeLatitudeDegreesEditor( final ClientProperties clientProperties ) {
+        // Declare value increment/decrement amount for up and down arrow keys,
+        // set to 1 degree as we are using DMS as separate values.
+        final int valueIncrementDegrees = 1;
+
+        final IntegerEditor latitudeDegreesEditor = new IntegerEditor( clientProperties,
+                                                                       "0", //$NON-NLS-1$
+                                                                       "Latitude Degrees", //$NON-NLS-1$
+                                                                       -89,
+                                                                       89,
+                                                                       0,
+                                                                       valueIncrementDegrees );
 
         return latitudeDegreesEditor;
     }
 
-    // Helper method to get a Longitude Degrees Editor, standalone or paired.
-    public static final LongitudeDegreesEditor getLongitudeDegreesEditor( final ClientProperties clientProperties ) {
-        final LongitudeDegreesEditor longitudeDegreesEditor =
-                                                            new LongitudeDegreesEditor( clientProperties,
-                                                                                        "Longitude Degrees" ); //$NON-NLS-1$
+    /**
+     * Returns an integer-based editor for Longitude Degrees in the context of a
+     * DMS triplet as opposed to floating-point single-number DD (Decimal
+     * Degrees) format. No wrap is supported; only clamping to { -179, +179 }.
+     *
+     * @param clientProperties
+     *            The {@link ClientProperties} for OS, Locale, etc.
+     * @return An {@link IntegerEditor} set to the allowed range for Longitude
+     */
+    public static final IntegerEditor makeLongitudeDegreesEditor( final ClientProperties clientProperties ) {
+        // Declare value increment/decrement amount for up and down arrow keys,
+        // set to 1 degree as we are using DMS as separate values.
+        final int valueIncrementDegrees = 1;
+
+        final IntegerEditor longitudeDegreesEditor = new IntegerEditor( clientProperties,
+                                                                        "0", //$NON-NLS-1$
+                                                                        "Longitude Degrees", //$NON-NLS-1$
+                                                                        -179,
+                                                                        179,
+                                                                        0,
+                                                                        valueIncrementDegrees );
 
         return longitudeDegreesEditor;
     }
 
-    // Helper method to get a Latitude Minutes Editor, standalone or paired.
-    public static final MinutesEditor getLatitudeMinutesEditor( final ClientProperties clientProperties ) {
-        final MinutesEditor latitudeMinutesEditor = new MinutesEditor( clientProperties,
-                                                                       "Latitude Minutes" ); //$NON-NLS-1$
+    /**
+     * Returns an integer-based editor for Latitude Minutes in the context of a
+     * DMS triplet as opposed to floating-point single-number DD (Decimal
+     * Degrees) format. No wrap is supported; only clamping to { 0, 59 }.
+     *
+     * @param clientProperties
+     *            The {@link ClientProperties} for OS, Locale, etc.
+     * @return An {@link IntegerEditor} set to the allowed range for Latitude
+     */
+    public static final IntegerEditor makeLatitudeMinutesEditor( final ClientProperties clientProperties ) {
+        final IntegerEditor latitudeMinutesEditor = makeMinutesIntegerEditor( clientProperties,
+                                                                              "Latitude Minutes" ); //$NON-NLS-1$
 
         return latitudeMinutesEditor;
     }
 
-    // Helper method to get a Longitude Minutes Editor, standalone or paired.
-    public static final MinutesEditor getLongitudeMinutesEditor( final ClientProperties clientProperties ) {
-        final MinutesEditor longitudeMinutesEditor = new MinutesEditor( clientProperties,
-                                                                        "Longitude Minutes" ); //$NON-NLS-1$
+    /**
+     * Returns an integer-based editor for Longitude Minutes in the context of a
+     * DMS triplet as opposed to floating-point single-number DD (Decimal
+     * Degrees) format. No wrap is supported; only clamping to { 0, 59 }.
+     *
+     * @param clientProperties
+     *            The {@link ClientProperties} for OS, Locale, etc.
+     * @return An {@link IntegerEditor} set to the allowed range for Longitude
+     */
+    public static final IntegerEditor makeLongitudeMinutesEditor( final ClientProperties clientProperties ) {
+        final IntegerEditor longitudeMinutesEditor =
+                                                   makeMinutesIntegerEditor( clientProperties,
+                                                                             "Longitude Minutes" ); //$NON-NLS-1$
 
         return longitudeMinutesEditor;
     }
 
-    // Helper method to get a Latitude Seconds Editor, standalone or paired.
-    public static final SecondsEditor getLatitudeSecondsEditor( final ClientProperties clientProperties ) {
-        final SecondsEditor latitudeSecondsEditor = new SecondsEditor( clientProperties,
-                                                                       "Latitude Seconds" ); //$NON-NLS-1$
+    /**
+     * Returns an integer-based editor for Minutes, in unspecified context as
+     * there are certain aspects that hold for all domains where this unit is
+     * used. No wrap is supported; only clamping to { 0, 59 }.
+     *
+     * @param clientProperties
+     *            The {@link ClientProperties} for OS, Locale, etc.
+     * @return An {@link IntegerEditor} set to the allowed range for Minutes
+     */
+    public static final IntegerEditor makeMinutesIntegerEditor( final ClientProperties clientProperties,
+                                                                final String tooltipText ) {
+        // Declare value increment/decrement amount for up and down arrow keys,
+        // set to 1 minute as this editor only works with integers.
+        final int valueIncrementMinutes = 1;
+
+        final IntegerEditor minutesEditor = new IntegerEditor( clientProperties,
+                                                               "0", //$NON-NLS-1$
+                                                               tooltipText,
+                                                               0,
+                                                               59,
+                                                               0,
+                                                               valueIncrementMinutes );
+
+        minutesEditor.setMeasurementUnitString( "'" ); //$NON-NLS-1$
+
+        return minutesEditor;
+    }
+
+    /**
+     * Returns an integer-based editor for Latitude Seconds in the context of a
+     * DMS triplet as opposed to floating-point single-number DD (Decimal
+     * Degrees) format. No wrap is supported; only clamping to { 0, 59 }.
+     *
+     * @param clientProperties
+     *            The {@link ClientProperties} for OS, Locale, etc.
+     * @return An {@link IntegerEditor} set to the allowed range for Latitude
+     */
+    public static final IntegerEditor makeLatitudeSecondsEditor( final ClientProperties clientProperties ) {
+        final IntegerEditor latitudeSecondsEditor = makeSecondsIntegerEditor( clientProperties,
+                                                                              "Latitude Seconds" ); //$NON-NLS-1$
 
         return latitudeSecondsEditor;
     }
 
-    // Helper method to get a Longitude Seconds Editor, standalone or paired.
-    public static final SecondsEditor getLongitudeSecondsEditor( final ClientProperties clientProperties ) {
-        final SecondsEditor longitudeSecondsEditor = new SecondsEditor( clientProperties,
-                                                                        "Longitude Seconds" ); //$NON-NLS-1$
+    /**
+     * Returns an integer-based editor for Longitude Seconds in the context of a
+     * DMS triplet as opposed to floating-point single-number DD (Decimal
+     * Degrees) format. No wrap is supported; only clamping to { 0, 59 }.
+     *
+     * @param clientProperties
+     *            The {@link ClientProperties} for OS, Locale, etc.
+     * @return An {@link IntegerEditor} set to the allowed range for Longitude
+     */
+    public static final IntegerEditor makeLongitudeSecondsEditor( final ClientProperties clientProperties ) {
+        final IntegerEditor longitudeSecondsEditor =
+                                                   makeSecondsIntegerEditor( clientProperties,
+                                                                             "Longitude Seconds" ); //$NON-NLS-1$
 
         return longitudeSecondsEditor;
+    }
+
+    /**
+     * Returns an integer-based editor for Seconds, in unspecified context as
+     * there are certain aspects that hold for all domains where this unit is
+     * used. No wrap is supported; only clamping to { 0, 59 }.
+     *
+     * @param clientProperties
+     *            The {@link ClientProperties} for OS, Locale, etc.
+     * @return An {@link IntegerEditor} set to the allowed range for Seconds
+     */
+    public static final IntegerEditor makeSecondsIntegerEditor( final ClientProperties clientProperties,
+                                                                final String tooltipText ) {
+        // Declare value increment/decrement amount for up and down arrow keys,
+        // set to 1 second as this editor only works with integers.
+        final int valueIncrementSeconds = 1;
+
+        final IntegerEditor secondsEditor = new IntegerEditor( clientProperties,
+                                                               "0", //$NON-NLS-1$
+                                                               tooltipText,
+                                                               0,
+                                                               59,
+                                                               0,
+                                                               valueIncrementSeconds );
+
+        secondsEditor.setMeasurementUnitString( "\"" ); //$NON-NLS-1$
+
+        return secondsEditor;
     }
 
     // Helper method to get a custom Temperature Editor.
