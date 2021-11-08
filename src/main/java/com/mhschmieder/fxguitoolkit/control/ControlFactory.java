@@ -191,21 +191,30 @@ public class ControlFactory {
     }
 
     // Helper method to get an Opacity Editor, standalone or paired.
-    public static final OpacityEditor makeOpacityEditor( final ClientProperties clientProperties,
-                                                         final String tooltipText,
-                                                         final String measurementUnit,
-                                                         final double minimumValue,
-                                                         final double maximumValue,
-                                                         final double initialValue ) {
+    public static final DoubleEditor makeOpacityEditor( final ClientProperties clientProperties,
+                                                        final String tooltipText,
+                                                        final String measurementUnit,
+                                                        final double minimumValue,
+                                                        final double maximumValue,
+                                                        final double initialValue ) {
         // Get the current value and format it as initial text.
         final String initialText = Double.toString( initialValue );
 
-        final OpacityEditor opacityEditor = new OpacityEditor( clientProperties,
-                                                               initialText,
-                                                               tooltipText,
-                                                               minimumValue,
-                                                               maximumValue,
-                                                               initialValue );
+        // Declare value increment/decrement amount for up and down arrow keys,
+        // set to 0.5% as a mid-way value of general use for auto-increment.
+        final double valueIncrementPercent = 0.5d;
+
+        // NOTE: We use up to one decimal place of precision for displaying
+        // opacity, and one decimal place for parsing opacity.
+        final DoubleEditor opacityEditor = new DoubleEditor( clientProperties,
+                                                             initialText,
+                                                             tooltipText,
+                                                             0,
+                                                             1,
+                                                             0,
+                                                             1,
+                                                             initialValue,
+                                                             valueIncrementPercent );
 
         opacityEditor.setMeasurementUnitString( measurementUnit );
 
@@ -213,16 +222,16 @@ public class ControlFactory {
     }
 
     // Helper method to get an Opacity Editor to pair with a slider.
-    public static final OpacityEditor makeOpacitySliderEditor( final ClientProperties clientProperties,
-                                                               final OpacitySlider opacitySlider ) {
+    public static final DoubleEditor makeOpacitySliderEditor( final ClientProperties clientProperties,
+                                                              final OpacitySlider opacitySlider ) {
         // Use the current slider value and limits to set the number editor.
-        final OpacityEditor opacityEditor = makeOpacityEditor( clientProperties,
-                                                               null,
-                                                               opacitySlider
-                                                                       .getMeasurementUnitString(),
-                                                               opacitySlider.getMin(),
-                                                               opacitySlider.getMax(),
-                                                               opacitySlider.getValue() );
+        final DoubleEditor opacityEditor = makeOpacityEditor( clientProperties,
+                                                              null,
+                                                              opacitySlider
+                                                                      .getMeasurementUnitString(),
+                                                              opacitySlider.getMin(),
+                                                              opacitySlider.getMax(),
+                                                              opacitySlider.getValue() );
 
         return opacityEditor;
     }

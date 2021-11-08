@@ -34,7 +34,7 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.ScrollingSensitivity;
 import com.mhschmieder.fxguitoolkit.control.ControlFactory;
-import com.mhschmieder.fxguitoolkit.control.OpacityEditor;
+import com.mhschmieder.fxguitoolkit.control.DoubleEditor;
 import com.mhschmieder.fxguitoolkit.control.OpacitySlider;
 
 import javafx.beans.property.DoubleProperty;
@@ -52,7 +52,7 @@ public final class OpacityPane extends VBox {
 
     private Label          _opacityLabel;
     public OpacitySlider   _opacitySlider;
-    public OpacityEditor   _opacityEditor;
+    public DoubleEditor    _opacityEditor;
 
     private DoubleProperty opacityPercent;
 
