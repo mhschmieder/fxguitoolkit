@@ -91,7 +91,7 @@ public final class OpacityPane extends VBox {
         _opacitySlider = new OpacitySlider( clientProperties );
 
         // Conform the associated editor (text field) to the slider attributes.
-        _opacityEditor = ControlFactory.getOpacitySliderEditor( clientProperties, _opacitySlider );
+        _opacityEditor = ControlFactory.makeOpacitySliderEditor( clientProperties, _opacitySlider );
         _opacityEditor.setPrefWidth( 70d );
 
         _opacityLabel = GuiUtilities.getControlLabel( labelText );

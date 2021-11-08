@@ -89,32 +89,32 @@ public class ControlFactory {
                                                                                        .toAbbreviatedString() };
 
     // Helper method to get an Angle Editor, standalone or paired.
-    public static final AngleEditor getAngleEditor( final ClientProperties clientProperties,
-                                                    final String tooltipText,
-                                                    final double minimumValue,
-                                                    final double maximumValue,
-                                                    final double initialValue ) {
-        final AngleEditor angleEditor = getAngleEditor( clientProperties,
-                                                        tooltipText,
-                                                        AngleUnit.DEGREES.toPresentationString(),
-                                                        minimumValue,
-                                                        maximumValue,
-                                                        initialValue );
+    public static final AngleEditor makeAngleEditor( final ClientProperties clientProperties,
+                                                     final String tooltipText,
+                                                     final double minimumValue,
+                                                     final double maximumValue,
+                                                     final double initialValue ) {
+        final AngleEditor angleEditor = makeAngleEditor( clientProperties,
+                                                         tooltipText,
+                                                         AngleUnit.DEGREES.toPresentationString(),
+                                                         minimumValue,
+                                                         maximumValue,
+                                                         initialValue );
 
         return angleEditor;
     }
 
     // Helper method to get an Angle Editor, standalone or paired.
-    public static final AngleEditor getAngleEditor( final ClientProperties clientProperties,
-                                                    final String tooltipText,
-                                                    final int minFractionDigitsFormat,
-                                                    final int maxFractionDigitsFormat,
-                                                    final int minFractionDigitsParse,
-                                                    final int maxFractionDigitsParse,
-                                                    final String measurementUnit,
-                                                    final double minimumValue,
-                                                    final double maximumValue,
-                                                    final double initialValue ) {
+    public static final AngleEditor makeAngleEditor( final ClientProperties clientProperties,
+                                                     final String tooltipText,
+                                                     final int minFractionDigitsFormat,
+                                                     final int maxFractionDigitsFormat,
+                                                     final int minFractionDigitsParse,
+                                                     final int maxFractionDigitsParse,
+                                                     final String measurementUnit,
+                                                     final double minimumValue,
+                                                     final double maximumValue,
+                                                     final double initialValue ) {
         // Get the current value and format it as initial text.
         final String initialText = Double.toString( initialValue );
 
@@ -135,68 +135,68 @@ public class ControlFactory {
     }
 
     // Helper method to get an Angle Editor, standalone or paired.
-    public static final AngleEditor getAngleEditor( final ClientProperties clientProperties,
-                                                    final String tooltipText,
-                                                    final String measurementUnit,
-                                                    final double minimumValue,
-                                                    final double maximumValue,
-                                                    final double initialValue ) {
-        final AngleEditor angleEditor = getAngleEditor( clientProperties,
-                                                        tooltipText,
-                                                        0,
-                                                        2,
-                                                        0,
-                                                        10,
-                                                        measurementUnit,
-                                                        minimumValue,
-                                                        maximumValue,
-                                                        initialValue );
+    public static final AngleEditor makeAngleEditor( final ClientProperties clientProperties,
+                                                     final String tooltipText,
+                                                     final String measurementUnit,
+                                                     final double minimumValue,
+                                                     final double maximumValue,
+                                                     final double initialValue ) {
+        final AngleEditor angleEditor = makeAngleEditor( clientProperties,
+                                                         tooltipText,
+                                                         0,
+                                                         2,
+                                                         0,
+                                                         10,
+                                                         measurementUnit,
+                                                         minimumValue,
+                                                         maximumValue,
+                                                         initialValue );
 
         return angleEditor;
     }
 
     // Helper method to get an Angle Editor to pair with a slider.
-    public static final AngleEditor getAngleSliderEditor( final ClientProperties clientProperties,
-                                                          final AngleSlider angleSlider ) {
-        final AngleEditor angleEditor = getAngleSliderEditor( clientProperties,
-                                                              angleSlider,
-                                                              0,
-                                                              2,
-                                                              0,
-                                                              10 );
+    public static final AngleEditor makeAngleSliderEditor( final ClientProperties clientProperties,
+                                                           final AngleSlider angleSlider ) {
+        final AngleEditor angleEditor = makeAngleSliderEditor( clientProperties,
+                                                               angleSlider,
+                                                               0,
+                                                               2,
+                                                               0,
+                                                               10 );
 
         return angleEditor;
     }
 
     // Helper method to get an Angle Editor to pair with a slider.
-    public static final AngleEditor getAngleSliderEditor( final ClientProperties clientProperties,
-                                                          final AngleSlider angleSlider,
-                                                          final int minFractionDigitsFormat,
-                                                          final int maxFractionDigitsFormat,
-                                                          final int minFractionDigitsParse,
-                                                          final int maxFractionDigitsParse ) {
+    public static final AngleEditor makeAngleSliderEditor( final ClientProperties clientProperties,
+                                                           final AngleSlider angleSlider,
+                                                           final int minFractionDigitsFormat,
+                                                           final int maxFractionDigitsFormat,
+                                                           final int minFractionDigitsParse,
+                                                           final int maxFractionDigitsParse ) {
         // Use the current slider value and limits to set the number editor.
-        final AngleEditor angleEditor = getAngleEditor( clientProperties,
-                                                        null,
-                                                        minFractionDigitsFormat,
-                                                        maxFractionDigitsFormat,
-                                                        minFractionDigitsParse,
-                                                        maxFractionDigitsParse,
-                                                        angleSlider.getMeasurementUnitString(),
-                                                        angleSlider.getMin(),
-                                                        angleSlider.getMax(),
-                                                        angleSlider.getValue() );
+        final AngleEditor angleEditor = makeAngleEditor( clientProperties,
+                                                         null,
+                                                         minFractionDigitsFormat,
+                                                         maxFractionDigitsFormat,
+                                                         minFractionDigitsParse,
+                                                         maxFractionDigitsParse,
+                                                         angleSlider.getMeasurementUnitString(),
+                                                         angleSlider.getMin(),
+                                                         angleSlider.getMax(),
+                                                         angleSlider.getValue() );
 
         return angleEditor;
     }
 
     // Helper method to get an Opacity Editor, standalone or paired.
-    public static final OpacityEditor getOpacityEditor( final ClientProperties clientProperties,
-                                                        final String tooltipText,
-                                                        final String measurementUnit,
-                                                        final double minimumValue,
-                                                        final double maximumValue,
-                                                        final double initialValue ) {
+    public static final OpacityEditor makeOpacityEditor( final ClientProperties clientProperties,
+                                                         final String tooltipText,
+                                                         final String measurementUnit,
+                                                         final double minimumValue,
+                                                         final double maximumValue,
+                                                         final double initialValue ) {
         // Get the current value and format it as initial text.
         final String initialText = Double.toString( initialValue );
 
@@ -213,31 +213,31 @@ public class ControlFactory {
     }
 
     // Helper method to get an Opacity Editor to pair with a slider.
-    public static final OpacityEditor getOpacitySliderEditor( final ClientProperties clientProperties,
-                                                              final OpacitySlider opacitySlider ) {
+    public static final OpacityEditor makeOpacitySliderEditor( final ClientProperties clientProperties,
+                                                               final OpacitySlider opacitySlider ) {
         // Use the current slider value and limits to set the number editor.
-        final OpacityEditor opacityEditor = getOpacityEditor( clientProperties,
-                                                              null,
-                                                              opacitySlider
-                                                                      .getMeasurementUnitString(),
-                                                              opacitySlider.getMin(),
-                                                              opacitySlider.getMax(),
-                                                              opacitySlider.getValue() );
+        final OpacityEditor opacityEditor = makeOpacityEditor( clientProperties,
+                                                               null,
+                                                               opacitySlider
+                                                                       .getMeasurementUnitString(),
+                                                               opacitySlider.getMin(),
+                                                               opacitySlider.getMax(),
+                                                               opacitySlider.getValue() );
 
         return opacityEditor;
     }
 
-    public static final Spinner< Double > getDoubleSpinner( final ClientProperties clientProperties,
-                                                            final boolean toolbarContext,
-                                                            final String valueDescriptor,
-                                                            final double minimumNumericValue,
-                                                            final double maximumNumericValue,
-                                                            final double defaultNumericValue,
-                                                            final double numericIncrement,
-                                                            final boolean wrapAround,
-                                                            final String numericFormatterPattern,
-                                                            final String measurementUnit,
-                                                            final double maximumSpinnerWidth ) {
+    public static final Spinner< Double > makeDoubleSpinner( final ClientProperties clientProperties,
+                                                             final boolean toolbarContext,
+                                                             final String valueDescriptor,
+                                                             final double minimumNumericValue,
+                                                             final double maximumNumericValue,
+                                                             final double defaultNumericValue,
+                                                             final double numericIncrement,
+                                                             final boolean wrapAround,
+                                                             final String numericFormatterPattern,
+                                                             final String measurementUnit,
+                                                             final double maximumSpinnerWidth ) {
         // Start with a fully initialized Spinner, with range specified.
         final Spinner< Double > doubleSpinner = new Spinner<>( minimumNumericValue,
                                                                maximumNumericValue,
@@ -265,17 +265,17 @@ public class ControlFactory {
         return doubleSpinner;
     }
 
-    public static final Spinner< Integer > getIntegerSpinner( final ClientProperties clientProperties,
-                                                              final boolean toolbarContext,
-                                                              final String valueDescriptor,
-                                                              final int minimumNumericValue,
-                                                              final int maximumNumericValue,
-                                                              final int defaultNumericValue,
-                                                              final int numericIncrement,
-                                                              final boolean wrapAround,
-                                                              final String numericFormatterPattern,
-                                                              final String measurementUnit,
-                                                              final double maximumSpinnerWidth ) {
+    public static final Spinner< Integer > makeIntegerSpinner( final ClientProperties clientProperties,
+                                                               final boolean toolbarContext,
+                                                               final String valueDescriptor,
+                                                               final int minimumNumericValue,
+                                                               final int maximumNumericValue,
+                                                               final int defaultNumericValue,
+                                                               final int numericIncrement,
+                                                               final boolean wrapAround,
+                                                               final String numericFormatterPattern,
+                                                               final String measurementUnit,
+                                                               final double maximumSpinnerWidth ) {
         // Start with a fully initialized Spinner, with range specified.
         final Spinner< Integer > integerSpinner = new Spinner<>( minimumNumericValue,
                                                                  maximumNumericValue,
@@ -303,7 +303,7 @@ public class ControlFactory {
         return integerSpinner;
     }
 
-    public static final TextSelector getLatitudeCardinalDirectionSelector( final ClientProperties clientProperties ) {
+    public static final TextSelector makeLatitudeCardinalDirectionSelector( final ClientProperties clientProperties ) {
         final TextSelector selector = new TextSelector( clientProperties,
                                                         "Latitude Cardinal Directions", //$NON-NLS-1$
                                                         false,
@@ -316,7 +316,7 @@ public class ControlFactory {
         return selector;
     }
 
-    public static final TextSelector getLongitudeCardinalDirectionSelector( final ClientProperties clientProperties ) {
+    public static final TextSelector makeLongitudeCardinalDirectionSelector( final ClientProperties clientProperties ) {
         final TextSelector selector = new TextSelector( clientProperties,
                                                         "Longitude Cardinal Directions", //$NON-NLS-1$
                                                         false,
@@ -419,6 +419,8 @@ public class ControlFactory {
      *
      * @param clientProperties
      *            The {@link ClientProperties} for OS, Locale, etc.
+     * @param tooltipText
+     *            The optional Tool Tip Text to display when the user hovers
      * @return An {@link IntegerEditor} set to the allowed range for Minutes
      */
     public static final IntegerEditor makeMinutesIntegerEditor( final ClientProperties clientProperties,
@@ -480,6 +482,8 @@ public class ControlFactory {
      *
      * @param clientProperties
      *            The {@link ClientProperties} for OS, Locale, etc.
+     * @param tooltipText
+     *            The optional Tool Tip Text to display when the user hovers
      * @return An {@link IntegerEditor} set to the allowed range for Seconds
      */
     public static final IntegerEditor makeSecondsIntegerEditor( final ClientProperties clientProperties,
@@ -502,7 +506,7 @@ public class ControlFactory {
     }
 
     // Helper method to get a custom Temperature Editor.
-    public static final TemperatureEditor getTemperatureEditor( final ClientProperties clientProperties ) {
+    public static final TemperatureEditor makeTemperatureEditor( final ClientProperties clientProperties ) {
         // Format the default Temperature value as the initial text.
         final double initialValue = TemperatureSlider.INITIAL_TEMPERATURE_KELVIN_DEFAULT;
         final String initialText = Double.toString( initialValue );
@@ -519,7 +523,7 @@ public class ControlFactory {
     }
 
     // Helper method to get a custom Pressure Editor.
-    public static final PressureEditor getPressureEditor( final ClientProperties clientProperties ) {
+    public static final PressureEditor makePressureEditor( final ClientProperties clientProperties ) {
         // Format the default Pressure value as the initial text.
         final double initialValue = PressureSlider.INITIAL_PRESSURE_PASCALS_DEFAULT;
         final String initialText = Double.toString( initialValue );
@@ -536,8 +540,8 @@ public class ControlFactory {
     }
 
     // Helper method to get a humidity editor to pair with a slider.
-    public static final HumidityEditor getHumiditySliderEditor( final ClientProperties clientProperties,
-                                                                final HumiditySlider humiditySlider ) {
+    public static final HumidityEditor makeHumiditySliderEditor( final ClientProperties clientProperties,
+                                                                 final HumiditySlider humiditySlider ) {
         // Get the current slider value and format it as initial text.
         final double initialValue = HumiditySlider.INITIAL_RELATIVE_HUMIDITY_DEFAULT;
         final String initialText = Double.toString( initialValue );
@@ -556,10 +560,10 @@ public class ControlFactory {
         return humidityEditor;
     }
 
-    public static final TextArea getNoticeTextArea( final String noticeTextContent,
-                                                    final boolean editable,
-                                                    final int numberOfColumns,
-                                                    final int numberOfRows ) {
+    public static final TextArea makeNoticeTextArea( final String noticeTextContent,
+                                                     final boolean editable,
+                                                     final int numberOfColumns,
+                                                     final int numberOfRows ) {
         final TextArea noticeTextArea = new TextArea( noticeTextContent );
         noticeTextArea.setEditable( editable );
         noticeTextArea.setWrapText( true );
@@ -572,9 +576,9 @@ public class ControlFactory {
         return noticeTextArea;
     }
 
-    public static final TextFlow getNoticeTextFlow( final Text noticeText,
-                                                    final int numberOfColumns,
-                                                    final int numberOfRows ) {
+    public static final TextFlow makeNoticeTextFlow( final Text noticeText,
+                                                     final int numberOfColumns,
+                                                     final int numberOfRows ) {
         // NOTE: The sizing is a temporary hack to avoid full-screen.
         final TextFlow noticeTextFlow = new TextFlow( noticeText );
         noticeTextFlow.setMaxWidth( numberOfRows * 12d );
@@ -586,7 +590,7 @@ public class ControlFactory {
         return noticeTextFlow;
     }
 
-    public static final WebView getNoticeWebView( final String noticeHtmlContent ) {
+    public static final WebView makeNoticeWebView( final String noticeHtmlContent ) {
         final WebView noticeWebView = new WebView();
         noticeWebView.getEngine().loadContent( noticeHtmlContent );
         noticeWebView.autosize();
@@ -594,7 +598,7 @@ public class ControlFactory {
         return noticeWebView;
     }
 
-    public static final WebView getNoticeWebView( final URL noticeUrl ) {
+    public static final WebView makeNoticeWebView( final URL noticeUrl ) {
         final WebView noticeWebView = new WebView();
         final WebEngine noticeWebEngine = noticeWebView.getEngine();
         noticeWebEngine.load( noticeUrl.toString() );

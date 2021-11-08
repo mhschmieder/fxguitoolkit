@@ -36,7 +36,8 @@ public final class HumidityEditor extends DoubleEditor {
 
     // Declare value increment/decrement amount for up and down arrow keys.
     // NOTE: We increment by 10% as this is a typical default.
-    // TODO: Modify this value if units are other than Relative Humidity?
+    // TODO: Modify this value if units are other than Relative Humidity, and
+    // also add supporting methods for unit conversion and display?
     public static final double VALUE_INCREMENT_PERCENT = 10d;
 
     public HumidityEditor( final ClientProperties clientProperties,

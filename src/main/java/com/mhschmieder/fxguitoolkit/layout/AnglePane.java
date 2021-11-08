@@ -70,7 +70,7 @@ public class AnglePane extends VBox {
         _angleSlider = new AngleSlider( clientProperties, useContextMenu );
 
         // Conform the associated editor (text field) to the slider attributes.
-        _angleEditor = ControlFactory.getAngleSliderEditor( clientProperties, _angleSlider );
+        _angleEditor = ControlFactory.makeAngleSliderEditor( clientProperties, _angleSlider );
         _angleEditor.setPrefWidth( 70d );
 
         final Label angleLabel = GuiUtilities.getControlLabel( labelText );

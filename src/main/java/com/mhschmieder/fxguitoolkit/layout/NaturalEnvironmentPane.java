@@ -178,7 +178,7 @@ public final class NaturalEnvironmentPane extends HBox {
     }
 
     // Set and bind the Natural Environment reference.
-    // :NOTE: This should be done only once, to avoid breaking bindings.
+    // NOTE: This should be done only once, to avoid breaking bindings.
     public void setNaturalEnvironment( final NaturalEnvironment pNaturalEnvironment ) {
         // Cache the Natural Environment reference.
         naturalEnvironment = pNaturalEnvironment;
@@ -211,6 +211,9 @@ public final class NaturalEnvironmentPane extends HBox {
 
     /**
      * Propagate the new Distance Unit to the relevant subcomponents.
+     * 
+     * @param distanceUnit
+     *            The Distance Unit to use for Altitude
      */
     public void updateDistanceUnit( final DistanceUnit distanceUnit ) {
         // Forward this method to the Altitude Pane.
@@ -219,6 +222,9 @@ public final class NaturalEnvironmentPane extends HBox {
 
     /**
      * Propagate the new Pressure Unit to the relevant subcomponents.
+     * 
+     * @param pressureUnit
+     *            The Pressure Unit to use for the Environment
      */
     public void updatePressureUnit( final PressureUnit pressureUnit ) {
         // Forward this method to the Pressure Pane.
@@ -227,6 +233,9 @@ public final class NaturalEnvironmentPane extends HBox {
 
     /**
      * Propagate the new Temperature Unit to the relevant subcomponents.
+     * 
+     * @param temperatureUnit
+     *            The Temperature Unit to use for the Environment
      */
     public void updateTemperatureUnit( final TemperatureUnit temperatureUnit ) {
         // Forward this method to the Temperature Pane.

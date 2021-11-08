@@ -116,7 +116,7 @@ public final class TemperaturePane extends VBox {
         _temperatureSlider = new TemperatureSlider( clientProperties );
 
         // Conform the associated editor (text field) to the slider attributes.
-        _temperatureEditor = ControlFactory.getTemperatureEditor( clientProperties );
+        _temperatureEditor = ControlFactory.makeTemperatureEditor( clientProperties );
         _temperatureEditor.setPrefWidth( 100d );
         _temperatureEditor.setMaxWidth( 100d );
 

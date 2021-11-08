@@ -131,7 +131,7 @@ public class NoticePane extends VBox {
 
     protected final void initPane( final String bannerText, final String noticeHtmlContent ) {
         // Declare the main Web View for the primary content.
-        final WebView noticeWebView = ControlFactory.getNoticeWebView( noticeHtmlContent );
+        final WebView noticeWebView = ControlFactory.makeNoticeWebView( noticeHtmlContent );
 
         // Initialize the remaining layout, which is common/shared.
         initLayout( bannerText, noticeWebView );
@@ -143,7 +143,7 @@ public class NoticePane extends VBox {
                                    final int numberOfRows ) {
         // Declare the main Text Area for the primary content.
         final TextArea noticeTextArea = ControlFactory
-                .getNoticeTextArea( noticeTextContent, false, numberOfColumns, numberOfRows );
+                .makeNoticeTextArea( noticeTextContent, false, numberOfColumns, numberOfRows );
 
         // Initialize the remaining layout, which is common/shared.
         initLayout( bannerText, noticeTextArea );
@@ -155,7 +155,7 @@ public class NoticePane extends VBox {
                                    final int numberOfRows ) {
         // Declare the main Text Area for the primary content.
         final TextArea noticeTextArea = ControlFactory
-                .getNoticeTextArea( notice.get(), true, numberOfColumns, numberOfRows );
+                .makeNoticeTextArea( notice.get(), true, numberOfColumns, numberOfRows );
 
         // Bind the editor to the referenced observable string property.
         noticeTextArea.textProperty().bindBidirectional( notice );
@@ -170,7 +170,7 @@ public class NoticePane extends VBox {
                                    final int numberOfRows ) {
         // Declare an alternate Text Flow for Rich Text content.
         final TextFlow noticeTextFlow = ControlFactory
-                .getNoticeTextFlow( noticeText, numberOfColumns, numberOfRows );
+                .makeNoticeTextFlow( noticeText, numberOfColumns, numberOfRows );
 
         // Initialize the remaining layout, which is common/shared.
         initLayout( bannerText, noticeTextFlow );
@@ -178,7 +178,7 @@ public class NoticePane extends VBox {
 
     protected final void initPane( final String bannerText, final URL noticeUrl ) {
         // Declare the main Web View for the primary content.
-        final WebView noticeWebView = ControlFactory.getNoticeWebView( noticeUrl );
+        final WebView noticeWebView = ControlFactory.makeNoticeWebView( noticeUrl );
 
         // :NOTE: We're having problems with horizontal scroll bars showing up
         // on Windows 10, if not also on Mac OS, unless we down-scale the font.

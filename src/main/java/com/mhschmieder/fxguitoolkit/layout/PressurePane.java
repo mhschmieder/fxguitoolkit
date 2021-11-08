@@ -116,7 +116,7 @@ public final class PressurePane extends VBox {
         _pressureSlider = new PressureSlider( clientProperties );
 
         // Conform the associated editor (text field) to the slider attributes.
-        _pressureEditor = ControlFactory.getPressureEditor( clientProperties );
+        _pressureEditor = ControlFactory.makePressureEditor( clientProperties );
         _pressureEditor.setPrefWidth( 100d );
         _pressureEditor.setMaxWidth( 100d );
 
