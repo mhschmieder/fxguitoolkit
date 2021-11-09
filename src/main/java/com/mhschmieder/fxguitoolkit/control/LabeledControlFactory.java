@@ -30,6 +30,10 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
+import java.util.ResourceBundle;
+
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
@@ -57,6 +61,12 @@ public final class LabeledControlFactory {
      * The default constructor is disabled, as this is a static factory class.
      */
     private LabeledControlFactory() {}
+
+    // TODO: Review whether this is still correct, now that we have to package
+    // all non-Java resource files in a separate hierarchy from the Java package
+    // for the source code.
+    @SuppressWarnings("nls") public static final String BUNDLE_NAME =
+                                                                    "com.mhschmieder.fxguitoolkit.action.ActionLabels";
 
     public static Button getButton( final String label,
                                     final Font font,
@@ -288,6 +298,17 @@ public final class LabeledControlFactory {
         final String tooltipText = buttonLabel + " New " + objectType;
 
         return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "insert-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static String getFileMruHeader( final ClientProperties pClientProperties,
+                                           final int mruFileNumber ) {
+        final ResourceBundle resourceBundle = GlobalUtilities
+                .getResourceBundle( pClientProperties, BUNDLE_NAME, true );
+        final String fileMruNumber = "mru" + Integer.toString( mruFileNumber );
+        final String fileMruHeader = GuiUtilities
+                .getButtonText( "file", fileMruNumber, resourceBundle );
+        return fileMruHeader;
     }
 
     @SuppressWarnings("nls")

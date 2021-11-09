@@ -211,7 +211,7 @@ public final class NaturalEnvironmentPane extends HBox {
 
     /**
      * Propagate the new Distance Unit to the relevant subcomponents.
-     * 
+     *
      * @param distanceUnit
      *            The Distance Unit to use for Altitude
      */
@@ -222,7 +222,7 @@ public final class NaturalEnvironmentPane extends HBox {
 
     /**
      * Propagate the new Pressure Unit to the relevant subcomponents.
-     * 
+     *
      * @param pressureUnit
      *            The Pressure Unit to use for the Environment
      */
@@ -233,7 +233,7 @@ public final class NaturalEnvironmentPane extends HBox {
 
     /**
      * Propagate the new Temperature Unit to the relevant subcomponents.
-     * 
+     *
      * @param temperatureUnit
      *            The Temperature Unit to use for the Environment
      */
