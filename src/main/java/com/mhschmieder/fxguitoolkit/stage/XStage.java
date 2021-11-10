@@ -33,7 +33,6 @@ package com.mhschmieder.fxguitoolkit.stage;
 import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
@@ -732,7 +731,6 @@ public abstract class XStage extends Stage {
         setForegroundFromBackground( ColorConstants.WINDOW_BACKGROUND_COLOR );
     }
 
-    @SuppressWarnings("nls")
     protected final Scene loadScene( final Parent parent,
                                      final double defaultWidth,
                                      final double defaultHeight,
@@ -748,12 +746,8 @@ public abstract class XStage extends Stage {
         // TODO: Move the core CSS setting to the Application startup, so that
         // non-stage windows also use our preferred styles?
         // NOTE: Unfortunately, the only way to do this involves Private API.
-        final List< String > jarRelativeStylesheetFilenames = new ArrayList<>();
-        jarRelativeStylesheetFilenames.add( "/css/skin.css" );
-        final String fontStylesheet = SystemType.MACOS.equals( clientProperties.systemType )
-            ? "/css/font-mac.css"
-            : "/css/font.css";
-        jarRelativeStylesheetFilenames.add( fontStylesheet );
+        final List< String > jarRelativeStylesheetFilenames = GuiUtilities
+                .getJarRelativeStylesheetFilenames( clientProperties.systemType );
         GuiUtilities.addStylesheetsAsJarResource( scene, jarRelativeStylesheetFilenames );
 
         return scene;

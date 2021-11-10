@@ -32,8 +32,11 @@ package com.mhschmieder.fxguitoolkit;
 
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.action.ActionUtils;
+
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
+import com.mhschmieder.fxguitoolkit.action.XAction;
 import com.mhschmieder.fxguitoolkit.control.DoubleEditor;
 import com.mhschmieder.fxguitoolkit.control.NumberSlider;
 import com.mhschmieder.fxguitoolkit.control.XToggleButton;
@@ -41,13 +44,19 @@ import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
-// :TODO: Split this up into more specialized utilities for Buttons, etc.?
+// TODO: Split this up into more specialized utilities for Buttons, etc.?
 public class SceneGraphUtilities {
 
     /**
@@ -73,7 +82,7 @@ public class SceneGraphUtilities {
         final String resourceKey = buttonName + ".toolTip";
 
         try {
-            // :NOTE: Not all actions have Tool Tips, so we have to check first
+            // NOTE: Not all actions have Tool Tips, so we have to check first
             // to see if one is present, to avoid unnecessary exceptions.
             if ( !resourceBundle.containsKey( resourceKey ) ) {
                 return null;
@@ -81,33 +90,27 @@ public class SceneGraphUtilities {
             return resourceBundle.getString( resourceKey );
         }
         catch ( final Exception e ) {
-            // :NOTE: It is OK to be missing a Tool Tip, but as we first check
+            // NOTE: It is OK to be missing a Tool Tip, but as we first check
             // for a key entry, this exception indicates a structural problem
             // that shouldn't be allowed to confuse the end users, but which
             // might benefit the developers or indicate file corruption.
+            // e.printStackTrace();
             return null;
         }
     }
 
-    public static ToggleButton getIconToggleButton( final ToggleGroup toggleGroup,
-                                                    final String iconFilename,
-                                                    final String tooltipText,
-                                                    final String cssStyleClass ) {
-        final ToggleButton toggleButton = new XToggleButton( tooltipText,
-                                                             cssStyleClass,
-                                                             false,
-                                                             false );
+    public static Tooltip getTooltip( final ClientProperties clientProperties,
+                                      final String bundleName,
+                                      final String groupName,
+                                      final String itemName ) {
+        final ResourceBundle resourceBundle = GlobalUtilities
+                .getResourceBundle( clientProperties, bundleName, false );
 
-        // Add the toggle button to its toggle group.
-        // NOTE: SegmentedButtons subsume this task; check for null!
-        if ( toggleGroup != null ) {
-            toggleButton.setToggleGroup( toggleGroup );
-        }
+        final String tooltipText = getButtonToolTipText( groupName, itemName, resourceBundle );
 
-        // Apply the icon from JAR-resident resources and set its style.
-        GuiUtilities.applyToolbarIcon( toggleButton, iconFilename );
+        final Tooltip tooltip = new Tooltip( tooltipText );
 
-        return toggleButton;
+        return tooltip;
     }
 
     public static String getLabeledControlLabel( final ClientProperties clientProperties,
@@ -116,7 +119,7 @@ public class SceneGraphUtilities {
                                                  final String itemName,
                                                  final boolean replaceMnemonic ) {
         final ResourceBundle resourceBundle = GlobalUtilities
-                .getResourceBundle( clientProperties, bundleName, true );
+                .getResourceBundle( clientProperties, bundleName, false );
 
         // Get the control label from the resource bundle, if applicable.
         final String buttonLabel =
@@ -156,6 +159,104 @@ public class SceneGraphUtilities {
         grid.add( textArea, 0, 1 );
 
         return grid;
+    }
+
+    /**
+     * This method uses the Action Framework to make a Button from an existing
+     * Action, which it then stylizes.
+     *
+     * Use this version when needing custom background colors.
+     *
+     * @param action
+     *            The {@link XAction} reference that contains most of the
+     *            resources needed for making an associated {@link Button}
+     * @param backColor
+     *            Custom background {@link Color} to apply to the {@link Button}
+     * @return A labeled {@link Button} adhering to MSLI style guidelines
+     */
+    public static Button getLabeledButton( final XAction action, final Color backColor ) {
+        final Button button = ActionUtils.createButton( action );
+
+        // Style the buttons with optional custom background.
+        // NOTE: CSS automatically chooses an appropriate foreground.
+        if ( backColor != null ) {
+            final Background background = GuiUtilities.getButtonBackground( backColor );
+            button.setBackground( background );
+        }
+
+        // Apply drop-shadow effects when the mouse enters a Button.
+        GuiUtilities.applyDropShadowEffect( button );
+
+        return button;
+    }
+
+    /**
+     * This method uses the Action Framework to make a Button from an existing
+     * Action, which it then stylizes.
+     *
+     * Use this version when needing custom background colors.
+     *
+     * @param action
+     *            The @XAction reference that contains most of the resources
+     *            needed for making an associated @Button
+     * @param cssStyleClass
+     *            The Style Class of the CSS attributes that customize the
+     *            button
+     * @return A labeled @Button adhering to MSLI style guidelines
+     */
+    public static Button getLabeledButton( final XAction action, final String cssStyleClass ) {
+        final Button button = ActionUtils.createButton( action );
+
+        // Set the CSS Style ID in place of direct setting of colors.
+        GuiUtilities.setButtonProperties( button, cssStyleClass );
+
+        return button;
+    }
+
+    /**
+     * This method uses resource lookup, via MSLI custom locale-sensitive
+     * text-based properties files, to get a button label which is then fed into
+     * a more fully qualified getter method to return a completely initialized
+     * and styled button.
+     *
+     * Use this version when needing custom background colors.
+     *
+     * @param clientProperties
+     *            The @ClientProperties grabbed at application startup
+     * @param bundleName
+     *            Resource Name for looking up locale-sensitive tags
+     * @param groupName
+     *            Group Name for resource lookup (e.g. Menu Name)
+     * @param itemName
+     *            Item Name for resource lookup (e.g. Menu Item Name)
+     * @param backColor
+     *            Custom background @Color to apply to the @Button
+     * @return A labeled @Button adhering to MSLI style guidelines
+     */
+    public static Button getLabeledButton( final ClientProperties clientProperties,
+                                           final String bundleName,
+                                           final String groupName,
+                                           final String itemName,
+                                           final Color backColor ) {
+        final String buttonLabel = getLabeledControlLabel( clientProperties,
+                                                           bundleName,
+                                                           groupName,
+                                                           itemName,
+                                                           false );
+
+        final Button button = new Button( buttonLabel );
+
+        // Style the buttons with optional custom background.
+        // NOTE: CSS automatically chooses an appropriate foreground.
+        if ( backColor != null ) {
+            final Background background = GuiUtilities.getButtonBackground( backColor );
+            button.setBackground( background );
+        }
+
+        // Apply drop-shadow effects when the mouse enters a Button.
+        GuiUtilities.applyDropShadowEffect( button );
+
+        return button;
     }
 
     /**
@@ -237,6 +338,81 @@ public class SceneGraphUtilities {
         return toggleButton;
     }
 
+    /**
+     * This method returns a completely initialized and styled toggle button.
+     *
+     * Use this version when not needing custom background or foreground colors,
+     * but when resource lookup is necessary for determining the label text. All
+     * other parameters are optional and check for null pointers.
+     *
+     * @param clientProperties
+     *            The @ClientProperties grabbed at application startup
+     * @param toggleGroup
+     *            The @ToggleGroup to which this @ToggleButton is to be assigned
+     * @param bundleName
+     *            Resource Name for looking up locale-sensitive tags
+     * @param groupName
+     *            Group Name for resource lookup (e.g. Menu Name)
+     * @param itemName
+     *            Item Name for resource lookup (e.g. Menu Item Name)
+     * @return A labeled @ToggleButton adhering to MSLI style guidelines
+     */
+    public static ToggleButton getLabeledToggleButton( final ClientProperties clientProperties,
+                                                       final ToggleGroup toggleGroup,
+                                                       final String bundleName,
+                                                       final String groupName,
+                                                       final String itemName ) {
+        final String buttonLabel = getLabeledControlLabel( clientProperties,
+                                                           bundleName,
+                                                           groupName,
+                                                           itemName,
+                                                           false );
+        final ToggleButton toggleButton = getLabeledToggleButton( toggleGroup,
+                                                                  buttonLabel,
+                                                                  null,
+                                                                  null );
+
+        return toggleButton;
+    }
+
+    public static CheckBox getLabeledCheckBox( final XAction action ) {
+        final CheckBox checkBox = ActionUtils.createCheckBox( action );
+
+        // Apply drop-shadow effects when the mouse enters a Check Box.
+        GuiUtilities.applyDropShadowEffect( checkBox );
+
+        return checkBox;
+    }
+
+    public static CheckBox getLabeledCheckBox( final ClientProperties clientProperties,
+                                               final String bundleName,
+                                               final String groupName,
+                                               final String itemName ) {
+        final String checkBoxLabel = getLabeledControlLabel( clientProperties,
+                                                             bundleName,
+                                                             groupName,
+                                                             itemName,
+                                                             false );
+
+        final CheckBox checkBox = GuiUtilities.getCheckBox( checkBoxLabel, false );
+
+        return checkBox;
+    }
+
+    public static Label getLabeledLabel( final ClientProperties clientProperties,
+                                         final String bundleName,
+                                         final String groupName,
+                                         final String itemName ) {
+        final String labelLabel = getLabeledControlLabel( clientProperties,
+                                                          bundleName,
+                                                          groupName,
+                                                          itemName,
+                                                          false );
+        final Label label = GuiUtilities.getControlLabel( labelLabel );
+
+        return label;
+    }
+
     // Helper method to get a number editor, stand-alone or paired.
     public static DoubleEditor getNumberSliderEditor( final ClientProperties clientProperties,
                                                       final int minFractionDigitsFormat,
@@ -291,6 +467,23 @@ public class SceneGraphUtilities {
                                                                valueIncrement );
 
         return doubleEditor;
+    }
+
+    public static void setControlProperties( final ClientProperties clientProperties,
+                                             final String bundleName,
+                                             final String groupName,
+                                             final String itemName,
+                                             final Control control,
+                                             final Object userData ) {
+        final Tooltip tooltip = getTooltip( clientProperties, bundleName, groupName, itemName );
+        control.setTooltip( tooltip );
+
+        // Apply drop-shadow effects when the mouse enters this Control.
+        GuiUtilities.applyDropShadowEffect( control );
+
+        if ( userData != null ) {
+            control.setUserData( userData );
+        }
     }
 
 }

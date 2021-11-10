@@ -24,17 +24,27 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-/**
- * This package contains the FxGuiToolkit Library's enhancements for JavaFX
- * Dialogs, along with dialog-related methods and tools to support security
- * features such as proxies and standard logins
- *
- * @version 1.0
- *
- * @author Mark Schmieder
- */
-package com.mhschmieder.fxguitoolkit.dialog;
+package com.mhschmieder.fxguitoolkit.control;
+
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+
+import javafx.scene.control.Button;
+
+public class NavigationButtons {
+
+    // Declare JavaFX image buttons for navigation related actions.
+    public Button _backButton;
+    public Button _forwardButton;
+
+    // Default constructor
+    public NavigationButtons( final ClientProperties pClientProperties ) {
+        // Make the JavaFX image buttons.
+        _backButton = LabeledControlFactory.getNavigateBackButton( pClientProperties );
+        _forwardButton = LabeledControlFactory.getNavigateForwardButton( pClientProperties );
+    }
+
+}

@@ -396,7 +396,7 @@ public final class ActionFactory {
         }
 
         final ResourceBundle resourceBundle = GlobalUtilities
-                .getResourceBundle( clientProperties, bundleName, true );
+                .getResourceBundle( clientProperties, bundleName, false );
 
         // If an accelerator is assigned, get it from a resource bundle.
         final KeyCombination acceleratorKeyCombination =
@@ -421,7 +421,7 @@ public final class ActionFactory {
         }
 
         final ResourceBundle resourceBundle = GlobalUtilities
-                .getResourceBundle( clientProperties, bundleName, true );
+                .getResourceBundle( clientProperties, bundleName, false );
 
         // If long text is assigned, get it from a resource bundle.
         final String longText = SceneGraphUtilities

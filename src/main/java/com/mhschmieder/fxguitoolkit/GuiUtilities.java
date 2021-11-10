@@ -50,6 +50,7 @@ import org.controlsfx.tools.Borders;
 
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
+import com.mhschmieder.fxguitoolkit.control.XToggleButton;
 import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
@@ -313,6 +314,7 @@ public final class GuiUtilities {
         }
     }
 
+    @SuppressWarnings("nls")
     public static List< String > getJarRelativeStylesheetFilenames( final SystemType systemType ) {
         // NOTE: The CSS files are copied from FxGuiToolkit as a starting point
         // and thus doesn't even begin to yet match our LAF for main Desktop.
@@ -1439,7 +1441,7 @@ public final class GuiUtilities {
         }
     }
 
-    // :NOTE: Use this method when the Toggle Button isn't exclusive and can
+    // NOTE: Use this method when the Toggle Button isn't exclusive and can
     // be selected with other buttons active.
     public static ToggleButton getIconToggleButton( final Group group, final String iconFilename ) {
         final ToggleButton toggleButton = new ToggleButton();
@@ -1453,7 +1455,7 @@ public final class GuiUtilities {
         return toggleButton;
     }
 
-    // :NOTE: Use this method when the Toggle Button isn't exclusive and can
+    // NOTE: Use this method when the Toggle Button isn't exclusive and can
     // be selected with other buttons active.
     public static ToggleButton getIconToggleButton( final String iconFilename ) {
         final ToggleButton toggleButton = new ToggleButton();
@@ -1469,7 +1471,7 @@ public final class GuiUtilities {
         final ToggleButton toggleButton = new ToggleButton();
 
         // Add the toggle button to its toggle group.
-        // :NOTE: SegmentedButtons subsume this task; check for null!
+        // NOTE: SegmentedButtons subsume this task; check for null!
         if ( toggleGroup != null ) {
             toggleButton.setToggleGroup( toggleGroup );
         }
@@ -1485,13 +1487,34 @@ public final class GuiUtilities {
         final ToggleButton toggleButton = new ToggleButton();
 
         // Add the toggle button to its toggle group.
-        // :NOTE: SegmentedButtons subsume this task; check for null!
+        // NOTE: SegmentedButtons subsume this task; check for null!
         if ( toggleGroup != null ) {
             toggleButton.setToggleGroup( toggleGroup );
         }
 
         // Apply the icon from JAR-resident resources and set its style.
         applyToolbarIcon( toggleButton, iconFilename );
+
+        return toggleButton;
+    }
+
+    public static ToggleButton getIconToggleButton( final ToggleGroup toggleGroup,
+                                                    final String iconFilename,
+                                                    final String tooltipText,
+                                                    final String cssStyleClass ) {
+        final ToggleButton toggleButton = new XToggleButton( tooltipText,
+                                                             cssStyleClass,
+                                                             false,
+                                                             false );
+
+        // Add the toggle button to its toggle group.
+        // NOTE: SegmentedButtons subsume this task; check for null!
+        if ( toggleGroup != null ) {
+            toggleButton.setToggleGroup( toggleGroup );
+        }
+
+        // Apply the icon from JAR-resident resources and set its style.
+        GuiUtilities.applyToolbarIcon( toggleButton, iconFilename );
 
         return toggleButton;
     }

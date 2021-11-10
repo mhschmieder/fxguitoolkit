@@ -36,6 +36,7 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
+import com.mhschmieder.fxguitoolkit.SceneGraphUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
 import javafx.geometry.Pos;
@@ -304,7 +305,7 @@ public final class LabeledControlFactory {
     public static String getFileMruHeader( final ClientProperties pClientProperties,
                                            final int mruFileNumber ) {
         final ResourceBundle resourceBundle = GlobalUtilities
-                .getResourceBundle( pClientProperties, BUNDLE_NAME, true );
+                .getResourceBundle( pClientProperties, BUNDLE_NAME, false );
         final String fileMruNumber = "mru" + Integer.toString( mruFileNumber );
         final String fileMruHeader = GuiUtilities
                 .getButtonText( "file", fileMruNumber, resourceBundle );
@@ -333,6 +334,91 @@ public final class LabeledControlFactory {
         final String tooltipText = "Save Current " + propertiesCategory;
 
         return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "save-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static ToggleButton getTextWrapToggleButton() {
+        final ToggleButton toggleButton = GuiUtilities
+                .getIconToggleButton( "/com/everaldo/icons/MultiRow16.png" );
+
+        final String tooltipText = "Toggle Wrap Text Mode";
+        toggleButton.setTooltip( new Tooltip( tooltipText ) );
+
+        return toggleButton;
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getRefreshButton( final ClientProperties pClientProperties ) {
+        final Button button = GuiUtilities.getIconButton( "/com/deviantArt/icons/Update16.png" );
+        SceneGraphUtilities.setControlProperties( pClientProperties,
+                                                  BUNDLE_NAME,
+                                                  "view",
+                                                  "refresh",
+                                                  button,
+                                                  null );
+        return button;
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getResetButton( final ClientProperties pClientProperties ) {
+        final Button button = GuiUtilities
+                .getIconButton( "/com/nineteenEightySeven/icons/FormReset16.png" );
+        SceneGraphUtilities.setControlProperties( pClientProperties,
+                                                  BUNDLE_NAME,
+                                                  "view",
+                                                  "reset",
+                                                  button,
+                                                  null );
+        return button;
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getNavigateBackButton( final ClientProperties pClientProperties ) {
+        final Button button = GuiUtilities.getIconButton( "/com/ahaSoft/icons/Back16.png" );
+        SceneGraphUtilities.setControlProperties( pClientProperties,
+                                                  BUNDLE_NAME,
+                                                  "navigate",
+                                                  "back",
+                                                  button,
+                                                  null );
+        return button;
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getNavigateForwardButton( final ClientProperties pClientProperties ) {
+        final Button button = GuiUtilities.getIconButton( "/com/ahaSoft/icons/Forward16.png" );
+        SceneGraphUtilities.setControlProperties( pClientProperties,
+                                                  BUNDLE_NAME,
+                                                  "navigate",
+                                                  "forward",
+                                                  button,
+                                                  null );
+        return button;
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getSessionLogNewButton( final ClientProperties pClientProperties ) {
+        final Button button = GuiUtilities
+                .getIconButton( "/com/deviantArt/icons/PowerRestartInvert16.png" );
+        SceneGraphUtilities.setControlProperties( pClientProperties,
+                                                  BUNDLE_NAME,
+                                                  "sessionLog",
+                                                  "new",
+                                                  button,
+                                                  null );
+        return button;
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getSessionLogUpdateButton( final ClientProperties pClientProperties ) {
+        final Button button = GuiUtilities.getIconButton( "/com/deviantArt/icons/Update16.png" );
+        SceneGraphUtilities.setControlProperties( pClientProperties,
+                                                  BUNDLE_NAME,
+                                                  "sessionLog",
+                                                  "update",
+                                                  button,
+                                                  null );
+        return button;
     }
 
 }

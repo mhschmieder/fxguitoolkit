@@ -34,6 +34,8 @@ import java.io.File;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 
+import com.mhschmieder.commonstoolkit.security.LoginType;
+
 /**
  * {@code MessageFactory} is a factory class for methods related to general
  * messages.
@@ -179,6 +181,27 @@ public class MessageFactory {
 
     public static final String getFileSaveOptionsTitle() {
         return "File Save Options"; //$NON-NLS-1$
+    }
+
+    public static final String getLoginCredentialsMasthead( final LoginType loginType,
+                                                            final String loginTarget ) {
+        final String loginCredentialsMasthead = "Please Log In to the " //$NON-NLS-1$
+                + loginTarget + " " + loginType.toPresentationString(); //$NON-NLS-1$
+        return loginCredentialsMasthead;
+    }
+
+    public static final String getLoginCredentialsTitle( final LoginType loginType ) {
+        final String loginCredentialsTitle =
+                                           loginType.toPresentationString() + " Login Credentials"; //$NON-NLS-1$
+        return loginCredentialsTitle;
+    }
+
+    public static final String getLoginErrorMasthead() {
+        return "Logins Disabled for This Session"; //$NON-NLS-1$
+    }
+
+    public static final String getLoginErrorTitle() {
+        return "Login Error"; //$NON-NLS-1$
     }
 
     public static final String getNoPrinterAvailableMessage() {

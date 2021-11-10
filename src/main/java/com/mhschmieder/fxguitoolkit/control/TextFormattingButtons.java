@@ -24,17 +24,23 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-/**
- * This package contains the FxGuiToolkit Library's enhancements for JavaFX
- * Dialogs, along with dialog-related methods and tools to support security
- * features such as proxies and standard logins
- *
- * @version 1.0
- *
- * @author Mark Schmieder
- */
-package com.mhschmieder.fxguitoolkit.dialog;
+package com.mhschmieder.fxguitoolkit.control;
+
+import javafx.scene.control.ToggleButton;
+
+public class TextFormattingButtons {
+
+    // Declare JavaFX image buttons for navigation related actions.
+    public ToggleButton _wrapTextButton;
+
+    // Default constructor
+    public TextFormattingButtons() {
+        // Make the JavaFX image buttons.
+        _wrapTextButton = LabeledControlFactory.getTextWrapToggleButton();
+    }
+
+}

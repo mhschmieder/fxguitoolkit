@@ -24,17 +24,31 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
+package com.mhschmieder.fxguitoolkit.control;
+
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+
+import javafx.scene.control.Button;
+
 /**
- * This package contains the FxGuiToolkit Library's enhancements for JavaFX
- * Dialogs, along with dialog-related methods and tools to support security
- * features such as proxies and standard logins
- *
- * @version 1.0
- *
- * @author Mark Schmieder
+ * This is a container for related buttons that reset or refresh a defined
+ * feature subset. Neither of these is like a Form Reset though.
  */
-package com.mhschmieder.fxguitoolkit.dialog;
+public class ResetRefreshButtons {
+
+    // Declare JavaFX image buttons for Reset and Refresh related actions.
+    public Button _resetButton;
+    public Button _refreshButton;
+
+    // Default constructor
+    public ResetRefreshButtons( final ClientProperties pClientProperties ) {
+        // Make the JavaFX image buttons.
+        _resetButton = LabeledControlFactory.getResetButton( pClientProperties );
+        _refreshButton = LabeledControlFactory.getRefreshButton( pClientProperties );
+    }
+
+}
