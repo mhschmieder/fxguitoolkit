@@ -35,6 +35,7 @@ import java.net.URL;
 import com.mhschmieder.commonstoolkit.geo.LatitudeCardinalDirection;
 import com.mhschmieder.commonstoolkit.geo.LongitudeCardinalDirection;
 import com.mhschmieder.commonstoolkit.physics.AngleUnit;
+import com.mhschmieder.commonstoolkit.text.StringUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
@@ -360,6 +361,8 @@ public class ControlFactory {
                                                                        0,
                                                                        valueIncrementDegrees );
 
+        latitudeDegreesEditor.setMeasurementUnitString( StringUtilities.DEGREES_SYMBOL );
+
         return latitudeDegreesEditor;
     }
 
@@ -384,6 +387,8 @@ public class ControlFactory {
                                                                         179,
                                                                         0,
                                                                         valueIncrementDegrees );
+
+        longitudeDegreesEditor.setMeasurementUnitString( StringUtilities.DEGREES_SYMBOL );
 
         return longitudeDegreesEditor;
     }
