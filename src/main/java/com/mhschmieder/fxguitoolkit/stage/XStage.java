@@ -75,7 +75,7 @@ import javafx.stage.Window;
  * {@code XStage} is a skeletal abstract base class that extends the JavaFX
  * Stage class enough to serve as a better boilerplate starting point for most.
  */
-public abstract class XStage extends Stage {
+public abstract class XStage extends Stage implements FileHandler {
 
     // To avoid cut/paste errors with resource references, make global constants
     // for the CSS theme to be used for dark vs. light backgrounds.
@@ -1013,7 +1013,8 @@ public abstract class XStage extends Stage {
     // per window as usually there is different functionality that may use files
     // that need to be in different locations due to how they are used in
     // overall user workflow with other applications.
-    protected void setDefaultDirectory( final File defaultDirectory ) {
+    @Override
+    public void setDefaultDirectory( final File defaultDirectory ) {
         _defaultDirectory = defaultDirectory;
     }
 
@@ -1248,6 +1249,7 @@ public abstract class XStage extends Stage {
         }
     }
 
+    @Override
     public final void updateMruCache( final File file, final boolean addToCache ) {
         try {
             // Add the specified file to the head of the MRU Filename Cache if

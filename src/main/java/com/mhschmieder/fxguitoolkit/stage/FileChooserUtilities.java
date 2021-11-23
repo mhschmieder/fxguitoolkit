@@ -48,7 +48,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public final class FileChooserUtilities {
 
@@ -124,7 +124,7 @@ public final class FileChooserUtilities {
                                        final File initialDirectory,
                                        final List< ExtensionFilter > extensionFilterAdditions,
                                        final ExtensionFilter defaultExtensionFilter,
-                                       final Stage parent ) {
+                                       final Window parent ) {
         // Get a file chooser with fully initialized properties.
         final FileChooser fileChooser = getFileChooser( title,
                                                         initialDirectory,
@@ -144,7 +144,7 @@ public final class FileChooserUtilities {
                                        final List< ExtensionFilter > extensionFilterAdditions,
                                        final ExtensionFilter defaultExtensionFilter,
                                        final File defaultFile,
-                                       final Stage parent ) {
+                                       final Window parent ) {
         // Get a file chooser with fully initialized properties.
         final FileChooser fileChooser = getFileChooser( title,
                                                         initialDirectory,
@@ -193,7 +193,7 @@ public final class FileChooserUtilities {
                                                 final File initialDirectory,
                                                 final List< ExtensionFilter > extensionFilterAdditions,
                                                 final ExtensionFilter defaultExtensionFilter,
-                                                final Stage parent ) {
+                                                final Window parent ) {
         // Get a file chooser with fully initialized properties.
         final FileChooser fileChooser = getFileChooser( title,
                                                         initialDirectory,

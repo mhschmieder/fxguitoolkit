@@ -131,6 +131,11 @@ public class MessageFactory {
         return "Selected file contains new parameters not supported by this client. Please upgrade to the latest client and try again."; //$NON-NLS-1$
     }
 
+    public static final String getFileNotLoadedMessage( final File file ) {
+        final String errorMessageBody = " could not be loaded."; //$NON-NLS-1$
+        return getFileErrorMessage( errorMessageBody, file );
+    }
+
     public static final String getFileNotOpenedMasthead() {
         return "File Not Opened"; //$NON-NLS-1$
     }
