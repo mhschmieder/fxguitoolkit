@@ -45,6 +45,7 @@ import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
 import com.mhschmieder.fxgraphicstoolkit.print.PrintUtilities;
+import com.mhschmieder.fxguitoolkit.ForegroundManager;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.action.MruFileActions;
@@ -75,7 +76,7 @@ import javafx.stage.Window;
  * {@code XStage} is a skeletal abstract base class that extends the JavaFX
  * Stage class enough to serve as a better boilerplate starting point for most.
  */
-public abstract class XStage extends Stage implements FileHandler {
+public abstract class XStage extends Stage implements ForegroundManager, FileHandler {
 
     // To avoid cut/paste errors with resource references, make global constants
     // for the CSS theme to be used for dark vs. light backgrounds.
@@ -449,14 +450,6 @@ public abstract class XStage extends Stage implements FileHandler {
         setWindowSize( _preferredWindowSize );
     }
 
-    // Not all windows will need a File Menu, but when they do, generally they
-    // should call this method and override it.
-    public boolean fileClose() {
-        return true;
-    }
-
-    protected abstract void fileOpenMru( final int mruId );
-
     /**
      * @return The main Content Node
      */
@@ -471,7 +464,8 @@ public abstract class XStage extends Stage implements FileHandler {
         return new StringBuilder( _defaultTitle );
     }
 
-    protected final File getMruFile( final int mruId ) {
+    @Override
+    public final File getMruFile( final int mruId ) {
         // Avoid side effects of the user saving the current file and thereby
         // changing the cache order.
         try {
@@ -1032,6 +1026,7 @@ public abstract class XStage extends Stage implements FileHandler {
     // affecting Tool Bars, Status Bars, and possibly even Menu Bars.
     // NOTE: This method is a minimal implementation shared by all windows,
     // whether they need to override for more complex layout forwarding or not.
+    @Override
     public void setForegroundFromBackground( final Color backColor ) {
         // Set the new Background first, so it sets context for CSS derivations.
         // NOTE: It appears to be more reliable to set this before loading CSS,
@@ -1241,7 +1236,7 @@ public abstract class XStage extends Stage implements FileHandler {
         // differently from Windows and other OS's.
         // TODO: Port this logic to JavaFX, if possible.
         if ( SystemType.MACOS.equals( clientProperties.systemType ) ) {
-            // final JRootPane rootPane = msliFrame.getRootPane();
+            // final JRootPane rootPane = getRootPane();
             // rootPane.putClientProperty( "Window.documentFile", documentFile
             // );
             // rootPane.putClientProperty( "Window.documentModified",

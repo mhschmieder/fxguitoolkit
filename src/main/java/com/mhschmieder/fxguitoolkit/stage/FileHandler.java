@@ -151,20 +151,51 @@ public interface FileHandler {
         return fileOpenPostProcessing( file, fileStatus );
     }
 
+    // File Save As is not required for all stages, so this method is not
+    // declared abstract but is instead given a default implementation.
+    default boolean fileSaveAs( final Window parent,
+                                final String fileChooserTitle,
+                                final File initialDirectory,
+                                final List< ExtensionFilter > extensionFilterAdditions,
+                                final ExtensionFilter defaultExtensionFilter,
+                                final File defaultFile ) {
+        // Pre-process the file save or export action. Exit if user canceled.
+        if ( !fileSavePreProcessing() ) {
+            return false;
+        }
+
+        // Get a file for a "File Save As" action.
+        final File file = FileChooserUtilities.getFileForSave( fileChooserTitle,
+                                                               initialDirectory,
+                                                               extensionFilterAdditions,
+                                                               defaultExtensionFilter,
+                                                               defaultFile,
+                                                               parent );
+
+        // Make sure the user actually selected a file and didn't cancel.
+        if ( file == null ) {
+            return false;
+        }
+
+        // Set the default directory to the parent of the selected file.
+        final File parentDirectory = file.getParentFile();
+        setDefaultDirectory( parentDirectory );
+
+        // Save the contextual content to the chosen (but possibly renamed)
+        // filename.
+        return fileSave( file );
+    }
+
     /**
      * This file save uses a specified file for the save, and is the
      * lowest-level shared call for all file save and export actions.
      *
      * @param file
      *            The {@link File} to save.
-     * @param filePrefix
-     *            The file prefix to use for interim write operations that
-     *            insert a randomizer-generated unique substring -- usually this
-     *            is the application name
      * @return {@code true} if the file saved successfully; {@code false}
      *         if it did not save.
      */
-    default boolean fileSave( final File file, final String filePrefix ) {
+    default boolean fileSave( final File file ) {
         // Find out if the file can be opened for write.
         final String errorMessage = FileChooserUtilities.verifyForWrite( file );
 
@@ -179,7 +210,8 @@ public interface FileHandler {
 
         // Get a temporary file for interim write operations.
         // TODO: Switch to Apache Commons I/O for safer handling (FileUtils).
-        final File tempFile = FileChooserUtilities.getTempFile( file, filePrefix );
+        final String prefixForTempFile = getPrefixForTempFile();
+        final File tempFile = FileChooserUtilities.getTempFile( file, prefixForTempFile );
         if ( tempFile == null ) {
             return false;
         }
@@ -200,10 +232,39 @@ public interface FileHandler {
         return FileStatus.NOT_SAVED;
     }
 
+    // NOTE: Not all implementing Windows support File Close actions, so this
+    // lower level method is given a default implementation that signifies
+    // failure.
+    default boolean fileClose() {
+        return true;
+    }
+
+    // NOTE: Not all implementing Windows support MRU File Lists, but the
+    // behavior is pretty generic across all applications when they do.
+    default void fileOpenMru( final int mruId ) {
+        // Open a new file of default type, using the cached filename.
+        final File mruFile = getMruFile( mruId );
+        if ( mruFile != null ) {
+            fileOpen( mruFile );
+        }
+    }
+
     // File Save is not required for all Windows, so this method is not
     // declared abstract but is instead given a default implementation.
     default FileStatus fileSaveExtensions( final File file, final File tempFile ) {
         return FileStatus.NOT_SAVED;
+    }
+
+    /**
+     * Returns the file prefix to use for interim write operations that insert a
+     * randomizer-generated unique substring. Usually this is the application
+     * name
+     *
+     * @return The prefix to use for generating a random temp file name.
+     */
+    @SuppressWarnings("nls")
+    default String getPrefixForTempFile() {
+        return "";
     }
 
     /**
@@ -241,7 +302,8 @@ public interface FileHandler {
      *         if it did not succeed.
      */
     default boolean fileOpenPostProcessing( final File file, final FileStatus fileStatus ) {
-        // By default, the only post-processing required is to check for errors.
+        // By default, the only post-processing required is to check for errors
+        // and cancellations.
         return fileOpenErrorHandling( file, fileStatus );
     }
 
@@ -270,20 +332,33 @@ public interface FileHandler {
         // is possible that additional logic may be needed in overrides to this
         // method, such as to make sure the results of the file load are
         // non-empty.
+        boolean sawErrors = true;
         switch ( fileStatus ) {
         case CREATED:
         case IMPORTED:
         case LOADED:
         case OPENED:
         case OPENED_FOR_RENAME:
-            return true;
+            sawErrors = false;
+            break;
         // $CASES-OMITTED$
         default:
             // Alert the user that a general file load error occurred.
-            final String fileLoadErrorMessage = MessageFactory.getFileNotLoadedMessage( file );
+            final String fileLoadErrorMessage = MessageFactory.getFileNotOpenedMessage( file );
             DialogUtilities.showFileOpenErrorAlert( fileLoadErrorMessage );
-            return false;
+            break;
         }
+
+        return !sawErrors;
+    }
+
+    // NOTE: This is by default a no-op that does no harm to the file status. As
+    // some applications need to do pre-processing in advance of other file
+    // handling, this method is supplied so that the main file save
+    // implementations can insert a call to this method early on. Implementing
+    // classes can override this default.
+    default boolean fileSavePreProcessing() {
+        return true;
     }
 
     default boolean fileSavePostProcessing( final File file,
@@ -317,7 +392,7 @@ public interface FileHandler {
             // Alert the user that a general file save error occurred.
             final String fileSaveErrorMessage = MessageFactory.getFileNotSavedMessage( file );
             DialogUtilities.showFileSaveErrorAlert( fileSaveErrorMessage );
-            return false;
+            break;
         }
 
         return !sawErrors;
@@ -378,6 +453,12 @@ public interface FileHandler {
     // of methods, so we default the image importer to return false.
     default boolean importImage( final InputStream inputStream, final String fileExtension ) {
         return false;
+    }
+
+    // NOTE: Not all implementing Windows support MRU File Lists, so this lower
+    // level method is given a default implementation that returns a null File.
+    default File getMruFile( final int mruId ) {
+        return null;
     }
 
     // NOTE: Not all implementing Windows support an MRU list, so we define a

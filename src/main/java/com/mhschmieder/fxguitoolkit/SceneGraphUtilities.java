@@ -172,7 +172,7 @@ public class SceneGraphUtilities {
      *            resources needed for making an associated {@link Button}
      * @param backColor
      *            Custom background {@link Color} to apply to the {@link Button}
-     * @return A labeled {@link Button} adhering to MSLI style guidelines
+     * @return A labeled {@link Button} adhering to custom style guidelines
      */
     public static Button getLabeledButton( final XAction action, final Color backColor ) {
         final Button button = ActionUtils.createButton( action );
@@ -202,7 +202,7 @@ public class SceneGraphUtilities {
      * @param cssStyleClass
      *            The Style Class of the CSS attributes that customize the
      *            button
-     * @return A labeled @Button adhering to MSLI style guidelines
+     * @return A labeled @Button adhering to custom style guidelines
      */
     public static Button getLabeledButton( final XAction action, final String cssStyleClass ) {
         final Button button = ActionUtils.createButton( action );
@@ -214,10 +214,10 @@ public class SceneGraphUtilities {
     }
 
     /**
-     * This method uses resource lookup, via MSLI custom locale-sensitive
-     * text-based properties files, to get a button label which is then fed into
-     * a more fully qualified getter method to return a completely initialized
-     * and styled button.
+     * This method uses resource lookup, via custom locale-sensitive text-based
+     * properties files, to get a button label which is then fed into a more
+     * fully qualified getter method to return a completely initialized and
+     * styled button.
      *
      * Use this version when needing custom background colors.
      *
@@ -231,7 +231,7 @@ public class SceneGraphUtilities {
      *            Item Name for resource lookup (e.g. Menu Item Name)
      * @param backColor
      *            Custom background @Color to apply to the @Button
-     * @return A labeled @Button adhering to MSLI style guidelines
+     * @return A labeled @Button adhering to custom style guidelines
      */
     public static Button getLabeledButton( final ClientProperties clientProperties,
                                            final String bundleName,
@@ -355,7 +355,7 @@ public class SceneGraphUtilities {
      *            Group Name for resource lookup (e.g. Menu Name)
      * @param itemName
      *            Item Name for resource lookup (e.g. Menu Item Name)
-     * @return A labeled @ToggleButton adhering to MSLI style guidelines
+     * @return A labeled @ToggleButton adhering to custom style guidelines
      */
     public static ToggleButton getLabeledToggleButton( final ClientProperties clientProperties,
                                                        final ToggleGroup toggleGroup,
