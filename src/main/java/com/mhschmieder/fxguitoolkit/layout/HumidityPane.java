@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.physics.NaturalEnvironment;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.fxcommonstoolkit.physics.NaturalEnvironment;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorUtilities;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.ScrollingSensitivity;

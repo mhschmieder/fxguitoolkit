@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
@@ -1094,13 +1094,21 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
             ? stageHeight
             : _defaultWindowSize.getHeight();
 
+        // Get the user's screen size, for Full Screen Mode and user statistics.
+        // TODO: Also get and cache the minimum point, which may not be zero.
+        // NOTE: This query is done on-the-fly as the user may switch screens
+        // between server calls.
+        final Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+        final double screenWidth = visualBounds.getWidth();
+        final double screenHeight = visualBounds.getHeight();
+
         // Likewise, as the Screen Size or resolution may have changed since the
         // previous session, we ensure that the Preferred Size can still fit.
         // :NOTE: We subtract a bit of a margin to make sure the Window can be
         // grabbed, resized, dragged, just in case decorations cause overflow,
         // and also to account for the dock and other related OS-level stuff.
-        stageWidthAdjusted = Math.min( clientProperties.screenWidth - 60, stageWidthAdjusted );
-        stageHeightAdjusted = Math.min( clientProperties.screenHeight - 60, stageHeightAdjusted );
+        stageWidthAdjusted = Math.min( screenWidth - 60, stageWidthAdjusted );
+        stageHeightAdjusted = Math.min( screenHeight - 60, stageHeightAdjusted );
 
         // Cache the Window's adjusted Preferred Size on the Screen (in pixels).
         _preferredWindowSize = new Dimension2D( stageWidthAdjusted, stageHeightAdjusted );

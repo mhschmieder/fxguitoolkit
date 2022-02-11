@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
@@ -33,10 +33,10 @@ package com.mhschmieder.fxguitoolkit.dialog;
 import java.util.Locale;
 import java.util.Optional;
 
-import com.mhschmieder.commonstoolkit.concurrent.AuthorizationRequestService;
 import com.mhschmieder.commonstoolkit.security.LoginCredentials;
 import com.mhschmieder.commonstoolkit.security.LoginType;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
+import com.mhschmieder.fxguitoolkit.concurrent.AuthorizationRequestService;
 
 import javafx.util.Callback;
 import javafx.util.Pair;
@@ -62,7 +62,8 @@ public final class SecurityDialogUtilities {
         final String title = MessageFactory.getLoginCredentialsTitle( loginType );
         final String headerText = MessageFactory.getLoginCredentialsMasthead( loginType,
                                                                               productName );
-        final Pair< String, String > initialUserInfo = loginCredentials.getLogin();
+        final Pair< String, String > initialUserInfo = new Pair<>( loginCredentials.getUserName(),
+                                                                   loginCredentials.getPassword() );
 
         final XLoginDialog loginDialog = new XLoginDialog( title,
                                                            headerText,
@@ -77,7 +78,8 @@ public final class SecurityDialogUtilities {
         // Cache the new Login Credentials, unless the user canceled or didn't
         // supply non-empty strings for one or the other field.
         loginCredentialsResult.ifPresent( loginCredentialsCandidate -> {
-            loginCredentials.setLogin( loginCredentialsCandidate );
+            loginCredentials.setLogin( loginCredentialsCandidate.getKey(),
+                                       loginCredentialsCandidate.getValue() );
         } );
 
         // NOTE: We distinguish between a user canceling a Login and a user
