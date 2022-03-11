@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,12 +42,12 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 
-// :NOTE: This needs to be a CheckBoxTableCell derivative in order to inherit
+// NOTE: This needs to be a CheckBoxTableCell derivative in order to inherit
 // all the correct table cell height, width, gaps, and other rendering details.
 public abstract class ToggleButtonTableCell< RT, VT > extends CheckBoxTableCell< RT, Boolean > {
 
     // This is a custom cell so we declare our own Toggle Button to handle it.
-    // :NOTE: Custom XToggleButton backed out, as CSS based implementations
+    // NOTE: Custom XToggleButton backed out, as CSS based implementations
     // don't give the opportunity to veto state changes and "lie" about state.
     // Unfortunately, we have to do this sometimes due to inadequacies of the
     // TableView API in terms of momentary blocking of table cell editing.
@@ -141,12 +141,12 @@ public abstract class ToggleButtonTableCell< RT, VT > extends CheckBoxTableCell<
         }
 
         // Try to make the Toggle Button fill the entire Table Cell.
-        // :NOTE: Setting height causes incremental growth per click!
+        // NOTE: Setting height causes incremental growth per click!
         _toggleButton.minWidthProperty().bind( widthProperty() );
         _toggleButton.prefWidthProperty().bind( widthProperty() );
 
         // Register a callback to handle button clicks/toggles.
-        // :NOTE: This callback is how we find out the Toggle Button state
+        // NOTE: This callback is how we find out the Toggle Button state
         // changed, so we are responsible for syncing that with the underlying
         // data model, which must be done via bean properties vs. using the
         // Toggle Button's selected state, since we programmatically change
@@ -174,7 +174,7 @@ public abstract class ToggleButtonTableCell< RT, VT > extends CheckBoxTableCell<
         }
     }
 
-    // :NOTE: This method requires knowledge of which bean properties are in
+    // NOTE: This method requires knowledge of which bean properties are in
     // use so cannot have a default or base class implementation and is required
     // for all subclasses to override in order to achieve proper data binding.
     protected abstract void setBeanProperty( final RT selectedRecord );
@@ -185,7 +185,7 @@ public abstract class ToggleButtonTableCell< RT, VT > extends CheckBoxTableCell<
         super.updateItem( item, empty );
 
         // Display the string representation of the current toggle state.
-        // :NOTE: We avoid displaying anything in empty rows.
+        // NOTE: We avoid displaying anything in empty rows.
         if ( empty ) {
             setText( null );
             setGraphic( null );

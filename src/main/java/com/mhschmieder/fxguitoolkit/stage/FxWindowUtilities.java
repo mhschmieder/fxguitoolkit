@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -326,7 +326,7 @@ public final class FxWindowUtilities {
         prefs.putBoolean( fullScreenModeKey, fullScreenMode );
 
         // Determine whether the user was in Maximized Mode when they exited.
-        // :TODO: Figure out why maximized is always true for undecorated
+        // TODO: Figure out why maximized is always true for undecorated
         // stages.
         final String maximizedModeKey = windowKeyPrefix + "MaximizedMode";
         final boolean maximizedMode = ( window instanceof Stage )
@@ -338,7 +338,7 @@ public final class FxWindowUtilities {
         // save the last cached Preferred Size instead, as Full Screen Mode Size
         // and Maximized Mode Size should only be modes and never used directly
         // (the OS knows best how to apply them).
-        // :TODO: Figure out why maximized is always true for undecorated
+        // TODO: Figure out why maximized is always true for undecorated
         // stages.
         final String windowWidthKey = windowKeyPrefix + "Width";
         final double windowWidthValue = ( fullScreenMode ) // || maximizedMode )
@@ -398,7 +398,7 @@ public final class FxWindowUtilities {
         final boolean fullScreenMode = prefs.getBoolean( fullScreenModeKey, false );
 
         // Determine whether the user was in Maximized Mode when they exited.
-        // :TODO: Figure out why this flag is always true for undecorated
+        // TODO: Figure out why this flag is always true for undecorated
         // stages.
         final String maximizedModeKey = windowKeyPrefix + "MaximizedMode";
         final boolean maximizedMode = false; // prefs.getBoolean(
@@ -415,7 +415,7 @@ public final class FxWindowUtilities {
         }
 
         // Restore the window's cached layout location from the last session.
-        // :NOTE: Default location accounts for issues with corner areas on some
+        // NOTE: Default location accounts for issues with corner areas on some
         // OS versions, but may be too much for smaller screens.
         final String windowXKey = windowKeyPrefix + "X";
         final double windowXValue = prefs.getDouble( windowXKey, 100d );

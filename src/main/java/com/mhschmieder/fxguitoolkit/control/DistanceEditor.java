@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,7 @@ public class DistanceEditor extends DoubleEditor {
                            final String initialText,
                            final String tooltipText ) {
         // Always call the superclass constructor first!
-        // :NOTE: We use up to two decimal place of precision for displaying
+        // NOTE: We use up to two decimal place of precision for displaying
         // distance, and ten decimal places for parsing Distance.
         super( clientProperties, initialText, tooltipText, 0, 2, 0, 10 );
 

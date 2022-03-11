@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -96,7 +96,7 @@ public class XColorPicker extends ColorPicker {
             // This seems to be the only way to get a programmatically selected
             // color to show up in the main Combo Box, due to a known bug in
             // JavaFX 2.2.
-            // :TODO: Review whether this is still necessary in JavaFX 8.60.
+            // TODO: Review whether this is still necessary in JavaFX 8.60.
             customColors.add( newColor );
             setValue( newColor );
             fireEvent( new ActionEvent( object, eventTarget ) );

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -322,7 +322,7 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
                 break;
             case ESCAPE:
                 // Revert to the previous selection.
-                // :NOTE: This code may never be reached; ESC must be caught at
+                // NOTE: This code may never be reached; ESC must be caught at
                 // a higher level and consumed. Need to debug to see if called.
                 _editor.cancelEdit();
 

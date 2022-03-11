@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -59,9 +59,9 @@ public class HoveredThresholdNode extends StackPane {
                                                    final double y ) {
         final Label label = new Label( y + "" ); //$NON-NLS-1$
 
-        // :TODO: Try to find out why this turns back on the circles at each
+        // TODO: Try to find out why this turns back on the circles at each
         // data point, even if we remove the other two Style Class settings.
-        // :NOTE: The chart line symbol style has been removed for now, as
+        // NOTE: The chart line symbol style has been removed for now, as
         // drawing a box around the data display, with a white background
         // painting over everything in sight, obscures neighboring data points.
         label.getStyleClass().addAll( colorTag, // "chart-line-symbol" );

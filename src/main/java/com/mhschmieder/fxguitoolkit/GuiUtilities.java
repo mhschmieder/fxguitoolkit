@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -214,10 +214,10 @@ public final class GuiUtilities {
      * legibility and separation of neighboring controls.
      */
     public static final Insets                          STATUS_LABEL_INSETS_DEFAULT     =
-                                                                                    new Insets( 3d,
-                                                                                                10d,
-                                                                                                3d,
-                                                                                                10d );
+                                                                                    new Insets( 3.0d,
+                                                                                                10.0d,
+                                                                                                3.0d,
+                                                                                                10.0d );
 
     /**
      * Define a label delimiter for when a label is horizontally paired with a
@@ -398,7 +398,7 @@ public final class GuiUtilities {
         }
 
         // Get the button displayed mnemonic index.
-        // :NOTE: The mnemonic marker index on the original label corresponds to
+        // NOTE: The mnemonic marker index on the original label corresponds to
         // the mnemonic index on the stripped label.
         return getMnemonicMarkerIndex( buttonLabel );
     }
@@ -510,7 +510,7 @@ public final class GuiUtilities {
         // NOTE: Do not apply the fx-content-display as centered here, as
         // that causes buttons with both text and graphics to stack them
         // both in the center of the button, thus obscuring each other.
-        // :NOTE: This variant assumes a Node is added to the right side
+        // NOTE: This variant assumes a Node is added to the right side
         // of the Custom Text Field, and thus leaves no inset padding there.
         customTextField.setStyle( "-fx-padding: 6 0 6 8" + "; -fx-background-color: " + backColorCss
                 + "; -fx-text-fill: white; -fx-border-color: " + borderColorCss
@@ -782,7 +782,7 @@ public final class GuiUtilities {
     public static ResizeTarget detectResizeTarget( final MouseEvent mouseEvent,
                                                    final Scene scene,
                                                    final Insets insets ) {
-        final double borderWidth = 8d;
+        final double borderWidth = 8.0d;
 
         return detectResizeTarget( mouseEvent, scene, insets, borderWidth );
     }
@@ -1048,15 +1048,15 @@ public final class GuiUtilities {
 
             final double x = 0.5d * newValue.getWidth();
             final double y = 0.5d * newValue.getHeight();
-            final Color white0 = Color.web( "white", 0d );
+            final Color white0 = Color.web( "white", 0.0d );
 
             final Stop[] dividerStops = new Stop[] {
-                                                     new Stop( 0d, Color.WHITE ),
+                                                     new Stop( 0.0d, Color.WHITE ),
                                                      new Stop( 0.5d, white0 ),
-                                                     new Stop( 1d, white0 ) };
+                                                     new Stop( 1.0d, white0 ) };
 
-            final RadialGradient dividerGradient = new RadialGradient( 0d,
-                                                                       0d,
+            final RadialGradient dividerGradient = new RadialGradient( 0.0d,
+                                                                       0.0d,
                                                                        x,
                                                                        y,
                                                                        newValue.getWidth(),
@@ -1191,8 +1191,8 @@ public final class GuiUtilities {
      */
     public static void centerOnScreen( final Window window ) {
         final Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-        window.setX( ( bounds.getMinX() + ( bounds.getWidth() / 2d ) ) - ( SPLASH_WIDTH / 2d ) );
-        window.setY( ( bounds.getMinY() + ( bounds.getHeight() / 2d ) ) - ( SPLASH_HEIGHT / 2d ) );
+        window.setX( ( bounds.getMinX() + ( bounds.getWidth() / 2.0d ) ) - ( SPLASH_WIDTH / 2.0d ) );
+        window.setY( ( bounds.getMinY() + ( bounds.getHeight() / 2.0d ) ) - ( SPLASH_HEIGHT / 2.0d ) );
     }
 
     /**
@@ -1235,17 +1235,17 @@ public final class GuiUtilities {
         final double fitWidthAdjusted = preserveRatio
             ? fitWidth
             : ( ( float ) aspectRatio != 0f )
-                ? ( fitWidth > 0d )
+                ? ( fitWidth > 0.0d )
                     ? fitWidth
-                    : ( fitHeight > 0d ) ? fitHeight * aspectRatio : imageHeight * aspectRatio
-                : ( fitWidth > 0d ) ? fitWidth : -1d;
+                    : ( fitHeight > 0.0d ) ? fitHeight * aspectRatio : imageHeight * aspectRatio
+                : ( fitWidth > 0.0d ) ? fitWidth : -1d;
         final double fitHeightAdjusted = preserveRatio
             ? fitHeight
             : ( ( float ) aspectRatio != 0f )
-                ? ( fitHeight > 0d )
+                ? ( fitHeight > 0.0d )
                     ? fitHeight
-                    : ( fitWidth > 0d ) ? fitWidth / aspectRatio : imageWidth / aspectRatio
-                : ( fitHeight > 0d ) ? fitHeight : -1d;
+                    : ( fitWidth > 0.0d ) ? fitWidth / aspectRatio : imageWidth / aspectRatio
+                : ( fitHeight > 0.0d ) ? fitHeight : -1d;
 
         final BackgroundSize backgroundSize = new BackgroundSize( fitWidthAdjusted,
                                                                   fitHeightAdjusted,
@@ -1529,7 +1529,7 @@ public final class GuiUtilities {
         return infoLabel;
     }
 
-    // :TODO: Pass in the minimum height as a parameter?
+    // TODO: Pass in the minimum height as a parameter?
     public static HBox getInfoPane( final Label infoLabel ) {
         final HBox infoPane = new HBox();
 
@@ -1563,7 +1563,7 @@ public final class GuiUtilities {
                                            final Color backColor,
                                            final Color foreColor ) {
         // Some Action Buttons are made blank, as they may also indicate Status.
-        // :NOTE: Due to internal initialization order within JavaFX, it is best
+        // NOTE: Due to internal initialization order within JavaFX, it is best
         // to supply the initial text with the constructor rather than assign it
         // afterwards.
         final Button button = ( ( buttonText != null ) && !buttonText.trim().isEmpty() )
@@ -1609,7 +1609,7 @@ public final class GuiUtilities {
                                            final String tooltipText,
                                            final String cssStyleClass ) {
         // Some Action Buttons are made blank, as they may also indicate Status.
-        // :NOTE: Due to internal initialization order within JavaFX, it is best
+        // NOTE: Due to internal initialization order within JavaFX, it is best
         // to supply the initial text with the constructor rather than assign it
         // afterwards.
         final Button button = ( ( buttonText != null ) && !buttonText.trim().isEmpty() )
@@ -1795,8 +1795,8 @@ public final class GuiUtilities {
         final HBox labeledLabelPane = new HBox();
         labeledLabelPane.getChildren().addAll( propertySheetLabel, label );
         labeledLabelPane.setAlignment( Pos.CENTER );
-        labeledLabelPane.setPadding( new Insets( 6d ) );
-        labeledLabelPane.setSpacing( 6d );
+        labeledLabelPane.setPadding( new Insets( 6.0d ) );
+        labeledLabelPane.setSpacing( 6.0d );
 
         return labeledLabelPane;
     }
@@ -1814,7 +1814,7 @@ public final class GuiUtilities {
         return radioButton;
     }
 
-    // :TODO: Handle this like regular sliders in terms of measurement units.
+    // TODO: Handle this like regular sliders in terms of measurement units.
     public static RangeSlider getRangeSlider( final double minimumValue,
                                               final double maximumValue,
                                               final double lowValue,
@@ -1822,7 +1822,7 @@ public final class GuiUtilities {
                                               final double majorTickUnit,
                                               final double blockIncrement,
                                               final boolean snapToTicks ) {
-        // :NOTE: Using the default constructor and then setting minimum,
+        // NOTE: Using the default constructor and then setting minimum,
         // maximum, low and high values later, causes infinite recursion and
         // stack overflow, so it's safer to set them all together in the fully
         // specified constructor and let the ControlsFX code take care of the
@@ -1966,7 +1966,7 @@ public final class GuiUtilities {
                                         final boolean applyCssStyleId,
                                         final boolean applyPadding ) {
         // Some Status Labels are made blank, as there may be no default Status.
-        // :NOTE: Due to internal initialization order within JavaFX, it is best
+        // NOTE: Due to internal initialization order within JavaFX, it is best
         // to supply the initial text with the constructor rather than assign it
         // afterwards.
         final Label statusLabel = ( ( labelText != null ) && !labelText.trim().isEmpty() )
@@ -2012,12 +2012,12 @@ public final class GuiUtilities {
     }
 
     public static Node getTitledBorderWrappedNode( final Node node, final String title ) {
-        // :NOTE: The etched border doesn't handle radii very smoothly, so we
+        // NOTE: The etched border doesn't handle radii very smoothly, so we
         // use the line border. A thin border is less obtrusive and distracting,
         // but still achieves the goal of slightly setting aside groups of
         // related GUI elements so that the user can see the workflow better.
         final Node titledBorderWrappedNode = Borders.wrap( node ).lineBorder().color( Color.WHITE )
-                .thickness( 1d ).title( title ).radius( 2.5d, 2.5d, 2.5d, 2.5d ).build().build();
+                .thickness( 1.0d ).title( title ).radius( 2.5d, 2.5d, 2.5d, 2.5d ).build().build();
 
         return titledBorderWrappedNode;
     }
@@ -2091,8 +2091,8 @@ public final class GuiUtilities {
         decoratorNodeGroup.setPickOnBounds( false );
     }
 
-    // :TODO: Search for the JavaFX CSS source code that analyzes HSB vs. RGB.
-    // :NOTE: This function is borrowed from ColorUtilities until we make the
+    // TODO: Search for the JavaFX CSS source code that analyzes HSB vs. RGB.
+    // NOTE: This function is borrowed from ColorUtilities until we make the
     // FxGraphicsUtilities library, at which time we should also normalize the
     // logic here with what was done for EPS Export and PDF Export.
     public static boolean isColorDark( final Color color ) {
@@ -2144,7 +2144,7 @@ public final class GuiUtilities {
     }
 
     public static void redirectTouchEvents( final Window window ) {
-        // :NOTE: This is an experiment to see if this fixes the crashes on the
+        // NOTE: This is an experiment to see if this fixes the crashes on the
         // new Touch Bars that Apple added to MacBook Pros in 2017.
         window.addEventFilter( TouchEvent.ANY, touchEvent -> {
             // Consume the touch event
@@ -2191,7 +2191,7 @@ public final class GuiUtilities {
         final URL stylesheetUrl = GuiUtilities.class.getResource( jarRelativeStylesheetFilename );
         final String stylesheetFilename = stylesheetUrl.toExternalForm();
         try {
-            // :NOTE: CSS loading can be timing-sensitive to JavaFX API calls
+            // NOTE: CSS loading can be timing-sensitive to JavaFX API calls
             // that also affect style attributes, so it might be safer to defer
             // the CSS loading so that it is applied to a more stable GUI.
             stylesheetFilenames.remove( stylesheetFilename );
@@ -2228,7 +2228,7 @@ public final class GuiUtilities {
 
     public static void setButtonProperties( final Button button, final String cssStyleClass ) {
         // Set the CSS Style Class in place of direct setting of colors.
-        // :NOTE: Some Controls are meant to just blend in with their
+        // NOTE: Some Controls are meant to just blend in with their
         // background, or have complex rules for rendering, so we flag whether
         // to apply styles.
         button.getStyleClass().add( cssStyleClass );
@@ -2301,7 +2301,7 @@ public final class GuiUtilities {
 
     // Try to globally change the foreground theme for elements not exposed
     // in Java API calls, using our custom dark vs. light theme CSS files.
-    // :NOTE: For now, we assume dark and light themes only.
+    // NOTE: For now, we assume dark and light themes only.
     public static void setStylesheetForTheme( final Parent parent,
                                               final Color backColor,
                                               final String jarRelativeStylesheetFilenameDark,
@@ -2321,7 +2321,7 @@ public final class GuiUtilities {
 
     // Try to globally change the foreground theme for elements not exposed
     // in Java API calls, using our custom dark vs. light theme CSS files.
-    // :NOTE: For now, we assume dark and light themes only.
+    // NOTE: For now, we assume dark and light themes only.
     public static void setStylesheetForTheme( final Scene scene,
                                               final Color backColor,
                                               final String jarRelativeStylesheetFilenameDark,
@@ -2360,7 +2360,7 @@ public final class GuiUtilities {
     public static void setToggleButtonProperties( final ToggleButton toggleButton,
                                                   final String cssStyleClass ) {
         // Set the CSS Style Class in place of direct setting of colors.
-        // :NOTE: It is risky to set the Style Class if null, as we might lose
+        // NOTE: It is risky to set the Style Class if null, as we might lose
         // default styles that we want to preserve.
         if ( cssStyleClass != null ) {
             toggleButton.getStyleClass().add( cssStyleClass );

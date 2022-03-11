@@ -1077,7 +1077,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
 
     public void setMenuBar( final MenuBar menuBar ) {
         // Make sure the Menu Bar displays above the Tool Bar.
-        // :NOTE: The Menu Bar must be added to the Stage's Layout even if it is
+        // NOTE: The Menu Bar must be added to the Stage's Layout even if it is
         // going to be set to use the System Menu Bar.
         _actionPane.setTop( menuBar );
     }
@@ -1104,7 +1104,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
 
         // Likewise, as the Screen Size or resolution may have changed since the
         // previous session, we ensure that the Preferred Size can still fit.
-        // :NOTE: We subtract a bit of a margin to make sure the Window can be
+        // NOTE: We subtract a bit of a margin to make sure the Window can be
         // grabbed, resized, dragged, just in case decorations cause overflow,
         // and also to account for the dock and other related OS-level stuff.
         stageWidthAdjusted = Math.min( screenWidth - 60, stageWidthAdjusted );
@@ -1259,7 +1259,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
             // not already present, or move it to the head of the list if
             // already present. If the cache is full and the specified file is
             // not yet in the cache, remove the last filename from the cache.
-            // :NOTE: We special case for whether the file exists and is
+            // NOTE: We special case for whether the file exists and is
             // read-enabled, to remove deleted and invalid files from the cache.
             // It is the caller's responsibility to determine this criteria and
             // pass it in using the "addToCache" flag.

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -99,7 +99,7 @@ public abstract class XTextField extends TextField {
 
                 break;
             case TAB:
-                // :NOTE: Nothing to do, as Text Input Controls commit edits and
+                // NOTE: Nothing to do, as Text Input Controls commit edits and
                 // then release focus when the TAB key is pressed, so the Focus
                 // Lost handler is where value restrictions should be applied.
                 break;

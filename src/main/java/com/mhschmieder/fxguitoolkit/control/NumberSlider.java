@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -161,11 +161,11 @@ public class NumberSlider extends Slider {
 
         // Try for slightly coarser resolution (pixels), to improve performance.
         final double scrollDeltaY = event.getDeltaY();
-        if ( Math.abs( scrollDeltaY ) < 3d ) {
+        if ( Math.abs( scrollDeltaY ) < 3.0d ) {
             return;
         }
 
-        double scrolledDelta = 0d;
+        double scrolledDelta = 0.0d;
         switch ( _scrollingSensitivity ) {
         case COARSE:
             scrolledDelta = getMajorTickUnit();
@@ -187,7 +187,7 @@ public class NumberSlider extends Slider {
         // NOTE: The scroll direction convention on macOS tends to be inverted.
         switch ( clientProperties.systemType ) {
         case MACOS:
-            if ( scrollDeltaY >= 0d ) {
+            if ( scrollDeltaY >= 0.0d ) {
                 scrolledDelta = -scrolledDelta;
             }
             break;
@@ -196,7 +196,7 @@ public class NumberSlider extends Slider {
         case UNIX:
         case SOLARIS:
         default:
-            if ( scrollDeltaY < 0d ) {
+            if ( scrollDeltaY < 0.0d ) {
                 scrolledDelta = -scrolledDelta;
             }
             break;

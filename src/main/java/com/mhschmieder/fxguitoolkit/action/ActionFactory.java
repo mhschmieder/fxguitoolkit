@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -127,7 +127,7 @@ public final class ActionFactory {
                 + ( SystemType.MACOS.equals( clientProperties.systemType ) ? ".mac" : "" );
 
         try {
-            // :NOTE: Not all actions have Accelerators, so we have to check
+            // NOTE: Not all actions have Accelerators, so we have to check
             // first to see if one is present, to avoid unnecessary exceptions.
             if ( !resourceBundle.containsKey( resourceKey ) ) {
                 return null;
@@ -143,7 +143,7 @@ public final class ActionFactory {
             return KeyCombination.keyCombination( acceleratorText );
         }
         catch ( final Exception e ) {
-            // :NOTE: It is OK to be missing an Accelerator, but as we first
+            // NOTE: It is OK to be missing an Accelerator, but as we first
             // check for a key entry, this exception indicates a structural
             // problem that shouldn't be allowed to confuse the end users, but
             // which might benefit the developers or indicate file corruption.

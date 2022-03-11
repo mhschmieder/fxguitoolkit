@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -120,9 +120,9 @@ public class DoubleSelector extends NumberSelector {
         setItems( FXCollections.observableArrayList( doubleValues ) );
 
         // Restrict keyboard input to numerals, sign, and delimiters.
-        final String allowedCharacters = ( minimumValue < 0d )
-            ? ( maximumValue > 0d ) ? "[0-9.,+-]" : "[0-9.,-]"
-            : ( maximumValue > 0d ) ? "[0-9.,+]" : "[0-9.,]";
+        final String allowedCharacters = ( minimumValue < 0.0d )
+            ? ( maximumValue > 0.0d ) ? "[0-9.,+-]" : "[0-9.,-]"
+            : ( maximumValue > 0.0d ) ? "[0-9.,+]" : "[0-9.,]";
         addEventFilter( KeyEvent.KEY_TYPED, keyEvent -> {
             if ( !keyEvent.getCharacter().matches( allowedCharacters ) ) {
                 keyEvent.consume();

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -66,7 +66,7 @@ public final class TemperaturePane extends VBox {
 
     public TemperaturePane( final ClientProperties clientProperties ) {
         // Always call the superclass constructor first!
-        super( 6d );
+        super( 6.0d );
 
         temperatureK = new SimpleDoubleProperty();
 
@@ -133,7 +133,7 @@ public final class TemperaturePane extends VBox {
         getChildren().addAll( _temperatureLabel, _temperatureSlider, _temperatureEditor );
 
         setAlignment( Pos.CENTER );
-        setPadding( new Insets( 6d ) );
+        setPadding( new Insets( 6.0d ) );
 
         // Make sure the Temperature Slider always gets vertical grow priority.
         VBox.setVgrow( _temperatureSlider, Priority.ALWAYS );
@@ -226,7 +226,7 @@ public final class TemperaturePane extends VBox {
         // value and max values change, and therefore it becomes clamped as the
         // not-yet-converted old value may not be within the new range, and thus
         // it fires an event, setting the dirty flag.
-        final double temperatureMaximum = 10d * PhysicsConstants.TEMPERATURE_MAXIMUM_K;
+        final double temperatureMaximum = 10.0d * PhysicsConstants.TEMPERATURE_MAXIMUM_K;
         final double temperatureMinimum = -temperatureMaximum;
         _temperatureEditor.setMinimumValue( temperatureMinimum );
         _temperatureEditor.setMaximumValue( temperatureMaximum );

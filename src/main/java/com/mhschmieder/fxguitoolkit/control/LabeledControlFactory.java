@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -144,7 +144,7 @@ public final class LabeledControlFactory {
 
         final ImageView icon = ImageUtilities.createIcon( iconFilename, iconWidth, iconHeight );
         button.setGraphic( icon );
-        button.setGraphicTextGap( 8d );
+        button.setGraphicTextGap( 8.0d );
 
         return button;
     }

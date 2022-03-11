@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
  * {@code ExtensionFilterUtilities} is a static utilities class for generating
  * file extension filters that can be used by a JavaFX File Chooser.
  * <p>
- * :NOTE: This code is copied from GraphicsToolkit on GitHub until it is
+ * NOTE: This code is copied from GraphicsToolkit on GitHub until it is
  * published
  * to Maven Central from where it can be pulled via Gradle.
  */
@@ -96,18 +96,18 @@ public final class ExtensionFilterUtilities {
     }
 
     public static List< ExtensionFilter > getImageGraphicsExtensionFilters() {
-        // :NOTE: TIFF requires either ImageIO-Ext or JAI 1.1.3 JAR's.
+        // NOTE: TIFF requires either ImageIO-Ext or JAI 1.1.3 JAR's.
         // Both are quite large (especially the former, which also has
         // JNI support that might not include the Mac, but otherwise is
         // a more direct analog to how we do other formats currently vs.
         // the different JAI approach). Better to wait until the switch
         // to JavaFX, which has its own imaging API's.
-        // :NOTE: WBMP isn't necessary anymore as most people's wireless
+        // NOTE: WBMP isn't necessary anymore as most people's wireless
         // devices can now handle the bandwidth of full color images, and it
         // benefits from us doing the down-conversion to black and white.
-        // :NOTE: PostScript requires Swing-based printer services so is now
+        // NOTE: PostScript requires Swing-based printer services so is now
         // disabled due to removing Swing and AWT dependencies.
-        // :NOTE: A brief experiment with PNM failed to produce output, but no
+        // NOTE: A brief experiment with PNM failed to produce output, but no
         // real time was spent on looking into what happened or changing type.
         final Vector< ExtensionFilter > extensionFilterAdditions = new Vector<>();
 
@@ -206,7 +206,7 @@ public final class ExtensionFilterUtilities {
     public static List< ExtensionFilter > getVectorGraphicsExtensionFilters() {
         final Vector< ExtensionFilter > extensionFilterAdditions = new Vector<>();
 
-        // :NOTE: The jfxConverter library is hard-wired to work with Apache
+        // NOTE: The jfxConverter library is hard-wired to work with Apache
         // POI's legacy support vs. the standard XML versions of PowerPoint
         // files. It is a lot of work to revise their drivers to accept PPTX.
         extensionFilterAdditions.add( ExtensionFilters.VECTOR_GRAPHICS_EXTENSION_FILTER );

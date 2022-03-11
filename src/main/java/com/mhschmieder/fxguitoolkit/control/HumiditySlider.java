@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,13 +38,13 @@ import javafx.geometry.Orientation;
 public final class HumiditySlider extends NumberSlider {
 
     // Declare default minimum, maximum, and initial humidity for { 0, 100 }.
-    public static final double  MINIMUM_RELATIVE_HUMIDITY_DEFAULT = 0d;
+    public static final double  MINIMUM_RELATIVE_HUMIDITY_DEFAULT = 0.0d;
     public static final double  MAXIMUM_RELATIVE_HUMIDITY_DEFAULT = 100d;
     public static final double  INITIAL_RELATIVE_HUMIDITY_DEFAULT = 50d;
 
     // Default tick spacing in percentiles.
-    private static final double MAJOR_TICK_SPACING_PERCENT        = 10d;
-    private static final double MINOR_TICK_SPACING_PERCENT        = 2d;
+    private static final double MAJOR_TICK_SPACING_PERCENT        = 10.0d;
+    private static final double MINOR_TICK_SPACING_PERCENT        = 2.0d;
 
     // Declare block increment/decrement amount for left and right arrows.
     private static final double BLOCK_INCREMENT_PERCENT           = 0.5d;

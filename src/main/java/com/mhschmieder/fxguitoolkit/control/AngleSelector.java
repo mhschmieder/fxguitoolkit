@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ import javafx.scene.control.SingleSelectionModel;
  * The Angle Selector is a dynamic drop-list of formatted angle values in
  * degrees, currently restricted to be uneditable.
  * <p>
- * :TODO: Use the richer logic of this class's list updater method to inform a
+ * TODO: Use the richer logic of this class's list updater method to inform a
  * consolidation of the two current approaches in the super-class, and note that
  * this class adds a third approach as well. All are mutually exclusive.
  */
@@ -80,14 +80,14 @@ public final class AngleSelector extends DoubleSelector {
     }
 
     private void initComboBox() {
-        // :NOTE: Groupings are turned off, and we force US locale for now,
+        // NOTE: Groupings are turned off, and we force US locale for now,
         // due to specifics about the implementation of the pattern-matcher.
-        // :TODO: Alternately, cast to DecimalFormat, query the decimal and
+        // TODO: Alternately, cast to DecimalFormat, query the decimal and
         // grouping separator chars, and pass them to pattern-matcher?
         _numberFormat.setGroupingUsed( false );
 
         // Make sure the list displays all items without scrolling.
-        // :NOTE: Commented out due to blank lines when list changes size.
+        // NOTE: Commented out due to blank lines when list changes size.
         // setVisibleRowCount( 20 );
     }
 

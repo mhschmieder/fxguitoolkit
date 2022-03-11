@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -78,12 +78,12 @@ public class AnglePane extends VBox {
         final HBox hbox = new HBox();
         hbox.getChildren().addAll( angleLabel, _angleEditor );
         hbox.setAlignment( Pos.BASELINE_LEFT );
-        hbox.setSpacing( 10d );
+        hbox.setSpacing( 10.0d );
 
         getChildren().addAll( hbox, _angleSlider );
 
         setAlignment( Pos.CENTER );
-        setPadding( new Insets( 6d ) );
+        setPadding( new Insets( 6.0d ) );
 
         // Bidirectionally bind the slider to an editable text field restricted
         // to the slider range, also accounting for angle period adjustments.

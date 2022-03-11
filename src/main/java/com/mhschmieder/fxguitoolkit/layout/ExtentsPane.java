@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -184,10 +184,10 @@ public final class ExtentsPane extends GridPane {
         _sizePane.setMinimumDistanceMeters( extentsSizeMinimumMeters );
         _sizePane.setMaximumDistanceMeters( extentsSizeMaximumMeters );
 
-        setHgap( 6d );
-        setVgap( 6d );
+        setHgap( 6.0d );
+        setVgap( 6.0d );
 
-        setPadding( new Insets( 6d ) );
+        setPadding( new Insets( 6.0d ) );
 
         add( _minimumPaneLabel, 0, 0 );
         add( _minimumPane, 0, 1 );

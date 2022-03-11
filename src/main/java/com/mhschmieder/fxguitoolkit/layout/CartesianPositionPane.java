@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -97,8 +97,8 @@ public class CartesianPositionPane extends BorderPane {
         _yPositionEditor = new DistanceEditor( clientProperties, "0", null );
 
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap( 10d );
-        gridPane.setVgap( 10d );
+        gridPane.setHgap( 10.0d );
+        gridPane.setVgap( 10.0d );
 
         _xPositionLabel = GuiUtilities.getControlLabel( xPositionLabelText );
         gridPane.add( _xPositionLabel, 0, 0 );
@@ -109,7 +109,7 @@ public class CartesianPositionPane extends BorderPane {
         gridPane.add( _yPositionEditor, 1, 1 );
 
         gridPane.setAlignment( Pos.CENTER );
-        gridPane.setPadding( new Insets( 10d ) );
+        gridPane.setPadding( new Insets( 10.0d ) );
 
         setLeft( gridPane );
     }

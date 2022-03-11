@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -109,9 +109,9 @@ public final class ImageSizePane extends VBox {
                                                  pixelHeightDefault );
 
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap( 6d );
-        gridPane.setVgap( 6d );
-        gridPane.setPadding( new Insets( 0d, 6d, 0d, 6d ) );
+        gridPane.setHgap( 6.0d );
+        gridPane.setVgap( 6.0d );
+        gridPane.setPadding( new Insets( 0.0d, 6.0d, 0.0d, 6.0d ) );
 
         gridPane.add( pixelWidthLabel, 0, 0 );
         gridPane.add( _pixelWidthSelector, 1, 0 );
@@ -127,8 +127,8 @@ public final class ImageSizePane extends VBox {
 
         getChildren().setAll( _autoSizeCheckBox, imageSizeBorderNode );
 
-        setPadding( new Insets( 10d ) );
-        setSpacing( 10d );
+        setPadding( new Insets( 10.0d ) );
+        setSpacing( 10.0d );
 
         setAlignment( Pos.CENTER );
 

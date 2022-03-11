@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -180,11 +180,11 @@ public class NoticePane extends VBox {
         // Declare the main Web View for the primary content.
         final WebView noticeWebView = ControlFactory.makeNoticeWebView( noticeUrl );
 
-        // :NOTE: We're having problems with horizontal scroll bars showing up
+        // NOTE: We're having problems with horizontal scroll bars showing up
         // on Windows 10, if not also on Mac OS, unless we down-scale the font.
-        // :NOTE: This has changed with recent Java updates, so the DPI based
+        // NOTE: This has changed with recent Java updates, so the DPI based
         // scaling was backed out and replaced downstream with font scaling.
-        noticeWebView.setFontScale( 1d );
+        noticeWebView.setFontScale( 1.0d );
 
         // Initialize the remaining layout, which is common/shared.
         initLayout( bannerText, noticeWebView );

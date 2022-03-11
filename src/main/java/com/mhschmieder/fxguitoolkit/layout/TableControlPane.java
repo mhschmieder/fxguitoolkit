@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -77,20 +77,20 @@ public final class TableControlPane extends BorderPane {
         // the border of the main panel above.
         if ( Orientation.HORIZONTAL.equals( orientation ) ) {
             final HBox hbox = new HBox();
-            hbox.setSpacing( 6d );
+            hbox.setSpacing( 6.0d );
             hbox.setAlignment( Pos.CENTER_RIGHT );
             hbox.getChildren().addAll( _insertRowButton, _deleteRowButton );
             setRight( hbox );
         }
         else {
             final VBox vbox = new VBox();
-            vbox.setSpacing( 6d );
+            vbox.setSpacing( 6.0d );
             vbox.setAlignment( Pos.BOTTOM_CENTER );
             vbox.getChildren().addAll( _insertRowButton, _deleteRowButton );
             setBottom( vbox );
         }
 
-        setPadding( new Insets( 0d ) );
+        setPadding( new Insets( 0.0d ) );
     }
 
 }

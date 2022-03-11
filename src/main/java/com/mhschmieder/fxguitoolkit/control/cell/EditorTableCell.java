@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -79,7 +79,7 @@ public abstract class EditorTableCell< RT, VT > extends TableCell< RT, VT > {
         endEdits();
     }
 
-    // :NOTE: This should be overridden by derived classes, as only those can
+    // NOTE: This should be overridden by derived classes, as only those can
     // know the context=specific business logic of when to allow empty fields.
     @Override
     public void commitEdit( final VT newValue ) {
@@ -90,7 +90,7 @@ public abstract class EditorTableCell< RT, VT > extends TableCell< RT, VT > {
         endEdits();
     }
 
-    // :NOTE: This is primarily invoked dynamically from the startEdit()
+    // NOTE: This is primarily invoked dynamically from the startEdit()
     // method so that we can guarantee we capture focus events that should
     // commit edits (e.g. mouse movement, TAB key, and ENTER key).
     @SuppressWarnings("nls")
@@ -107,9 +107,9 @@ public abstract class EditorTableCell< RT, VT > extends TableCell< RT, VT > {
             }
         } );
 
-        // :TODO: Switch to a Text Editor, to avoid empty strings etc.
+        // TODO: Switch to a Text Editor, to avoid empty strings etc.
         _textField = new TextField();
-        _textField.setMinWidth( getWidth() - ( getGraphicTextGap() * 2d ) );
+        _textField.setMinWidth( getWidth() - ( getGraphicTextGap() * 2.0d ) );
 
         // Validate committed input (via ENTER) and adjust to allowed values.
         _textField.setOnAction( evt -> {
@@ -131,7 +131,7 @@ public abstract class EditorTableCell< RT, VT > extends TableCell< RT, VT > {
         } );
 
         // When focus is lost, commit the changes; otherwise update the text.
-        // :NOTE: Mouse focus events to other rows, cause the editing state to
+        // NOTE: Mouse focus events to other rows, cause the editing state to
         // be turned off before the commit is called, and thus the edits are
         // thrown out by the JavaFX core methods. There doesn't appear to be a
         // workaround, but strangely this doesn't happen if moving focus within
@@ -157,14 +157,14 @@ public abstract class EditorTableCell< RT, VT > extends TableCell< RT, VT > {
             }
         } );
 
-        // :NOTE: We must manually handle the ENTER key in order to save edits
+        // NOTE: We must manually handle the ENTER key in order to save edits
         // and release editing focus, but the ESCAPE key seems to be handled
         // already as it cancels edits and releases editing focus.
         _textField.setOnKeyPressed( keyEvent -> {
             final KeyCode keyCode = keyEvent.getCode();
             switch ( keyCode ) {
             case ENTER:
-                // :NOTE: Nothing to do, as ENTER is best handled via onAction.
+                // NOTE: Nothing to do, as ENTER is best handled via onAction.
                 break;
             case ESCAPE:
                 // Revert to the most recent committed value.
@@ -182,7 +182,7 @@ public abstract class EditorTableCell< RT, VT > extends TableCell< RT, VT > {
 
                 break;
             case TAB:
-                // :NOTE: Nothing to do, as Text Input Controls commit edits and
+                // NOTE: Nothing to do, as Text Input Controls commit edits and
                 // then release focus when the TAB key is pressed, so the Focus
                 // Lost handler is where value restrictions should be applied.
                 break;
@@ -230,7 +230,7 @@ public abstract class EditorTableCell< RT, VT > extends TableCell< RT, VT > {
 
     protected abstract VT getEditorValue();
 
-    // :TODO: Replace this with a JavaFX StringConverter initialization.
+    // TODO: Replace this with a JavaFX StringConverter initialization.
     @SuppressWarnings("nls")
     protected String getString() {
         final VT storedValue = getItem();
@@ -245,14 +245,14 @@ public abstract class EditorTableCell< RT, VT > extends TableCell< RT, VT > {
 
     protected abstract String getTextValue();
 
-    // :NOTE: The execution order below is the only one that works dependably
+    // NOTE: The execution order below is the only one that works dependably
     // for all contexts (focus via mouse, TAB, ENTER).
     private final void saveEdits() {
         // Potentially adjust the current edits from the Text Field.
         adjustValue();
     }
 
-    // :NOTE: This method requires knowledge of which bean properties are in
+    // NOTE: This method requires knowledge of which bean properties are in
     // use so cannot have a default or base class implementation and is required
     // for all subclasses to override in order to achieve proper data binding.
     protected void setBeanProperty( final RT selectedRecord ) {}
@@ -313,10 +313,10 @@ public abstract class EditorTableCell< RT, VT > extends TableCell< RT, VT > {
     @Override
     public void updateItem( final VT item, final boolean empty ) {
         // Make sure the table cell knows the current selected item.
-        // :NOTE: We have to override the value of "empty" to overcome flaws in
+        // NOTE: We have to override the value of "empty" to overcome flaws in
         // inaccessible private methods of the JavaFX base class that prevents
         // us from entering edit mode during initial invocation.
-        // :NOTE: No longer the case since Java 8u40, or maybe Java 8u60?
+        // NOTE: No longer the case since Java 8u40, or maybe Java 8u60?
         super.updateItem( item, empty ); // false );
 
         // Blank the displayed text and the editor, if empty or null updates.

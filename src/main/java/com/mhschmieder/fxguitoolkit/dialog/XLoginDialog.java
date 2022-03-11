@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -235,7 +235,7 @@ public final class XLoginDialog extends Dialog< Pair< String, String > > {
         errorMessage.setVisible( false );
         errorMessage.setManaged( false );
 
-        final VBox content = new VBox( 10d );
+        final VBox content = new VBox( 10.0d );
         content.getChildren().addAll( errorMessage, userNameField, passwordField );
         dialogPane.setContent( content );
 

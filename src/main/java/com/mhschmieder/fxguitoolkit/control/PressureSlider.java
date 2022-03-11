@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -155,19 +155,19 @@ public class PressureSlider extends NumberSlider {
         // Set the tick resolution based on the granularity of the unit.
         switch ( _pressureUnit ) {
         case KILOPASCALS:
-            setTickResolution( 10d, 2d );
-            setBlockIncrement( 1d );
+            setTickResolution( 10.0d, 2.0d );
+            setBlockIncrement( 1.0d );
             break;
         case PASCALS:
             setTickResolution( 10000d, 2000d );
             setBlockIncrement( 1000d );
             break;
         case MILLIBARS:
-            setTickResolution( 100d, 20d );
-            setBlockIncrement( 10d );
+            setTickResolution( 100d, 20.0d );
+            setBlockIncrement( 10.0d );
             break;
         case ATMOSPHERES:
-            setTickResolution( 1d, 0.25d );
+            setTickResolution( 1.0d, 0.25d );
             setBlockIncrement( 0.1d );
             break;
         default:

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -111,8 +111,8 @@ public final class AltitudePane extends BorderPane {
         _customAltitudeRadioButton.setUserData( null );
 
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap( 8d );
-        gridPane.setVgap( 8d );
+        gridPane.setHgap( 8.0d );
+        gridPane.setVgap( 8.0d );
 
         gridPane.add( _altitudeLabel, 0, 0 );
         gridPane.add( _lowAltitudeRadioButton, 0, 1 );
@@ -120,7 +120,7 @@ public final class AltitudePane extends BorderPane {
         gridPane.add( _highAltitudeRadioButton, 0, 3 );
 
         gridPane.setAlignment( Pos.TOP_LEFT );
-        gridPane.setPadding( new Insets( 6d ) );
+        gridPane.setPadding( new Insets( 6.0d ) );
 
         setLeft( gridPane );
 

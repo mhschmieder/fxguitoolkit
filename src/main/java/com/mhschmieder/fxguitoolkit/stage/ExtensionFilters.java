@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
  * {@code ExtensionFilters} is a static constants class for JavaFX File Chooser
  * based file extensions.
  * <p>
- * :NOTE: This code is copied from GraphicsToolkit on GitHub until it is
+ * NOTE: This code is copied from GraphicsToolkit on GitHub until it is
  * published
  * to Maven Central from where it can be pulled via Gradle.
  */

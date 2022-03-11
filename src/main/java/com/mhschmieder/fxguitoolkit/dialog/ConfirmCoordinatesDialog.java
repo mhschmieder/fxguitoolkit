@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -95,7 +95,7 @@ public class ConfirmCoordinatesDialog extends XDialog {
         dialogPane.getButtonTypes().addAll( ButtonType.OK, ButtonType.CANCEL );
 
         // Filter for the ENTER key so we can use it to trigger the OK Button.
-        // :TODO: Find a better way to filter for this so that we wait for focus
+        // TODO: Find a better way to filter for this so that we wait for focus
         // lost on the editing controls, but this is probably not possible until
         // the next revision of the Dialog API, at which point we probably have
         // direct control of ENTER anyway by assigning the Default Button.

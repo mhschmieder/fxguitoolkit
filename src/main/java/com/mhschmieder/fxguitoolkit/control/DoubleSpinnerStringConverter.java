@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -253,7 +253,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
             }
 
             // Handle differences in behavior for negative values allowed.
-            if ( ( _minimumNumericValue < 0d ) ) {
+            if ( ( _minimumNumericValue < 0.0d ) ) {
                 // Special case: minus sign if negative values allowed.
                 if ( newValue.endsWith( "-" ) ) { //$NON-NLS-1$
                     if ( newValue.length() > 1 ) {
@@ -296,7 +296,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
         } );
 
         // When focus is lost, commit the changes; otherwise strip the unit.
-        // :NOTE: This callback is for manual edits, after they are committed.
+        // NOTE: This callback is for manual edits, after they are committed.
         _editor.focusedProperty().addListener( ( observableValue, wasFocused, isNowFocused ) -> {
             if ( !isNowFocused ) {
                 // Save edits from the Text Field to the property bean. Commit
@@ -322,7 +322,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
                 break;
             case ESCAPE:
                 // Revert to the previous selection.
-                // :NOTE: This code may never be reached; ESC must be caught at
+                // NOTE: This code may never be reached; ESC must be caught at
                 // a higher level and consumed. Need to debug to see if called.
                 _editor.cancelEdit();
 

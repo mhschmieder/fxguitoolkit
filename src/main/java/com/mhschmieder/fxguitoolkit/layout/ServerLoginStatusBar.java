@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -87,7 +87,7 @@ public final class ServerLoginStatusBar extends StackPane {
         // _longLoadStatusBar.getChildren().addAll( _longLoadIcon,
         // _longLoadStatusLabel );
         //
-        // _longLoadStatusBar.setPadding( new Insets( 3d, 12d, 3d, 12d ) );
+        // _longLoadStatusBar.setPadding( new Insets( 3.0d, 12d, 3.0d, 12d ) );
         // _longLoadStatusBar.setSpacing( 12d );
 
         _loggedInStatusBar = new HBox();
@@ -97,7 +97,7 @@ public final class ServerLoginStatusBar extends StackPane {
 
         _loggedInStatusBar.getChildren().addAll( _loggedInIcon, _loggedInStatusLabel );
 
-        _loggedInStatusBar.setPadding( new Insets( 3d, 12d, 3d, 12d ) );
+        _loggedInStatusBar.setPadding( new Insets( 3.0d, 12d, 3.0d, 12d ) );
         _loggedInStatusBar.setSpacing( 16d );
 
         _loggedOutStatusBar = new HBox();
@@ -107,7 +107,7 @@ public final class ServerLoginStatusBar extends StackPane {
 
         _loggedOutStatusBar.getChildren().addAll( _loggedOutIcon, _loggedOutStatusLabel );
 
-        _loggedOutStatusBar.setPadding( new Insets( 3d, 12d, 3d, 12d ) );
+        _loggedOutStatusBar.setPadding( new Insets( 3.0d, 12d, 3.0d, 12d ) );
         _loggedOutStatusBar.setSpacing( 12d );
 
         // Build the Stack Pane and prepare it for view-switching.

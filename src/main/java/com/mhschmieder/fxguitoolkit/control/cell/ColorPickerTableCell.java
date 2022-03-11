@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,7 +53,7 @@ public abstract class ColorPickerTableCell< RT > extends TableCell< RT, Color > 
     // This is a custom cell so we declare our own Color Picker to handle it.
     protected XColorPicker _colorPicker;
 
-    // :NOTE: It is better to pass in the Table Column than to query at
+    // NOTE: It is better to pass in the Table Column than to query at
     // run-time, as the latter can result in null pointer exceptions during
     // initialization, due to order-dependency.
     public ColorPickerTableCell( final TableColumn< RT, Color > column, final String tooltipText ) {
@@ -75,9 +75,9 @@ public abstract class ColorPickerTableCell< RT > extends TableCell< RT, Color > 
         _colorPicker.setMaxWidth( Double.MAX_VALUE );
 
         // Try to make the Color Picker fill the entire Table Cell.
-        // :NOTE: We have to account for insets and margins though.
-        // :NOTE: Setting height causes incremental growth per click!
-        _colorPicker.minWidthProperty().bind( widthProperty().subtract( 8d ) );
+        // NOTE: We have to account for insets and margins though.
+        // NOTE: Setting height causes incremental growth per click!
+        _colorPicker.minWidthProperty().bind( widthProperty().subtract( 8.0d ) );
         _colorPicker.prefWidthProperty().bind( widthProperty() );
 
         _colorPicker.editableProperty().bind( column.editableProperty() );
@@ -98,7 +98,7 @@ public abstract class ColorPickerTableCell< RT > extends TableCell< RT, Color > 
         } );
 
         // Register a callback to handle user actions that commit a choice.
-        // :NOTE: This covers direct clicks in the palette, and confirmation of
+        // NOTE: This covers direct clicks in the palette, and confirmation of
         // custom colors, but deliberately avoids cases where the user canceled
         // the custom color pop-up or the main palette (via mouse focus), so
         // that we do not unnecessarily sync or commit unchanged values (which
@@ -120,7 +120,7 @@ public abstract class ColorPickerTableCell< RT > extends TableCell< RT, Color > 
         setValue( color );
     }
 
-    // :NOTE: This method requires knowledge of which bean properties are in
+    // NOTE: This method requires knowledge of which bean properties are in
     // use so cannot have a default or base class implementation and is required
     // for all subclasses to override in order to achieve proper data binding.
     protected abstract void setBeanProperty( final RT selectedRecord );
@@ -148,7 +148,7 @@ public abstract class ColorPickerTableCell< RT > extends TableCell< RT, Color > 
         super.updateItem( item, empty );
 
         // Display the current state for the Color Picker.
-        // :NOTE: We avoid displaying anything in empty rows.
+        // NOTE: We avoid displaying anything in empty rows.
         if ( empty ) {
             setText( null );
             setGraphic( null );

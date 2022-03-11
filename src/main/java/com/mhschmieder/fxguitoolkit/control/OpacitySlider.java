@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,16 +40,16 @@ import javafx.geometry.Orientation;
 public final class OpacitySlider extends NumberSlider {
 
     // Declare default minimum, maximum, and initial opacity for { 0, 100 }.
-    public static final double  MINIMUM_OPACITY_DEFAULT    = 0d;
+    public static final double  MINIMUM_OPACITY_DEFAULT    = 0.0d;
     public static final double  MAXIMUM_OPACITY_DEFAULT    = 100d;
     public static final double  INITIAL_OPACITY_DEFAULT    = 100d;
 
     // Default tick spacing in percentiles.
-    private static final double MAJOR_TICK_SPACING_PERCENT = 5d;
-    private static final double MINOR_TICK_SPACING_PERCENT = 1d;
+    private static final double MAJOR_TICK_SPACING_PERCENT = 5.0d;
+    private static final double MINOR_TICK_SPACING_PERCENT = 1.0d;
 
     // Declare block increment/decrement amount for left and right arrows.
-    private static final double BLOCK_INCREMENT_PERCENT    = 2d;
+    private static final double BLOCK_INCREMENT_PERCENT    = 2.0d;
 
     public OpacitySlider( final ClientProperties clientProperties ) {
         this( clientProperties,
@@ -92,14 +92,14 @@ public final class OpacitySlider extends NumberSlider {
         setOrientation( Orientation.HORIZONTAL );
 
         // Make sure the tick labels aren't bunched together.
-        // :NOTE: We can't do this on the base class in case the slider's
+        // NOTE: We can't do this on the base class in case the slider's
         // orientation is vertical, which we only know per context.
-        // :NOTE: This is a safety value that should be overloaded by the parent
+        // NOTE: This is a safety value that should be overloaded by the parent
         // node, per usage context.
         setMinWidth( 400d );
 
         // Cache the string representation of the opacity unit.
-        // :NOTE: We set this directly as there currently is no unit conversion,
+        // NOTE: We set this directly as there currently is no unit conversion,
         // for opacity, as opacity is generally only modeled as percentiles.
         setMeasurementUnitString( "%" );
     }

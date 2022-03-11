@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -68,7 +68,7 @@ public final class OpacityPane extends VBox {
     private void bindProperties() {
         // Bidirectionally bind the Opacity property to its associated text
         // input control's value property (which reflects committed edits).
-        // :NOTE: This is OK because we embed unit conversion in DoubleEditor.
+        // NOTE: This is OK because we embed unit conversion in DoubleEditor.
         _opacityEditor.valueProperty().bindBidirectional( opacityPercentProperty() );
 
         // Bidirectionally bind the slider to an editable text field restricted
@@ -99,12 +99,12 @@ public final class OpacityPane extends VBox {
         final HBox hbox = new HBox();
         hbox.getChildren().addAll( _opacityLabel, _opacityEditor );
         hbox.setAlignment( Pos.BASELINE_LEFT );
-        hbox.setSpacing( 10d );
+        hbox.setSpacing( 10.0d );
 
         getChildren().addAll( hbox, _opacitySlider );
 
         setAlignment( Pos.CENTER );
-        setPadding( new Insets( 0d, 16d, 0d, 16d ) );
+        setPadding( new Insets( 0.0d, 16d, 0.0d, 16d ) );
 
         // Bidirectionally bind the slider to an editable text field restricted
         // to the slider range.
@@ -175,7 +175,7 @@ public final class OpacityPane extends VBox {
     }
 
     // Set and bind the Opacity Percent property reference.
-    // :NOTE: This should be done only once, to avoid breaking bindings.
+    // NOTE: This should be done only once, to avoid breaking bindings.
     public void setOpacityPercentProperty( final DoubleProperty pOpacityPercent ) {
         // Cache the Opacity Percent property reference.
         opacityPercent = pOpacityPercent;

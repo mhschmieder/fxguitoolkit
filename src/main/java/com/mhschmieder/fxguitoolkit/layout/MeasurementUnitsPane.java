@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -170,7 +170,7 @@ public final class MeasurementUnitsPane extends VBox {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap( 16d );
         gridPane.setVgap( 16d );
-        gridPane.setPadding( new Insets( 0d, 16d, 0d, 16d ) );
+        gridPane.setPadding( new Insets( 0.0d, 16d, 0.0d, 16d ) );
 
         int row = 0;
         gridPane.add( distanceUnitLabel, 0, row );

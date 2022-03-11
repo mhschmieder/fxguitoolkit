@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,8 +48,8 @@ public class TemperatureSlider extends NumberSlider {
                                                                    PhysicsConstants.ROOM_TEMPERATURE_K;
 
     // Default tick spacing in degrees Kelvin.
-    private static final double MAJOR_TICK_SPACING_KELVIN          = 10d;
-    private static final double MINOR_TICK_SPACING_KELVIN          = 2d;
+    private static final double MAJOR_TICK_SPACING_KELVIN          = 10.0d;
+    private static final double MINOR_TICK_SPACING_KELVIN          = 2.0d;
 
     // Declare block increment/decrement amount for left and right arrows.
     private static final double BLOCK_INCREMENT_KELVIN             = 0.5d;
@@ -158,16 +158,16 @@ public class TemperatureSlider extends NumberSlider {
         // Set the tick resolution based on the granularity of the unit.
         switch ( _temperatureUnit ) {
         case KELVIN:
-            setTickResolution( 10d, 2d );
+            setTickResolution( 10.0d, 2.0d );
             setBlockIncrement( 0.5d );
             break;
         case CELSIUS:
-            setTickResolution( 10d, 2d );
+            setTickResolution( 10.0d, 2.0d );
             setBlockIncrement( 0.5d );
             break;
         case FAHRENHEIT:
-            setTickResolution( 20d, 5d );
-            setBlockIncrement( 1d );
+            setTickResolution( 20.0d, 5.0d );
+            setBlockIncrement( 1.0d );
             break;
         default:
             break;

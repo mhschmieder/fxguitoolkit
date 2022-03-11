@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -143,7 +143,7 @@ public class SceneGraphUtilities {
                                                    final TextArea textArea,
                                                    final ClientProperties clientProperties ) {
         final GridPane grid = LayoutFactory
-                .makeGridPane( Pos.CENTER_LEFT, new Insets( 0d, 6d, 0d, 6d ), 6, 6 );
+                .makeGridPane( Pos.CENTER_LEFT, new Insets( 0.0d, 6.0d, 0.0d, 6.0d ), 6, 6 );
 
         // Although we put the label above the control, the size difference is
         // so huge that it won't be clear what the label is for unless we add a
@@ -284,7 +284,7 @@ public class SceneGraphUtilities {
                                                              tooltipText,
                                                              cssStyleId,
                                                              true,
-                                                             3d,
+                                                             3.0d,
                                                              false,
                                                              false );
 

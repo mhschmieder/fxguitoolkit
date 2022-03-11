@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ public final class HumidityEditor extends DoubleEditor {
     // NOTE: We increment by 10% as this is a typical default.
     // TODO: Modify this value if units are other than Relative Humidity, and
     // also add supporting methods for unit conversion and display?
-    public static final double VALUE_INCREMENT_PERCENT = 10d;
+    public static final double VALUE_INCREMENT_PERCENT = 10.0d;
 
     public HumidityEditor( final ClientProperties clientProperties,
                            final String initialText,

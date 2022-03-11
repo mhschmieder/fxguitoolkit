@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ import java.util.Locale;
 
 import javafx.geometry.Pos;
 
-// :TODO: Use our DoubleEditor class instead, and pass the measurement unit?
+// TODO: Use our DoubleEditor class instead, and pass the measurement unit?
 public class NumberEditorTableCell< RT, VT > extends EditorTableCell< RT, Double > {
 
     // Maintain a reference to the Measurement Unit label (can be blank).
@@ -66,7 +66,7 @@ public class NumberEditorTableCell< RT, VT > extends EditorTableCell< RT, Double
 
     @Override
     protected Double getEditorValue() {
-        // :NOTE: This is a bit of a hack to allow invalid and/or impertinent
+        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
         // cells and to represent them with a consistent and intuitive rendering
         // that is globally understood as "no data".
         final String textValue = _textField.getText();
@@ -80,7 +80,7 @@ public class NumberEditorTableCell< RT, VT > extends EditorTableCell< RT, Double
     @SuppressWarnings("nls")
     @Override
     protected String getString() {
-        // :NOTE: This is a bit of a hack to allow invalid and/or impertinent
+        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
         // cells and to represent them with a consistent and intuitive rendering
         // that is globally understood as "no data".
         final Double doubleValue = getItem();
@@ -96,7 +96,7 @@ public class NumberEditorTableCell< RT, VT > extends EditorTableCell< RT, Double
     @SuppressWarnings("nls")
     @Override
     protected String getTextValue() {
-        // :NOTE: This is a bit of a hack to allow invalid and/or impertinent
+        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
         // cells and to represent them with a consistent and intuitive rendering
         // that is globally understood as "no data".
         final Double doubleValue = getItem();

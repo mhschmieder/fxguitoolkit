@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -105,9 +105,9 @@ public final class MainApplicationLoadTask extends Task< Void > {
      */
     public void showMainApplicationStage() {
         // Start an application session. This also shows the main stage.
-        // :NOTE: We run this on a deferred thread, to give the GUI
+        // NOTE: We run this on a deferred thread, to give the GUI
         // initialization more time to complete any deferred tasks.
-        // :TODO: Refactor this back to the more elaborate session starter
+        // TODO: Refactor this back to the more elaborate session starter
         // sequence once pulling in my GitHub library, not yet on Maven Central.
         Platform.runLater( () -> {
             if ( mainApplicationStage != null ) {

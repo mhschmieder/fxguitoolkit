@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -77,7 +77,7 @@ public final class NaturalEnvironmentPane extends HBox {
         getChildren().addAll( _temperaturePane, _humidityPane, _pressurePane, _altitudePane );
 
         setSpacing( 12d );
-        setPadding( new Insets( 10d ) );
+        setPadding( new Insets( 10.0d ) );
 
         // Make sure the Altitude Pane always gets horizontal grow priority, so
         // it can resize to fit larger measurement units.

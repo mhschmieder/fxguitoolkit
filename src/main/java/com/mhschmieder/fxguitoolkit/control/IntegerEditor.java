@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -125,7 +125,7 @@ public class IntegerEditor extends NumberEditor {
             final KeyCode keyCode = keyEvent.getCode();
             switch ( keyCode ) {
             case ENTER:
-                // :NOTE: Nothing to do, as ENTER is best handled via onAction.
+                // NOTE: Nothing to do, as ENTER is best handled via onAction.
                 break;
             case ESCAPE:
                 // Revert to the most recent committed value.
@@ -142,20 +142,20 @@ public class IntegerEditor extends NumberEditor {
 
                 break;
             case TAB:
-                // :NOTE: Nothing to do, as Text Input Controls commit edits and
+                // NOTE: Nothing to do, as Text Input Controls commit edits and
                 // then release focus when the TAB key is pressed, so the Focus
                 // Lost handler is where value restrictions should be applied.
                 break;
             case UP:
                 // Increment the current value by the set amount.
-                if ( _valueIncrement != 0d ) {
+                if ( _valueIncrement != 0.0d ) {
                     setValue( getValue() + _valueIncrement );
                 }
 
                 break;
             case DOWN:
                 // Decrement the current value by the set amount.
-                if ( _valueIncrement != 0d ) {
+                if ( _valueIncrement != 0.0d ) {
                     setValue( getValue() - _valueIncrement );
                 }
 

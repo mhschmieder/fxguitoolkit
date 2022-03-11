@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -82,8 +82,8 @@ public class OrientationPane extends BorderPane {
         _orientationInvertedCheckBox = GuiUtilities.getCheckBox( "Inverted", false ); //$NON-NLS-1$
 
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap( 10d );
-        gridPane.setVgap( 10d );
+        gridPane.setHgap( 10.0d );
+        gridPane.setVgap( 10.0d );
 
         gridPane.add( _orientationHzRadioButton, 0, 0 );
         gridPane.add( _orientationVtRadioButton, 0, 1 );

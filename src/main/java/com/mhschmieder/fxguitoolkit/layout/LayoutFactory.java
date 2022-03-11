@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -172,7 +172,7 @@ public final class LayoutFactory {
      * the
      * parent).
      * <p>
-     * :NOTE: Even if this is applied after setting a CSS style using Java calls
+     * NOTE: Even if this is applied after setting a CSS style using Java calls
      * vs. CSS stylesheet loading, it is overruled bny any background color set
      * in a Java setStyle() invocation.
      *
@@ -186,11 +186,11 @@ public final class LayoutFactory {
     public static Background makeRegionBackground( final Color backColor,
                                                    final Color gradientColor ) {
         final Stop[] stops =
-                           new Stop[] { new Stop( 0d, backColor ), new Stop( 1d, gradientColor ) };
-        final LinearGradient gradient = new LinearGradient( 0d,
-                                                            0d,
-                                                            0d,
-                                                            1d,
+                           new Stop[] { new Stop( 0.0d, backColor ), new Stop( 1.0d, gradientColor ) };
+        final LinearGradient gradient = new LinearGradient( 0.0d,
+                                                            0.0d,
+                                                            0.0d,
+                                                            1.0d,
                                                             true,
                                                             CycleMethod.NO_CYCLE,
                                                             stops );
@@ -209,7 +209,7 @@ public final class LayoutFactory {
      * the
      * parent).
      * <p>
-     * :NOTE: Even if this is applied after setting a CSS style using Java calls
+     * NOTE: Even if this is applied after setting a CSS style using Java calls
      * vs. CSS stylesheet loading, it is overruled bny any background color set
      * in a Java setStyle() invocation.
      *
@@ -229,11 +229,11 @@ public final class LayoutFactory {
                                                    final CornerRadii radii,
                                                    final Insets insets ) {
         final Stop[] stops =
-                           new Stop[] { new Stop( 0d, backColor ), new Stop( 1d, gradientColor ) };
-        final LinearGradient gradient = new LinearGradient( 0d,
-                                                            0d,
-                                                            0d,
-                                                            1d,
+                           new Stop[] { new Stop( 0.0d, backColor ), new Stop( 1.0d, gradientColor ) };
+        final LinearGradient gradient = new LinearGradient( 0.0d,
+                                                            0.0d,
+                                                            0.0d,
+                                                            1.0d,
                                                             true,
                                                             CycleMethod.NO_CYCLE,
                                                             stops );

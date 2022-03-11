@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,11 +40,11 @@ public final class AngleSlider extends NumberSlider {
     // Declare default minimum, maximum, and initial angles for { -180, 180 }.
     public static final double MINIMUM_ANGLE_DEGREES_DEFAULT = -180d;
     public static final double MAXIMUM_ANGLE_DEGREES_DEFAULT = 180d;
-    public static final double INITIAL_ANGLE_DEGREES_DEFAULT = 0d;
+    public static final double INITIAL_ANGLE_DEGREES_DEFAULT = 0.0d;
 
     // Default tick spacing in degrees.
     public static final double MAJOR_TICK_SPACING_DEGREES    = 60d;
-    public static final double MINOR_TICK_SPACING_DEGREES    = 10d;
+    public static final double MINOR_TICK_SPACING_DEGREES    = 10.0d;
 
     // Declare block increment/decrement amount for left and right arrow keys.
     // NOTE: We block to 0.5 degrees as this is a common increment value,

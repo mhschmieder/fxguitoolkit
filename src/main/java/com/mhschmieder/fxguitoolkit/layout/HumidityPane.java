@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -59,7 +59,7 @@ public final class HumidityPane extends VBox {
 
     public HumidityPane( final ClientProperties clientProperties ) {
         // Always call the superclass constructor first!
-        super( 6d );
+        super( 6.0d );
 
         humidityRelative = new SimpleDoubleProperty();
 
@@ -107,7 +107,7 @@ public final class HumidityPane extends VBox {
         getChildren().addAll( _humidityLabel, _humiditySlider, _humidityEditor );
 
         setAlignment( Pos.CENTER );
-        setPadding( new Insets( 6d ) );
+        setPadding( new Insets( 6.0d ) );
 
         // Make sure the Humidity Slider always gets vertical grow priority.
         VBox.setVgrow( _humiditySlider, Priority.ALWAYS );
@@ -135,7 +135,7 @@ public final class HumidityPane extends VBox {
     }
 
     // Set and bind the Relative Humidity property reference.
-    // :NOTE: This should be done only once, to avoid breaking bindings.
+    // NOTE: This should be done only once, to avoid breaking bindings.
     public void setHumidityRelativeProperty( final DoubleProperty pHumidityRelative ) {
         // Cache the Relative Humidity property reference.
         humidityRelative = pHumidityRelative;

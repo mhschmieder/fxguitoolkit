@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ public class PressureEditor extends DoubleEditor {
     // Declare value increment/decrement amount for up and down arrow keys.
     // NOTE: We increment by 10 pascals as this works well for most units.
     // TODO: Apply a different increment for each Pressure Unit choice?
-    public static final double VALUE_INCREMENT_PA = 10d;
+    public static final double VALUE_INCREMENT_PA = 10.0d;
 
     // Store the Pressure Unit so we'll know when we need to convert.
     private PressureUnit       _pressureUnit;

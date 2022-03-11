@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -208,7 +208,7 @@ public abstract class XSpreadsheetView extends SpreadsheetView {
         if ( ( selectedRowIndices != null ) && !selectedRowIndices.isEmpty() ) {
             int correctedIndex = -1;
             for ( final Integer deleteIndex : selectedRowIndices ) {
-                // :NOTE: As the table changes size inside this loop, we have to
+                // NOTE: As the table changes size inside this loop, we have to
                 // refresh the last row index on each iteration.
                 final int maximumDeleteIndex = getLastRowIndex();
                 correctedIndex = deleteTableRowAt( deleteIndex,
@@ -287,10 +287,10 @@ public abstract class XSpreadsheetView extends SpreadsheetView {
         _deletingRowsUnconditionally = true;
 
         // Delete the requested spreadsheet row from the grid.
-        // :NOTE: We have to bump the end index as it is exclusive.
+        // NOTE: We have to bump the end index as it is exclusive.
         rows.remove( firstDeleteIndex, lastDeleteIndex + 1 );
 
-        // :NOTE: We have to update the grid in order for its view to be
+        // NOTE: We have to update the grid in order for its view to be
         // refreshed, along with maintaining the correct indices for fixed rows
         // and columns, and the current multi-cell selection list.
         setGrid( grid );
@@ -428,7 +428,7 @@ public abstract class XSpreadsheetView extends SpreadsheetView {
     }
 
     // Select the specified row in the table.
-    // :NOTE: There are new methods that do things like select the next row.
+    // NOTE: There are new methods that do things like select the next row.
     public final void setSelectedRow( final int selectedRowIndex ) {
         // Clear any active row selections, in case the table is empty.
         // NOTE: Commented out due to the third-party code treating the visual
@@ -442,7 +442,7 @@ public abstract class XSpreadsheetView extends SpreadsheetView {
         // spreadsheet if the requested row is invalid. If the spreadsheet is
         // now empty, select nothing as otherwise an index out of range
         // exception will be thrown.
-        // :NOTE: Disabled, because manual selection uses single selection mode
+        // NOTE: Disabled, because manual selection uses single selection mode
         // for some reason, whereas programmatic selection uses multiple
         // selection mode, so we stay stuck at the initial manual selection if
         // we clear and reset the selected rows. This is clearly a bug in the

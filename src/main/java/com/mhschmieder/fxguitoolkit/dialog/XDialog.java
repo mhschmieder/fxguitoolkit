@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -114,7 +114,7 @@ public abstract class XDialog extends Dialog< ButtonType > {
         dialogPane.setBackground( background );
 
         // Make the Dialog just translucent enough to see what's behind it.
-        // :NOTE: Translucency throws exceptions on Linux and Windows 8.1, but
+        // NOTE: Translucency throws exceptions on Linux and Windows 8.1, but
         // we don't want to penalize all Windows users and Windows 8.1 has other
         // issues such as incorrect image width, so we only disable for Linux.
         // if ( !SystemType.LINUX.equals( systemType ) ) {
@@ -143,11 +143,11 @@ public abstract class XDialog extends Dialog< ButtonType > {
 
     ////////////////////// Model/View syncing methods ////////////////////////
 
-    // :NOTE: We are phasing out Swing-style model/view syncing in favor of Data
+    // NOTE: We are phasing out Swing-style model/view syncing in favor of Data
     // Binding, so these methods are no longer required of subclasses.
     public void syncModelToView() {}
 
-    // :NOTE: We are phasing out Swing-style model/view syncing in favor of Data
+    // NOTE: We are phasing out Swing-style model/view syncing in favor of Data
     // Binding, so these methods are no longer required of subclasses.
     public void syncViewToModel() {}
 

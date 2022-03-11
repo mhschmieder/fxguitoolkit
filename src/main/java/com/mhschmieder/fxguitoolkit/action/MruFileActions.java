@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -77,7 +77,7 @@ public class MruFileActions {
         // User Preferences between sessions, there is no need to make the
         // separator invisible as this will only add clutter to the menu on
         // first usage.
-        // :NOTE: We no longer add the tenth MRU action, as we must switch to
+        // NOTE: We no longer add the tenth MRU action, as we must switch to
         // letters at that point and run through the alphabet, at which point we
         // really should break all the MRU's out into a sub-menu.
         final int maximumNumberOfMruFiles = FileUtilities.MRU_CACHE_SIZE;

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ public class TextEditor extends XTextField {
     private final boolean        _blankTextAllowed;
 
     // Cache the raw string representation of the data value.
-    // :NOTE: This field has to follow JavaFX Property Beans conventions.
+    // NOTE: This field has to follow JavaFX Property Beans conventions.
     private final StringProperty value;
 
     @SuppressWarnings("nls")
@@ -130,7 +130,7 @@ public class TextEditor extends XTextField {
 
     private final void initEditor() {
         // Use a TextFormatter to wrap and bind the provided string format.
-        // :TODO: Complete this new approach and then remove setOnAction().
+        // TODO: Complete this new approach and then remove setOnAction().
         // final TextFormatter< String > formatter = new TextFormatter<>( new
         // FormatStringConverter<>( numberFormat ) );
         // formatter.valueProperty().bindBidirectional( value );
@@ -182,14 +182,14 @@ public class TextEditor extends XTextField {
             }
         } );
 
-        // :NOTE: We must manually handle the ENTER key in order to save edits
+        // NOTE: We must manually handle the ENTER key in order to save edits
         // and release editing focus, but the ESCAPE key seems to be handled
         // already as it cancels edits and releases editing focus.
         setOnKeyPressed( keyEvent -> {
             final KeyCode keyCode = keyEvent.getCode();
             switch ( keyCode ) {
             case ENTER:
-                // :NOTE: Nothing to do, as ENTER is best handled via onAction.
+                // NOTE: Nothing to do, as ENTER is best handled via onAction.
                 break;
             case ESCAPE:
                 // Revert to the most recent committed value.
@@ -207,7 +207,7 @@ public class TextEditor extends XTextField {
 
                 break;
             case TAB:
-                // :NOTE: Nothing to do, as Text Input Controls commit edits and
+                // NOTE: Nothing to do, as Text Input Controls commit edits and
                 // then release focus when the TAB key is pressed, so the Focus
                 // Lost handler is where value restrictions should be applied.
                 break;
