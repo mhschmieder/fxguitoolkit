@@ -35,8 +35,8 @@ import java.util.Optional;
 
 import com.mhschmieder.commonstoolkit.security.LoginCredentials;
 import com.mhschmieder.commonstoolkit.security.LoginType;
+import com.mhschmieder.fxcommonstoolkit.concurrent.AuthorizationRequestService;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
-import com.mhschmieder.fxguitoolkit.concurrent.AuthorizationRequestService;
 
 import javafx.util.Callback;
 import javafx.util.Pair;
