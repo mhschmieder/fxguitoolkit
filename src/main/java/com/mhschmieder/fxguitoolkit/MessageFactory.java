@@ -57,6 +57,10 @@ public class MessageFactory {
         return acceptEulaMasthead;
     }
 
+    public static final String getAccountManagementPreamble() {
+        return "To review your login credentials, go to"; //$NON-NLS-1$ ;
+    }
+
     public static final String getAutoAppendExtensionMayOverwriteMasthead() {
         return "Auto-Append of Default Extension May Overwrite Existing File"; //$NON-NLS-1$
     }
@@ -79,6 +83,14 @@ public class MessageFactory {
 
     public static final String getCheckForUpdatesPreamble() {
         return "Check for"; //$NON-NLS-1$
+    }
+
+    public static final String getClientServerProtocolErrorTitle() {
+        return "Client-Server Protocol Error"; //$NON-NLS-1$
+    }
+
+    public static final String getConfirmCoordinatesMasthead() {
+        return "Please Confirm Coordinates"; //$NON-NLS-1$
     }
 
     public static final String getContinueWithFileSaveMessage() {
@@ -188,6 +200,20 @@ public class MessageFactory {
         return "File Save Options"; //$NON-NLS-1$
     }
 
+    public static final String getIncompatibleClientMasthead( final String productName ) {
+        return "Incompatible Client"; //$NON-NLS-1$
+    }
+
+    public static final String getIncompatibleClientMessage( final String productName ) {
+        final String incompatibleClientMessage = "Your " //$NON-NLS-1$
+                + productName + " client is out of date and incompatible with the server."; //$NON-NLS-1$
+        return incompatibleClientMessage;
+    }
+
+    public static final String getInvalidUserAccountMasthead() {
+        return "Invalid User Account or Login Credentials"; //$NON-NLS-1$
+    }
+
     public static final String getLoginCredentialsMasthead( final LoginType loginType,
                                                             final String loginTarget ) {
         final String loginCredentialsMasthead = "Please Log In to the " //$NON-NLS-1$
@@ -254,10 +280,27 @@ public class MessageFactory {
         return "Problem with Print Services"; //$NON-NLS-1$
     }
 
+    public static final String getProjectFileReadErrorMessage( final File file ) {
+        final String errorMessageBody = " could not open." //$NON-NLS-1$
+                + " Check the Session Log for possible run-time exceptions."; //$NON-NLS-1$
+        final String projectFileNotOpenedMessage = getFileErrorMessage( errorMessageBody, file );
+        return projectFileNotOpenedMessage;
+    }
+
+    public static final String getProjectFileWriteErrorMessage( final File file ) {
+        final String errorMessageBody = " could not save." //$NON-NLS-1$
+                + " Check the Session Log for possible run-time exceptions."; //$NON-NLS-1$
+        final String projectFileNotSavedMessage = getFileErrorMessage( errorMessageBody, file );
+        return projectFileNotSavedMessage;
+    }
+
+    public static final String getRasterGraphicsExportOptionsMasthead() {
+        return "Raster Graphics Export Options"; //$NON-NLS-1$
+    }
+
     public static final String getReadProtectedFileMessage( final File file ) {
         final String errorMessageBody = " is read-protected."; //$NON-NLS-1$
-        final String readProtectedFileMessage = MessageFactory
-                .getFileErrorMessage( errorMessageBody, file );
+        final String readProtectedFileMessage = getFileErrorMessage( errorMessageBody, file );
         return readProtectedFileMessage;
     }
 
@@ -276,9 +319,33 @@ public class MessageFactory {
                                                               final String fileMode ) {
         final String errorMessageBody = "is denied " + fileMode //$NON-NLS-1$
                 + " access by the Security Manager."; //$NON-NLS-1$
-        final String securityManagedFileMessage = MessageFactory
-                .getFileErrorMessage( errorMessageBody, file );
+        final String securityManagedFileMessage = getFileErrorMessage( errorMessageBody, file );
         return securityManagedFileMessage;
+    }
+
+    public static final String getServerRequestFileWriteErrorMessage( final File file ) {
+        final String errorMessageBody = " could not save server request due to write access denied." //$NON-NLS-1$
+                + " Please see Session Log for details (if the JRE forwarded exceptions)."; //$NON-NLS-1$
+        final String serverRequestFileNotSavedMessage =
+                                                      getFileErrorMessage( errorMessageBody, file );
+        return serverRequestFileNotSavedMessage;
+    }
+
+    public static final String getServerResponseFileWriteErrorMessage( final File file ) {
+        final String errorMessageBody =
+                                      " could not save server response due to write access denied." //$NON-NLS-1$
+                                              + " Please see Session Log for details (if the JRE forwarded exceptions)."; //$NON-NLS-1$
+        final String serverResponseFileNotSavedMessage = getFileErrorMessage( errorMessageBody,
+                                                                              file );
+        return serverResponseFileNotSavedMessage;
+    }
+
+    public static final String getUserAuthorizationErrorTitle() {
+        return "User Authorization Error"; //$NON-NLS-1$
+    }
+
+    public static final String getVectorGraphicsExportOptionsMasthead() {
+        return "Vector Graphics Export Options"; //$NON-NLS-1$
     }
 
     public static final String getWriteProtectedFileMessage( final File file ) {

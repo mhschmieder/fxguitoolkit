@@ -24,7 +24,7 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
@@ -34,15 +34,22 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.fxgraphicstoolkit.RasterGraphicsExportOptions;
+import com.mhschmieder.fxgraphicstoolkit.VectorGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 /**
@@ -345,6 +352,174 @@ public final class DialogUtilities {
                                          final String title ) {
         final Alert alert = new Alert( AlertType.WARNING, message );
         showAlertDialog( alert, masthead, title );
+    }
+
+    // NOTE: Point2D is immutable, so this method must return the confirmed
+    // coordinates vs. a status. This isn't a problem though, as the default
+    // choice is passed in, so a Cancel action simply returns the initial
+    // coordinates unchanged.
+    public static Point2D showConfirmCoordinatesDialog( final String title,
+                                                        final ClientProperties clientProperties,
+                                                        final Point2D coordinatesCandidate,
+                                                        final DistanceUnit distanceUnit ) {
+        final String masthead = MessageFactory.getConfirmCoordinatesMasthead();
+        final ConfirmCoordinatesDialog confirmCoordinatesDialog =
+                                                                new ConfirmCoordinatesDialog( title,
+                                                                                              masthead,
+                                                                                              clientProperties,
+                                                                                              coordinatesCandidate );
+        confirmCoordinatesDialog.setDistanceUnit( distanceUnit );
+        final Optional< ButtonType > response = confirmCoordinatesDialog.showModalDialog();
+
+        // Get the Button Type that was pressed, but use standard
+        // object-oriented comparisons as Lambda Expressions do not give us
+        // the flexibility of exiting this method directly or of sharing
+        // common code after initial special-case handling of the three user
+        // options ("Yes", "No", and "Cancel") and their variants.
+        final ButtonType buttonType = response.get();
+
+        // Handle the full enumeration of potential responses.
+        switch ( buttonType.getButtonData() ) {
+        case HELP:
+        case HELP_2:
+        case BACK_PREVIOUS:
+        case CANCEL_CLOSE:
+            // These options equate to cancellation.
+            // If the user cancels, return the initial coordinates.
+            return coordinatesCandidate;
+        case NO:
+            // This case is currently unsupported, but would be like a
+            // Cancel.
+            return coordinatesCandidate;
+        case APPLY:
+        case FINISH:
+        case NEXT_FORWARD:
+        case OK_DONE:
+        case YES:
+            // Sync the data model to the final edits before querying them.
+            confirmCoordinatesDialog.syncModelToView();
+
+            // Return the newly confirmed coordinates.
+            final Point2D confirmedCoordinates = confirmCoordinatesDialog.getCoordinatesCandidate();
+            return confirmedCoordinates;
+        case BIG_GAP:
+        case SMALL_GAP:
+        case LEFT:
+        case RIGHT:
+        case OTHER:
+            // It is unlikely that these cases will ever be called, but it
+            // is safest to treat them like a Cancel.
+            return coordinatesCandidate;
+        default:
+            return coordinatesCandidate;
+        }
+    }
+
+    public static boolean showRasterGraphicsExportOptions( final ClientProperties clientProperties,
+                                                          final RasterGraphicsExportOptions rasterGraphicsExportOptions,
+                                                          final boolean hasChart,
+                                                          final boolean hasAuxiliary,
+                                                          final String graphicsExportAllLabel,
+                                                          final String graphicsExportChartLabel,
+                                                          final String graphicsExportAuxiliaryLabel ) {
+        // First, clone the Raster Graphics Export Options to serve as the
+        // candidate.
+        final RasterGraphicsExportOptions rasterGraphicsExportOptionsCandidate =
+                                                                              new RasterGraphicsExportOptions( rasterGraphicsExportOptions );
+
+        final String masthead = MessageFactory.getRasterGraphicsExportOptionsMasthead();
+        final String title = MessageFactory.getFileSaveOptionsTitle();
+        final RasterGraphicsExportOptionsDialog rasterGraphicsExportOptionsDialog =
+                                                                                  new RasterGraphicsExportOptionsDialog( title,
+                                                                                                                         masthead,
+                                                                                                                         clientProperties,
+                                                                                                                         rasterGraphicsExportOptionsCandidate,
+                                                                                                                         hasChart,
+                                                                                                                         hasAuxiliary,
+                                                                                                                         graphicsExportAllLabel,
+                                                                                                                         graphicsExportChartLabel,
+                                                                                                                         graphicsExportAuxiliaryLabel );
+        final Optional< ButtonType > response = rasterGraphicsExportOptionsDialog.showModalDialog();
+
+        // Cache the new Raster Graphics Export Options, unless the user
+        // canceled.
+        final boolean rasterGraphicsExportOptionsCaptured =
+                                                         rasterGraphicsExportOptionsDialog._exportButton
+                                                                 .equals( response.get() );
+        if ( rasterGraphicsExportOptionsCaptured ) {
+            // Sync the data model to final edits before caching the result.
+            rasterGraphicsExportOptionsDialog.syncModelToView();
+            rasterGraphicsExportOptions
+                    .setRasterGraphicsExportOptions( rasterGraphicsExportOptionsCandidate );
+        }
+
+        return rasterGraphicsExportOptionsCaptured;
+    }
+
+    public static boolean showVectorGraphicsExportOptions( final ClientProperties clientProperties,
+                                                           final VectorGraphicsExportOptions vectorGraphicsExportOptions,
+                                                           final boolean hasTitle,
+                                                           final boolean hasChart,
+                                                           final boolean hasAuxiliary,
+                                                           final String graphicsExportAllLabel,
+                                                           final String graphicsExportChartLabel,
+                                                           final String graphicsExportAuxiliaryLabel ) {
+        // First, clone the Vector Graphics Export Options to serve as the
+        // candidate.
+        final VectorGraphicsExportOptions vectorGraphicsExportOptionsCandidate =
+                                                                               new VectorGraphicsExportOptions( vectorGraphicsExportOptions );
+
+        final String masthead = MessageFactory.getVectorGraphicsExportOptionsMasthead();
+        final String title = MessageFactory.getFileSaveOptionsTitle();
+        final VectorGraphicsExportOptionsDialog vectorGraphicsExportOptionsDialog =
+                                                                                  new VectorGraphicsExportOptionsDialog( title,
+                                                                                                                         masthead,
+                                                                                                                         clientProperties,
+                                                                                                                         vectorGraphicsExportOptionsCandidate,
+                                                                                                                         hasTitle,
+                                                                                                                         hasChart,
+                                                                                                                         hasAuxiliary,
+                                                                                                                         graphicsExportAllLabel,
+                                                                                                                         graphicsExportChartLabel,
+                                                                                                                         graphicsExportAuxiliaryLabel );
+        final Optional< ButtonType > response = vectorGraphicsExportOptionsDialog.showModalDialog();
+
+        // Cache the new Vector Graphics Export Options, unless the user
+        // canceled.
+        final boolean vectorGraphicsExportOptionsCaptured =
+                                                          vectorGraphicsExportOptionsDialog._exportButton
+                                                                  .equals( response.get() );
+        if ( vectorGraphicsExportOptionsCaptured ) {
+            // Sync the data model to final edits before caching the result.
+            vectorGraphicsExportOptionsDialog.syncModelToView();
+            vectorGraphicsExportOptions
+                    .setVectorGraphicsExportOptions( vectorGraphicsExportOptionsCandidate );
+        }
+
+        return vectorGraphicsExportOptionsCaptured;
+    }
+
+    public static void showIncompatibileClientAlert( final String productName,
+                                                     final Hyperlink checkForUpdatesHyperlink ) {
+        final String message = MessageFactory.getIncompatibleClientMessage( productName );
+        final String masthead = MessageFactory.getIncompatibleClientMasthead( productName );
+        final String title = MessageFactory.getClientServerProtocolErrorTitle();
+        final String checkForUpdatesPreamble = MessageFactory.getCheckForUpdatesPreamble();
+        final TextFlow textFlow = new TextFlow( new Text( checkForUpdatesPreamble ),
+                                                checkForUpdatesHyperlink );
+
+        showTextFlowAlert( message, masthead, title, textFlow, AlertType.ERROR );
+    }
+
+    public static void showInvalidUserAccountAlert( final String message,
+                                                    final Hyperlink accountManagementHyperlink ) {
+        final String masthead = MessageFactory.getInvalidUserAccountMasthead();
+        final String title = MessageFactory.getUserAuthorizationErrorTitle();
+        final String accountManagementPreamble = MessageFactory.getAccountManagementPreamble();
+        final TextFlow textFlow = new TextFlow( new Text( accountManagementPreamble ),
+                                                accountManagementHyperlink );
+
+        showTextFlowAlert( message, masthead, title, textFlow, AlertType.ERROR );
     }
 
 }

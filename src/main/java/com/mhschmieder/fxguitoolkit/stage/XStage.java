@@ -42,6 +42,8 @@ import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.io.FileUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.SystemType;
+import com.mhschmieder.fxgraphicstoolkit.RasterGraphicsExportOptions;
+import com.mhschmieder.fxgraphicstoolkit.VectorGraphicsExportOptions;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
 import com.mhschmieder.fxgraphicstoolkit.print.PrintUtilities;
@@ -129,6 +131,16 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
 
     // Cache the pop-up window owner for warning/error dialogs, pop-ups, etc.
     protected final Window                              _popupOwner;
+
+    // Maintain a Scene Node reference for Image Graphics Export actions.
+    protected Node                        _rasterGraphicsExportSource;
+
+    // Maintain a Scene Node reference for Vector Graphics Export actions.
+    protected Node                        _vectorGraphicsExportSource;
+
+    // Declare file options for the various file modes and actions.
+    protected RasterGraphicsExportOptions  _rasterGraphicsExportOptions;
+    protected VectorGraphicsExportOptions _vectorGraphicsExportOptions;
 
     // Declare flag for whether this window shows the dirty flag.
     private final boolean                               _showDirtyFlag;
@@ -464,6 +476,28 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
         return new StringBuilder( _defaultTitle );
     }
 
+    // NOTE: This label is for Graphics Export Options.
+    // NOTE: Derived classes should override this default if they expose
+    // either charts or auxiliary information for Graphics Export.
+    public String getGraphicsExportAllLabel() {
+        return ""; //$NON-NLS-1$
+    }
+
+    // NOTE: This label is for Graphics Export Options.
+    // NOTE: Derived classes should override this default if they expose
+    // auxiliary information for Graphics Export.
+    public String getGraphicsExportAuxiliaryLabel() {
+        return ""; //$NON-NLS-1$
+    }
+
+    // NOTE: This label is for Graphics Export Options.
+    // NOTE: Derived classes should override this default if they expose charts
+    // for Graphics Export.
+    public String getGraphicsExportChartLabel() {
+        return ""; //$NON-NLS-1$
+    }
+
+
     @Override
     public final File getMruFile( final int mruId ) {
         // Avoid side effects of the user saving the current file and thereby
@@ -638,6 +672,9 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
     }
 
     protected void initVariables() {
+        _rasterGraphicsExportOptions = new RasterGraphicsExportOptions();
+        _vectorGraphicsExportOptions = new VectorGraphicsExportOptions();
+
         // Cache the number formats so that we don't have to get information
         // about locale, language, etc. from the OS each time we format a
         // number.
@@ -1250,6 +1287,22 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
             // rootPane.putClientProperty( "Window.documentModified",
             // documentModified );
         }
+    }
+
+    // Unless more granularity is supported via the Export Options, it should
+    // be sufficient to grab the main Content Node as Graphics Export Source,
+    // so that Tool Bars and Menus don't become part of the exported graphics.
+    protected void updateRasterGraphicsExportSource() {
+        // Set the default Node reference for Raster Graphics Export operations.
+        _rasterGraphicsExportSource = _content;
+    }
+
+    // Unless more granularity is supported via the Export Options, it should
+    // be sufficient to grab the main Content Node as Graphics Export Source,
+    // so that Tool Bars and Menus don't become part of the exported graphics.
+    protected void updateVectorGraphicsExportSource() {
+        // Set the default Node reference for Vector Graphics Export operations.
+        _vectorGraphicsExportSource = _content;
     }
 
     @Override
