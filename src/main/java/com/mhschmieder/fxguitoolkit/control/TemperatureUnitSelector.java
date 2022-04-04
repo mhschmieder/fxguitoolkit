@@ -61,7 +61,7 @@ public final class TemperatureUnitSelector extends TextSelector {
     }
 
     public TemperatureUnit getTemperatureUnit() {
-        return TemperatureUnit.canonicalValueOf( getTextValue() );
+        return TemperatureUnit.fromCanonicalString( getTextValue() );
     }
 
     public void setTemperatureUnit( final TemperatureUnit temperatureUnit ) {

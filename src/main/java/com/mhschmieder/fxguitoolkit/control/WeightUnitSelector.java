@@ -64,7 +64,7 @@ public final class WeightUnitSelector extends TextSelector {
     }
 
     public WeightUnit getWeightUnit() {
-        return WeightUnit.canonicalValueOf( getTextValue() );
+        return WeightUnit.fromCanonicalString( getTextValue() );
     }
 
     public void setWeightUnit( final WeightUnit weightUnit ) {

@@ -61,7 +61,7 @@ public final class PressureUnitSelector extends TextSelector {
     }
 
     public PressureUnit getPressureUnit() {
-        return PressureUnit.canonicalValueOf( getTextValue() );
+        return PressureUnit.fromCanonicalString( getTextValue() );
     }
 
     public void setPressureUnit( final PressureUnit pressureUnit ) {

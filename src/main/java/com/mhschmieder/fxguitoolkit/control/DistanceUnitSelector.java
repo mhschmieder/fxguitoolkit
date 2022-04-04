@@ -89,7 +89,7 @@ public class DistanceUnitSelector extends TextSelector {
         final String distanceUnitString = getTextValue();
         final DistanceUnit distanceUnit = CHOOSE_ONE.equals( distanceUnitString )
             ? DistanceUnit.UNITLESS
-            : DistanceUnit.canonicalValueOf( distanceUnitString );
+            : DistanceUnit.fromCanonicalString( distanceUnitString );
         return distanceUnit;
     }
 

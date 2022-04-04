@@ -61,7 +61,7 @@ public final class AngleUnitSelector extends TextSelector {
     }
 
     public AngleUnit getAngleUnit() {
-        return AngleUnit.canonicalValueOf( getTextValue() );
+        return AngleUnit.fromCanonicalString( getTextValue() );
     }
 
     public void setAngleUnit( final AngleUnit angleUnit ) {
