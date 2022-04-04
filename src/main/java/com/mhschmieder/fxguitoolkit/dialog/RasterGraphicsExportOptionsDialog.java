@@ -53,14 +53,14 @@ public final class RasterGraphicsExportOptionsDialog extends ExportOptionsDialog
     protected RasterGraphicsExportOptions _imageGraphicsExportOptionsCandidate;
 
     public RasterGraphicsExportOptionsDialog( final String title,
-                                             final String masthead,
-                                             final ClientProperties clientProperties,
-                                             final RasterGraphicsExportOptions imageGraphicsExportOptionsCandidate,
-                                             final boolean hasChart,
-                                             final boolean hasAuxiliary,
-                                             final String graphicsExportAllLabel,
-                                             final String graphicsExportChartLabel,
-                                             final String graphicsExportAuxiliaryLabel ) {
+                                              final String masthead,
+                                              final ClientProperties clientProperties,
+                                              final RasterGraphicsExportOptions imageGraphicsExportOptionsCandidate,
+                                              final boolean hasChart,
+                                              final boolean hasAuxiliary,
+                                              final String graphicsExportAllLabel,
+                                              final String graphicsExportChartLabel,
+                                              final String graphicsExportAuxiliaryLabel ) {
         // Always call the superclass constructor first!
         super( title, masthead, clientProperties );
 

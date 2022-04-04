@@ -185,8 +185,9 @@ public final class LayoutFactory {
      */
     public static Background makeRegionBackground( final Color backColor,
                                                    final Color gradientColor ) {
-        final Stop[] stops =
-                           new Stop[] { new Stop( 0.0d, backColor ), new Stop( 1.0d, gradientColor ) };
+        final Stop[] stops = new Stop[] {
+                                          new Stop( 0.0d, backColor ),
+                                          new Stop( 1.0d, gradientColor ) };
         final LinearGradient gradient = new LinearGradient( 0.0d,
                                                             0.0d,
                                                             0.0d,
@@ -228,8 +229,9 @@ public final class LayoutFactory {
                                                    final Color gradientColor,
                                                    final CornerRadii radii,
                                                    final Insets insets ) {
-        final Stop[] stops =
-                           new Stop[] { new Stop( 0.0d, backColor ), new Stop( 1.0d, gradientColor ) };
+        final Stop[] stops = new Stop[] {
+                                          new Stop( 0.0d, backColor ),
+                                          new Stop( 1.0d, gradientColor ) };
         final LinearGradient gradient = new LinearGradient( 0.0d,
                                                             0.0d,
                                                             0.0d,

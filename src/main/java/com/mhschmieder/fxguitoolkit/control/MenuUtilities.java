@@ -52,7 +52,6 @@ public final class MenuUtilities {
      */
     private MenuUtilities() {}
 
-
     // If an accelerator is assigned, set it by platform.
     public static void setMenuItemAccelerator( final ClientProperties clientProperties,
                                                final MenuItem menuItem,

@@ -31,9 +31,9 @@
 package com.mhschmieder.fxguitoolkit.layout;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.fxcommonstoolkit.util.ProjectProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.TextEditor;
+import com.mhschmieder.fxguitoolkit.model.ProjectProperties;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

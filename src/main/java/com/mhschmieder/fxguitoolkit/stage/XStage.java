@@ -133,14 +133,14 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
     protected final Window                              _popupOwner;
 
     // Maintain a Scene Node reference for Image Graphics Export actions.
-    protected Node                        _rasterGraphicsExportSource;
+    protected Node                                      _rasterGraphicsExportSource;
 
     // Maintain a Scene Node reference for Vector Graphics Export actions.
-    protected Node                        _vectorGraphicsExportSource;
+    protected Node                                      _vectorGraphicsExportSource;
 
     // Declare file options for the various file modes and actions.
-    protected RasterGraphicsExportOptions  _rasterGraphicsExportOptions;
-    protected VectorGraphicsExportOptions _vectorGraphicsExportOptions;
+    protected RasterGraphicsExportOptions               _rasterGraphicsExportOptions;
+    protected VectorGraphicsExportOptions               _vectorGraphicsExportOptions;
 
     // Declare flag for whether this window shows the dirty flag.
     private final boolean                               _showDirtyFlag;
@@ -496,7 +496,6 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
     public String getGraphicsExportChartLabel() {
         return ""; //$NON-NLS-1$
     }
-
 
     @Override
     public final File getMruFile( final int mruId ) {

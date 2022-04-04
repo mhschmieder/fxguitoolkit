@@ -1191,8 +1191,10 @@ public final class GuiUtilities {
      */
     public static void centerOnScreen( final Window window ) {
         final Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-        window.setX( ( bounds.getMinX() + ( bounds.getWidth() / 2.0d ) ) - ( SPLASH_WIDTH / 2.0d ) );
-        window.setY( ( bounds.getMinY() + ( bounds.getHeight() / 2.0d ) ) - ( SPLASH_HEIGHT / 2.0d ) );
+        window.setX( ( bounds.getMinX() + ( bounds.getWidth() / 2.0d ) )
+                - ( SPLASH_WIDTH / 2.0d ) );
+        window.setY( ( bounds.getMinY() + ( bounds.getHeight() / 2.0d ) )
+                - ( SPLASH_HEIGHT / 2.0d ) );
     }
 
     /**

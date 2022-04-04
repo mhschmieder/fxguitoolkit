@@ -32,7 +32,6 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import java.net.URL;
 
-import com.mhschmieder.commonstoolkit.physics.AngleUnit;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
@@ -61,110 +60,13 @@ import javafx.scene.web.WebView;
 public class ControlFactory {
 
     // Predefine the notes/notices colors.
-    public static final Color     NOTES_BACKGROUND_COLOR        = Color.FLORALWHITE;
-    public static final Color     NOTES_FOREGROUND_COLOR        = Color.BLACK;
+    public static final Color NOTES_BACKGROUND_COLOR = Color.FLORALWHITE;
+    public static final Color NOTES_FOREGROUND_COLOR = Color.BLACK;
 
-    // Helper method to get an Angle Editor, standalone or paired.
-    public static final AngleEditor makeAngleEditor( final ClientProperties clientProperties,
-                                                     final String tooltipText,
-                                                     final double minimumValue,
-                                                     final double maximumValue,
-                                                     final double initialValue ) {
-        final AngleEditor angleEditor = makeAngleEditor( clientProperties,
-                                                         tooltipText,
-                                                         AngleUnit.DEGREES.toPresentationString(),
-                                                         minimumValue,
-                                                         maximumValue,
-                                                         initialValue );
-
-        return angleEditor;
-    }
-
-    // Helper method to get an Angle Editor, standalone or paired.
-    public static final AngleEditor makeAngleEditor( final ClientProperties clientProperties,
-                                                     final String tooltipText,
-                                                     final int minFractionDigitsFormat,
-                                                     final int maxFractionDigitsFormat,
-                                                     final int minFractionDigitsParse,
-                                                     final int maxFractionDigitsParse,
-                                                     final String measurementUnit,
-                                                     final double minimumValue,
-                                                     final double maximumValue,
-                                                     final double initialValue ) {
-        // Get the current value and format it as initial text.
-        final String initialText = Double.toString( initialValue );
-
-        final AngleEditor angleEditor = new AngleEditor( clientProperties,
-                                                         initialText,
-                                                         tooltipText,
-                                                         minFractionDigitsFormat,
-                                                         maxFractionDigitsFormat,
-                                                         minFractionDigitsParse,
-                                                         maxFractionDigitsParse,
-                                                         minimumValue,
-                                                         maximumValue,
-                                                         initialValue );
-
-        angleEditor.setMeasurementUnitString( measurementUnit );
-
-        return angleEditor;
-    }
-
-    // Helper method to get an Angle Editor, standalone or paired.
-    public static final AngleEditor makeAngleEditor( final ClientProperties clientProperties,
-                                                     final String tooltipText,
-                                                     final String measurementUnit,
-                                                     final double minimumValue,
-                                                     final double maximumValue,
-                                                     final double initialValue ) {
-        final AngleEditor angleEditor = makeAngleEditor( clientProperties,
-                                                         tooltipText,
-                                                         0,
-                                                         2,
-                                                         0,
-                                                         10,
-                                                         measurementUnit,
-                                                         minimumValue,
-                                                         maximumValue,
-                                                         initialValue );
-
-        return angleEditor;
-    }
-
-    // Helper method to get an Angle Editor to pair with a slider.
-    public static final AngleEditor makeAngleSliderEditor( final ClientProperties clientProperties,
-                                                           final AngleSlider angleSlider ) {
-        final AngleEditor angleEditor = makeAngleSliderEditor( clientProperties,
-                                                               angleSlider,
-                                                               0,
-                                                               2,
-                                                               0,
-                                                               10 );
-
-        return angleEditor;
-    }
-
-    // Helper method to get an Angle Editor to pair with a slider.
-    public static final AngleEditor makeAngleSliderEditor( final ClientProperties clientProperties,
-                                                           final AngleSlider angleSlider,
-                                                           final int minFractionDigitsFormat,
-                                                           final int maxFractionDigitsFormat,
-                                                           final int minFractionDigitsParse,
-                                                           final int maxFractionDigitsParse ) {
-        // Use the current slider value and limits to set the number editor.
-        final AngleEditor angleEditor = makeAngleEditor( clientProperties,
-                                                         null,
-                                                         minFractionDigitsFormat,
-                                                         maxFractionDigitsFormat,
-                                                         minFractionDigitsParse,
-                                                         maxFractionDigitsParse,
-                                                         angleSlider.getMeasurementUnitString(),
-                                                         angleSlider.getMin(),
-                                                         angleSlider.getMax(),
-                                                         angleSlider.getValue() );
-
-        return angleEditor;
-    }
+    /**
+     * The default constructor is disabled, as this is a static factory class.
+     */
+    private ControlFactory() {}
 
     // Helper method to get an Opacity Editor, standalone or paired.
     public static final DoubleEditor makeOpacityEditor( final ClientProperties clientProperties,
@@ -286,61 +188,6 @@ public class ControlFactory {
 
         // Return the fully initialized integer Spinner.
         return integerSpinner;
-    }
-
-    // Helper method to get a custom Temperature Editor.
-    public static final TemperatureEditor makeTemperatureEditor( final ClientProperties clientProperties ) {
-        // Format the default Temperature value as the initial text.
-        final double initialValue = TemperatureSlider.INITIAL_TEMPERATURE_KELVIN_DEFAULT;
-        final String initialText = Double.toString( initialValue );
-
-        final TemperatureEditor temperatureEditor =
-                                                  new TemperatureEditor( clientProperties,
-                                                                         initialText,
-                                                                         null,
-                                                                         TemperatureSlider.MINIMUM_TEMPERATURE_KELVIN_DEFAULT,
-                                                                         TemperatureSlider.MAXIMUM_TEMPERATURE_KELVIN_DEFAULT,
-                                                                         initialValue );
-
-        return temperatureEditor;
-    }
-
-    // Helper method to get a custom Pressure Editor.
-    public static final PressureEditor makePressureEditor( final ClientProperties clientProperties ) {
-        // Format the default Pressure value as the initial text.
-        final double initialValue = PressureSlider.INITIAL_PRESSURE_PASCALS_DEFAULT;
-        final String initialText = Double.toString( initialValue );
-
-        final PressureEditor pressureEditor =
-                                            new PressureEditor( clientProperties,
-                                                                initialText,
-                                                                null,
-                                                                PressureSlider.MINIMUM_PRESSURE_PASCALS_DEFAULT,
-                                                                PressureSlider.MAXIMUM_PRESSURE_PASCALS_DEFAULT,
-                                                                initialValue );
-
-        return pressureEditor;
-    }
-
-    // Helper method to get a humidity editor to pair with a slider.
-    public static final HumidityEditor makeHumiditySliderEditor( final ClientProperties clientProperties,
-                                                                 final HumiditySlider humiditySlider ) {
-        // Get the current slider value and format it as initial text.
-        final double initialValue = HumiditySlider.INITIAL_RELATIVE_HUMIDITY_DEFAULT;
-        final String initialText = Double.toString( initialValue );
-
-        final HumidityEditor humidityEditor =
-                                            new HumidityEditor( clientProperties,
-                                                                initialText,
-                                                                null,
-                                                                HumiditySlider.MINIMUM_RELATIVE_HUMIDITY_DEFAULT,
-                                                                HumiditySlider.MAXIMUM_RELATIVE_HUMIDITY_DEFAULT,
-                                                                initialValue );
-
-        final String measurementUnitString = humiditySlider.getMeasurementUnitString();
-        humidityEditor.setMeasurementUnitString( measurementUnitString );
-
-        return humidityEditor;
     }
 
     public static final TextArea makeNoticeTextArea( final String noticeTextContent,

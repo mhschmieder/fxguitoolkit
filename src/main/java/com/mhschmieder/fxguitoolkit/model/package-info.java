@@ -28,38 +28,11 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxguitoolkit.control;
-
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
-
-public final class HumidityEditor extends DoubleEditor {
-
-    // Declare value increment/decrement amount for up and down arrow keys.
-    // NOTE: We increment by 10% as this is a typical default.
-    // TODO: Modify this value if units are other than Relative Humidity, and
-    // also add supporting methods for unit conversion and display?
-    public static final double VALUE_INCREMENT_PERCENT = 10.0d;
-
-    public HumidityEditor( final ClientProperties clientProperties,
-                           final String initialText,
-                           final String tooltipText,
-                           final double humidityMinimum,
-                           final double humidityMaximum,
-                           final double humidityInitial ) {
-        // Always call the superclass constructor first!
-        // NOTE: We use up to two decimal places of precision for displaying
-        // humidity, and four decimal places for parsing humidity.
-        super( clientProperties,
-               initialText,
-               tooltipText,
-               0,
-               2,
-               0,
-               4,
-               humidityMinimum,
-               humidityMaximum,
-               humidityInitial,
-               VALUE_INCREMENT_PERCENT );
-    }
-
-}
+/**
+ * This package contains the model classes for associated JavaFX GUI elements.
+ *
+ * @version 1.0
+ *
+ * @author Mark Schmieder
+ */
+package com.mhschmieder.fxguitoolkit.model;
