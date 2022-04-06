@@ -63,7 +63,6 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.geometry.Side;
 import javafx.print.PrinterJob;
 import javafx.print.PrinterJob.JobStatus;
 import javafx.scene.Cursor;
@@ -71,8 +70,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.Axis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -1066,41 +1063,6 @@ public final class GuiUtilities {
 
             region.setBackground( LayoutFactory.makeRegionBackground( dividerGradient ) );
         } );
-    }
-
-    // Apply standardized attributes to all number-based charts.
-    @SuppressWarnings("nls")
-    public static void applyNumberChartAttributes( final XYChart< Number, Number > chart,
-                                                   final boolean isOverlayChart,
-                                                   final boolean showLegend,
-                                                   final Side legendSide ) {
-        chart.setLegendVisible( showLegend );
-        if ( showLegend ) {
-            if ( legendSide != null ) {
-                chart.setLegendSide( legendSide );
-            }
-        }
-
-        // It is safer to turn off animation while the chart is initializing.
-        chart.setAnimated( false );
-
-        // NOTE: The overlay attribute could be for dual axis charts or for
-        // charts with the same y-axis data range, but the underlying assumption
-        // is a shared x-axis for all charts; only the bottom chart shows all.
-        chart.setAlternativeRowFillVisible( !isOverlayChart );
-        chart.setAlternativeColumnFillVisible( !isOverlayChart );
-        chart.setHorizontalGridLinesVisible( !isOverlayChart );
-        chart.setVerticalGridLinesVisible( !isOverlayChart );
-
-        // The overlay chart shouldn't show its x-axis tick marks or labels.
-        if ( isOverlayChart ) {
-            final Axis< Number > xAxis = chart.getXAxis();
-            xAxis.setLabel( "" );
-            xAxis.setTickLabelsVisible( false );
-            xAxis.setTickMarkVisible( false );
-
-            addStylesheetAsJarResource( chart, "/css/overlay-chart.css" );
-        }
     }
 
     /**
