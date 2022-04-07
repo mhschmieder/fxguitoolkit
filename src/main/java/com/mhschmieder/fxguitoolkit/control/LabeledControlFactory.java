@@ -35,13 +35,20 @@ import java.util.ResourceBundle;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
+import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.SceneGraphUtilities;
+import com.mhschmieder.fxguitoolkit.action.LabeledActionFactory;
+import com.mhschmieder.fxguitoolkit.action.WindowSizeActions;
+import com.mhschmieder.fxguitoolkit.action.XAction;
+import com.mhschmieder.fxguitoolkit.action.XActionGroup;
+import com.mhschmieder.fxguitoolkit.action.XActionUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -232,6 +239,76 @@ public final class LabeledControlFactory {
     }
 
     @SuppressWarnings("nls")
+    public static Button getHelpButton( final boolean needsGraphic ) {
+        final Button helpButton = GuiUtilities.getLabeledButton( "Help", null, "help-button" );
+
+        if ( needsGraphic ) {
+            final ImageView helpIcon = ImageUtilities.getImageView( "/com/led24/icons/Help16.png",
+                                                                    true );
+            helpButton.setGraphic( helpIcon );
+        }
+
+        return helpButton;
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getPageSetupButton( final ClientProperties pClientProperties ) {
+        final Button button =
+                            GuiUtilities.getIconButton( "/com/yusukeKamiyamane/icons/Setup16.png" );
+
+        SceneGraphUtilities.setControlProperties( pClientProperties,
+                                                  BUNDLE_NAME,
+                                                  "file",
+                                                  "pageSetup",
+                                                  button,
+                                                  null );
+
+        return button;
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getPrintButton( final ClientProperties pClientProperties ) {
+        final Button button = GuiUtilities.getIconButton( "/com/everaldo/icons/FilePrint16.png" );
+
+        SceneGraphUtilities.setControlProperties( pClientProperties,
+                                                  BUNDLE_NAME,
+                                                  "file",
+                                                  "print",
+                                                  button,
+                                                  null );
+
+        return button;
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getOpenButton( final ClientProperties pClientProperties ) {
+        final Button button = GuiUtilities.getIconButton( "/com/led24/icons/PageWhiteZip16.png" );
+
+        SceneGraphUtilities.setControlProperties( pClientProperties,
+                                                  BUNDLE_NAME,
+                                                  "file",
+                                                  "open",
+                                                  button,
+                                                  null );
+
+        return button;
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getSaveAsButton( final ClientProperties pClientProperties ) {
+        final Button button = GuiUtilities.getIconButton( "/com/everaldo/icons/FileSaveAs16.png" );
+
+        SceneGraphUtilities.setControlProperties( pClientProperties,
+                                                  BUNDLE_NAME,
+                                                  "file",
+                                                  "saveAs",
+                                                  button,
+                                                  null );
+
+        return button;
+    }
+
+    @SuppressWarnings("nls")
     public static Button getApplyButton( final String objectType ) {
         final String buttonLabel = "Apply";
         final String tooltipText = buttonLabel + " Changes to " + objectType;
@@ -373,6 +450,30 @@ public final class LabeledControlFactory {
     }
 
     @SuppressWarnings("nls")
+    public static Button getResetButton( final ClientProperties pClientProperties,
+                                         final XAction resetAction ) {
+        return SceneGraphUtilities.getLabeledButton( resetAction, "reset-button" );
+    }
+
+    @SuppressWarnings("nls")
+    public static String getEditPropertiesLabel( final ClientProperties pClientProperties ) {
+        final ResourceBundle resourceBundle = GlobalUtilities
+                .getResourceBundle( pClientProperties, BUNDLE_NAME, false );
+        final String editPropertiesLabel = GuiUtilities
+                .getButtonText( "edit", "properties", resourceBundle );
+        return editPropertiesLabel;
+    }
+
+    @SuppressWarnings("nls")
+    public static int getEditPropertiesMnemonicIndex( final ClientProperties pClientProperties ) {
+        final ResourceBundle resourceBundle = GlobalUtilities
+                .getResourceBundle( pClientProperties, BUNDLE_NAME, false );
+        final int editPropertiesMnemonicIndex = GuiUtilities
+                .getMnemonicIndex( "edit", "properties", resourceBundle );
+        return editPropertiesMnemonicIndex;
+    }
+
+    @SuppressWarnings("nls")
     public static Button getNavigateBackButton( final ClientProperties pClientProperties ) {
         final Button button = GuiUtilities.getIconButton( "/com/ahaSoft/icons/Back16.png" );
         SceneGraphUtilities.setControlProperties( pClientProperties,
@@ -419,6 +520,104 @@ public final class LabeledControlFactory {
                                                   button,
                                                   null );
         return button;
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getExportSessionLogButton( final ClientProperties pClientProperties ) {
+        final Button button =
+                            GuiUtilities.getIconButton( "/com/everaldo/icons/Txt2Mimetype16.png" );
+
+        SceneGraphUtilities.setControlProperties( pClientProperties,
+                                                  BUNDLE_NAME,
+                                                  "export",
+                                                  "sessionLog",
+                                                  button,
+                                                  null );
+
+        return button;
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getEditNotesButton( final String tooltipText ) {
+        final Button editNotesButton = GuiUtilities
+                .getLabeledButton( "Edit Notes", tooltipText, "edit-notes-button" );
+        final ImageView editNotesIcon = ImageUtilities
+                .getImageView( "/com/visualIdiot/icons/Notes16.png", true );
+        editNotesButton.setGraphic( editNotesIcon );
+        return editNotesButton;
+    }
+
+    @SuppressWarnings("nls")
+    public static XToggleButton getDisplayToggleButton( final String targetName,
+                                                        final boolean applyAspectRatio,
+                                                        final boolean selected ) {
+        final String selectedText = "Visible";
+        final String deselectedText = "Hidden";
+        final String tooltipText = "Click to Toggle " + targetName
+                + " Display Between Visible and Hidden";
+
+        // NOTE: JavaFX CSS automatically darkens unselected buttons, and
+        // auto-selects the foreground for text fill, but we mimic Compass.
+        final XToggleButton toggleButton = new XToggleButton( selectedText,
+                                                              deselectedText,
+                                                              tooltipText,
+                                                              "visible-toggle",
+                                                              applyAspectRatio,
+                                                              3.0d,
+                                                              false,
+                                                              selected );
+
+        return toggleButton;
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getPredictButton( final ClientProperties pClientProperties ) {
+        return SceneGraphUtilities.getLabeledButton( pClientProperties,
+                                                     BUNDLE_NAME,
+                                                     "tools",
+                                                     "predict",
+                                                     ColorConstants.PREDICT_BACKGROUND_COLOR );
+    }
+
+    public static Button getPredictButton( final ClientProperties pClientProperties,
+                                           final XAction predictAction ) {
+        return SceneGraphUtilities.getLabeledButton( predictAction,
+                                                     ColorConstants.PREDICT_BACKGROUND_COLOR );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getCancelButton( final ClientProperties pClientProperties ) {
+        return SceneGraphUtilities.getLabeledButton( pClientProperties,
+                                                     BUNDLE_NAME,
+                                                     "tools",
+                                                     "cancel",
+                                                     ColorConstants.CANCEL_BACKGROUND_COLOR );
+    }
+
+    @SuppressWarnings("nls")
+    public static Button getClearButton( final ClientProperties pClientProperties ) {
+        return SceneGraphUtilities.getLabeledButton( pClientProperties,
+                                                     BUNDLE_NAME,
+                                                     "tools",
+                                                     "clear",
+                                                     ColorConstants.CLEAR_BACKGROUND_COLOR );
+    }
+
+    public static Button getClearButton( final ClientProperties pClientProperties,
+                                         final XAction clearAction ) {
+        return SceneGraphUtilities.getLabeledButton( clearAction,
+                                                     ColorConstants.CLEAR_BACKGROUND_COLOR );
+    }
+
+    public static Menu getWindowSizeMenu( final ClientProperties pClientProperties,
+                                          final WindowSizeActions windowSizeActions,
+                                          final boolean maximumSizeSupported ) {
+        final XActionGroup windowSizeActionGroup = LabeledActionFactory
+                .makeWindowSizeActionGroup( pClientProperties,
+                                            windowSizeActions,
+                                            maximumSizeSupported );
+        final Menu windowSizeMenu = XActionUtilities.createMenu( windowSizeActionGroup );
+        return windowSizeMenu;
     }
 
 }
