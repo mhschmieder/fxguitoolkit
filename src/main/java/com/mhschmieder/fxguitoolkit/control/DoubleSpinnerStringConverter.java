@@ -35,7 +35,7 @@ import java.text.ParseException;
 import java.util.Locale;
 
 import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
-import com.mhschmieder.commonstoolkit.text.StringUtilities;
+import com.mhschmieder.commonstoolkit.text.TextUtilities;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
 import javafx.application.Platform;
@@ -111,10 +111,10 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
 
         final double minimumNumericValue = spinnerValueFactory.getMin();
         final double maximumNumericValue = spinnerValueFactory.getMax();
-        final String tooltipText = StringUtilities.getValueRangeTooltipText( valueDescriptor,
-                                                                             minimumNumericValue,
-                                                                             maximumNumericValue,
-                                                                             numberFormat );
+        final String tooltipText = TextUtilities.getValueRangeTooltipText( valueDescriptor,
+                                                                           minimumNumericValue,
+                                                                           maximumNumericValue,
+                                                                           numberFormat );
 
         final TextField editor = doubleSpinner.getEditor();
         final DoubleSpinnerStringConverter converter =

@@ -41,7 +41,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-import com.mhschmieder.commonstoolkit.text.StringUtilities;
+import com.mhschmieder.commonstoolkit.lang.StringUtilities;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
 
 import javafx.collections.ObservableList;

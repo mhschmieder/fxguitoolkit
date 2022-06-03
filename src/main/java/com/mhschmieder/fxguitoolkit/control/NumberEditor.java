@@ -32,7 +32,7 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import java.text.NumberFormat;
 
-import com.mhschmieder.commonstoolkit.text.StringUtilities;
+import com.mhschmieder.commonstoolkit.lang.StringUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.application.Platform;
