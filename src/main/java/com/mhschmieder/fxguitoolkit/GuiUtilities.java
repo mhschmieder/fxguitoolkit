@@ -852,30 +852,41 @@ public final class GuiUtilities {
     }
 
     public static Cursor getCursorForResizeTarget( final ResizeTarget resizeTarget ) {
+        Cursor cursor = Cursor.DEFAULT;
+        
         switch ( resizeTarget ) {
         case NONE:
-            return Cursor.DEFAULT;
+            cursor = Cursor.DEFAULT;
+            break;
         case TOP:
-            return Cursor.N_RESIZE;
+            cursor = Cursor.N_RESIZE;
+            break;
         case TOP_RIGHT:
-            return Cursor.NE_RESIZE;
+            cursor = Cursor.NE_RESIZE;
+            break;
         case RIGHT:
-            return Cursor.E_RESIZE;
+            cursor = Cursor.E_RESIZE;
+            break;
         case BOTTOM_RIGHT:
-            return Cursor.SE_RESIZE;
+            cursor = Cursor.SE_RESIZE;
+            break;
         case BOTTOM:
-            return Cursor.S_RESIZE;
+            cursor = Cursor.S_RESIZE;
+            break;
         case BOTTOM_LEFT:
-            return Cursor.SW_RESIZE;
+            cursor = Cursor.SW_RESIZE;
+            break;
         case LEFT:
-            return Cursor.W_RESIZE;
+            cursor = Cursor.W_RESIZE;
+            break;
         case TOP_LEFT:
-            return Cursor.NW_RESIZE;
+            cursor = Cursor.NW_RESIZE;
+            break;
         default:
             break;
         }
 
-        return Cursor.DEFAULT;
+        return cursor;
     }
 
     public static void clampStageSize( final Stage stage ) {
@@ -1371,18 +1382,26 @@ public final class GuiUtilities {
      * @return The inset dimension to use for the supplied icon type
      */
     public static int getIconInset( final IconContext iconContext ) {
+        int iconInset = 0;
+        
         switch ( iconContext ) {
         case FRAME_TITLE:
-            return FRAME_TITLE_ICON_INSET;
+            iconInset = FRAME_TITLE_ICON_INSET;
+            break;
         case MENU:
-            return MENU_ICON_INSET;
+            iconInset = MENU_ICON_INSET;
+            break;
         case TOOLBAR:
-            return TOOLBAR_ICON_INSET;
+            iconInset = TOOLBAR_ICON_INSET;
+            break;
         case CONTROL_PANEL:
-            return CONTROL_PANEL_ICON_INSET;
+            iconInset = CONTROL_PANEL_ICON_INSET;
+            break;
         default:
-            return 0;
+            break;
         }
+        
+        return iconInset;
     }
 
     /**
@@ -1391,18 +1410,26 @@ public final class GuiUtilities {
      * @return The icon size to use for the supplied icon type
      */
     public static int getIconSize( final IconContext iconContext ) {
+        int iconSize = 0;
+        
         switch ( iconContext ) {
         case FRAME_TITLE:
-            return FRAME_TITLE_ICON_SIZE;
+            iconSize = FRAME_TITLE_ICON_SIZE;
+            break;
         case MENU:
-            return MENU_ICON_SIZE;
+            iconSize = MENU_ICON_SIZE;
+            break;
         case TOOLBAR:
-            return TOOLBAR_ICON_SIZE;
+            iconSize = TOOLBAR_ICON_SIZE;
+            break;
         case CONTROL_PANEL:
-            return CONTROL_PANEL_ICON_SIZE;
+            iconSize = CONTROL_PANEL_ICON_SIZE;
+            break;
         default:
-            return 0;
+            break;
         }
+        
+        return iconSize;
     }
 
     // NOTE: Use this method when the Toggle Button isn't exclusive and can
