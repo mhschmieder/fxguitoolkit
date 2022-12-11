@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGuiToolkit Library
+ * This file is part of the FxCommonsToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxCommonsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxguitoolkit
+ * Project: https://github.com/mhschmieder/fxcommonstoolkit
  */
 package com.mhschmieder.fxguitoolkit.dialog;
 
@@ -40,6 +40,7 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.application.Platform;
 
+// TODO: Move this to a new fxproxytoolkit library.
 public final class ProxyLoginAuthenticator extends ProxyAuthenticator {
 
     public static final String PROXY_LOGIN_CONTEXT = "Proxy"; //$NON-NLS-1$
