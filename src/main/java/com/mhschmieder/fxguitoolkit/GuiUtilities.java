@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -259,8 +259,12 @@ public final class GuiUtilities {
         }
 
         final URL stylesheetUrl = GuiUtilities.class.getResource( jarRelativeStylesheetFilename );
-        final String stylesheetFilename = stylesheetUrl.toExternalForm();
         try {
+            // If not found, the returned string is null, so we should either
+            // check for null and throw an exception, or let the null string
+            // throw an exception when used, which we capture below.
+            final String stylesheetFilename = stylesheetUrl.toExternalForm();
+
             // NOTE: CSS loading can be timing-sensitive to JavaFX API calls
             // that also affect style attributes, so it might be safer to defer
             // the CSS loading so that it is applied to a more stable GUI.
