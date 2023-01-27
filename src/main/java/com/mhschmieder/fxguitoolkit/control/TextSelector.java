@@ -67,6 +67,7 @@ public class TextSelector extends XComboBox {
     }
 
     // This is the constructor to call when we know the initial drop-list.
+    // For this version, we expect a static array of list values.
     public TextSelector( final ClientProperties pClientProperties,
                          final String tooltipText,
                          final boolean toolbarContext,
@@ -80,11 +81,29 @@ public class TextSelector extends XComboBox {
               toolbarContext,
               editable,
               searchable,
-              textValues.length );
+              FXCollections.observableArrayList( textValues ),
+              defaultValue );
+    }
+
+    // This is the constructor to call when we know the initial drop-list.
+    // For this version, we expect an already-constructed observable list.
+    public TextSelector( final ClientProperties pClientProperties,
+                         final String tooltipText,
+                         final boolean toolbarContext,
+                         final boolean editable,
+                         final boolean searchable,
+                         final ObservableList< String > valuesList,
+                         final String defaultValue ) {
+        // By default, make sure the list displays all items without scrolling.
+        this( pClientProperties,
+              tooltipText,
+              toolbarContext,
+              editable,
+              searchable,
+              valuesList.size() );
 
         // Set the list of supported text values.
-        final ObservableList< String > items = FXCollections.observableArrayList( textValues );
-        setItems( items );
+        setItems( valuesList );
 
         // Set the initial choice as the default.
         setValue( defaultValue );
