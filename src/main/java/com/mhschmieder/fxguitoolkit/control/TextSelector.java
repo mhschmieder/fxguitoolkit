@@ -39,7 +39,7 @@ import javafx.collections.ObservableList;
  * This class formalizes aspects of list selection that are specific to
  * text value sets.
  */
-public class TextSelector extends XComboBox {
+public class TextSelector extends XComboBox< String > {
 
     // Default constructor, when nothing much is known at creation time.
     public TextSelector( final ClientProperties pClientProperties ) {

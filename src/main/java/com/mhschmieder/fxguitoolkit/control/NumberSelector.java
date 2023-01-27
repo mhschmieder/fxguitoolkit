@@ -38,8 +38,12 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
 /**
  * This class formalizes aspects of list selection that are specific to
  * number value sets.
+ * <p>
+ * TODO: Review whether it is better to derive from TextSelector, or even
+ *  to specify the template type as Number, and use NumberConverters in
+ *  place of Number Formatters? Look at ControlsFX and other examples.
  */
-public class NumberSelector extends XComboBox {
+public class NumberSelector extends XComboBox< String > {
 
     // Number format cache used for locale-specific number formatting.
     protected NumberFormat _numberFormat;

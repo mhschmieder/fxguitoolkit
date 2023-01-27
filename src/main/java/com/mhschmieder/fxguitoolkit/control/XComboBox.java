@@ -49,7 +49,7 @@ import javafx.scene.control.Tooltip;
  * inform a consolidation of the two current approaches in this class, and note
  * that that class adds a third approach as well. All are mutually exclusive.
  */
-public abstract class XComboBox extends ComboBox< String > {
+public abstract class XComboBox< T > extends ComboBox< T > {
 
     // We need to know at all times whether we are marked as Searchable.
     protected boolean       _searchable;
@@ -224,13 +224,13 @@ public abstract class XComboBox extends ComboBox< String > {
     // TODO: Find a way to restore the previous value when it was displayed but
     // not actively selected, and to distinguish the two cases, as currently we
     // pass in "-1" to indicate that we don't want to preserve the selection.
-    public final void updateValues( final ObservableList< String > values,
+    public final void updateValues( final ObservableList< T > values,
                                     final int defaultSelectedIndex ) {
         // Cache the backup list for auto-complete follow-up list replacement.
         // _backupList.setAll( values );
 
         // Save the selection to reinstate after replacing the drop-list.
-        final SingleSelectionModel< String > selectionModel = getSelectionModel();
+        final SingleSelectionModel< T > selectionModel = getSelectionModel();
         final int currentSelectedIndex = ( defaultSelectedIndex >= 0 )
             ? defaultSelectedIndex
             : selectionModel.getSelectedIndex();
@@ -240,7 +240,7 @@ public abstract class XComboBox extends ComboBox< String > {
         // cause a callback on the current selection being reselected as though
         // it is a brand new (different) selection (due to being a legitimate
         // member of a "new" list), thus generating unwanted callbacks.
-        final ObservableList< String > items = getItems();
+        final ObservableList< T > items = getItems();
         if ( !items.equals( values ) ) {
             setItems( values );
         }
@@ -256,21 +256,21 @@ public abstract class XComboBox extends ComboBox< String > {
     }
 
     // Update the drop-list of available values.
-    public final void updateValues( final ObservableList< String > values,
-                                    final String defaultValue,
+    public final void updateValues( final ObservableList< T > values,
+                                    final T defaultValue,
                                     final boolean preserveSelection ) {
         // Cache the backup list for auto-complete follow-up list replacement.
         // _backupList.setAll( values );
 
         // Save the selection to reinstate after factoring the drop-list.
-        final String currentValue = getValue();
+        final T currentValue = getValue();
 
         // Replace the entire list all at once, to reduce callbacks and interim
         // states. Avoid side effects of replacing an identical list as that can
         // cause a callback on the current selection being reselected as though
         // it is a brand new (different) selection (due to being a legitimate
         // member of a "new" list), thus generating unwanted callbacks.
-        final ObservableList< String > items = getItems();
+        final ObservableList< T > items = getItems();
         if ( !items.equals( values ) ) {
             setItems( values );
         }
@@ -299,13 +299,13 @@ public abstract class XComboBox extends ComboBox< String > {
     }
 
     // Update the drop-list of available values.
-    public final void updateValues( final String[] values, final int defaultSelectedIndex ) {
+    public final void updateValues( final T[] values, final int defaultSelectedIndex ) {
         updateValues( FXCollections.observableArrayList( values ), defaultSelectedIndex );
     }
 
     // Update the drop-list of available values.
-    public final void updateValues( final String[] values,
-                                    final String defaultValue,
+    public final void updateValues( final T[] values,
+                                    final T defaultValue,
                                     final boolean preserveSelection ) {
         updateValues( FXCollections.observableArrayList( values ),
                       defaultValue,
