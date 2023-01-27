@@ -438,19 +438,27 @@ public final class GuiUtilities {
     }
 
     public static void applyLabeledButtonStyle( final Button button,
-                                                final String backColorCss,
+                                                final String backgroundColorCss,
+                                                final String foregroundColorCss,
                                                 final String borderColorCss,
                                                 final String borderWidthCss ) {
-        applyLabeledButtonStyle( button, backColorCss, borderColorCss, borderWidthCss, "7.5" );
+        applyLabeledButtonStyle( button, 
+                                 backgroundColorCss, 
+                                 foregroundColorCss, 
+                                 borderColorCss, 
+                                 borderWidthCss, 
+                                 "7.5" );
     }
 
     public static void applyLabeledButtonStyle( final Button button,
                                                 final String backgroundColorCss,
+                                                final String foregroundColorCss,
                                                 final String borderColorCss,
                                                 final String borderWidthCss,
                                                 final String borderRadiusCss ) {
         applyLabeledButtonStyle( button,
                                  backgroundColorCss,
+                                 foregroundColorCss,
                                  borderColorCss,
                                  borderWidthCss,
                                  borderRadiusCss,
@@ -459,6 +467,7 @@ public final class GuiUtilities {
 
     public static void applyLabeledButtonStyle( final Button button,
                                                 final String backgroundColorCss,
+                                                final String foregroundColorCss,
                                                 final String borderColorCss,
                                                 final String borderWidthCss,
                                                 final String borderRadiusCss,
@@ -477,11 +486,11 @@ public final class GuiUtilities {
                 + "; -fx-background-radius: " + borderRadiusCss + "; -fx-border-color: "
                 + borderColorCss + "; " + borderInsets + "; -fx-border-radius: " + borderRadiusCss
                 + "; -fx-border-width: " + borderWidthCss + "; " + padding
-                + "; -fx-text-fill: white;" );
+                + "; -fx-text-fill: " + foregroundColorCss + ";" );
     }
 
     public static void applyApplicationButtonStyle( final Button button,
-                                                    final String backColorCss,
+                                                    final String backgroundColorCss,
                                                     final String borderColorCss,
                                                     final String borderWidthCss ) {
         // NOTE: Do not apply the fx-content-display as centered here, as
@@ -489,7 +498,29 @@ public final class GuiUtilities {
         // both in the center of the button, thus obscuring each other.
         // TODO: Move this into CSS as state-specific styles, to avoid
         // so much copy/paste code in the toggle button action handlers.
-        applyLabeledButtonStyle( button, backColorCss, borderColorCss, borderWidthCss, "45" );
+        applyApplicationButtonStyle( button, 
+                                     backgroundColorCss, 
+                                     "white", 
+                                     borderColorCss, 
+                                     borderWidthCss );
+    }
+
+    public static void applyApplicationButtonStyle( final Button button,
+                                                    final String backgroundColorCss,
+                                                    final String foregroundColorCss,
+                                                    final String borderColorCss,
+                                                    final String borderWidthCss ) {
+        // NOTE: Do not apply the fx-content-display as centered here, as
+        // that causes buttons with both text and graphics to stack them
+        // both in the center of the button, thus obscuring each other.
+        // TODO: Move this into CSS as state-specific styles, to avoid
+        // so much copy/paste code in the toggle button action handlers.
+        applyLabeledButtonStyle( button, 
+                                 backgroundColorCss, 
+                                 foregroundColorCss, 
+                                 borderColorCss, 
+                                 borderWidthCss, 
+                                 "45" );
     }
 
     public static void applyTextFieldStyle( final TextField textField,

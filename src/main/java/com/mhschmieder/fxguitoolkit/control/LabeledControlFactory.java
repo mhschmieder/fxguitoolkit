@@ -122,10 +122,31 @@ public final class LabeledControlFactory {
                                     final String borderColorCss,
                                     final String borderWidthCss,
                                     final String borderRadiusCss ) {
+        final Button button = getButton( label, 
+                                         font, 
+                                         buttonWidth,
+                                         backColorCss,
+                                         "white",
+                                         borderColorCss,
+                                         borderWidthCss,
+                                         borderRadiusCss );
+
+        return button;
+    }
+
+    public static Button getButton( final String label,
+                                    final Font font,
+                                    final double buttonWidth,
+                                    final String backColorCss,
+                                    final String foreColorCss,
+                                    final String borderColorCss,
+                                    final String borderWidthCss,
+                                    final String borderRadiusCss ) {
         final Button button = getButton( label, font, buttonWidth );
 
         GuiUtilities.applyLabeledButtonStyle( button,
                                               backColorCss,
+                                              foreColorCss,
                                               borderColorCss,
                                               borderWidthCss,
                                               borderRadiusCss );
