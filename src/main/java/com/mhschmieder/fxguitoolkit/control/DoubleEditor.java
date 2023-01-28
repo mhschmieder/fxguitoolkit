@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -63,6 +63,7 @@ public class DoubleEditor extends NumberEditor {
     public DoubleEditor( final ClientProperties clientProperties,
                          final String initialText,
                          final String tooltipText,
+                         final boolean applyToolkitCss,
                          final int minFractionDigitsFormat,
                          final int maxFractionDigitsFormat,
                          final int minFractionDigitsParse,
@@ -70,6 +71,7 @@ public class DoubleEditor extends NumberEditor {
         this( clientProperties,
               initialText,
               tooltipText,
+              applyToolkitCss,
               minFractionDigitsFormat,
               maxFractionDigitsFormat,
               minFractionDigitsParse,
@@ -81,6 +83,7 @@ public class DoubleEditor extends NumberEditor {
     public DoubleEditor( final ClientProperties clientProperties,
                          final String initialText,
                          final String tooltipText,
+                         final boolean applyToolkitCss,
                          final int minFractionDigitsFormat,
                          final int maxFractionDigitsFormat,
                          final int minFractionDigitsParse,
@@ -90,6 +93,7 @@ public class DoubleEditor extends NumberEditor {
         this( clientProperties,
               initialText,
               tooltipText,
+              applyToolkitCss,
               minFractionDigitsFormat,
               maxFractionDigitsFormat,
               minFractionDigitsParse,
@@ -103,6 +107,7 @@ public class DoubleEditor extends NumberEditor {
     public DoubleEditor( final ClientProperties clientProperties,
                          final String initialText,
                          final String tooltipText,
+                         final boolean applyToolkitCss,
                          final int minFractionDigitsFormat,
                          final int maxFractionDigitsFormat,
                          final int minFractionDigitsParse,
@@ -112,7 +117,7 @@ public class DoubleEditor extends NumberEditor {
                          final double defaultValue,
                          final double valueIncrement ) {
         // Always call the superclass constructor first!
-        super( clientProperties, initialText, tooltipText );
+        super( clientProperties, initialText, tooltipText, applyToolkitCss );
 
         _defaultValue = defaultValue;
 

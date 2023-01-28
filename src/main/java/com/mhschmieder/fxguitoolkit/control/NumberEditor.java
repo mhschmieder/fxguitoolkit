@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,9 +58,10 @@ public abstract class NumberEditor extends XTextField {
 
     public NumberEditor( final ClientProperties clientProperties,
                          final String initialText,
-                         final String tooltipText ) {
+                         final String tooltipText,
+                         final boolean applyToolkitCss ) {
         // Always call the superclass constructor first!
-        super( initialText, tooltipText, clientProperties );
+        super( initialText, tooltipText, applyToolkitCss, clientProperties );
 
         _measurementUnitString = ""; //$NON-NLS-1$
 

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -78,16 +78,6 @@ public final class LabeledControlFactory {
 
     public static Button getButton( final String label,
                                     final Font font,
-                                    final double buttonWidth,
-                                    final double buttonHeight ) {
-        final Button button = getButton( label, font, buttonWidth );
-        button.setPrefHeight( buttonHeight );
-
-        return button;
-    }
-
-    public static Button getButton( final String label,
-                                    final Font font,
                                     final double buttonWidth ) {
         final Button button = new Button( label );
         if ( font != null ) {
@@ -96,6 +86,16 @@ public final class LabeledControlFactory {
         button.setAlignment( Pos.CENTER );
 
         button.setPrefWidth( buttonWidth );
+
+        return button;
+    }
+
+    public static Button getButton( final String label,
+                                    final Font font,
+                                    final double buttonWidth,
+                                    final double buttonHeight ) {
+        final Button button = getButton( label, font, buttonWidth );
+        button.setPrefHeight( buttonHeight );
 
         return button;
     }
@@ -142,6 +142,28 @@ public final class LabeledControlFactory {
                                     final String borderColorCss,
                                     final String borderWidthCss,
                                     final String borderRadiusCss ) {
+        final Button button = getButton( label,
+                                         font, 
+                                         buttonWidth,
+                                         backColorCss,
+                                         foreColorCss,
+                                         borderColorCss,
+                                         borderWidthCss,
+                                         borderRadiusCss,
+                                         null );
+
+        return button;
+    }
+
+    public static Button getButton( final String label,
+                                    final Font font,
+                                    final double buttonWidth,
+                                    final String backColorCss,
+                                    final String foreColorCss,
+                                    final String borderColorCss,
+                                    final String borderWidthCss,
+                                    final String borderRadiusCss,
+                                    final String borderInsetsCss ) {
         final Button button = getButton( label, font, buttonWidth );
 
         GuiUtilities.applyLabeledButtonStyle( button,
@@ -149,12 +171,13 @@ public final class LabeledControlFactory {
                                               foreColorCss,
                                               borderColorCss,
                                               borderWidthCss,
-                                              borderRadiusCss );
+                                              borderRadiusCss,
+                                              borderInsetsCss );
 
         return button;
     }
 
-    public static Button getButton( final String label,
+   public static Button getButton( final String label,
                                     final Font font,
                                     final double buttonWidth,
                                     final String backColorCss,

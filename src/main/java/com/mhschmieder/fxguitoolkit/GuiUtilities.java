@@ -2002,8 +2002,8 @@ public final class GuiUtilities {
         // Some Labels are meant to just blend in with their background, or have
         // complex rules for rendering, so we flag whether to apply styles.
         if ( applyCssStyleId ) {
-            // Match the enhanced Look-and-Feel for non-editable Status Labels.
-            statusLabel.getStyleClass().add( "enhanced-label" );
+            // Match this toolkit's Look-and-Feel for non-editable Status Labels.
+            statusLabel.getStyleClass().add( "fxguitoolkit-label" );
         }
 
         // Some Labels are used in paired contexts that already account for
@@ -2129,23 +2129,6 @@ public final class GuiUtilities {
         // foreground. This makes for better contrast and is easier on the eyes
         // than a black foreground, in such cases.
         return color.getBrightness() <= 0.51d;
-    }
-
-    public static boolean isNodeInHierarchy( final Node sourceNode,
-                                             final Node potentialHierarchyNode ) {
-        if ( potentialHierarchyNode == null ) {
-            return true;
-        }
-
-        Node node = sourceNode;
-        while ( node != null ) {
-            if ( node.equals( potentialHierarchyNode ) ) {
-                return true;
-            }
-            node = node.getParent();
-        }
-
-        return false;
     }
 
     // Launch the user's default browser set to the specified initial URL.
@@ -2286,9 +2269,9 @@ public final class GuiUtilities {
 
     @SuppressWarnings("nls")
     public static void setComboBoxProperties( final ComboBox< ? > comboBox ) {
-        // Apply the enhanced Combo Box CSS Style to this control.
-        comboBox.getStyleClass().add( "enhanced-combo-box" );
-        comboBox.getEditor().getStyleClass().add( "enhanced-combo-box" );
+        // Apply this toolkit's custom Combo Box CSS Style to this control.
+        comboBox.getStyleClass().add( "fxguitoolkit-combo-box" );
+        comboBox.getEditor().getStyleClass().add( "fxguitoolkit-combo-box" );
 
         // Apply drop-shadow effects when the mouse enters a Combo Box.
         applyDropShadowEffect( comboBox );
@@ -2317,9 +2300,9 @@ public final class GuiUtilities {
 
     @SuppressWarnings("nls")
     public static void setSpinnerProperties( final Spinner< ? > spinner ) {
-        // Apply the enhanced Spinner CSS Style to this control.
-        spinner.getStyleClass().add( "enhanced-spinner" );
-        spinner.getEditor().getStyleClass().add( "enhanced-spinner" );
+        // Apply this toolkit's custom Spinner CSS Style to this control.
+        spinner.getStyleClass().add( "fxguitoolkit-spinner" );
+        spinner.getEditor().getStyleClass().add( "fxguitoolkit-spinner" );
 
         // Apply drop-shadow effects when the mouse enters a Spinner.
         applyDropShadowEffect( spinner );
@@ -2376,8 +2359,8 @@ public final class GuiUtilities {
 
     @SuppressWarnings("nls")
     public static void setTextFieldProperties( final TextField textField ) {
-        // Apply the enhanced Text Field CSS Style to this control.
-        textField.getStyleClass().add( "enhanced-text-input" );
+        // Apply this toolkit's custom Text Field CSS Style to this control.
+        textField.getStyleClass().add( "fxguitoolkit-text-input" );
 
         // Apply drop-shadow effects when the mouse enters a Text Field.
         applyDropShadowEffect( textField );

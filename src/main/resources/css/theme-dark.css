@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -265,12 +265,12 @@
 
 /*******************************************************************************
  *                                                                             *
- * Custom Styles                                                               *
+ * Custom Toolkit Styles                                                       *
  *                                                                             *
  ******************************************************************************/
 
 /* Match the "Night Mode" color for General Action Buttons. */
-.custom-button {
+.fxguitoolkit-button {
     -fx-background-color: COLOR_BUTTON;
     -fx-background-insets: 0, 1;
     -fx-background-radius: 3, 2;
@@ -278,7 +278,7 @@
 }
 
 /* Match the "Night Mode" color for Status and Value Labels. */
-.custom-label {
+.fxguitoolkit-label {
     -fx-border-color: BORDER_LABEL;
     -fx-background-color: COLOR_LABEL;
     -fx-background-insets: 0, 1;
@@ -287,7 +287,7 @@
 }
 
 /* Match the "Night Mode" color for Text Fields (don't lose borders). */
-.custom-text-input {
+.fxguitoolkit-text-input {
     -fx-control-inner-background: COLOR_EDITOR;
     -fx-text-box-border: BORDER_EDITOR;
     -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
@@ -301,51 +301,51 @@
 }
 
 /* Match the "Night Mode" color for Combo Boxes. */
-.custom-combo-box {
+.fxguitoolkit-combo-box {
     -fx-background-color: COLOR_SELECTOR;
     -fx-text-fill: FILL_SELECTOR;
 }
 
-.custom-combo-box > .cell:selected {
+.fxguitoolkit-combo-box > .cell:selected {
     -fx-text-fill: FILL_SELECTOR;
 }
 
-.custom-combo-box > .text-field {
+.fxguitoolkit-combo-box > .text-field {
 	-fx-background-color: COLOR_SELECTOR;
     -fx-text-fill: FILL_SELECTOR;
 }
 
-.custom-combo-box > .arrow-button {
+.fxguitoolkit-combo-box > .arrow-button {
     -fx-background-color: COLOR_SELECTOR;
 }
 
-.custom-combo-box > .arrow-button > .arrow {
+.fxguitoolkit-combo-box > .arrow-button > .arrow {
     -fx-background-color: FILL_SELECTOR; /* Counter-intuitive but correct */
 }
 
 /* Match the "Night Mode" color for Spinners. */
-.custom-spinner {
+.fxguitoolkit-spinner {
     -fx-background-color: COLOR_SPINNER;
     -fx-text-fill: FILL_SPINNER;
 }
 
-.custom-spinner > .text-field {
+.fxguitoolkit-spinner > .text-field {
      -fx-text-fill: FILL_SPINNER;
 }
 
-.custom-spinner .increment-arrow-button {
+.fxguitoolkit-spinner .increment-arrow-button {
     -fx-background-color: COLOR_SPINNER;
 }
 
-.custom-spinner .increment-arrow-button .increment-arrow {
+.fxguitoolkit-spinner .increment-arrow-button .increment-arrow {
     -fx-background-color: FILL_SPINNER;
 }
 
-.custom-spinner .decrement-arrow-button {
+.fxguitoolkit-spinner .decrement-arrow-button {
     -fx-background-color: COLOR_SPINNER;
 }
 
-.custom-spinner .decrement-arrow-button .decrement-arrow {
+.fxguitoolkit-spinner .decrement-arrow-button .decrement-arrow {
     -fx-background-color: FILL_SPINNER; /* Counter-intuitive but correct */
 }
 

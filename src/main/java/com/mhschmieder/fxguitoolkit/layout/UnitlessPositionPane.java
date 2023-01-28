@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -78,6 +78,7 @@ public class UnitlessPositionPane extends BorderPane {
         _xPositionEditor = new DoubleEditor( clientProperties,
                                              "0", //$NON-NLS-1$
                                              null,
+                                             true,
                                              0,
                                              2,
                                              0,
@@ -87,6 +88,7 @@ public class UnitlessPositionPane extends BorderPane {
         _yPositionEditor = new DoubleEditor( clientProperties,
                                              "0", //$NON-NLS-1$
                                              null,
+                                             true,
                                              0,
                                              2,
                                              0,

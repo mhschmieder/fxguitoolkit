@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -62,27 +62,30 @@ public class IntegerEditor extends NumberEditor {
 
     public IntegerEditor( final ClientProperties clientProperties,
                           final String initialText,
-                          final String tooltipText ) {
-        this( clientProperties, initialText, tooltipText, -Integer.MAX_VALUE, Integer.MAX_VALUE );
+                          final String tooltipText,
+                          final boolean applyToolkitCss ) {
+        this( clientProperties, initialText, tooltipText, applyToolkitCss, -Integer.MAX_VALUE, Integer.MAX_VALUE );
     }
 
     public IntegerEditor( final ClientProperties clientProperties,
                           final String initialText,
                           final String tooltipText,
+                          final boolean applyToolkitCss,
                           final int minimumValue,
                           final int maximumValue ) {
-        this( clientProperties, initialText, tooltipText, minimumValue, maximumValue, 0, 0 );
+        this( clientProperties, initialText, tooltipText, applyToolkitCss, minimumValue, maximumValue, 0, 0 );
     }
 
     public IntegerEditor( final ClientProperties clientProperties,
                           final String initialText,
                           final String tooltipText,
+                          final boolean applyToolkitCss,
                           final int minimumValue,
                           final int maximumValue,
                           final int defaultValue,
                           final int valueIncrement ) {
         // Always call the superclass constructor first!
-        super( clientProperties, initialText, tooltipText );
+        super( clientProperties, initialText, tooltipText, applyToolkitCss );
 
         _defaultValue = defaultValue;
 

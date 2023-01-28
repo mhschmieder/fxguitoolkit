@@ -90,7 +90,7 @@ public class VectorGraphicsExportOptionsDialog extends ExportOptionsDialog {
                                    final String graphicsExportChartLabel,
                                    final String graphicsExportAuxiliaryLabel ) {
         final String title = _vectorGraphicsExportOptionsCandidate.getTitle();
-        final TextEditor titleEditor = new TextEditor( title, true, clientProperties );
+        final TextEditor titleEditor = new TextEditor( title, true, true, clientProperties );
         final HBox titleBox = GuiUtilities.getLabeledTextFieldPane( "Document Title", //$NON-NLS-1$
                                                                     titleEditor );
 

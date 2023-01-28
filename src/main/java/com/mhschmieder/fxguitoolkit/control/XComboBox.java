@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,17 +39,28 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Skin;
+import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 
 /**
- * This is an abstract superclass to consolidate stuff that we want all Combo
- * Boxes to do, such as handle ESC and ENTER key events consistently.
+ * {@code XComboBox} is a concrete base class that serves as a specialization
+ * of {@link ComboBox}, primarily to augment the core API so that derived
+ * classes don't have to write copy/paste code that might diverge over time.
+ * <p>
+ * In particular, this class properly handles ESC and ENTER keys consistently.
  * <p>
  * TODO: Use the richer logic of Angle Selector's list updater method to
  * inform a consolidation of the two current approaches in this class, and note
  * that that class adds a third approach as well. All are mutually exclusive.
+ *
+ * @param <T>
+ *            The object type for the combo box
+ *
+ * @version 1.0
+ *
+ * @author Mark Schmieder
  */
-public abstract class XComboBox< T > extends ComboBox< T > {
+public class XComboBox< T > extends ComboBox< T > {
 
     // We need to know at all times whether we are marked as Searchable.
     protected boolean       _searchable;
@@ -64,7 +75,7 @@ public abstract class XComboBox< T > extends ComboBox< T > {
 
     public XComboBox( final ClientProperties pClientProperties,
                       final String tooltipText,
-                      final boolean toolbarContext,
+                      final boolean applyToolkitCss,
                       final boolean editable,
                       final boolean searchable ) {
         // Always call the superclass constructor first!
@@ -77,7 +88,7 @@ public abstract class XComboBox< T > extends ComboBox< T > {
         // _backupList = FXCollections.observableArrayList();
 
         try {
-            initComboBox( tooltipText, toolbarContext, editable );
+            initComboBox( tooltipText, applyToolkitCss, editable );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -90,7 +101,7 @@ public abstract class XComboBox< T > extends ComboBox< T > {
     }
 
     private final void initComboBox( final String tooltipText,
-                                     final boolean toolbarContext,
+                                     final boolean applyToolkitCss,
                                      final boolean editable ) {
         // Provide Tool Tips in case this component is used in a sparse context
         // like a Tool Bar, where there may be no associated descriptive label.
@@ -101,13 +112,13 @@ public abstract class XComboBox< T > extends ComboBox< T > {
         // It's best to set editable status before modifying CSS attributes.
         setEditable( editable );
 
-        if ( toolbarContext ) {
-            // Apply drop-shadow effects when the mouse enters this Combo Box.
-            GuiUtilities.applyDropShadowEffect( this );
+        if ( applyToolkitCss ) {
+            // Set the full list of this toolkit's custom Combo Box Properties.
+            GuiUtilities.setComboBoxProperties( this );
         }
         else {
-            // Set the full list of shared Combo Box Properties (CSS etc.).
-            GuiUtilities.setComboBoxProperties( this );
+            // Apply drop-shadow effects when the mouse enters this Combo Box.
+            GuiUtilities.applyDropShadowEffect( this );
         }
 
         // Attempt to support auto-complete for all list data types.

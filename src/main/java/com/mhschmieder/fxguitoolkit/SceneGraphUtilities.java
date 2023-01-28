@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,6 +44,7 @@ import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
@@ -430,6 +431,7 @@ public class SceneGraphUtilities {
         final DoubleEditor doubleEditor = new DoubleEditor( clientProperties,
                                                             initialText,
                                                             null,
+                                                            true,
                                                             minFractionDigitsFormat,
                                                             maxFractionDigitsFormat,
                                                             minFractionDigitsParse,
@@ -484,6 +486,23 @@ public class SceneGraphUtilities {
         if ( userData != null ) {
             control.setUserData( userData );
         }
+    }
+
+    public static boolean isNodeInHierarchy( final Node sourceNode,
+                                             final Node potentialHierarchyNode ) {
+        if ( potentialHierarchyNode == null ) {
+            return true;
+        }
+    
+        Node node = sourceNode;
+        while ( node != null ) {
+            if ( node.equals( potentialHierarchyNode ) ) {
+                return true;
+            }
+            node = node.getParent();
+        }
+    
+        return false;
     }
 
 }

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -87,6 +87,7 @@ public class ControlFactory {
         final DoubleEditor opacityEditor = new DoubleEditor( clientProperties,
                                                              initialText,
                                                              tooltipText,
+                                                             true,
                                                              0,
                                                              1,
                                                              0,
@@ -115,7 +116,7 @@ public class ControlFactory {
     }
 
     public static final Spinner< Double > makeDoubleSpinner( final ClientProperties clientProperties,
-                                                             final boolean toolbarContext,
+                                                             final boolean applyToolkitCss,
                                                              final String valueDescriptor,
                                                              final double minimumNumericValue,
                                                              final double maximumNumericValue,
@@ -139,7 +140,7 @@ public class ControlFactory {
                                                 measurementUnit,
                                                 clientProperties.locale );
 
-        if ( toolbarContext ) {
+        if ( applyToolkitCss ) {
             // Apply drop-shadow effects when the mouse enters this Node.
             GuiUtilities.applyDropShadowEffect( doubleSpinner );
         }
@@ -153,7 +154,7 @@ public class ControlFactory {
     }
 
     public static final Spinner< Integer > makeIntegerSpinner( final ClientProperties clientProperties,
-                                                               final boolean toolbarContext,
+                                                               final boolean applyToolkitCss,
                                                                final String valueDescriptor,
                                                                final int minimumNumericValue,
                                                                final int maximumNumericValue,
@@ -177,7 +178,7 @@ public class ControlFactory {
                                                  measurementUnit,
                                                  clientProperties.locale );
 
-        if ( toolbarContext ) {
+        if ( applyToolkitCss ) {
             // Apply drop-shadow effects when the mouse enters this Node.
             GuiUtilities.applyDropShadowEffect( integerSpinner );
         }

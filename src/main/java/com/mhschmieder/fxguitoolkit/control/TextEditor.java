@@ -53,26 +53,46 @@ public class TextEditor extends XTextField {
     private final StringProperty value;
 
     @SuppressWarnings("nls")
-    public TextEditor( final ClientProperties pClientProperties ) {
-        this( "", null, true, pClientProperties );
+    public TextEditor( final boolean applyToolkitCss,
+                       final ClientProperties pClientProperties ) {
+        this( "", null, applyToolkitCss, true, pClientProperties );
     }
 
     public TextEditor( final String initialText,
-                       final boolean pBlankTextAllowed,
+                       final boolean applyToolkitCss, 
                        final ClientProperties pClientProperties ) {
-        this( initialText, null, pBlankTextAllowed, pClientProperties );
+        this( initialText, null, applyToolkitCss, pClientProperties );
     }
 
-    public TextEditor( final String initialText, final ClientProperties pClientProperties ) {
-        this( initialText, null, pClientProperties );
+    public TextEditor( final String initialText,
+                       final String tooltipText,
+                       final boolean applyToolkitCss,
+                       final ClientProperties pClientProperties ) {
+        this( initialText, 
+              tooltipText, 
+              applyToolkitCss, 
+              false, 
+              pClientProperties );
+    }
+
+    public TextEditor( final String initialText,
+                       final boolean applyToolkitCss,
+                       final boolean pBlankTextAllowed,
+                       final ClientProperties pClientProperties ) {
+        this( initialText, 
+              null, 
+              applyToolkitCss, 
+              pBlankTextAllowed, 
+              pClientProperties );
     }
 
     public TextEditor( final String pInitialText,
                        final String pTooltipText,
+                       final boolean applyToolkitCss,
                        final boolean pBlankTextAllowed,
                        final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super( pInitialText, pTooltipText, pClientProperties );
+        super( pInitialText, pTooltipText, applyToolkitCss, pClientProperties );
 
         _blankTextAllowed = pBlankTextAllowed;
 
@@ -84,12 +104,6 @@ public class TextEditor extends XTextField {
         catch ( final Exception ex ) {
             ex.printStackTrace();
         }
-    }
-
-    public TextEditor( final String initialText,
-                       final String tooltipText,
-                       final ClientProperties pClientProperties ) {
-        this( initialText, tooltipText, false, pClientProperties );
     }
 
     public final void adjustValue() {

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,8 +43,7 @@ import javafx.scene.text.TextAlignment;
 
 /**
  * {@code XToggleButton} is an enhancement to {@link ToggleButton} that takes
- * care
- * of some of its anomalies.
+ * care of some of its anomalies.
  *
  * @version 1.0
  *

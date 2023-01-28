@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,11 +58,15 @@ public class NumberSelector extends XComboBox< String > {
                            final int maxFractionDigitsParse,
                            final boolean useLocale,
                            final String tooltipText,
-                           final boolean toolbarContext,
+                           final boolean applyToolkitCss,
                            final boolean editable,
                            final boolean searchable ) {
         // Always call the superclass constructor first!
-        super( clientProperties, tooltipText, toolbarContext, editable, searchable );
+        super( clientProperties, 
+               tooltipText, 
+               applyToolkitCss, 
+               editable, 
+               searchable );
 
         try {
             initComboBox( minFractionDigitsFormat,

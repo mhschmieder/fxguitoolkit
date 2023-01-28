@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -51,12 +51,16 @@ public class TextSelector extends XComboBox< String > {
     // constructor hierarchy (super() and this() have to be the first code).
     public TextSelector( final ClientProperties pClientProperties,
                          final String tooltipText,
-                         final boolean toolbarContext,
+                         final boolean applyToolkitCss,
                          final boolean editable,
                          final boolean searchable,
                          final int visibleRowCount ) {
         // Always call the superclass constructor first!
-        super( pClientProperties, tooltipText, toolbarContext, editable, searchable );
+        super( pClientProperties, 
+               tooltipText, 
+               applyToolkitCss, 
+               editable, 
+               searchable );
 
         try {
             initComboBox( visibleRowCount );
@@ -70,7 +74,7 @@ public class TextSelector extends XComboBox< String > {
     // For this version, we expect a static array of list values.
     public TextSelector( final ClientProperties pClientProperties,
                          final String tooltipText,
-                         final boolean toolbarContext,
+                         final boolean applyToolkitCss,
                          final boolean editable,
                          final boolean searchable,
                          final String[] textValues,
@@ -78,7 +82,7 @@ public class TextSelector extends XComboBox< String > {
         // By default, make sure the list displays all items without scrolling.
         this( pClientProperties,
               tooltipText,
-              toolbarContext,
+              applyToolkitCss,
               editable,
               searchable,
               FXCollections.observableArrayList( textValues ),
@@ -89,7 +93,7 @@ public class TextSelector extends XComboBox< String > {
     // For this version, we expect an already-constructed observable list.
     public TextSelector( final ClientProperties pClientProperties,
                          final String tooltipText,
-                         final boolean toolbarContext,
+                         final boolean applyToolkitCss,
                          final boolean editable,
                          final boolean searchable,
                          final ObservableList< String > valuesList,
@@ -97,7 +101,7 @@ public class TextSelector extends XComboBox< String > {
         // By default, make sure the list displays all items without scrolling.
         this( pClientProperties,
               tooltipText,
-              toolbarContext,
+              applyToolkitCss,
               editable,
               searchable,
               valuesList.size() );

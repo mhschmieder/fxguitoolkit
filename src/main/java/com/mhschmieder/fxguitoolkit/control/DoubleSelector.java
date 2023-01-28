@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ public class DoubleSelector extends NumberSelector {
                            final int maxFractionDigitsParse,
                            final boolean useLocale,
                            final String tooltipText,
-                           final boolean toolbarContext,
+                           final boolean applyToolkitCss,
                            final boolean editable,
                            final boolean searchable ) {
         // Always call the superclass constructor first!
@@ -60,7 +60,7 @@ public class DoubleSelector extends NumberSelector {
                maxFractionDigitsParse,
                useLocale,
                tooltipText,
-               toolbarContext,
+               applyToolkitCss,
                editable,
                searchable );
     }
@@ -72,7 +72,7 @@ public class DoubleSelector extends NumberSelector {
                            final int maxFractionDigitsParse,
                            final boolean useLocale,
                            final String tooltipText,
-                           final boolean toolbarContext,
+                           final boolean applyToolkitCss,
                            final boolean editable,
                            final boolean searchable,
                            final double minimumValue,
@@ -85,7 +85,7 @@ public class DoubleSelector extends NumberSelector {
               maxFractionDigitsParse,
               useLocale,
               tooltipText,
-              toolbarContext,
+              applyToolkitCss,
               editable,
               searchable );
 

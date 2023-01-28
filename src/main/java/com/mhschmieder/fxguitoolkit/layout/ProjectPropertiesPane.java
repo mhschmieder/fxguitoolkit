@@ -81,19 +81,19 @@ public final class ProjectPropertiesPane extends VBox {
         final double textFieldWidth = 360d;
 
         final Label projectNameLabel = GuiUtilities.getPropertySheetLabel( "Project" ); //$NON-NLS-1$
-        _projectNameTextField = new TextEditor( clientProperties );
+        _projectNameTextField = new TextEditor( true, clientProperties );
         _projectNameTextField.setPrefWidth( textFieldWidth );
 
         final Label venueLabel = GuiUtilities.getPropertySheetLabel( "Venue" ); //$NON-NLS-1$
-        _venueTextField = new TextEditor( clientProperties );
+        _venueTextField = new TextEditor( true, clientProperties );
         _venueTextField.setPrefWidth( textFieldWidth );
 
         final Label designerLabel = GuiUtilities.getPropertySheetLabel( "Designer" ); //$NON-NLS-1$
-        _designerTextField = new TextEditor( clientProperties );
+        _designerTextField = new TextEditor( true, clientProperties );
         _designerTextField.setPrefWidth( textFieldWidth );
 
         final Label dateLabel = GuiUtilities.getPropertySheetLabel( "Date" ); //$NON-NLS-1$
-        _dateTextField = new TextEditor( clientProperties );
+        _dateTextField = new TextEditor( true, clientProperties );
         _dateTextField.setPrefWidth( textFieldWidth );
 
         _projectNotes = GuiUtilities.getNotesEditor( 12 );

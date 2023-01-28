@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,7 @@ public class IntegerSelector extends NumberSelector {
     public IntegerSelector( final ClientProperties clientProperties,
                             final boolean useLocale,
                             final String tooltipText,
-                            final boolean toolbarContext,
+                            final boolean applyToolkitCss,
                             final boolean editable,
                             final boolean searchable ) {
         // Always call the superclass constructor first!
@@ -56,7 +56,7 @@ public class IntegerSelector extends NumberSelector {
                0,
                useLocale,
                tooltipText,
-               toolbarContext,
+               applyToolkitCss,
                editable,
                searchable );
     }
@@ -64,13 +64,18 @@ public class IntegerSelector extends NumberSelector {
     public IntegerSelector( final ClientProperties clientProperties,
                             final boolean useLocale,
                             final String tooltipText,
-                            final boolean toolbarContext,
+                            final boolean applyToolkitCss,
                             final boolean editable,
                             final boolean searchable,
                             final int minimumValue,
                             final int maximumValue,
                             final int increment ) {
-        this( clientProperties, useLocale, tooltipText, toolbarContext, editable, searchable );
+        this( clientProperties, 
+              useLocale, 
+              tooltipText, 
+              applyToolkitCss, 
+              editable, 
+              searchable );
 
         try {
             initComboBox( minimumValue, maximumValue, increment );

@@ -87,7 +87,7 @@ public final class ImageSizePane extends VBox {
                 .getPixelDimensionAsString( ImageSize.PIXEL_DIMENSIONS_WIDTH_DEFAULT );
         _pixelWidthSelector = new TextSelector( clientProperties,
                                                 "Image Width in Pixels", //$NON-NLS-1$
-                                                false,
+                                                true,
                                                 true,
                                                 false,
                                                 pixelWidths,
@@ -102,7 +102,7 @@ public final class ImageSizePane extends VBox {
                 .getPixelDimensionAsString( ImageSize.PIXEL_DIMENSIONS_HEIGHT_DEFAULT );
         _pixelHeightSelector = new TextSelector( clientProperties,
                                                  "Image Height in Pixels", //$NON-NLS-1$
-                                                 false,
+                                                 true,
                                                  true,
                                                  false,
                                                  pixelHeights,
