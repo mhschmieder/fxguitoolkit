@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
+import org.apache.commons.math3.util.FastMath;
+
 import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
@@ -90,7 +92,7 @@ public class IntegerSelector extends NumberSelector {
                                      final int maximumValue,
                                      final int increment ) {
         // Put together the monotonically increasing list of choices.
-        final int numberOfChoices = ( int ) Math
+        final int numberOfChoices = ( int ) FastMath
                 .floor( ( ( maximumValue - minimumValue ) + 1 ) / increment );
         final String[] integerValues = new String[ numberOfChoices ];
 
@@ -102,7 +104,7 @@ public class IntegerSelector extends NumberSelector {
 
         // Ensure that most items are visible before scrolling, but also make
         // sure the overall list doesn't get unwieldy.
-        setVisibleRowCount( Math.min( numberOfChoices, 25 ) );
+        setVisibleRowCount( FastMath.min( numberOfChoices, 25 ) );
 
         // Set the non-editable list of supported integer values.
         setItems( FXCollections.observableArrayList( integerValues ) );

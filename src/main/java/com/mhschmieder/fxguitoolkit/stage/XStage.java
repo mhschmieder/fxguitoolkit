@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import org.apache.commons.math3.util.FastMath;
+
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.io.FileUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
@@ -325,8 +327,8 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
             final Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
 
             // Adjust and cache the preferred size for this window.
-            final double adjustedWidth = Math.min( getWidth(), bounds.getWidth() );
-            final double adjustedHeight = Math.min( getHeight(), bounds.getHeight() );
+            final double adjustedWidth = FastMath.min( getWidth(), bounds.getWidth() );
+            final double adjustedHeight = FastMath.min( getHeight(), bounds.getHeight() );
             setPreferredWindowSize( adjustedWidth, adjustedHeight );
 
             // Adjust and set the window's location on the screen (in pixels).
@@ -1143,8 +1145,8 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
         // NOTE: We subtract a bit of a margin to make sure the Window can be
         // grabbed, resized, dragged, just in case decorations cause overflow,
         // and also to account for the dock and other related OS-level stuff.
-        stageWidthAdjusted = Math.min( screenWidth - 60, stageWidthAdjusted );
-        stageHeightAdjusted = Math.min( screenHeight - 60, stageHeightAdjusted );
+        stageWidthAdjusted = FastMath.min( screenWidth - 60, stageWidthAdjusted );
+        stageHeightAdjusted = FastMath.min( screenHeight - 60, stageHeightAdjusted );
 
         // Cache the Window's adjusted Preferred Size on the Screen (in pixels).
         _preferredWindowSize = new Dimension2D( stageWidthAdjusted, stageHeightAdjusted );

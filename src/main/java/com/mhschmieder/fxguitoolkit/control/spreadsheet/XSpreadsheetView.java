@@ -33,6 +33,7 @@ package com.mhschmieder.fxguitoolkit.control.spreadsheet;
 import java.text.NumberFormat;
 import java.util.Comparator;
 
+import org.apache.commons.math3.util.FastMath;
 import org.controlsfx.control.spreadsheet.Grid;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
 import org.controlsfx.control.spreadsheet.SpreadsheetColumn;
@@ -452,7 +453,7 @@ public abstract class XSpreadsheetView extends SpreadsheetView {
         final int lastRowIndex = getLastRowIndex();
         final int autoselectRowIndex = ( selectedRowIndex < 0 )
             ? lastRowIndex
-            : Math.min( selectedRowIndex, lastRowIndex );
+            : FastMath.min( selectedRowIndex, lastRowIndex );
         if ( autoselectRowIndex >= 0 ) {
             final SpreadsheetViewSelectionModel selectionModel = getSelectionModel();
 

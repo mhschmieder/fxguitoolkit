@@ -32,6 +32,8 @@ package com.mhschmieder.fxguitoolkit;
 
 import java.text.NumberFormat;
 
+import org.apache.commons.math3.util.FastMath;
+
 import javafx.util.StringConverter;
 
 public class NumberConverter extends StringConverter< Number > {
@@ -75,8 +77,8 @@ public class NumberConverter extends StringConverter< Number > {
 
             // If limits were established, enforce them. Always check though, to
             // avoid overflow and underflow conditions.
-            editedValue = Math.max( editedValue, _minimumValue );
-            editedValue = Math.min( editedValue, _maximumValue );
+            editedValue = FastMath.max( editedValue, _minimumValue );
+            editedValue = FastMath.min( editedValue, _maximumValue );
 
             return editedValue;
         }

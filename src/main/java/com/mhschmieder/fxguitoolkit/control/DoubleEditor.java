@@ -32,6 +32,8 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import java.text.ParseException;
 
+import org.apache.commons.math3.util.FastMath;
+
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.application.Platform;
@@ -283,7 +285,7 @@ public class DoubleEditor extends NumberEditor {
     }
 
     public double getClampedValue( final double unclampedValue ) {
-        final double clampedValue = Math.min( Math.max( unclampedValue, _minimumValue ),
+        final double clampedValue = FastMath.min( FastMath.max( unclampedValue, _minimumValue ),
                                               _maximumValue );
         return clampedValue;
     }

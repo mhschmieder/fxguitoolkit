@@ -34,6 +34,8 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
+import org.apache.commons.math3.util.FastMath;
+
 import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
 import com.mhschmieder.commonstoolkit.text.TextUtilities;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
@@ -421,7 +423,7 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
     }
 
     public int getClampedValue( final int unclampedValue ) {
-        final int clampedValue = Math.min( Math.max( unclampedValue, _minimumNumericValue ),
+        final int clampedValue = FastMath.min( FastMath.max( unclampedValue, _minimumNumericValue ),
                                            _maximumNumericValue );
         return clampedValue;
     }

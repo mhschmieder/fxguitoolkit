@@ -40,6 +40,7 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import org.apache.commons.math3.util.FastMath;
 import org.controlsfx.control.RangeSlider;
 import org.controlsfx.control.SegmentedButton;
 import org.controlsfx.control.action.Action;
@@ -823,10 +824,10 @@ public final class GuiUtilities {
                                                    final Scene scene,
                                                    final Insets insets,
                                                    final double borderWidth ) {
-        final double resizeMarginTop = Math.max( borderWidth, 0.5d * insets.getTop() );
-        final double resizeMarginLeft = Math.max( borderWidth, 0.5d * insets.getLeft() );
-        final double resizeMarginBottom = Math.max( borderWidth, 0.5d * insets.getBottom() );
-        final double resizeMarginRight = Math.max( borderWidth, 0.5d * insets.getRight() );
+        final double resizeMarginTop = FastMath.max( borderWidth, 0.5d * insets.getTop() );
+        final double resizeMarginLeft = FastMath.max( borderWidth, 0.5d * insets.getLeft() );
+        final double resizeMarginBottom = FastMath.max( borderWidth, 0.5d * insets.getBottom() );
+        final double resizeMarginRight = FastMath.max( borderWidth, 0.5d * insets.getRight() );
 
         return detectResizeTarget( mouseEvent,
                                    scene,
@@ -866,15 +867,15 @@ public final class GuiUtilities {
 
         final Insets insets = region.getInsets();
 
-        final double diffMinY = Math.abs( ( layoutBounds.getMinY() - mouseY ) + insets.getTop() );
-        final double diffMinX = Math.abs( ( layoutBounds.getMinX() - mouseX ) + insets.getLeft() );
-        final double diffMaxY = Math.abs( layoutBounds.getMaxY() - mouseY - insets.getBottom() );
-        final double diffMaxX = Math.abs( layoutBounds.getMaxX() - mouseX - insets.getRight() );
+        final double diffMinY = FastMath.abs( ( layoutBounds.getMinY() - mouseY ) + insets.getTop() );
+        final double diffMinX = FastMath.abs( ( layoutBounds.getMinX() - mouseX ) + insets.getLeft() );
+        final double diffMaxY = FastMath.abs( layoutBounds.getMaxY() - mouseY - insets.getBottom() );
+        final double diffMaxX = FastMath.abs( layoutBounds.getMaxX() - mouseX - insets.getRight() );
 
-        final double resizeMarginTop = Math.max( borderWidth, 0.5d * insets.getTop() );
-        final double resizeMarginLeft = Math.max( borderWidth, 0.5d * insets.getLeft() );
-        final double resizeMarginBottom = Math.max( borderWidth, 0.5d * insets.getBottom() );
-        final double resizeMarginRight = Math.max( borderWidth, 0.5d * insets.getRight() );
+        final double resizeMarginTop = FastMath.max( borderWidth, 0.5d * insets.getTop() );
+        final double resizeMarginLeft = FastMath.max( borderWidth, 0.5d * insets.getLeft() );
+        final double resizeMarginBottom = FastMath.max( borderWidth, 0.5d * insets.getBottom() );
+        final double resizeMarginRight = FastMath.max( borderWidth, 0.5d * insets.getRight() );
 
         return ResizeTarget.detectResizeTarget( diffMinY,
                                                 diffMinX,
@@ -961,7 +962,7 @@ public final class GuiUtilities {
             ? stage.getMaxWidth()
             : ( resizeWidthCandidate < stage.getMinWidth() )
                 ? stage.getMinWidth()
-                : Math.min( resizeWidthCandidate, allowedWidth );
+                : FastMath.min( resizeWidthCandidate, allowedWidth );
     }
 
     public static double getClampedHeight( final Stage stage, final double resizeHeightCandidate ) {
@@ -985,7 +986,7 @@ public final class GuiUtilities {
             ? stage.getMaxHeight()
             : ( resizeHeightCandidate < stage.getMinHeight() )
                 ? stage.getMinHeight()
-                : Math.min( resizeHeightCandidate, allowedHeight );
+                : FastMath.min( resizeHeightCandidate, allowedHeight );
     }
 
     public static Screen findActiveScreen( final Window window ) {
@@ -1035,9 +1036,9 @@ public final class GuiUtilities {
     // As with some other methods here, this one actually comes from
     // FxGuiToolkit's ColorUtilities class, which we use very little of.
     public static String colorToRgba( final Color color ) {
-        return "rgba(" + String.valueOf( Math.floor( color.getRed() * 255d ) ) + ", "
-                + String.valueOf( Math.floor( color.getGreen() * 255d ) ) + ", "
-                + String.valueOf( Math.floor( color.getBlue() * 255d ) ) + ", "
+        return "rgba(" + String.valueOf( FastMath.floor( color.getRed() * 255d ) ) + ", "
+                + String.valueOf( FastMath.floor( color.getGreen() * 255d ) ) + ", "
+                + String.valueOf( FastMath.floor( color.getBlue() * 255d ) ) + ", "
                 + String.valueOf( color.getOpacity() ) + ")";
     }
 
@@ -1076,7 +1077,7 @@ public final class GuiUtilities {
 
         final double lHeight = l.prefHeight( Region.USE_COMPUTED_SIZE ) + 16d;
         final double tHeight = t.prefHeight( Region.USE_COMPUTED_SIZE ) + 16d;
-        final double finalHeight = Math.max( lHeight, tHeight );
+        final double finalHeight = FastMath.max( lHeight, tHeight );
 
         textArea.setMinHeight( finalHeight );
         textArea.setPrefHeight( finalHeight );
@@ -1859,7 +1860,7 @@ public final class GuiUtilities {
                                                          highValue );
 
         rangeSlider.setMajorTickUnit( majorTickUnit );
-        rangeSlider.setMinorTickCount( ( int ) Math.floor( majorTickUnit / blockIncrement ) );
+        rangeSlider.setMinorTickCount( ( int ) FastMath.floor( majorTickUnit / blockIncrement ) );
         rangeSlider.setBlockIncrement( blockIncrement );
 
         rangeSlider.setShowTickMarks( true );

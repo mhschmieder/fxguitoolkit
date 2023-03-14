@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
+import org.apache.commons.math3.util.FastMath;
+
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.ScrollingSensitivity;
@@ -161,7 +163,7 @@ public class NumberSlider extends Slider {
 
         // Try for slightly coarser resolution (pixels), to improve performance.
         final double scrollDeltaY = event.getDeltaY();
-        if ( Math.abs( scrollDeltaY ) < 3.0d ) {
+        if ( FastMath.abs( scrollDeltaY ) < 3.0d ) {
             return;
         }
 
@@ -233,7 +235,7 @@ public class NumberSlider extends Slider {
     public final void setTickResolution( final double majorTickSpacing,
                                          final double minorTickSpacing ) {
         // NOTE: The tick count is for how many are between major ticks.
-        final int minorTickCount = ( int ) Math.round( majorTickSpacing / minorTickSpacing ) - 1;
+        final int minorTickCount = ( int ) FastMath.round( majorTickSpacing / minorTickSpacing ) - 1;
 
         setMajorTickUnit( majorTickSpacing );
         setMinorTickCount( minorTickCount );

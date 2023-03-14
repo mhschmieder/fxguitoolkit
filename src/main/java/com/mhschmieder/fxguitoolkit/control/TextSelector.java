@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
+import org.apache.commons.math3.util.FastMath;
+
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.collections.FXCollections;
@@ -120,7 +122,7 @@ public class TextSelector extends XComboBox< String > {
     private final void initComboBox( final int visibleRowCount ) {
         // Ensure that the desired number of rows are visible before scrolling,
         // but also make sure the overall list doesn't get unwieldy.
-        setVisibleRowCount( Math.min( visibleRowCount, 25 ) );
+        setVisibleRowCount( FastMath.min( visibleRowCount, 25 ) );
     }
 
     public final boolean isValueAllowed( final String textValue ) {

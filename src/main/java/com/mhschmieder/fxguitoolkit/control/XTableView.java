@@ -32,6 +32,8 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import java.util.Comparator;
 
+import org.apache.commons.math3.util.FastMath;
+
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
 import javafx.collections.transformation.SortedList;
@@ -289,7 +291,7 @@ public class XTableView< TD > extends TableView< TD > {
             // the default selection to be the last valid row index.
             if ( autoSelectionEnabled ) {
                 final int maximumRowIndex = getLastRowIndex();
-                selectionIndex = Math.max( selectionIndex, maximumRowIndex );
+                selectionIndex = FastMath.max( selectionIndex, maximumRowIndex );
             }
         }
 
@@ -332,7 +334,7 @@ public class XTableView< TD > extends TableView< TD > {
         final int lastRowIndex = getLastRowIndex();
         final int adjustedRowIndex = ( ( rowIndex < 0 ) || ( rowIndex > lastRowIndex ) )
             ? lastRowIndex
-            : Math.min( rowIndex, lastRowIndex );
+            : FastMath.min( rowIndex, lastRowIndex );
         if ( adjustedRowIndex >= 0 ) {
             final TableViewSelectionModel< TD > selectionModel = getSelectionModel();
             selectionModel.clearAndSelect( adjustedRowIndex );

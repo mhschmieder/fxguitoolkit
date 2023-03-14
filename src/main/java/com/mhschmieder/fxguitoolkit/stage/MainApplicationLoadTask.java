@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
+import org.apache.commons.math3.util.FastMath;
+
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.stage.Stage;
@@ -43,7 +45,7 @@ public final class MainApplicationLoadTask extends Task< Void > {
     // to initialize the main application.
     private static final int THREAD_SLEEP_INTERVAL_MS        = 500;
     private static final int MAXIMUM_THREAD_SLEEP_TIME_MS    = 15000;
-    private static final int MAXIMUM_THREAD_SLEEP_INCREMENTS = Math
+    private static final int MAXIMUM_THREAD_SLEEP_INCREMENTS = FastMath
             .round( MAXIMUM_THREAD_SLEEP_TIME_MS / THREAD_SLEEP_INTERVAL_MS );
 
     // Cache the progress text so we can initialize it via the constructor.

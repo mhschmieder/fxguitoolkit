@@ -33,6 +33,8 @@ package com.mhschmieder.fxguitoolkit.stage;
 import java.util.List;
 import java.util.prefs.Preferences;
 
+import org.apache.commons.math3.util.FastMath;
+
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
@@ -238,8 +240,8 @@ public final class FxWindowUtilities {
 
         // Likewise, as the Screen Size or resolution may have changed since the
         // previous session, we ensure that the Preferred Size can still fit.
-        windowWidthAdjusted = Math.min( maximumWindowSize.getWidth(), windowWidthAdjusted );
-        windowHeightAdjusted = Math.min( maximumWindowSize.getHeight(), windowHeightAdjusted );
+        windowWidthAdjusted = FastMath.min( maximumWindowSize.getWidth(), windowWidthAdjusted );
+        windowHeightAdjusted = FastMath.min( maximumWindowSize.getHeight(), windowHeightAdjusted );
 
         // Cache the window's adjusted Preferred Size on the Screen (in pixels).
         return new Dimension2D( windowWidthAdjusted, windowHeightAdjusted );
@@ -265,8 +267,8 @@ public final class FxWindowUtilities {
         // Adjust and cache the preferred size for this window.
         final double boundsWidth = bounds.getWidth();
         final double boundsHeight = bounds.getHeight();
-        final double adjustedWidth = Math.min( window.getWidth(), boundsWidth );
-        final double adjustedHeight = Math.min( window.getHeight(), boundsHeight );
+        final double adjustedWidth = FastMath.min( window.getWidth(), boundsWidth );
+        final double adjustedHeight = FastMath.min( window.getHeight(), boundsHeight );
 
         // Adjust and set the window's location on the screen (in pixels).
         final double adjustedX = bounds.getMinX() + ( 0.5d * ( boundsWidth - adjustedWidth ) );
