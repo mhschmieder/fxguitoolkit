@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -101,6 +101,57 @@ public class LabeledActionFactory {
                                          "windowSize",
                                          "preferredSize",
                                          "/icons/yusukeKamiyamane/ApplicationResize16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction makeScrollingCoarseChoice( final ClientProperties clientProperties ) {
+        return ActionFactory
+                .makeChoice( clientProperties, BUNDLE_NAME, "scrollingSensitivity", "coarse", null );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction makeScrollingFineChoice( final ClientProperties clientProperties ) {
+        return ActionFactory
+                .makeChoice( clientProperties, BUNDLE_NAME, "scrollingSensitivity", "fine", null );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction makeScrollingMediumChoice( final ClientProperties clientProperties ) {
+        return ActionFactory
+                .makeChoice( clientProperties, BUNDLE_NAME, "scrollingSensitivity", "medium", null );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction makeScrollingOffChoice( final ClientProperties sessionContext ) {
+        return ActionFactory
+                .makeChoice( sessionContext, BUNDLE_NAME, "scrollingSensitivity", "off", null );
+    }
+
+    @SuppressWarnings("nls")
+    public static XActionGroup makeScrollingSensitivityChoiceGroup( final ClientProperties clientProperties,
+                                                                    final ScrollingSensitivityChoices scrollingSensitivityChoices ) {
+        final Collection< Action > scrollingSensitivityChoiceCollection =
+                                                                        scrollingSensitivityChoices
+                                                                                .getScrollingSensitivityChoiceCollection();
+
+        final XActionGroup scrollingSensitivityChoiceGroup = ActionFactory
+                .makeChoiceGroup( clientProperties,
+                                  scrollingSensitivityChoiceCollection,
+                                  BUNDLE_NAME,
+                                  "scrollingSensitivity",
+                                  "/icons/fatCow/MouseSelectScroll16.png" );
+
+        return scrollingSensitivityChoiceGroup;
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction makeAnimateChartUpdatesCheck( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeCheck( pClientProperties,
+                                        LabeledActionFactory.BUNDLE_NAME,
+                                        "view",
+                                        "animateChartUpdates",
+                                        null,
+                                        true );
     }
 
 }
