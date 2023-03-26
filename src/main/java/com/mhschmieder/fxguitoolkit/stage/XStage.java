@@ -1729,4 +1729,10 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
     public String getFormattedVectorGraphicsExportOptionalItemLabel() {
         return ""; //$NON-NLS-1$
     }
+    
+    // NOTE: This is a placeholder until we get file support into this class.
+    protected void fileExportImageGraphics( final String graphicsCategory ) {}
+    
+    // NOTE: This is a placeholder until we get file support into this class.
+    protected void fileExportVectorGraphics( final String graphicsCategory ) {}
 }
