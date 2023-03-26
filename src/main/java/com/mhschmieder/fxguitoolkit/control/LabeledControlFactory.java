@@ -38,7 +38,11 @@ import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.SceneGraphUtilities;
+import com.mhschmieder.fxguitoolkit.action.BackgroundColorChoices;
+import com.mhschmieder.fxguitoolkit.action.ExportActions;
+import com.mhschmieder.fxguitoolkit.action.FileActions;
 import com.mhschmieder.fxguitoolkit.action.LabeledActionFactory;
+import com.mhschmieder.fxguitoolkit.action.SettingsActions;
 import com.mhschmieder.fxguitoolkit.action.WindowSizeActions;
 import com.mhschmieder.fxguitoolkit.action.XAction;
 import com.mhschmieder.fxguitoolkit.action.XActionGroup;
@@ -287,7 +291,7 @@ public final class LabeledControlFactory {
         final Button helpButton = GuiUtilities.getLabeledButton( "Help", null, "help-button" );
 
         if ( needsGraphic ) {
-            final ImageView helpIcon = ImageUtilities.getImageView( "/com/led24/icons/Help16.png",
+            final ImageView helpIcon = ImageUtilities.getImageView( "/icons/led24/Help16.png",
                                                                     true );
             helpButton.setGraphic( helpIcon );
         }
@@ -298,7 +302,7 @@ public final class LabeledControlFactory {
     @SuppressWarnings("nls")
     public static Button getPageSetupButton( final ClientProperties pClientProperties ) {
         final Button button =
-                            GuiUtilities.getIconButton( "/com/yusukeKamiyamane/icons/Setup16.png" );
+                            GuiUtilities.getIconButton( "/icons/yusukeKamiyamane/Setup16.png" );
 
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
@@ -312,7 +316,7 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getPrintButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/com/everaldo/icons/FilePrint16.png" );
+        final Button button = GuiUtilities.getIconButton( "/icons/everaldo/FilePrint16.png" );
 
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
@@ -326,7 +330,7 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getOpenButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/com/led24/icons/PageWhiteZip16.png" );
+        final Button button = GuiUtilities.getIconButton( "/icons/led24/PageWhiteZip16.png" );
 
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
@@ -340,7 +344,7 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getSaveAsButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/com/everaldo/icons/FileSaveAs16.png" );
+        final Button button = GuiUtilities.getIconButton( "/icons/everaldo/FileSaveAs16.png" );
 
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
@@ -460,7 +464,7 @@ public final class LabeledControlFactory {
     @SuppressWarnings("nls")
     public static ToggleButton getTextWrapToggleButton() {
         final ToggleButton toggleButton = GuiUtilities
-                .getIconToggleButton( "/com/everaldo/icons/MultiRow16.png" );
+                .getIconToggleButton( "/icons/everaldo/MultiRow16.png" );
 
         final String tooltipText = "Toggle Wrap Text Mode";
         toggleButton.setTooltip( new Tooltip( tooltipText ) );
@@ -470,7 +474,7 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getRefreshButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/com/deviantArt/icons/Update16.png" );
+        final Button button = GuiUtilities.getIconButton( "/icons/deviantArt/Update16.png" );
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "view",
@@ -483,7 +487,7 @@ public final class LabeledControlFactory {
     @SuppressWarnings("nls")
     public static Button getResetButton( final ClientProperties pClientProperties ) {
         final Button button = GuiUtilities
-                .getIconButton( "/com/nineteenEightySeven/icons/FormReset16.png" );
+                .getIconButton( "/icons/nineteenEightySeven/FormReset16.png" );
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "view",
@@ -519,7 +523,7 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getNavigateBackButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/com/ahaSoft/icons/Back16.png" );
+        final Button button = GuiUtilities.getIconButton( "/icons/ahaSoft/Back16.png" );
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "navigate",
@@ -531,7 +535,7 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getNavigateForwardButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/com/ahaSoft/icons/Forward16.png" );
+        final Button button = GuiUtilities.getIconButton( "/icons/ahaSoft/Forward16.png" );
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "navigate",
@@ -544,7 +548,7 @@ public final class LabeledControlFactory {
     @SuppressWarnings("nls")
     public static Button getSessionLogNewButton( final ClientProperties pClientProperties ) {
         final Button button = GuiUtilities
-                .getIconButton( "/com/deviantArt/icons/PowerRestartInvert16.png" );
+                .getIconButton( "/icons/deviantArt/PowerRestartInvert16.png" );
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "sessionLog",
@@ -556,7 +560,7 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getSessionLogUpdateButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/com/deviantArt/icons/Update16.png" );
+        final Button button = GuiUtilities.getIconButton( "/icons/deviantArt/Update16.png" );
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "sessionLog",
@@ -569,7 +573,7 @@ public final class LabeledControlFactory {
     @SuppressWarnings("nls")
     public static Button getExportSessionLogButton( final ClientProperties pClientProperties ) {
         final Button button =
-                            GuiUtilities.getIconButton( "/com/everaldo/icons/Txt2Mimetype16.png" );
+                            GuiUtilities.getIconButton( "/icons/everaldo/Txt2Mimetype16.png" );
 
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
@@ -586,7 +590,7 @@ public final class LabeledControlFactory {
         final Button editNotesButton = GuiUtilities
                 .getLabeledButton( "Edit Notes", tooltipText, "edit-notes-button" );
         final ImageView editNotesIcon = ImageUtilities
-                .getImageView( "/com/visualIdiot/icons/Notes16.png", true );
+                .getImageView( "/icons/visualIdiot/Notes16.png", true );
         editNotesButton.setGraphic( editNotesIcon );
         return editNotesButton;
     }
@@ -664,4 +668,46 @@ public final class LabeledControlFactory {
         return windowSizeMenu;
     }
 
+    public static Menu getBackgroundColorMenu( final ClientProperties pClientProperties,
+                                               final BackgroundColorChoices backgroundColorChoices ) {
+        final XActionGroup backgroundColorChoiceGroup = LabeledActionFactory
+                .getBackgroundColorChoiceGroup( pClientProperties, backgroundColorChoices );
+        final Menu backgroundColorMenu = XActionUtilities.createMenu( backgroundColorChoiceGroup );
+        return backgroundColorMenu;
+    }
+    
+    public static Menu getExportMenu( final ClientProperties pClientProperties,
+                                      final ExportActions exportActions,
+                                      final boolean vectorGraphicsSupported,
+                                      final boolean formattedVectorGraphicsSupported ) {
+        final XActionGroup exportActionGroup = LabeledActionFactory
+                .getExportActionGroup( pClientProperties,
+                                       exportActions,
+                                       vectorGraphicsSupported,
+                                       formattedVectorGraphicsSupported );
+        final Menu exportMenu = XActionUtilities.createMenu( exportActionGroup );
+        return exportMenu;
+    }
+
+    public static Menu getFileMenu( final ClientProperties pClientProperties,
+                                    final FileActions fileActions,
+                                    final boolean vectorGraphicsSupported,
+                                    final boolean formattedVectorGraphicsSupported ) {
+        final XActionGroup fileActionGroup = LabeledActionFactory
+                .getFileActionGroup( pClientProperties,
+                                     fileActions,
+                                     vectorGraphicsSupported,
+                                     formattedVectorGraphicsSupported );
+        final Menu fileMenu = XActionUtilities.createMenu( fileActionGroup );
+        return fileMenu;
+    }
+
+    public static Menu getSettingsMenu( final ClientProperties pClientProperties,
+                                        final SettingsActions settingsActions,
+                                        final boolean maximumSizeSupported ) {
+        final XActionGroup settingsActionGroup = LabeledActionFactory
+                .getSettingsActionGroup( pClientProperties, settingsActions, maximumSizeSupported );
+        final Menu settingsMenu = XActionUtilities.createMenu( settingsActionGroup );
+        return settingsMenu;
+    }
 }

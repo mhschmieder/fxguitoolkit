@@ -34,5 +34,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/commonstoolkit"/>
+	<classpathentry kind="src" path="/guitoolkit"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

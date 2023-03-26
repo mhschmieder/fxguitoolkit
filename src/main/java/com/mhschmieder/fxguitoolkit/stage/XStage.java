@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -52,6 +52,7 @@ import com.mhschmieder.fxgraphicstoolkit.print.PrintUtilities;
 import com.mhschmieder.fxguitoolkit.ForegroundManager;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
+import com.mhschmieder.fxguitoolkit.action.BackgroundColorChoices;
 import com.mhschmieder.fxguitoolkit.action.MruFileActions;
 import com.mhschmieder.fxguitoolkit.action.WindowSizeActions;
 import com.mhschmieder.fxguitoolkit.action.XAction;
@@ -165,16 +166,85 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
     // Cache a reference to the product branding information.
     protected final ProductBranding                     _productBranding;
 
+    // Declare a flag for whether this window supports Formatted Vector Graphics
+    // Export.
+    protected boolean               _supportsFormattedVectorGraphicsExport;
+
+    // Declare a Window Manager to act as a container for all window references.
+    public final WindowManager      _windowManager;
+
     /**
      * Cache the Client Properties (System Type, Locale, etc.).
      */
-    public ClientProperties                             clientProperties;
+    public final ClientProperties   clientProperties;
+
+    protected XStage( final String title,
+                      final String windowKeyPrefix,
+                      final ProductBranding productBranding,
+                      final ClientProperties pClientProperties ) {
+        this( title, 
+              windowKeyPrefix, 
+              false, 
+              false, 
+              productBranding, 
+              pClientProperties );
+    }
+
+    protected XStage( final String title,
+                      final String windowKeyPrefix,
+                      final boolean showDirtyFlag,
+                      final boolean frameTitleManager,
+                      final ProductBranding productBranding,
+                      final ClientProperties pClientProperties ) {
+        this( title,
+              windowKeyPrefix,
+              showDirtyFlag,
+              frameTitleManager,
+              false,
+              productBranding,
+              pClientProperties );
+    }
+
+    protected XStage( final String title,
+                      final String windowKeyPrefix,
+                      final boolean showDirtyFlag,
+                      final boolean frameTitleManager,
+                      final boolean supportsFormattedVectorGraphicsExport,
+                      final ProductBranding productBranding,
+                      final ClientProperties pClientProperties ) {
+        this( Modality.NONE,
+              title,
+              windowKeyPrefix,
+              showDirtyFlag,
+              frameTitleManager,
+              supportsFormattedVectorGraphicsExport,
+              productBranding,
+              pClientProperties );
+    }
+
+   protected XStage( final Modality modality,
+                     final String title,
+                     final String windowKeyPrefix,
+                     final boolean showDirtyFlag,
+                     final boolean frameTitleManager,
+                     final ProductBranding productBranding,
+                     final ClientProperties pClientProperties ) {
+       this( modality,
+             title,
+             windowKeyPrefix,
+             showDirtyFlag,
+             frameTitleManager,
+             false,
+             productBranding,
+             pClientProperties );
+    }
 
     protected XStage( final Modality modality,
                       final String title,
                       final String windowKeyPrefix,
                       final boolean showDirtyFlag,
                       final boolean frameTitleManager,
+                      final boolean supportsFormattedVectorGraphicsExport,
                       final ProductBranding productBranding,
                       final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
@@ -200,6 +270,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
         _windowKeyPrefix = windowKeyPrefix;
         _showDirtyFlag = showDirtyFlag;
         _frameTitleManager = frameTitleManager;
+        _supportsFormattedVectorGraphicsExport = supportsFormattedVectorGraphicsExport;
         _productBranding = productBranding;
         clientProperties = pClientProperties;
 
@@ -210,28 +281,9 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
 
         // By default, most windows are obligated to handle Full Screen Mode.
         _fullScreenModeExempt = false;
-    }
 
-    protected XStage( final String title,
-                      final String windowKeyPrefix,
-                      final boolean showDirtyFlag,
-                      final boolean frameTitleManager,
-                      final ProductBranding productBranding,
-                      final ClientProperties pClientProperties ) {
-        this( Modality.NONE,
-              title,
-              windowKeyPrefix,
-              showDirtyFlag,
-              frameTitleManager,
-              productBranding,
-              pClientProperties );
-    }
-
-    protected XStage( final String title,
-                      final String windowKeyPrefix,
-                      final ProductBranding productBranding,
-                      final ClientProperties pClientProperties ) {
-        this( title, windowKeyPrefix, false, false, productBranding, pClientProperties );
+        // Make the Window Manager in the base class as it is a stock utility.
+        _windowManager = new WindowManager();
     }
 
     // Actions are not required for stages, so this method is not declared
@@ -344,6 +396,32 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
         }
     }
 
+    /**
+     * This method wraps behavior for clearing memory resources used by
+     * Graphics Export actions. It should be overridden by classes that need to
+     * clean up duplication of large memory resources.
+     */
+    protected void clearImportedGraphics() {}
+
+    // Dispose of all resources allocated by this Stage.
+    public final void disposeAllResources() {
+        // Hide all windows owned by this Stage.
+        hideAllWindows();
+
+        // Hide this Stage, then dispose of it.
+        setVisible( false );
+    }
+
+    // Clear all of the User Preferences for all Windows.
+    public final void clearAllPreferences() {
+        // First, clear User Preferences all of the secondary windows owned by
+        // this Stage.
+        _windowManager.clearAllPreferences();
+
+        // Finally, clear User Preferences for this window as well.
+        clearPreferences();
+    }
+
     // Clear all of the User Preferences for this Stage.
     public final void clearPreferences() {
         // Get the user node for this package/class, so that we get the
@@ -364,6 +442,85 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
         // otherwise the previous settings still are what get cached when the
         // session ends, thus effectively undoing the Clear Preferences action.
         loadPreferences();
+    }
+
+    // Hide all of the Windows associated with this Stage.
+    public void hideAllWindows() {
+        // First, hide all of the secondary windows owned by this Stage.
+        _windowManager.hideAllWindows();
+
+        // Finally, hide this window as well, by setting it invisible.
+        setVisible( false );
+    }
+
+    // Hide all of the Object Properties Editors and Insert Dialogs.
+    public void hideObjectPropertiesEditors() {
+        // Forward this method to the Window Manager.
+        _windowManager.hideObjectPropertiesEditors();
+    }
+
+    // Load the User Preferences for all Windows associated with this Stage.
+    public final void loadAllPreferences() {
+        // First, load preferences for secondary windows owned by this Stage.
+        _windowManager.loadAllPreferences();
+
+        // Finally, load the User Preferences for this Stage itself.
+        loadPreferences();
+    }
+
+    protected void loadObjectPropertiesEditors() {}
+
+    // This method refreshes the Object Properties Editors when their
+    // properties are changed outside the editor, such as via mouse move/rotate.
+    public final void refreshObjectPropertiesEditors() {
+        // Forward this method to the Window manager.
+        _windowManager.refreshObjectPropertiesEditors();
+    }
+
+    /**
+     * This method restores the Window Layout Preferences for all Windows.
+     *
+     * @param prefs
+     *            The @Preferences reference for the key/value pairs
+     */
+    public final void restoreAllWindowLayouts( final Preferences prefs ) {
+        // First, restore layouts for secondary windows owned by this Stage.
+        _windowManager.restoreAllWindowLayouts( prefs );
+
+        // Finally, restore this Stage's preferred layout.
+        restoreWindowLayout( prefs );
+    }
+
+    // Save the User Preferences for all Windows associated with this Stage.
+    public final void saveAllPreferences() {
+        // First, save preferences for secondary windows owned by this Stage.
+        _windowManager.saveAllPreferences();
+
+        // Finally, save the User Preferences for this Stage itself.
+        savePreferences();
+    }
+
+    /**
+     * This method saves the Window Layout Preferences for all Windows.
+     *
+     * @param prefs
+     *            The @Preferences reference for the key/value pairs
+     */
+    public final void saveAllWindowLayouts( final Preferences prefs ) {
+        // First, save layouts for secondary windows owned by this Stage.
+        _windowManager.saveAllWindowLayouts( prefs );
+
+        // Finally, save this Stage preferred layout.
+        saveWindowLayout( prefs );
+    }
+
+    // Update the Frame Titles with the dirty flag, where appropriate.
+    public final void updateFrameTitles( final File documentFile, final boolean documentModified ) {
+        // Update the Frame Title for this Stage.
+        updateFrameTitle( documentFile, documentModified );
+
+        // Forward this method to the Window Manager.
+        _windowManager.updateFrameTitles( documentFile, documentModified );
     }
 
     // NOTE: This method should be overridden if a Stage works with file
@@ -705,6 +862,21 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
         return _frameTitleManager;
     }
 
+    // Re-populate the MRU Filename Cache from the previous session.
+    protected final void loadMruCache( final String[] mruFilenames ) {
+        for ( final String mruFilename : mruFilenames ) {
+            if ( !mruFilename.trim().isEmpty() ) {
+                _mruFilenameCache.add( mruFilename );
+            }
+        }
+
+        // Update the MRU File actions in the overall File actions from the new
+        // MRU filename cache.
+        if ( _mruFileActions != null ) {
+            _mruFileActions.updateMruFileActions( _mruFilenameCache );
+        }
+    }
+
     protected MenuBar loadActionPane() {
         // The Action Pane is a way of combining the Menu Bar and Tool Bar in a
         // way that avoids gaps or stretching height beyond preferred height.
@@ -742,6 +914,9 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
 
         // Load all of the Primary and Secondary Stages.
         loadAllStages();
+    
+        // Load all of the Object Properties Editors and Insert Dialogs.
+        loadObjectPropertiesEditors();
     }
 
     // Every stage must have a Main Content Node, so this method is mandated.
@@ -1372,4 +1547,186 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
         return true;
     }
 
+    // Background color is handled uniformly, when supported, so register all
+    // the action handlers here as otherwise we would have cut/paste code that
+    // is hard to maintain and verify as complete and correct.
+    public final void addBackgroundColorChoiceHandlers( final BackgroundColorChoices backgroundColorChoices ) {
+        // Register handlers for all of the equal weighted gray scale colors.
+        backgroundColorChoices._backgroundColorBlackChoice
+                .setEventHandler( evt -> doBackgroundColorBlack() );
+        backgroundColorChoices._backgroundColorNightChoice
+                .setEventHandler( evt -> doBackgroundColorNight() );
+        backgroundColorChoices._backgroundColorGray15Choice
+                .setEventHandler( evt -> doBackgroundColorGray15() );
+        backgroundColorChoices._backgroundColorGray25Choice
+                .setEventHandler( evt -> doBackgroundColorGray25() );
+        backgroundColorChoices._backgroundColorGray33Choice
+                .setEventHandler( evt -> doBackgroundColorGray33() );
+        backgroundColorChoices._backgroundColorDimGrayChoice
+                .setEventHandler( evt -> doBackgroundColorDimGray() );
+        backgroundColorChoices._backgroundColorGray50Choice
+                .setEventHandler( evt -> doBackgroundColorGray50() );
+        backgroundColorChoices._backgroundColorDarkGrayChoice
+                .setEventHandler( evt -> doBackgroundColorDarkGray() );
+        backgroundColorChoices._backgroundColorGray75Choice
+                .setEventHandler( evt -> doBackgroundColorGray75() );
+        backgroundColorChoices._backgroundColorLightGrayChoice
+                .setEventHandler( evt -> doBackgroundColorLightGray() );
+        backgroundColorChoices._backgroundColorGainsboroChoice
+                .setEventHandler( evt -> doBackgroundColorGainsboro() );
+        backgroundColorChoices._backgroundColorDayChoice
+                .setEventHandler( evt -> doBackgroundColorDay() );
+        backgroundColorChoices._backgroundColorWhiteSmokeChoice
+                .setEventHandler( evt -> doBackgroundColorWhiteSmoke() );
+        backgroundColorChoices._backgroundColorWhiteChoice
+                .setEventHandler( evt -> doBackgroundColorWhite() );
+
+        // Register handlers for all of the slate gray hues.
+        backgroundColorChoices._backgroundColorDarkSlateGrayChoice
+                .setEventHandler( evt -> doBackgroundColorDarkSlateGray() );
+        backgroundColorChoices._backgroundColorSlateGrayChoice
+                .setEventHandler( evt -> doBackgroundColorSlateGray() );
+        backgroundColorChoices._backgroundColorLightSlateGrayChoice
+                .setEventHandler( evt -> doBackgroundColorLightSlateGray() );
+
+        // Register handlers for all of the custom blue-gray hues.
+        backgroundColorChoices._backgroundColorDarkBlueGrayChoice
+                .setEventHandler( evt -> doBackgroundColorDarkBlueGray() );
+        backgroundColorChoices._backgroundColorBlueGrayChoice
+                .setEventHandler( evt -> doBackgroundColorBlueGray() );
+        backgroundColorChoices._backgroundColorLightBlueGrayChoice
+                .setEventHandler( evt -> doBackgroundColorLightBlueGray() );
+    }
+
+    public final void doBackgroundColorBlack() {
+        // Set the stage background color to Black.
+        setForegroundFromBackground( Color.BLACK );
+    }
+
+    public final void doBackgroundColorBlueGray() {
+        // Set the stage background color to Blue Gray.
+        setForegroundFromBackground( ColorConstants.BLUEGRAY );
+    }
+
+    public final void doBackgroundColorDarkBlueGray() {
+        // Set the stage background color to Dark Blue Gray.
+        setForegroundFromBackground( ColorConstants.DARKBLUEGRAY );
+    }
+
+    public final void doBackgroundColorDarkGray() {
+        // Set the stage background color to Dark Gray.
+        setForegroundFromBackground( Color.DARKGRAY );
+    }
+
+    public final void doBackgroundColorDarkSlateGray() {
+        // Set the stage background color to Dark Slate Gray.
+        setForegroundFromBackground( Color.DARKSLATEGRAY );
+    }
+
+    public final void doBackgroundColorDay() {
+        // Set the stage background color to Day Mode.
+        setForegroundFromBackground( ColorConstants.DAY_MODE );
+    }
+
+    public final void doBackgroundColorDimGray() {
+        // Set the stage background color to Dim Gray.
+        setForegroundFromBackground( Color.DIMGRAY );
+    }
+
+    public final void doBackgroundColorGainsboro() {
+        // Set the stage background color to Gainsboro.
+        setForegroundFromBackground( Color.GAINSBORO );
+    }
+
+    public final void doBackgroundColorGray15() {
+        // Set the stage background color to 15% Gray.
+        setForegroundFromBackground( ColorConstants.GRAY15 );
+    }
+
+    public final void doBackgroundColorGray25() {
+        // Set the stage background color to 25% Gray.
+        setForegroundFromBackground( ColorConstants.GRAY25 );
+    }
+
+    public final void doBackgroundColorGray33() {
+        // Set the stage background color to 33% Gray.
+        setForegroundFromBackground( ColorConstants.GRAY33_3 );
+    }
+
+    public final void doBackgroundColorGray50() {
+        // Set the stage background color to 50% Gray.
+        setForegroundFromBackground( ColorConstants.GRAY50 );
+    }
+
+    public final void doBackgroundColorGray75() {
+        // Set the stage background color to 75% Gray.
+        setForegroundFromBackground( ColorConstants.GRAY75 );
+    }
+
+    public final void doBackgroundColorLightBlueGray() {
+        // Set the stage background color to Light Blue Gray.
+        setForegroundFromBackground( ColorConstants.LIGHTBLUEGRAY );
+    }
+
+    public final void doBackgroundColorLightGray() {
+        // Set the stage background color to Light Gray.
+        setForegroundFromBackground( Color.LIGHTGRAY );
+    }
+
+    public final void doBackgroundColorLightSlateGray() {
+        // Set the stage background color to Light Slate Gray.
+        setForegroundFromBackground( Color.LIGHTSLATEGRAY );
+    }
+
+    public final void doBackgroundColorNight() {
+        // Set the stage background color to Night Mode.
+        setForegroundFromBackground( ColorConstants.NIGHT_MODE );
+    }
+
+    public final void doBackgroundColorSlateGray() {
+        // Set the stage background color to Slate Gray.
+        setForegroundFromBackground( Color.SLATEGRAY );
+    }
+
+    public final void doBackgroundColorWhite() {
+        // Set the stage background color to White.
+        setForegroundFromBackground( Color.WHITE );
+    }
+
+    public final void doBackgroundColorWhiteSmoke() {
+        // Set the stage background color to White Smoke.
+        setForegroundFromBackground( Color.WHITESMOKE );
+    }
+
+    /**
+     * This method wraps behavior for canceling Formatted Vector Graphics
+     * Export actions. It should be overridden by classes that need to clean up
+     * duplication of large memory resources.
+     */
+    protected void cancelFormattedVectorGraphicsExport() {}
+
+    // NOTE: Most windows won't need to support Formatted Vector Graphics
+    // Export.
+    protected void updateFormattedVectorGraphicsExportSource() {}
+
+    // NOTE: This label is for Formatted Vector Graphics Export.
+    // NOTE: Derived classes should override this default if they expose
+    // either charts or auxiliary information for Graphics Export.
+    public String getFormattedVectorGraphicsExportAuxiliaryLabel() {
+        return ""; //$NON-NLS-1$
+    }
+
+    // NOTE: This label is for Formatted Vector Graphics Export.
+    // NOTE: Derived classes should override this default if they expose
+    // either charts or auxiliary information for Graphics Export.
+    public String getFormattedVectorGraphicsExportInformationTablesLabel() {
+        return ""; //$NON-NLS-1$
+    }
+
+    // NOTE: This label is for Formatted Vector Graphics Export.
+    // NOTE: Derived classes should override this default if they expose
+    // either charts or auxiliary information for Graphics Export.
+    public String getFormattedVectorGraphicsExportOptionalItemLabel() {
+        return ""; //$NON-NLS-1$
+    }
 }

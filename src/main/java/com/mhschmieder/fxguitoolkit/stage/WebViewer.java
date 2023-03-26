@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,11 @@ package com.mhschmieder.fxguitoolkit.stage;
 
 import java.net.URL;
 
+import com.mhschmieder.commonstoolkit.branding.ProductBranding;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+
 import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -40,20 +44,21 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-public class WebViewer extends Stage {
+public class WebViewer extends XStage {
 
     // Declare the Web View host, so we can load it post-init.
     protected WebView webView;
 
     public WebViewer( final String title,
+                      final String windowKeyPrefix,
                       final String jarRelativeIconFilename,
                       final String jarRelativeHtmlFilename,
                       final double preferredWidth,
-                      final double preferredHeight ) {
+                      final double preferredHeight,
+                      final ProductBranding productBranding,
+                      final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super();
-
-        setTitle( title );
+        super( title, windowKeyPrefix, productBranding, pClientProperties );
 
         try {
             initStage( jarRelativeIconFilename,
@@ -71,21 +76,17 @@ public class WebViewer extends Stage {
                                     final double defaultWidth,
                                     final double defaultHeight ) {
         // First have the superclass initialize its content.
-        // initStage( jarRelativeIconFilename, defaultWidth, defaultHeight,
-        // false );
-
-        final Parent contentPane = loadContent();
+        initStage( jarRelativeIconFilename, defaultWidth, defaultHeight, false );
 
         final URL htmlUrl = WebViewer.class.getResource( jarRelativeHtmlFilename );
 
         final WebEngine webEngine = webView.getEngine();
+        webEngine.load( htmlUrl.toString() );
         webView.autosize();
-
-        final Scene scene = new Scene( contentPane, defaultWidth, defaultHeight );
-        setScene( scene );
     }
 
-    protected final Parent loadContent() {
+    @Override
+    protected final Node loadContent() {
         // Instantiate and return the custom Content Node.
         webView = new WebView();
 
@@ -98,5 +99,4 @@ public class WebViewer extends Stage {
 
         return contentPane;
     }
-
 }
