@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.fxgraphicstoolkit.GraphicsExportOptions;
+import com.mhschmieder.fxgraphicstoolkit.io.GraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
 import javafx.scene.control.RadioButton;

@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.swing;
 
-import com.mhschmieder.fxgraphicstoolkit.FormattedVectorGraphicsExportOptions;
+import com.mhschmieder.fxgraphicstoolkit.io.FormattedVectorGraphicsExportOptions;
 import com.mhschmieder.guitoolkit.component.TitledVectorizationXPanel;
 
 /**

@@ -31,8 +31,8 @@
 package com.mhschmieder.fxguitoolkit.dialog;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.fxgraphicstoolkit.RasterGraphicsExportOptions;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageSize;
+import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.control.GraphicsExportOptionsToggleGroup;
 import com.mhschmieder.fxguitoolkit.layout.ImageSizePane;
 

@@ -35,8 +35,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.fxgraphicstoolkit.RasterGraphicsExportOptions;
-import com.mhschmieder.fxgraphicstoolkit.VectorGraphicsExportOptions;
+import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
+import com.mhschmieder.fxgraphicstoolkit.io.VectorGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 

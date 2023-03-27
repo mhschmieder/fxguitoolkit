@@ -33,7 +33,7 @@ package com.mhschmieder.fxguitoolkit.layout;
 import java.awt.EventQueue;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.fxgraphicstoolkit.FormattedVectorGraphicsExportOptions;
+import com.mhschmieder.fxgraphicstoolkit.io.FormattedVectorGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.TextEditor;
 import com.mhschmieder.fxguitoolkit.swing.FormattedVectorGraphicsPanel;

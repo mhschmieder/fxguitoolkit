@@ -31,7 +31,7 @@
 package com.mhschmieder.fxguitoolkit.dialog;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.fxgraphicstoolkit.VectorGraphicsExportOptions;
+import com.mhschmieder.fxgraphicstoolkit.io.VectorGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.GraphicsExportOptionsToggleGroup;
 import com.mhschmieder.fxguitoolkit.control.TextEditor;
