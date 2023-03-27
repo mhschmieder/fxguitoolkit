@@ -1441,7 +1441,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
     // NOTE: Not all Stages have contextual settings, so a concrete no-op
     // implementation is provided rather than making this method abstract and
     // requiring all derived classes to implement it.
-    protected void updateContextualSettings() {}
+    public void updateContextualSettings() {}
 
     // Conditionally append an asterisk to the filename, if document modified.
     // TODO: Learn how to set the black dot in the red circle in JavaFX --

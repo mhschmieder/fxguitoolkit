@@ -710,4 +710,18 @@ public final class LabeledControlFactory {
         final Menu settingsMenu = XActionUtilities.createMenu( settingsActionGroup );
         return settingsMenu;
     }
+
+    public static Button getCreateLayerButton() {
+        final String buttonLabel = "Create"; //$NON-NLS-1$
+        final String tooltipText = "Create New Layer after Selected Row"; //$NON-NLS-1$
+
+        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "create-button" ); //$NON-NLS-1$
+    }
+
+    public static Button getDeleteLayerButton() {
+        final String buttonLabel = "Delete"; //$NON-NLS-1$
+        final String tooltipText = "Delete Selected Layer(s) from Table"; //$NON-NLS-1$
+
+        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "delete-button" ); //$NON-NLS-1$
+    }
 }
