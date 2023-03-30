@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,16 @@ import org.apache.commons.math3.util.FastMath;
 
 import javafx.util.StringConverter;
 
-public class NumberConverter extends StringConverter< Number > {
+/**
+ * For some reason, the Core JavaFX API doesn't include basic type-specific
+ * implementations of string converters, so I provide a couple on this toolkit.
+ * <p>
+ * These can be especially useful with FX Charts when setting converters for
+ * axis tick labels and the like -- especially if needing integers vs. doubles.
+ * <p>
+ * Other uses are more typical of JavaFX Controls contexts, for editor syncing.
+ */
+public class DoubleConverter extends StringConverter< Number > {
 
     // Maintain a reference to the Measurement Unit label (can be blank).
     protected String       _measurementUnit;
@@ -53,7 +62,7 @@ public class NumberConverter extends StringConverter< Number > {
     // Cache the maximum allowed data value (positive).
     protected double       _maximumValue;
 
-    public NumberConverter( final String measurementUnit,
+    public DoubleConverter( final String measurementUnit,
                             final NumberFormat numberFormat,
                             final double defaultValue,
                             final double minimumValue,
@@ -66,6 +75,20 @@ public class NumberConverter extends StringConverter< Number > {
         _defaultValue = defaultValue;
         _minimumValue = minimumValue;
         _maximumValue = maximumValue;
+    }
+
+    @Override
+    public String toString( final Number number ) {
+        String presentationValue = number.toString();
+
+        try {
+            presentationValue = _numberFormat.format( number ) + _measurementUnit;
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+        }
+
+        return presentationValue;
     }
 
     // NOTE: make sure to strip the Measurement Unit label before converting to
@@ -94,16 +117,16 @@ public class NumberConverter extends StringConverter< Number > {
         return _defaultValue;
     }
 
+    public double getMinimumValue() {
+        return _minimumValue;
+    }
+
     public double getMaximumValue() {
         return _maximumValue;
     }
 
     public String getMeasurementUnit() {
         return _measurementUnit;
-    }
-
-    public double getMinimumValue() {
-        return _minimumValue;
     }
 
     public NumberFormat getNumberFormat() {
@@ -114,6 +137,10 @@ public class NumberConverter extends StringConverter< Number > {
         _defaultValue = defaultValue;
     }
 
+    public void setMinimumValue( final double minimumValue ) {
+        _minimumValue = minimumValue;
+    }
+
     public void setMaximumValue( final double maximumValue ) {
         _maximumValue = maximumValue;
     }
@@ -122,26 +149,7 @@ public class NumberConverter extends StringConverter< Number > {
         _measurementUnit = measurementUnit;
     }
 
-    public void setMinimumValue( final double minimumValue ) {
-        _minimumValue = minimumValue;
-    }
-
     public void setNumberFormat( final NumberFormat numberFormat ) {
         _numberFormat = numberFormat;
     }
-
-    @Override
-    public String toString( final Number number ) {
-        String presentationValue = number.toString();
-
-        try {
-            presentationValue = _numberFormat.format( number ) + _measurementUnit;
-        }
-        catch ( final Exception e ) {
-            e.printStackTrace();
-        }
-
-        return presentationValue;
-    }
-
 }
