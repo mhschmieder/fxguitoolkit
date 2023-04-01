@@ -187,7 +187,7 @@ public abstract class ObjectPropertiesEditor extends XStage {
      * method, as it needs to happen after basic initialization is
      * completed and as this avoids complicated parameter lists. Also,
      * not all subclasses need to do the same things so this is a more
-     * flexible approach overall. This replicates MsliFrame features.
+     * flexible approach overall. This replicates some XFrame features.
      *
      * @param jarRelativeIconFilename
      * @param objectType
