@@ -39,7 +39,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Skin;
-import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 
 /**
