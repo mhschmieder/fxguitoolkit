@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Vector;
 
 import org.controlsfx.control.action.Action;
 
@@ -82,7 +82,7 @@ public class SettingsActions {
                                                                                      _windowSizeActions,
                                                                                      maximumSizeSupported );
 
-        final Collection< Action > settingsActionCollection = new Vector<>();
+        final Collection< Action > settingsActionCollection = new ArrayList<>();
 
         settingsActionCollection.add( backgroundColorChoiceGroup );
         settingsActionCollection.add( windowSizeActionGroup );

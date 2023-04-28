@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Vector;
 
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.action.ActionUtils;
@@ -73,7 +73,7 @@ public class HelpActions {
     // NOTE: This method is not final, so that it can be derived for
     // additions.
     public Collection< Action > getHelpActionCollection() {
-        final Collection< Action > helpActionCollection = new Vector<>();
+        final Collection< Action > helpActionCollection = new ArrayList<>();
 
         helpActionCollection.add( _helpAction );
         helpActionCollection.add( _releaseNotesAction );

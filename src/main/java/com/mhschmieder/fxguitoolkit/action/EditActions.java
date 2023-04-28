@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Vector;
 
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.action.ActionUtils;
@@ -78,7 +78,7 @@ public class EditActions {
     // NOTE: This method is not final, so that it can be derived for
     // additions.
     public Collection< Action > getEditActionCollection( final ClientProperties pClientProperties ) {
-        final Collection< Action > editActionCollection = new Vector<>();
+        final Collection< Action > editActionCollection = new ArrayList<>();
 
         editActionCollection.add( _undoAction );
         editActionCollection.add( _redoAction );

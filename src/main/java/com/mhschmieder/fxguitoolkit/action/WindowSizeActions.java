@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Vector;
 
 import org.controlsfx.control.action.Action;
 
@@ -56,7 +56,7 @@ public final class WindowSizeActions {
     }
 
     public Collection< Action > getWindowSizeActionCollection( final boolean maximumSizeSupported ) {
-        final Collection< Action > windowSizeActionCollection = new Vector<>();
+        final Collection< Action > windowSizeActionCollection = new ArrayList<>();
 
         windowSizeActionCollection.add( _windowSizePreferredSizeAction );
         windowSizeActionCollection.add( _windowSizeDefaultSizeAction );

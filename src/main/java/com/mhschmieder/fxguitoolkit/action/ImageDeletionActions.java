@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Vector;
 
 public class ImageDeletionActions {
 
@@ -57,7 +57,7 @@ public class ImageDeletionActions {
     }
 
     public Collection< XAction > getImageDeletionActionCollection() {
-        final Collection< XAction > imageDeletionActionCollection = new Vector<>();
+        final Collection< XAction > imageDeletionActionCollection = new ArrayList<>();
 
         imageDeletionActionCollection.add( deleteThisImageAction );
         imageDeletionActionCollection.add( deleteOtherImagesAction );

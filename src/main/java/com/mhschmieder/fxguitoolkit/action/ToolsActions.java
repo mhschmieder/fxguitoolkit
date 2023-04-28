@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Vector;
 
 import org.controlsfx.control.action.Action;
 
@@ -55,7 +55,7 @@ public class ToolsActions {
     // NOTE: This method is not final, so that it can be derived for
     // additions.
     public Collection< Action > getToolsActionCollection( final ClientProperties pClientProperties ) {
-        final Collection< Action > toolsActionCollection = new Vector<>();
+        final Collection< Action > toolsActionCollection = new ArrayList<>();
 
         toolsActionCollection.add( _predictAction );
         toolsActionCollection.add( _clearAction );

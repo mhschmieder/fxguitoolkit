@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Vector;
 
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.action.ActionUtils;
@@ -101,7 +101,7 @@ public class FileActions {
                                        vectorGraphicsSupported,
                                        formattedVectorGraphicsSupported );
 
-        final Collection< Action > fileActionCollection = new Vector<>();
+        final Collection< Action > fileActionCollection = new ArrayList<>();
 
         fileActionCollection.add( _closeWindowAction );
         fileActionCollection.add( ActionUtils.ACTION_SEPARATOR );

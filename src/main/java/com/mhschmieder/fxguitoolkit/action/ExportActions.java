@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Vector;
 
 import org.controlsfx.control.action.Action;
 
@@ -61,7 +61,7 @@ public class ExportActions {
     // additions.
     public Collection< Action > getExportActionCollection( final boolean vectorGraphicsSupported,
                                                            final boolean formattedVectorGraphicsSupported ) {
-        final Collection< Action > exportActionCollection = new Vector<>();
+        final Collection< Action > exportActionCollection = new ArrayList<>();
 
         exportActionCollection.add( _exportImageGraphicsAction );
 
