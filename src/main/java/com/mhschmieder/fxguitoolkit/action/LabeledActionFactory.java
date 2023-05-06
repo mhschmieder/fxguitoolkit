@@ -758,15 +758,6 @@ public class LabeledActionFactory {
     }
 
     @SuppressWarnings("nls")
-    public static XAction getPredictionPlaneAction( final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction( pClientProperties,
-                                         BUNDLE_NAME,
-                                         "settings",
-                                         "predictionPlane",
-                                         "/icons/mhschmieder/PredictionPlane16.png" );
-    }
-
-    @SuppressWarnings("nls")
     public static XAction getPrintAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
                                          BUNDLE_NAME,
