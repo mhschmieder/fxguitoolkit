@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,44 +36,45 @@ import java.util.Locale;
 
 import javafx.geometry.Pos;
 
-// TODO: Use our DoubleEditor class instead, and pass the measurement unit?
-public class NumberEditorTableCell< RT, VT > extends EditorTableCell< RT, Double > {
+// TODO: Use our IntegerEditor class instead, and pass the measurement unit?
+public class IntegerEditorTableCell< RT, VT > extends EditorTableCell< RT, Integer > {
 
     // Maintain a reference to the Measurement Unit label (can be blank).
     @SuppressWarnings("nls") private String _measurementUnit = "";
 
-    // Cache a number formatter for displaying the delay times.
+    // Cache a number formatter for displaying the integer values.
     private final NumberFormat              _numberFormat;
 
-    public NumberEditorTableCell( final boolean pAllowedToBeBlank ) {
+    public IntegerEditorTableCell( final boolean pAllowedToBeBlank ) {
         this( null, pAllowedToBeBlank );
     }
 
-    public NumberEditorTableCell( final List< Integer > pUneditableRows,
-                                  final boolean pAllowedToBeBlank ) {
+    public IntegerEditorTableCell( final List< Integer > pUneditableRows,
+                                   final boolean pAllowedToBeBlank ) {
         // Always call the superclass constructor first!
         super( pUneditableRows, pAllowedToBeBlank );
 
         // Generally, we prefer numeric fields to be centered.
         setAlignment( Pos.CENTER );
 
-        // Use two decimal places of precision for numbers, in the default
-        // locale.
+        // Make sure we show the integers in the default locale.
         _numberFormat = NumberFormat.getNumberInstance( Locale.getDefault() );
         _numberFormat.setMinimumFractionDigits( 0 );
-        _numberFormat.setMaximumFractionDigits( 2 );
+        _numberFormat.setMaximumFractionDigits( 0 );
+        _numberFormat.setMinimumIntegerDigits( 1 );
+        _numberFormat.setParseIntegerOnly( true );
     }
 
     @Override
-    protected Double getEditorValue() {
+    protected Integer getEditorValue() {
         // NOTE: This is a bit of a hack to allow invalid and/or impertinent
         // cells and to represent them with a consistent and intuitive rendering
         // that is globally understood as "no data".
         final String textValue = _textField.getText();
-        final Double doubleValue = Double.valueOf( textValue );
-        final Double editorValue = ( textValue == null ) || ( doubleValue == null )
+        final Integer integerValue = Integer.valueOf( textValue );
+        final Integer editorValue = ( textValue == null ) || ( integerValue == null )
             ? null
-            : ( doubleValue.doubleValue() == Double.POSITIVE_INFINITY ) ? null : doubleValue;
+            : integerValue;
         return editorValue;
     }
 
@@ -83,12 +84,10 @@ public class NumberEditorTableCell< RT, VT > extends EditorTableCell< RT, Double
         // NOTE: This is a bit of a hack to allow invalid and/or impertinent
         // cells and to represent them with a consistent and intuitive rendering
         // that is globally understood as "no data".
-        final Double doubleValue = getItem();
-        final String stringValue = ( doubleValue == null )
+        final Integer integerValue = getItem();
+        final String stringValue = ( integerValue == null )
             ? ""
-            : ( doubleValue.doubleValue() == Double.POSITIVE_INFINITY )
-                ? "-"
-                : _numberFormat.format( Double.valueOf( doubleValue.toString() ) )
+            : _numberFormat.format( Integer.valueOf( integerValue.toString() ) )
                         + _measurementUnit;
         return stringValue;
     }
@@ -99,12 +98,10 @@ public class NumberEditorTableCell< RT, VT > extends EditorTableCell< RT, Double
         // NOTE: This is a bit of a hack to allow invalid and/or impertinent
         // cells and to represent them with a consistent and intuitive rendering
         // that is globally understood as "no data".
-        final Double doubleValue = getItem();
-        final String textValue = ( doubleValue == null )
+        final Integer integerValue = getItem();
+        final String textValue = ( integerValue == null )
             ? ""
-            : ( doubleValue.doubleValue() == Double.POSITIVE_INFINITY )
-                ? "-"
-                : Double.toString( doubleValue.doubleValue() );
+            : Integer.toString( integerValue.intValue() );
         return textValue;
     }
 
@@ -112,4 +109,4 @@ public class NumberEditorTableCell< RT, VT > extends EditorTableCell< RT, Double
         _measurementUnit = measurementUnit;
     }
 
-}// class NumberEditorTableCell
+}
