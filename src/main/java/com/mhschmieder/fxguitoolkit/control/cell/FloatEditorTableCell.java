@@ -30,20 +30,12 @@
  */
 package com.mhschmieder.fxguitoolkit.control.cell;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 import javafx.geometry.Pos;
 
 // TODO: Use our FloatEditor class instead, and pass the measurement unit?
-public class FloatEditorTableCell< RT, VT > extends EditorTableCell< RT, Float > {
-
-    // Maintain a reference to the Measurement Unit label (can be blank).
-    @SuppressWarnings("nls") private String _measurementUnit = "";
-
-    // Cache a number formatter for displaying the float values.
-    private final NumberFormat              _numberFormat;
+public class FloatEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Float > {
 
     public FloatEditorTableCell( final boolean pAllowedToBeBlank ) {
         this( null, pAllowedToBeBlank );
@@ -54,15 +46,9 @@ public class FloatEditorTableCell< RT, VT > extends EditorTableCell< RT, Float >
         // Always call the superclass constructor first!
         super( pUneditableRows, pAllowedToBeBlank );
 
-        // Generally, we prefer numeric fields to be centered.
-        setAlignment( Pos.CENTER );
-
-        // Use two decimal places of precision for numbers, in the default
+        // Use two decimal places of precision for floats, in the default
         // locale.
-        _numberFormat = NumberFormat.getNumberInstance( Locale.getDefault() );
-        _numberFormat.setMinimumFractionDigits( 0 );
         _numberFormat.setMaximumFractionDigits( 2 );
-        _numberFormat.setMinimumIntegerDigits( 1 );
         _numberFormat.setParseIntegerOnly( false );
     }
 
@@ -109,9 +95,4 @@ public class FloatEditorTableCell< RT, VT > extends EditorTableCell< RT, Float >
                 : Float.toString( floatValue.floatValue() );
         return textValue;
     }
-
-    public final void setMeasurementUnit( final String measurementUnit ) {
-        _measurementUnit = measurementUnit;
-    }
-
 }

@@ -43,7 +43,7 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
  *  to specify the template type as Number, and use NumberConverters in
  *  place of Number Formatters? Look at ControlsFX and other examples.
  */
-public class NumberSelector extends XComboBox< String > {
+public abstract class NumberSelector extends XComboBox< String > {
 
     // Number format cache used for locale-specific number formatting.
     protected NumberFormat _numberFormat;
@@ -105,5 +105,4 @@ public class NumberSelector extends XComboBox< String > {
         _numberParse.setMinimumFractionDigits( minFractionDigitsParse );
         _numberParse.setMaximumFractionDigits( maxFractionDigitsParse );
     }
-
 }

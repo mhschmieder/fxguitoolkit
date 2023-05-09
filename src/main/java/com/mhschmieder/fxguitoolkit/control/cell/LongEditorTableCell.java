@@ -34,37 +34,36 @@ import java.util.List;
 
 import javafx.geometry.Pos;
 
-// TODO: Use our DoubleEditor class instead, and pass the measurement unit?
-public class DoubleEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Double > {
+// TODO: Use our LongEditor class instead, and pass the measurement unit?
+public class LongEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Long > {
 
-    public DoubleEditorTableCell( final boolean pAllowedToBeBlank ) {
+    public LongEditorTableCell( final boolean pAllowedToBeBlank ) {
         this( null, pAllowedToBeBlank );
     }
 
-    public DoubleEditorTableCell( final List< Integer > pUneditableRows,
-                                  final boolean pAllowedToBeBlank ) {
+    public LongEditorTableCell( final List< Integer > pUneditableRows,
+                                final boolean pAllowedToBeBlank ) {
         // Always call the superclass constructor first!
         super( pUneditableRows, pAllowedToBeBlank );
 
         // Generally, we prefer numeric fields to be centered.
         setAlignment( Pos.CENTER );
 
-        // Use two decimal places of precision for doubles, in the default
-        // locale.
-        _numberFormat.setMaximumFractionDigits( 2 );
-        _numberFormat.setParseIntegerOnly( false );
+        // Make sure we show the longs in the default locale.
+        _numberFormat.setMaximumFractionDigits( 0 );
+        _numberFormat.setParseIntegerOnly( true );
     }
 
     @Override
-    protected Double getEditorValue() {
+    protected Long getEditorValue() {
         // NOTE: This is a bit of a hack to allow invalid and/or impertinent
         // cells and to represent them with a consistent and intuitive rendering
         // that is globally understood as "no data".
         final String textValue = _textField.getText();
-        final Double doubleValue = Double.valueOf( textValue );
-        final Double editorValue = ( textValue == null ) || ( doubleValue == null )
+        final Long longValue = Long.valueOf( textValue );
+        final Long editorValue = ( textValue == null ) || ( longValue == null )
             ? null
-            : ( doubleValue.doubleValue() == Double.POSITIVE_INFINITY ) ? null : doubleValue;
+            : longValue;
         return editorValue;
     }
 
@@ -74,12 +73,10 @@ public class DoubleEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, 
         // NOTE: This is a bit of a hack to allow invalid and/or impertinent
         // cells and to represent them with a consistent and intuitive rendering
         // that is globally understood as "no data".
-        final Double doubleValue = getItem();
-        final String stringValue = ( doubleValue == null )
+        final Long longValue = getItem();
+        final String stringValue = ( longValue == null )
             ? ""
-            : ( doubleValue.doubleValue() == Double.POSITIVE_INFINITY )
-                ? "-"
-                : _numberFormat.format( Double.valueOf( doubleValue.toString() ) )
+            : _numberFormat.format( Long.valueOf( longValue.toString() ) )
                         + _measurementUnit;
         return stringValue;
     }
@@ -90,12 +87,10 @@ public class DoubleEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, 
         // NOTE: This is a bit of a hack to allow invalid and/or impertinent
         // cells and to represent them with a consistent and intuitive rendering
         // that is globally understood as "no data".
-        final Double doubleValue = getItem();
-        final String textValue = ( doubleValue == null )
+        final Long longValue = getItem();
+        final String textValue = ( longValue == null )
             ? ""
-            : ( doubleValue.doubleValue() == Double.POSITIVE_INFINITY )
-                ? "-"
-                : Double.toString( doubleValue.doubleValue() );
+            : Long.toString( longValue.intValue() );
         return textValue;
     }
 }
