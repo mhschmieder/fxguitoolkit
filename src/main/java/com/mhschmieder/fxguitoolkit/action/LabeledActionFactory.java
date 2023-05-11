@@ -48,7 +48,7 @@ public class LabeledActionFactory {
     // all non-Java resource files in a separate hierarchy from the Java package
     // for the source code.
     @SuppressWarnings("nls") public static final String BUNDLE_NAME =
-                                                                    "com.mhschmieder.fxguitoolkit.action.ActionLabels";
+                                                                    "properties.ActionLabels";
 
     // TODO: Load an icon that is a stylized representation of the MRU number.
     @SuppressWarnings("nls")
@@ -564,7 +564,7 @@ public class LabeledActionFactory {
                                           vectorGraphicsSupported,
                                           formattedVectorGraphicsSupported );
 
-        // TODO: Review whether this is the correct bundle name to use for this actiob group.
+        // TODO: Review whether this is the correct bundle name to use for this action group.
         final XActionGroup fileActionGroup = ActionFactory
                 .makeActionGroup( pClientProperties,
                                   fileActionCollection,

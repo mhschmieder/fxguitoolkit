@@ -78,7 +78,7 @@ public final class LabeledControlFactory {
     // all non-Java resource files in a separate hierarchy from the Java package
     // for the source code.
     @SuppressWarnings("nls") public static final String BUNDLE_NAME =
-                                                                    "com.mhschmieder.fxguitoolkit.action.ActionLabels";
+                                                                    "properties.ActionLabels";
 
     public static Button getButton( final String label,
                                     final Font font,
