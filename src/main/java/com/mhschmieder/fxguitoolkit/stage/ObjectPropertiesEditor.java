@@ -182,18 +182,12 @@ public abstract class ObjectPropertiesEditor extends XStage {
         cancel();
     }
 
-    /**
+    /*
      * It is the responsibility of the subclasses to invoke this
      * method, as it needs to happen after basic initialization is
      * completed and as this avoids complicated parameter lists. Also,
      * not all subclasses need to do the same things so this is a more
      * flexible approach overall. This replicates some XFrame features.
-     *
-     * @param jarRelativeIconFilename
-     * @param objectType
-     * @param resizable
-     * @param useHelpButton
-     * @param useHelpAlternateButton
      */
     protected void initStage( final String jarRelativeIconFilename,
                               final String objectType,

@@ -209,7 +209,7 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
      *             If {@code textField} is {@code null}
      */
     public IntegerSpinnerStringConverter( final SpinnerValueFactory.IntegerSpinnerValueFactory spinnerValueFactory,
-                                          final TextField editor,
+                                          final TextField textField,
                                           final String tooltipText,
                                           final int minimumNumericValue,
                                           final int maximumNumericValue,
@@ -220,12 +220,12 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
             throw new NullPointerException( "spinnerValueFactory" ); //$NON-NLS-1$
         }
 
-        if ( editor == null ) {
+        if ( textField == null ) {
             throw new NullPointerException( "textField" ); //$NON-NLS-1$
         }
 
         _spinnerValueFactory = spinnerValueFactory;
-        _editor = editor;
+        _editor = textField;
 
         _minimumNumericValue = minimumNumericValue;
         _maximumNumericValue = maximumNumericValue;

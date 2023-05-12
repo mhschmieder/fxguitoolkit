@@ -209,7 +209,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
      *             If {@code textField} is {@code null}
      */
     public DoubleSpinnerStringConverter( final SpinnerValueFactory.DoubleSpinnerValueFactory spinnerValueFactory,
-                                         final TextField editor,
+                                         final TextField textField,
                                          final String tooltipText,
                                          final double minimumNumericValue,
                                          final double maximumNumericValue,
@@ -220,12 +220,12 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
             throw new NullPointerException( "spinnerValueFactory" ); //$NON-NLS-1$
         }
 
-        if ( editor == null ) {
+        if ( textField == null ) {
             throw new NullPointerException( "textField" ); //$NON-NLS-1$
         }
 
         _spinnerValueFactory = spinnerValueFactory;
-        _editor = editor;
+        _editor = textField;
 
         _minimumNumericValue = minimumNumericValue;
         _maximumNumericValue = maximumNumericValue;
