@@ -160,5 +160,4 @@ public abstract class ColorPickerTableCell< RT > extends TableCell< RT, Color > 
             setGraphic( _colorPicker );
         }
     }
-
-}// class ColorPickerTableCell
+}

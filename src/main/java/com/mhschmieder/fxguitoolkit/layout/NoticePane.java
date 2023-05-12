@@ -157,7 +157,7 @@ public class NoticePane extends VBox {
         final TextArea noticeTextArea = ControlFactory
                 .makeNoticeTextArea( notice.get(), true, numberOfColumns, numberOfRows );
 
-        // Bind the editor to the referenced observable string property.
+        // Bind the textField to the referenced observable string property.
         noticeTextArea.textProperty().bindBidirectional( notice );
 
         // Initialize the remaining layout, which is common/shared.

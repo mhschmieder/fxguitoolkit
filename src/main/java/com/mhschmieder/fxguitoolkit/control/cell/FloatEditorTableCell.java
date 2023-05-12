@@ -32,19 +32,32 @@ package com.mhschmieder.fxguitoolkit.control.cell;
 
 import java.util.List;
 
-import javafx.geometry.Pos;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.fxguitoolkit.control.FloatEditor;
 
-// TODO: Use our FloatEditor class instead, and pass the measurement unit?
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.geometry.Pos;
+import javafx.scene.control.TextField;
+
 public class FloatEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Float > {
 
-    public FloatEditorTableCell( final boolean pAllowedToBeBlank ) {
-        this( null, pAllowedToBeBlank );
+    // Cache the raw Float representation of the data cachedValue.
+    // NOTE: This field has to follow JavaFX Property Beans conventions.
+    private final FloatProperty cachedValue;
+
+    public FloatEditorTableCell( final boolean pAllowedToBeBlank,
+                                 final ClientProperties pClientProperties ) {
+        this( null, pAllowedToBeBlank, pClientProperties );
     }
 
     public FloatEditorTableCell( final List< Integer > pUneditableRows,
-                                 final boolean pAllowedToBeBlank ) {
+                                 final boolean pAllowedToBeBlank,
+                                 final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super( pUneditableRows, pAllowedToBeBlank );
+        super( pUneditableRows, pAllowedToBeBlank, pClientProperties );
+
+        cachedValue = new SimpleFloatProperty( 0.0f );
 
         // Use two decimal places of precision for floats, in the default
         // locale.
@@ -52,47 +65,72 @@ public class FloatEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, F
         _numberFormat.setParseIntegerOnly( false );
     }
 
+   
     @Override
-    protected Float getEditorValue() {
-        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
-        // cells and to represent them with a consistent and intuitive rendering
-        // that is globally understood as "no data".
-        final String textValue = _textField.getText();
-        final Float floatValue = Float.valueOf( textValue );
-        final Float editorValue = ( textValue == null ) || ( floatValue == null )
-            ? null
-            : ( floatValue.doubleValue() == Float.POSITIVE_INFINITY ) ? null : floatValue;
-        return editorValue;
+    protected TextField makeTextField() {
+        return new FloatEditor(
+            clientProperties, "0", "", blankTextAllowed, 0, 2, 0, 4);
     }
 
-    @SuppressWarnings("nls")
+    @Override
+    protected Float getEditorValue() {
+        final String textValue = textField.getText();
+        if ( textValue == null ) {
+            return null;
+        }
+        
+        final float floatValue = ( ( FloatEditor ) textField ).fromString( textValue );
+        
+        return Float.valueOf( floatValue );
+    }
+
     @Override
     protected String getString() {
-        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
-        // cells and to represent them with a consistent and intuitive rendering
-        // that is globally understood as "no data".
         final Float floatValue = getItem();
-        final String stringValue = ( floatValue == null )
-            ? ""
-            : ( floatValue.doubleValue() == Float.POSITIVE_INFINITY )
-                ? "-"
-                : _numberFormat.format( Float.valueOf( floatValue.toString() ) )
-                        + _measurementUnit;
+        if ( floatValue == null ) {
+            return "";
+        }
+        
+        // This text goes to the editor, so we don't want to clutter the user's
+        // editing session with formatting and measurement units.
+        // TODO: Determine whether we at least need to apply the Number
+        //  Formatter for proper localization of commas, periods, etc.
+        final String stringValue = Float.toString( floatValue );
+        
         return stringValue;
     }
 
-    @SuppressWarnings("nls")
     @Override
     protected String getTextValue() {
-        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
-        // cells and to represent them with a consistent and intuitive rendering
-        // that is globally understood as "no data".
         final Float floatValue = getItem();
-        final String textValue = ( floatValue == null )
-            ? ""
-            : ( floatValue.doubleValue() == Float.POSITIVE_INFINITY )
-                ? "-"
-                : Float.toString( floatValue.floatValue() );
+        if ( floatValue == null ) {
+            return "";
+        }
+        
+        final String textValue = ( ( FloatEditor ) textField ).toString( floatValue );
+        
         return textValue;
+    }
+
+    @Override
+    public final void setValue( final Float pValue ) {
+        // Locally cache the new cachedValue, separately from the textField.
+        cachedValue.set( pValue );
+
+        // Now do whatever we do for all data types in the base class.
+        super.setValue( pValue );
+    }
+
+    public final FloatProperty cachedValueProperty() {
+        return cachedValue;
+    }
+
+    public final float getCachedValue() {
+        return cachedValue.get();
+    }
+    
+    public final void setCachedValue( final float pCachedValue ) {
+        // Locally cache the new cachedValue, separately from the textField.
+        cachedValue.set( pCachedValue );
     }
 }

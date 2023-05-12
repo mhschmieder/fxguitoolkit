@@ -103,7 +103,7 @@ public class ControlFactory {
     // Helper method to get an Opacity Editor to pair with a slider.
     public static final DoubleEditor makeOpacitySliderEditor( final ClientProperties clientProperties,
                                                               final OpacitySlider opacitySlider ) {
-        // Use the current slider value and limits to set the number editor.
+        // Use the current slider value and limits to set the number textField.
         final DoubleEditor opacityEditor = makeOpacityEditor( clientProperties,
                                                               null,
                                                               opacitySlider

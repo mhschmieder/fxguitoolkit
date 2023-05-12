@@ -77,7 +77,7 @@ public abstract class ObjectPropertiesEditor extends XStage {
     // NOTE: These fields must follow JavaFX Property Bean naming conventions.
     public BooleanProperty objectPropertiesChanged;
     
-    // Flag for whether Reset Actions are applicable to this editor instance.
+    // Flag for whether Reset Actions are applicable to this textField instance.
     
     private boolean         resetApplicable;
 
@@ -91,9 +91,9 @@ public abstract class ObjectPropertiesEditor extends XStage {
         // Always call the superclass constructor first!
         // NOTE: We set the modality in case this is for Insert Mode vs. Edit
         // Mode, and vary the frame title based on this mode as well.
-        // NOTE: This editor can be made as more than one instance, so it is
+        // NOTE: This textField can be made as more than one instance, so it is
         // simpler to block the application and thus avoid confusion of state or
-        // complexity of dismissing and canceling redundant copies of the editor
+        // complexity of dismissing and canceling redundant copies of the textField
         // launched from more than one owning window, with different settings.
         super( insertMode ? Modality.APPLICATION_MODAL : Modality.NONE,
                insertMode ? "Insert " + objectType : objectType + " Properties",
@@ -251,7 +251,7 @@ public abstract class ObjectPropertiesEditor extends XStage {
 
         // Make the OK/Close Button consume the ENTER key when possible.
         // NOTE: We do not want a one-shoe-fits-all exit criteria from the
-        // editor, when no control has focus, and enabling this feature
+        // textField, when no control has focus, and enabling this feature
         // prevents the action buttons from retaining focus for ENTER.
         // _doneButton.setDefaultButton( true );
 
@@ -412,7 +412,7 @@ public abstract class ObjectPropertiesEditor extends XStage {
     }
 
     public final boolean isDisabled() {
-        // Determine whether this editor is disabled, so we don't apply changes
+        // Determine whether this textField is disabled, so we don't apply changes
         // to deselected objects and inactive editors.
         return _disabled;
     }
@@ -468,7 +468,7 @@ public abstract class ObjectPropertiesEditor extends XStage {
         // Cache the disabled status, so we can use it when exiting.
         _disabled = disable;
 
-        // If this editor is visible, in Edit Mode, and about to be disabled, we
+        // If this textField is visible, in Edit Mode, and about to be disabled, we
         // also want to revert any user changes, by re-syncing the view to the
         // cached model, without triggering dirty flags and extra computations.
         if ( disable && isShowing() && isEditMode() ) {
@@ -488,7 +488,7 @@ public abstract class ObjectPropertiesEditor extends XStage {
         _revertButton.setDisable( revertDisable );
     }
 
-    // Common open method for opening an editor in modal Insert Mode.
+    // Common open method for opening an textField in modal Insert Mode.
     @Override
     public final void showAndWait() {
         // Always default to not canceled, until user edits begin.
@@ -510,7 +510,7 @@ public abstract class ObjectPropertiesEditor extends XStage {
 
     // NOTE: All objects must have at least some editing controls that must be
     // updated when the object reference is switched for another one or when
-    // changes happen outside this editor.
+    // changes happen outside this textField.
     // TODO: Rename as "updateProperties()" or "storeProperties()"?
     protected abstract void syncEditorToObjectReference();
 
@@ -530,7 +530,7 @@ public abstract class ObjectPropertiesEditor extends XStage {
 
     // NOTE: All objects must have at least some editing controls that must be
     // updated when the object reference is switched for another one or when
-    // changes happen outside this editor.
+    // changes happen outside this textField.
     // TODO: Rename as "loadProperties()" or "recallProperties()"?
     protected abstract void syncObjectReferenceToEditor();
 

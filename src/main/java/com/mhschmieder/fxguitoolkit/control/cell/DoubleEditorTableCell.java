@@ -32,70 +32,104 @@ package com.mhschmieder.fxguitoolkit.control.cell;
 
 import java.util.List;
 
-import javafx.geometry.Pos;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.fxguitoolkit.control.DoubleEditor;
 
-// TODO: Use our DoubleEditor class instead, and pass the measurement unit?
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.geometry.Pos;
+import javafx.scene.control.TextField;
+
 public class DoubleEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Double > {
 
-    public DoubleEditorTableCell( final boolean pAllowedToBeBlank ) {
-        this( null, pAllowedToBeBlank );
+    // Cache the raw Double representation of the data cachedValue.
+    // NOTE: This field has to follow JavaFX Property Beans conventions.
+    private final DoubleProperty cachedValue;
+
+    public DoubleEditorTableCell( final boolean pAllowedToBeBlank,
+                                  final ClientProperties pClientProperties ) {
+        this( null, pAllowedToBeBlank, pClientProperties );
     }
 
     public DoubleEditorTableCell( final List< Integer > pUneditableRows,
-                                  final boolean pAllowedToBeBlank ) {
+                                  final boolean pAllowedToBeBlank,
+                                  final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super( pUneditableRows, pAllowedToBeBlank );
+        super( pUneditableRows, pAllowedToBeBlank, pClientProperties );
 
-        // Generally, we prefer numeric fields to be centered.
-        setAlignment( Pos.CENTER );
+        cachedValue = new SimpleDoubleProperty( 0.0d );
 
         // Use two decimal places of precision for doubles, in the default
         // locale.
         _numberFormat.setMaximumFractionDigits( 2 );
         _numberFormat.setParseIntegerOnly( false );
     }
+    
+    @Override
+    protected TextField makeTextField() {
+        return new DoubleEditor(
+            clientProperties, "0", "", blankTextAllowed, 0, 2, 0, 4);
+    }
 
     @Override
     protected Double getEditorValue() {
-        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
-        // cells and to represent them with a consistent and intuitive rendering
-        // that is globally understood as "no data".
-        final String textValue = _textField.getText();
-        final Double doubleValue = Double.valueOf( textValue );
-        final Double editorValue = ( textValue == null ) || ( doubleValue == null )
-            ? null
-            : ( doubleValue.doubleValue() == Double.POSITIVE_INFINITY ) ? null : doubleValue;
-        return editorValue;
+        final String textValue = textField.getText();
+        if ( textValue == null ) {
+            return null;
+        }
+        
+        final double doubleValue = ( ( DoubleEditor ) textField ).fromString( textValue );
+        
+        return Double.valueOf( doubleValue );
     }
 
-    @SuppressWarnings("nls")
     @Override
     protected String getString() {
-        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
-        // cells and to represent them with a consistent and intuitive rendering
-        // that is globally understood as "no data".
         final Double doubleValue = getItem();
-        final String stringValue = ( doubleValue == null )
-            ? ""
-            : ( doubleValue.doubleValue() == Double.POSITIVE_INFINITY )
-                ? "-"
-                : _numberFormat.format( Double.valueOf( doubleValue.toString() ) )
-                        + _measurementUnit;
+        if ( doubleValue == null ) {
+            return "";
+        }
+        
+        // This text goes to the editor, so we don't want to clutter the user's
+        // editing session with formatting and measurement units.
+        // TODO: Determine whether we at least need to apply the Number
+        //  Formatter for proper localization of commas, periods, etc.
+        final String stringValue = Double.toString( doubleValue );
+        
         return stringValue;
     }
 
-    @SuppressWarnings("nls")
     @Override
     protected String getTextValue() {
-        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
-        // cells and to represent them with a consistent and intuitive rendering
-        // that is globally understood as "no data".
         final Double doubleValue = getItem();
-        final String textValue = ( doubleValue == null )
-            ? ""
-            : ( doubleValue.doubleValue() == Double.POSITIVE_INFINITY )
-                ? "-"
-                : Double.toString( doubleValue.doubleValue() );
+        if ( doubleValue == null ) {
+            return "";
+        }
+        
+        final String textValue = ( ( DoubleEditor ) textField ).toString( doubleValue );
+        
         return textValue;
+    }
+
+    @Override
+    public final void setValue( final Double pValue ) {
+        // Locally cache the new cachedValue, separately from the textField.
+        cachedValue.set( pValue );
+
+        // Now do whatever we do for all data types in the base class.
+        super.setValue( pValue );
+    }
+
+    public final DoubleProperty cachedValueProperty() {
+        return cachedValue;
+    }
+
+    public final double getCachedValue() {
+        return cachedValue.get();
+    }
+    
+    public final void setCachedValue( final double pCachedValue ) {
+        // Locally cache the new cachedValue, separately from the textField.
+        cachedValue.set( pCachedValue );
     }
 }

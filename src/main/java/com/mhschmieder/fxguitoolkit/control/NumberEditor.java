@@ -147,7 +147,7 @@ public abstract class NumberEditor extends XTextField {
     }
 
     /**
-     * Sets the editor reset callback.
+     * Sets the textField reset callback.
      * <p>
      * Specify {@code null} to clear a previously set {@link Runnable}. When
      * creating a {@link TextField}, this callback is automatically defined to

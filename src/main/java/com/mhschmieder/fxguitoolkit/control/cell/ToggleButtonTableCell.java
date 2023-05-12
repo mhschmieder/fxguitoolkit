@@ -207,5 +207,4 @@ public abstract class ToggleButtonTableCell< RT, VT > extends CheckBoxTableCell<
             setGraphic( _toggleButton );
         }
     }
-
-}// class ToggleButtonTableCell
+}

@@ -285,8 +285,8 @@ public class DoubleEditor extends NumberEditor {
     }
 
     public double getClampedValue( final double unclampedValue ) {
-        final double clampedValue = FastMath.min( FastMath.max( unclampedValue, _minimumValue ),
-                                              _maximumValue );
+        final double clampedValue = FastMath.min( 
+            FastMath.max( unclampedValue, _minimumValue ), _maximumValue );
         return clampedValue;
     }
 
@@ -326,7 +326,7 @@ public class DoubleEditor extends NumberEditor {
      * Converts the specified {@link String} into its double value.
      * <p>
      * A {@code null}, empty, or otherwise invalid argument returns zero and
-     * also executes the editor reset callback, if any.
+     * also executes the textField reset callback, if any.
      *
      * @param stringValue
      *            The {@link String} to convert
@@ -405,5 +405,4 @@ public class DoubleEditor extends NumberEditor {
         // what is already set in the Number Parser.
         return doubleValue;
     }
-
 }

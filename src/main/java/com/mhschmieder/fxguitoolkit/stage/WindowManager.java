@@ -133,7 +133,7 @@ public final class WindowManager {
 
     /**
      * This method refreshes the Object Properties Editors when their
-     * properties are changed outside the editor, such as via mouse move/rotate.
+     * properties are changed outside the textField, such as via mouse move/rotate.
      */
     public void refreshObjectPropertiesEditors() {
         // NOTE: There is no recursion here, so it is safe to run in parallel.

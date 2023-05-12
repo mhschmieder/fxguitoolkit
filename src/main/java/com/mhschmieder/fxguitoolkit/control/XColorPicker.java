@@ -61,11 +61,6 @@ public class XColorPicker extends ColorPicker {
         }
     }
 
-    // Get the JavaFX color value from the color picker.
-    public final Color getColor() {
-        return getValue();
-    }
-
     private final void initColorPicker( final String tooltipText ) {
         // Conditionally provide tool tips in case this component is used in a
         // sparse context like a toolbar.
@@ -75,6 +70,11 @@ public class XColorPicker extends ColorPicker {
 
         // Apply drop-shadow effects when the mouse enters this node.
         GuiUtilities.applyDropShadowEffect( this );
+    }
+
+    // Get the JavaFX color value from the color picker.
+    public final Color getColor() {
+        return getValue();
     }
 
     // Set the Java FX color to the color picker.
@@ -102,5 +102,4 @@ public class XColorPicker extends ColorPicker {
             fireEvent( new ActionEvent( object, eventTarget ) );
         }
     }
-
 }

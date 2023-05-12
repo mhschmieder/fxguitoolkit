@@ -1135,7 +1135,7 @@ public final class GuiUtilities {
         // Set up the key listeners for the up and down arrow keys to increment
         // and decrement, as this built-in feature of the spinner doesn't work
         // once the spinner is set to editable, so we have to register listeners
-        // on the editor to manually handle the arrow keys there instead.
+        // on the textField to manually handle the arrow keys there instead.
         spinner.getEditor().setOnKeyPressed( event -> {
             switch ( event.getCode() ) {
             case UP:

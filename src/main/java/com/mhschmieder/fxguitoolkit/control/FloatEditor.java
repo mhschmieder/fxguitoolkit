@@ -37,56 +37,87 @@ import org.apache.commons.math3.util.FastMath;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.application.Platform;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.scene.input.KeyCode;
 
 /**
- * This class formalizes aspects of text editing that are specific to longs.
+ * This class formalizes aspects of text editing that are specific to floats.
  */
-public class LongEditor extends NumberEditor {
-
+public class FloatEditor extends NumberEditor {
 
     // Cache the minimum allowed data value (negative).
-    protected long                _minimumValue;
+    protected float             _minimumValue;
 
     // Cache the maximum allowed data value (positive).
-    protected long                _maximumValue;
+    protected float             _maximumValue;
 
     // Cache the default data value.
-    protected long                _defaultValue;
+    protected float             _defaultValue;
 
     // The amount to increment or decrement by, using the arrow keys.
-    protected long                _valueIncrement;
+    protected float             _valueIncrement;
 
     // Cache the raw numeric representation of the data value.
     // NOTE: This field has to follow JavaFX Property Beans conventions.
-    private final LongProperty value;
+    private final FloatProperty value;
 
-    public LongEditor( final ClientProperties clientProperties,
-                       final String initialText,
-                       final String tooltipText,
-                       final boolean applyToolkitCss ) {
-        this( clientProperties, initialText, tooltipText, applyToolkitCss, -Long.MAX_VALUE, Long.MAX_VALUE );
+    public FloatEditor( final ClientProperties clientProperties,
+                        final String initialText,
+                        final String tooltipText,
+                        final boolean applyToolkitCss,
+                        final int minFractionDigitsFormat,
+                        final int maxFractionDigitsFormat,
+                        final int minFractionDigitsParse,
+                        final int maxFractionDigitsParse ) {
+        this( clientProperties,
+              initialText,
+              tooltipText,
+              applyToolkitCss,
+              minFractionDigitsFormat,
+              maxFractionDigitsFormat,
+              minFractionDigitsParse,
+              maxFractionDigitsParse,
+              -Float.MAX_VALUE,
+              Float.MAX_VALUE );
     }
 
-    public LongEditor( final ClientProperties clientProperties,
-                       final String initialText,
-                       final String tooltipText,
-                       final boolean applyToolkitCss,
-                       final long minimumValue,
-                       final long maximumValue ) {
-        this( clientProperties, initialText, tooltipText, applyToolkitCss, minimumValue, maximumValue, 0L, 0L );
+    public FloatEditor( final ClientProperties clientProperties,
+                        final String initialText,
+                        final String tooltipText,
+                        final boolean applyToolkitCss,
+                        final int minFractionDigitsFormat,
+                        final int maxFractionDigitsFormat,
+                        final int minFractionDigitsParse,
+                        final int maxFractionDigitsParse,
+                        final float minimumValue,
+                        final float maximumValue ) {
+        this( clientProperties,
+              initialText,
+              tooltipText,
+              applyToolkitCss,
+              minFractionDigitsFormat,
+              maxFractionDigitsFormat,
+              minFractionDigitsParse,
+              maxFractionDigitsParse,
+              minimumValue,
+              maximumValue,
+              0.0f,
+              0.0f );
     }
 
-    public LongEditor( final ClientProperties clientProperties,
-                       final String initialText,
-                       final String tooltipText,
-                       final boolean applyToolkitCss,
-                       final long minimumValue,
-                       final long maximumValue,
-                       final long defaultValue,
-                       final long valueIncrement ) {
+    public FloatEditor( final ClientProperties clientProperties,
+                        final String initialText,
+                        final String tooltipText,
+                        final boolean applyToolkitCss,
+                        final int minFractionDigitsFormat,
+                        final int maxFractionDigitsFormat,
+                        final int minFractionDigitsParse,
+                        final int maxFractionDigitsParse,
+                        final float minimumValue,
+                        final float maximumValue,
+                        final float defaultValue,
+                        final float valueIncrement ) {
         // Always call the superclass constructor first!
         super( clientProperties, initialText, tooltipText, applyToolkitCss );
 
@@ -97,12 +128,15 @@ public class LongEditor extends NumberEditor {
 
         _valueIncrement = valueIncrement;
 
-        value = new SimpleLongProperty( _defaultValue );
+        value = new SimpleFloatProperty( _defaultValue );
 
-        _reset = () -> setText( Long.toString( _defaultValue ) );
+        _reset = () -> setText( Double.toString( _defaultValue ) );
 
         try {
-            initEditor();
+            initEditor( minFractionDigitsFormat,
+                        maxFractionDigitsFormat,
+                        minFractionDigitsParse,
+                        maxFractionDigitsParse );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -110,7 +144,18 @@ public class LongEditor extends NumberEditor {
     }
 
     @SuppressWarnings("nls")
-    private final void initEditor() {
+    private final void initEditor( final int minFractionDigitsFormat,
+                                   final int maxFractionDigitsFormat,
+                                   final int minFractionDigitsParse,
+                                   final int maxFractionDigitsParse ) {
+        // Set the precision for floating-point text formatting.
+        _numberFormat.setMinimumFractionDigits( minFractionDigitsFormat );
+        _numberFormat.setMaximumFractionDigits( maxFractionDigitsFormat );
+
+        // Set the precision for floating-point text formatting.
+        _numberParse.setMinimumFractionDigits( minFractionDigitsParse );
+        _numberParse.setMaximumFractionDigits( maxFractionDigitsParse );
+
         // Make sure the value property is clamped to the required range, then
         // update the text field to be in sync with the clamped value.
         valueProperty().addListener( ( observableValue, oldValue, newValue ) -> {
@@ -120,7 +165,7 @@ public class LongEditor extends NumberEditor {
             else {
                 // If limits were established, enforce them. Always check
                 // though, to avoid overflow and underflow.
-                final long clampedValue = getClampedValue( newValue.intValue() );
+                final float clampedValue = getClampedValue( newValue.floatValue() );
 
                 // Format the number to match how we display committed values.
                 updateText( clampedValue );
@@ -154,14 +199,14 @@ public class LongEditor extends NumberEditor {
                 break;
             case UP:
                 // Increment the current value by the set amount.
-                if ( _valueIncrement != 0L ) {
+                if ( _valueIncrement != 0.0f ) {
                     setValue( getValue() + _valueIncrement );
                 }
 
                 break;
             case DOWN:
                 // Decrement the current value by the set amount.
-                if ( _valueIncrement != 0L ) {
+                if ( _valueIncrement != 0.0f ) {
                     setValue( getValue() - _valueIncrement );
                 }
 
@@ -176,16 +221,16 @@ public class LongEditor extends NumberEditor {
     @Override
     public String getAllowedCharacters() {
         // Restrict keyboard input to numerals, sign, and delimiters.
-        final String allowedCharacters = ( _minimumValue < 0L )
-            ? ( _maximumValue > 0L ) ? "[0-9.,+-]" : "[0-9.,-]"
-            : ( _maximumValue > 0L ) ? "[0-9.,+]" : "[0-9.,]";
+        final String allowedCharacters = ( _minimumValue < 0 )
+            ? ( _maximumValue > 0 ) ? "[0-9.,+-]" : "[0-9.,-]"
+            : ( _maximumValue > 0 ) ? "[0-9.,+]" : "[0-9.,]";
         return allowedCharacters;
     }
 
     @Override
     public final String getDecoratedText() {
         // Get the most recently committed value.
-        final long savedValue = getValue();
+        final float savedValue = getValue();
 
         // Show the number with units to indicate we committed edits.
         final String formattedText = toString( savedValue );
@@ -198,7 +243,7 @@ public class LongEditor extends NumberEditor {
 
     // NOTE: This is an opportunity to pre-parse the typed text before
     // converting to a number, such as when we disallow positive numbers (e.g.).
-    public String getDecoratedText( final long savedValue, final String savedText ) {
+    public String getDecoratedText( final float savedValue, final String savedText ) {
         final String decoratedText = savedText;
 
         return decoratedText;
@@ -207,13 +252,13 @@ public class LongEditor extends NumberEditor {
     @Override
     public final void updateText() {
         // Get the most recently committed value.
-        final long savedValue = getValue();
+        final float savedValue = getValue();
 
         // Update the displayed text to match the cached value.
         updateText( savedValue );
     }
 
-    public final void updateText( final long savedValue ) {
+    public final void updateText( final float savedValue ) {
         // Show the number with units to indicate we committed edits.
         final String formattedValue = toString( savedValue );
 
@@ -225,83 +270,83 @@ public class LongEditor extends NumberEditor {
     public final void clampValue() {
         // Get the clamped, edited value, stripped of decorations and
         // formatting.
-        final long clampedValue = getClampedValue();
+        final float clampedValue = getClampedValue();
 
         // Update the cached property from the clamped, edited value.
         setValue( clampedValue );
     }
 
-    public final long getClampedValue() {
+    public final float getClampedValue() {
         // The fromString method performs input validation.
         final String undecoratedText = getUndecoratedText();
-        final long clampedValue = fromString( undecoratedText );
+        final float clampedValue = fromString( undecoratedText );
 
         return clampedValue;
     }
 
-    public long getClampedValue( final long unclampedValue ) {
-        final long clampedValue =
-                FastMath.min( FastMath.max( unclampedValue, _minimumValue ), _maximumValue );
+    public float getClampedValue( final float unclampedValue ) {
+        final float clampedValue = FastMath.min( 
+            FastMath.max( unclampedValue, _minimumValue ), _maximumValue );
         return clampedValue;
     }
 
-    public final long getMinimumValue() {
+    public final float getMinimumValue() {
         return _minimumValue;
     }
 
-    public final void setMinimumValue( final long minimumValue ) {
+    public final void setMinimumValue( final float minimumValue ) {
         _minimumValue = minimumValue;
     }
 
-    public final long getMaximumValue() {
+    public final float getMaximumValue() {
         return _maximumValue;
     }
 
-    public final void setMaximumValue( final long maximumValue ) {
+    public final void setMaximumValue( final float maximumValue ) {
         _maximumValue = maximumValue;
     }
 
-    public final void setValueIncrement( final long pValueIncrement ) {
+    public final void setValueIncrement( final float pValueIncrement ) {
         _valueIncrement = pValueIncrement;
     }
 
-    public final long getValue() {
+    public final float getValue() {
         return value.get();
     }
 
-    public final void setValue( final long pValue ) {
+    public final void setValue( final float pValue ) {
         value.set( pValue );
     }
 
-    public final LongProperty valueProperty() {
+    public final FloatProperty valueProperty() {
         return value;
     }
 
     /**
-     * Converts the specified {@link String} into its long value.
+     * Converts the specified {@link String} into its float value.
      * <p>
      * A {@code null}, empty, or otherwise invalid argument returns zero and
      * also executes the textField reset callback, if any.
      *
      * @param stringValue
      *            The {@link String} to convert
-     * @return The long value of {@code stringValue}
+     * @return The float value of {@code stringValue}
      * @see #setReset
      */
-    public long fromString( final String stringValue ) {
+    public float fromString( final String stringValue ) {
         // Return with current value vs. penalizing user for internal errors.
-        final long currentValue = getValue();
+        final float currentValue = getValue();
         if ( ( stringValue == null ) || stringValue.trim().isEmpty() ) {
             return currentValue;
         }
 
         // If the user typed a formatted number with units, parse it exactly;
-        // otherwise strip the units and try to directly convert the string to
-        // a long.
-        long longValue = currentValue;
+        // otherwise strip the units and try to directly convert the string to a
+        // double precision floating-point number.
+        float floatValue = currentValue;
         try {
             final Number numericValue = _numberParse.parse( stringValue );
-            longValue = numericValue.intValue();
+            floatValue = numericValue.floatValue();
         }
         catch ( final ParseException pe ) {
             final int measurementUnitIndex = stringValue.indexOf( _measurementUnitString );
@@ -309,7 +354,7 @@ public class LongEditor extends NumberEditor {
                 final String numericString = ( measurementUnitIndex < 0 )
                     ? stringValue
                     : stringValue.substring( 0, measurementUnitIndex + 1 );
-                longValue = Long.parseLong( numericString );
+                floatValue = Float.parseFloat( numericString );
             }
             catch ( IndexOutOfBoundsException | NumberFormatException | NullPointerException e ) {
                 if ( _reset != null ) {
@@ -318,30 +363,33 @@ public class LongEditor extends NumberEditor {
             }
         }
 
+        // If necessary, adjust the precision level based on magnitude ranges.
+        final float precisionAdjustedValue = adjustPrecision( floatValue );
+
         // If limits were established, enforce them by range-checking and
         // restricting the parsed or defaulted value. Always check though, to
         // avoid overflow and underflow conditions.
-        final long clampedValue = getClampedValue( longValue );
+        final float clampedValue = getClampedValue( precisionAdjustedValue );
 
         return clampedValue;
     }
 
     /**
-     * Converts the specified long into its {@link String} form.
+     * Converts the specified floar into its {@link String} form.
      * <p>
      * A {@code null} argument is converted into the default value.
      *
-     * @param longValue
-     *            The long to convert
-     * @return The {@link String} form of {@code longValue}
+     * @param floatValue
+     *            The float to convert
+     * @return The {@link String} form of {@code floatValue}
      */
-    public final String toString( final long longValue ) {
+    public final String toString( final float floatValue ) {
         // Do a simple string conversion to a number, in case we get arithmetic
         // exceptions using the number formatter.
-        String stringValue = Long.toString( longValue );
+        String stringValue = Double.toString( floatValue );
 
         try {
-            stringValue = _numberFormat.format( longValue );
+            stringValue = _numberFormat.format( floatValue );
         }
         catch ( final ArithmeticException ae ) {
             ae.printStackTrace();
@@ -352,4 +400,9 @@ public class LongEditor extends NumberEditor {
         return stringValue;
     }
 
+    public float adjustPrecision( final float floatValue ) {
+        // By default, unless overridden, there is no further adjustment beyond
+        // what is already set in the Number Parser.
+        return floatValue;
+    }
 }

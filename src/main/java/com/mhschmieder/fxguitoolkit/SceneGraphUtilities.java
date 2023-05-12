@@ -414,7 +414,7 @@ public class SceneGraphUtilities {
         return label;
     }
 
-    // Helper method to get a number editor, stand-alone or paired.
+    // Helper method to get a number textField, stand-alone or paired.
     public static DoubleEditor getNumberSliderEditor( final ClientProperties clientProperties,
                                                       final int minFractionDigitsFormat,
                                                       final int maxFractionDigitsFormat,
@@ -446,7 +446,7 @@ public class SceneGraphUtilities {
         return doubleEditor;
     }
 
-    // Helper method to get a number editor to pair with a slider.
+    // Helper method to get a number textField to pair with a slider.
     public static DoubleEditor getNumberSliderEditor( final ClientProperties clientProperties,
                                                       final NumberSlider numberSlider,
                                                       final int minFractionDigitsFormat,
@@ -454,7 +454,7 @@ public class SceneGraphUtilities {
                                                       final int minFractionDigitsParse,
                                                       final int maxFractionDigitsParse,
                                                       final double valueIncrement ) {
-        // Use the current slider value and limits to set the number editor.
+        // Use the current slider value and limits to set the number textField.
         final DoubleEditor doubleEditor =
                                         getNumberSliderEditor( clientProperties,
                                                                minFractionDigitsFormat,

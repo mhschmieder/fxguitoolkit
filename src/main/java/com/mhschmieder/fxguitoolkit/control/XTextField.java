@@ -124,5 +124,4 @@ public class XTextField extends TextField {
             }
         } );
     }
-
 }

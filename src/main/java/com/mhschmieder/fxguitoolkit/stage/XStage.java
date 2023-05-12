@@ -471,7 +471,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
     protected void loadObjectPropertiesEditors() {}
 
     // This method refreshes the Object Properties Editors when their
-    // properties are changed outside the editor, such as via mouse move/rotate.
+    // properties are changed outside the textField, such as via mouse move/rotate.
     public final void refreshObjectPropertiesEditors() {
         // Forward this method to the Window manager.
         _windowManager.refreshObjectPropertiesEditors();

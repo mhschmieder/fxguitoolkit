@@ -46,7 +46,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- * This layout manager couples an opacity editor with a slider.
+ * This layout manager couples an opacity textField with a slider.
  */
 public final class OpacityPane extends VBox {
 
@@ -90,7 +90,7 @@ public final class OpacityPane extends VBox {
         // Create a default Opacity Slider.
         _opacitySlider = new OpacitySlider( clientProperties );
 
-        // Conform the associated editor (text field) to the slider attributes.
+        // Conform the associated textField (text field) to the slider attributes.
         _opacityEditor = ControlFactory.makeOpacitySliderEditor( clientProperties, _opacitySlider );
         _opacityEditor.setPrefWidth( 70d );
 
@@ -117,9 +117,9 @@ public final class OpacityPane extends VBox {
         // text property of the underlying Text Field stays in sync as a
         // formatted number via other methods and callbacks.
         // NOTE: We don't even need this binding at all anymore, as we instead
-        // bind the editor and the slider independently to the data model. This
+        // bind the textField and the slider independently to the data model. This
         // reduces confusion over any master/slave relationships between the
-        // paired controls, and seems to retain the higher editor resolution.
+        // paired controls, and seems to retain the higher textField resolution.
         // _opacityEditor.valueProperty().bindBidirectional(
         // _opacitySlider.valueProperty() );
         // _opacityEditor.textProperty().bindBidirectional(
@@ -145,7 +145,7 @@ public final class OpacityPane extends VBox {
             _opacityEditor.setValue( editedValue );
 
             // Sync the slider and read-only label to the saved value in the
-            // editor.
+            // textField.
             setOpacityPercent( _opacityEditor.getValue() );
         }
     }

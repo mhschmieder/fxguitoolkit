@@ -34,6 +34,8 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+
 import javafx.geometry.Pos;
 
 public abstract class NumberEditorTableCell< RT, Number > extends EditorTableCell< RT, Number > {
@@ -41,17 +43,19 @@ public abstract class NumberEditorTableCell< RT, Number > extends EditorTableCel
     // Maintain a reference to the Measurement Unit label (can be blank).
     @SuppressWarnings("nls") protected String _measurementUnit = "";
 
-    // Cache a number formatter for displaying the float values.
+    // Cache a number formatter for displaying the numeric values.
     protected final NumberFormat              _numberFormat;
 
-    public NumberEditorTableCell( final boolean pAllowedToBeBlank ) {
-        this( null, pAllowedToBeBlank );
+    public NumberEditorTableCell( final boolean pAllowedToBeBlank,
+                                  final ClientProperties pClientProperties ) {
+        this( null, pAllowedToBeBlank, pClientProperties );
     }
 
     public NumberEditorTableCell( final List< Integer > pUneditableRows,
-                                 final boolean pAllowedToBeBlank ) {
+                                  final boolean pAllowedToBeBlank,
+                                  final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super( pUneditableRows, pAllowedToBeBlank );
+        super( pUneditableRows, pAllowedToBeBlank, pClientProperties );
 
         // Generally, we prefer numeric fields to be centered.
         setAlignment( Pos.CENTER );
@@ -60,6 +64,36 @@ public abstract class NumberEditorTableCell< RT, Number > extends EditorTableCel
         _numberFormat = NumberFormat.getNumberInstance( Locale.getDefault() );
         _numberFormat.setMinimumFractionDigits( 0 );
         _numberFormat.setMinimumIntegerDigits( 1 );
+    }
+
+    @Override
+    public void commitEdit( final Number newValue ) {
+        // Reject empty fields and treat as cancellation of editing, as we do
+        // not allow null numbers as it can complicate bindings and syncing.
+        if ( blankTextAllowed || ( newValue != null ) ) {
+            super.commitEdit( newValue );
+        }
+        else {
+            super.cancelEdit();
+        }
+    }
+
+    @Override
+    public Number getAdjustedValue( final Number unadjustedValue ) {
+        // If blank text is allowed, return the input unadjusted; otherwise trim
+        // the edited value to make it legal, and to avoid confusing the user.
+        // TODO: Think out all the edge cases and what to do, such as blank trim.
+        final Number adjustedValue = blankTextAllowed 
+                ? unadjustedValue 
+                : adjustPrecision( unadjustedValue );
+
+        return adjustedValue;
+    }
+    
+    protected Number adjustPrecision( final Number unadjustedValue ) {
+        // NOTE: There is nothing to do by default, but some derivations may
+        //  need to supply type-specific overrides in a domain context.
+        return unadjustedValue;
     }
 
     public final void setMeasurementUnit( final String measurementUnit ) {

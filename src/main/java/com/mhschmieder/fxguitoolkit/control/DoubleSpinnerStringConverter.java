@@ -54,7 +54,7 @@ import javafx.util.StringConverter;
 /**
  * Converts between user-edited strings and {@link Double} values.
  * <p>
- * Accepts an optional {@link Runnable} that resets the editor on
+ * Accepts an optional {@link Runnable} that resets the textField on
  * {@link NumberFormatException}, or a {@link TextField} or {@link Spinner} that
  * is preemptively monitored for invalid input during typing, and restricts
  * valid input to a specified range when committed.
@@ -164,7 +164,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
     public DoubleSpinnerStringConverter() {}
 
     /**
-     * Creates an {@link DoubleSpinnerStringConverter} with an editor reset
+     * Creates an {@link DoubleSpinnerStringConverter} with an textField reset
      * callback.
      * <p>
      * Specifying {@code null} has the same effect as the default constructor.
@@ -181,16 +181,16 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
      * Creates an {@link DoubleSpinnerStringConverter} with the specified input
      * range.
      * <p>
-     * Preemptively monitors {@code editor} to reject any invalid characters
-     * during typing, restricts {@code editor} to [{@code minimumNumericValue},
+     * Preemptively monitors {@code textField} to reject any invalid characters
+     * during typing, restricts {@code textField} to [{@code minimumNumericValue},
      * {@code maximumNumericValue}] (inclusive) when valid text is committed,
-     * and resets {@code editor} to the default value when invalid text is
+     * and resets {@code textField} to the default value when invalid text is
      * committed.
      *
      * @param spinnerValueFactory
      *            The {@link SpinnerValueFactory} that regulates the supported
      *            value list for the associated {@link Spinner}
-     * @param editor
+     * @param textField
      *            The {@link TextField} providing user-edited strings
      * @param tooltipText
      *            The pre-formatted text to display for the tool tip
@@ -206,7 +206,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
      * @param numberFormat
      *            The number formatter to apply for the number representation
      * @throws NullPointerException
-     *             If {@code editor} is {@code null}
+     *             If {@code textField} is {@code null}
      */
     public DoubleSpinnerStringConverter( final SpinnerValueFactory.DoubleSpinnerValueFactory spinnerValueFactory,
                                          final TextField editor,
@@ -221,7 +221,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
         }
 
         if ( editor == null ) {
-            throw new NullPointerException( "editor" ); //$NON-NLS-1$
+            throw new NullPointerException( "textField" ); //$NON-NLS-1$
         }
 
         _spinnerValueFactory = spinnerValueFactory;
@@ -376,7 +376,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
      * Converts the specified {@link String} into its {@link Double} value.
      * <p>
      * A {@code null}, empty, or otherwise invalid argument returns zero and
-     * also executes the editor reset callback, if any.
+     * also executes the textField reset callback, if any.
      *
      * @param stringValue
      *            The {@link String} to convert
@@ -437,7 +437,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
     }
 
     /**
-     * Sets the editor reset callback.
+     * Sets the textField reset callback.
      * <p>
      * Specify {@code null} to clear a previously set {@link Runnable}. When
      * creating an {@link DoubleSpinnerStringConverter} for a {@link TextField}

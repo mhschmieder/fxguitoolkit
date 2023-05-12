@@ -41,13 +41,13 @@ import javafx.beans.property.StringProperty;
 
 public class LabelEditorTableCell< RT, VT > extends EditorTableCell< RT, String > {
 
-    // Cache the raw string representation of the data value.
+    // Cache the raw String representation of the data cachedValue.
     // NOTE: This field has to follow JavaFX Property Beans conventions.
-    private final StringProperty value;
+    private final StringProperty cachedValue;
 
     // Number format cache used for locale-specific number formatting of
     // uniquefier appendices.
-    public NumberFormat          _uniquefierNumberFormat;
+    public NumberFormat          uniquefierNumberFormat;
 
     public LabelEditorTableCell( final boolean pBlankTextAllowed,
                                  final ClientProperties pClientProperties ) {
@@ -59,10 +59,10 @@ public class LabelEditorTableCell< RT, VT > extends EditorTableCell< RT, String 
                                  final boolean pBlankTextAllowed,
                                  final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super( pUneditableRows, pBlankTextAllowed );
+        super( pUneditableRows, pBlankTextAllowed, pClientProperties );
 
-        value = new SimpleStringProperty( "" );
-
+        cachedValue = new SimpleStringProperty( "" );
+ 
         try {
             initTableCell( pClientProperties );
         }
@@ -71,11 +71,16 @@ public class LabelEditorTableCell< RT, VT > extends EditorTableCell< RT, String 
         }
     }
 
+    private final void initTableCell( final ClientProperties pClientProperties ) {
+        uniquefierNumberFormat = NumberFormatUtilities
+                .getUniquefierNumberFormat( pClientProperties.locale );
+    }
+
     @Override
     public void commitEdit( final String newValue ) {
         // Reject empty strings and treat as cancellation of editing, as we do
         // not allow blank labels since it can break mappings of lookups.
-        if ( _blankTextAllowed || ( ( newValue != null ) && !newValue.trim().isEmpty() ) ) {
+        if ( blankTextAllowed || ( ( newValue != null ) && !newValue.trim().isEmpty() ) ) {
             super.commitEdit( newValue );
         }
         else {
@@ -86,21 +91,21 @@ public class LabelEditorTableCell< RT, VT > extends EditorTableCell< RT, String 
     @Override
     public String getAdjustedValue( final String text ) {
         // If blank text is allowed, return the input unadjusted; otherwise trim
-        // the edited value to make it legal, and to avoid confusing the user.
-        final String adjustedValue = _blankTextAllowed ? text : text.trim();
+        // the edited cachedValue to make it legal, and to avoid confusing the user.
+        // TODO: Think out all the edge cases and what to do, such as blank trim.
+        final String adjustedValue = blankTextAllowed ? text : text.trim();
 
         return adjustedValue;
     }
 
     @Override
     protected String getEditorValue() {
-        return _textField.getText();
+        return textField.getText();
     }
 
     @Override
     protected String getString() {
-        final String stringValue = getItem();
-        return stringValue;
+        return getItem();
     }
 
     @Override
@@ -108,26 +113,25 @@ public class LabelEditorTableCell< RT, VT > extends EditorTableCell< RT, String 
         return getItem();
     }
 
-    public final String getValue() {
-        return value.get();
-    }
-
-    private final void initTableCell( final ClientProperties pClientProperties ) {
-        _uniquefierNumberFormat = NumberFormatUtilities
-                .getUniquefierNumberFormat( pClientProperties.locale );
-    }
-
     @Override
     public final void setValue( final String pValue ) {
-        // Locally cache the new value, separately from the editor.
-        value.set( pValue );
+        // Locally cache the new cachedValue, separately from the textField.
+        setCachedValue( pValue );
 
         // Now do whatever we do for all data types in the base class.
         super.setValue( pValue );
     }
 
-    public final StringProperty valueProperty() {
-        return value;
+    public final StringProperty cachedValueProperty() {
+        return cachedValue;
     }
 
+    public final String getCachedValue() {
+        return cachedValue.get();
+    }
+    
+    public final void setCachedValue( final String pCachedValue ) {
+        // Locally cache the new cachedValue, separately from the textField.
+        cachedValue.set( pCachedValue );
+    }
 }

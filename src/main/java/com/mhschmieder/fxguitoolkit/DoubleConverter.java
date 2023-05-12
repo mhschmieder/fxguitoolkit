@@ -43,7 +43,7 @@ import javafx.util.StringConverter;
  * These can be especially useful with FX Charts when setting converters for
  * axis tick labels and the like -- especially if needing integers vs. doubles.
  * <p>
- * Other uses are more typical of JavaFX Controls contexts, for editor syncing.
+ * Other uses are more typical of JavaFX Controls contexts, for textField syncing.
  */
 public class DoubleConverter extends StringConverter< Number > {
 

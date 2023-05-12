@@ -32,65 +32,103 @@ package com.mhschmieder.fxguitoolkit.control.cell;
 
 import java.util.List;
 
-import javafx.geometry.Pos;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.fxguitoolkit.control.IntegerEditor;
 
-// TODO: Use our IntegerEditor class instead, and pass the measurement unit?
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Pos;
+import javafx.scene.control.TextField;
+
 public class IntegerEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Integer > {
 
-    public IntegerEditorTableCell( final boolean pAllowedToBeBlank ) {
-        this( null, pAllowedToBeBlank );
+    // Cache the raw Integer representation of the data cachedValue.
+    // NOTE: This field has to follow JavaFX Property Beans conventions.
+    private final IntegerProperty cachedValue;
+
+    public IntegerEditorTableCell( final boolean pAllowedToBeBlank,
+                                   final ClientProperties pClientProperties ) {
+        this( null, pAllowedToBeBlank, pClientProperties );
     }
 
     public IntegerEditorTableCell( final List< Integer > pUneditableRows,
-                                   final boolean pAllowedToBeBlank ) {
+                                   final boolean pAllowedToBeBlank,
+                                   final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super( pUneditableRows, pAllowedToBeBlank );
+        super( pUneditableRows, pAllowedToBeBlank, pClientProperties );
 
-        // Generally, we prefer numeric fields to be centered.
-        setAlignment( Pos.CENTER );
+        cachedValue = new SimpleIntegerProperty( 0 );
 
         // Make sure we show the integers in the default locale.
         _numberFormat.setMaximumFractionDigits( 0 );
         _numberFormat.setParseIntegerOnly( true );
     }
+    
+    @Override
+    protected TextField makeTextField() {
+        return new IntegerEditor(
+            clientProperties, "0", "", blankTextAllowed, 0, 2, 0, 4);
+    }
 
     @Override
     protected Integer getEditorValue() {
-        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
-        // cells and to represent them with a consistent and intuitive rendering
-        // that is globally understood as "no data".
-        final String textValue = _textField.getText();
-        final Integer integerValue = Integer.valueOf( textValue );
-        final Integer editorValue = ( textValue == null ) || ( integerValue == null )
-            ? null
-            : integerValue;
-        return editorValue;
+        final String textValue = textField.getText();
+        if ( textValue == null ) {
+            return null;
+        }
+        
+        final int intValue = ( ( IntegerEditor ) textField ).fromString( textValue );
+        
+        return Integer.valueOf( intValue );
     }
 
-    @SuppressWarnings("nls")
     @Override
     protected String getString() {
-        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
-        // cells and to represent them with a consistent and intuitive rendering
-        // that is globally understood as "no data".
-        final Integer integerValue = getItem();
-        final String stringValue = ( integerValue == null )
-            ? ""
-            : _numberFormat.format( Integer.valueOf( integerValue.toString() ) )
-                        + _measurementUnit;
+        final Integer intValue = getItem();
+        if ( intValue == null ) {
+            return "";
+        }
+        
+        // This text goes to the editor, so we don't want to clutter the user's
+        // editing session with formatting and measurement units.
+        // TODO: Determine whether we at least need to apply the Number
+        //  Formatter for proper localization of commas, periods, etc.
+        final String stringValue = Integer.toString( intValue );
+        
         return stringValue;
     }
 
-    @SuppressWarnings("nls")
     @Override
     protected String getTextValue() {
-        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
-        // cells and to represent them with a consistent and intuitive rendering
-        // that is globally understood as "no data".
-        final Integer integerValue = getItem();
-        final String textValue = ( integerValue == null )
-            ? ""
-            : Integer.toString( integerValue.intValue() );
+        final Integer intValue = getItem();
+        if ( intValue == null ) {
+            return "";
+        }
+        
+        final String textValue = ( ( IntegerEditor ) textField ).toString( intValue );
+        
         return textValue;
+    }
+
+    @Override
+    public final void setValue( final Integer pValue ) {
+        // Locally cache the new cachedValue, separately from the textField.
+        cachedValue.set( pValue );
+
+        // Now do whatever we do for all data types in the base class.
+        super.setValue( pValue );
+    }
+
+    public final IntegerProperty cachedValueProperty() {
+        return cachedValue;
+    }
+
+    public final int getCachedValue() {
+        return cachedValue.get();
+    }
+    
+    public final void setCachedValue( final int pCachedValue ) {
+        // Locally cache the new cachedValue, separately from the textField.
+        cachedValue.set( pCachedValue );
     }
 }

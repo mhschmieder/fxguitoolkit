@@ -32,65 +32,103 @@ package com.mhschmieder.fxguitoolkit.control.cell;
 
 import java.util.List;
 
-import javafx.geometry.Pos;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.fxguitoolkit.control.LongEditor;
 
-// TODO: Use our LongEditor class instead, and pass the measurement unit?
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.geometry.Pos;
+import javafx.scene.control.TextField;
+
 public class LongEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Long > {
 
-    public LongEditorTableCell( final boolean pAllowedToBeBlank ) {
-        this( null, pAllowedToBeBlank );
+    // Cache the raw Long representation of the data cachedValue.
+    // NOTE: This field has to follow JavaFX Property Beans conventions.
+    private final LongProperty cachedValue;
+
+    public LongEditorTableCell( final boolean pAllowedToBeBlank,
+                                final ClientProperties pClientProperties ) {
+        this( null, pAllowedToBeBlank, pClientProperties );
     }
 
     public LongEditorTableCell( final List< Integer > pUneditableRows,
-                                final boolean pAllowedToBeBlank ) {
+                                final boolean pAllowedToBeBlank,
+                                final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super( pUneditableRows, pAllowedToBeBlank );
+        super( pUneditableRows, pAllowedToBeBlank, pClientProperties );
 
-        // Generally, we prefer numeric fields to be centered.
-        setAlignment( Pos.CENTER );
+        cachedValue = new SimpleLongProperty( 0L );
 
         // Make sure we show the longs in the default locale.
         _numberFormat.setMaximumFractionDigits( 0 );
         _numberFormat.setParseIntegerOnly( true );
     }
+    
+    @Override
+    protected TextField makeTextField() {
+        return new LongEditor(
+            clientProperties, "0", "", blankTextAllowed, 0, 2, 0, 4);
+    }
 
     @Override
     protected Long getEditorValue() {
-        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
-        // cells and to represent them with a consistent and intuitive rendering
-        // that is globally understood as "no data".
-        final String textValue = _textField.getText();
-        final Long longValue = Long.valueOf( textValue );
-        final Long editorValue = ( textValue == null ) || ( longValue == null )
-            ? null
-            : longValue;
-        return editorValue;
+        final String textValue = textField.getText();
+        if ( textValue == null ) {
+            return null;
+        }
+        
+        final long longValue = ( ( LongEditor ) textField ).fromString( textValue );
+        
+        return Long.valueOf( longValue );
     }
 
-    @SuppressWarnings("nls")
     @Override
     protected String getString() {
-        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
-        // cells and to represent them with a consistent and intuitive rendering
-        // that is globally understood as "no data".
         final Long longValue = getItem();
-        final String stringValue = ( longValue == null )
-            ? ""
-            : _numberFormat.format( Long.valueOf( longValue.toString() ) )
-                        + _measurementUnit;
+        if ( longValue == null ) {
+            return "";
+        }
+        
+        // This text goes to the editor, so we don't want to clutter the user's
+        // editing session with formatting and measurement units.
+        // TODO: Determine whether we at least need to apply the Number
+        //  Formatter for proper localization of commas, periods, etc.
+        final String stringValue = Long.toString( longValue );
+        
         return stringValue;
     }
 
-    @SuppressWarnings("nls")
     @Override
     protected String getTextValue() {
-        // NOTE: This is a bit of a hack to allow invalid and/or impertinent
-        // cells and to represent them with a consistent and intuitive rendering
-        // that is globally understood as "no data".
         final Long longValue = getItem();
-        final String textValue = ( longValue == null )
-            ? ""
-            : Long.toString( longValue.intValue() );
+        if ( longValue == null ) {
+            return "";
+        }
+        
+        final String textValue = ( ( LongEditor ) textField ).toString( longValue );
+        
         return textValue;
+    }
+
+    @Override
+    public final void setValue( final Long pValue ) {
+        // Locally cache the new cachedValue, separately from the textField.
+        cachedValue.set( pValue );
+
+        // Now do whatever we do for all data types in the base class.
+        super.setValue( pValue );
+    }
+
+    public final LongProperty cachedValueProperty() {
+        return cachedValue;
+    }
+
+    public final long getCachedValue() {
+        return cachedValue.get();
+    }
+    
+    public final void setCachedValue( final long pCachedValue ) {
+        // Locally cache the new cachedValue, separately from the textField.
+        cachedValue.set( pCachedValue );
     }
 }

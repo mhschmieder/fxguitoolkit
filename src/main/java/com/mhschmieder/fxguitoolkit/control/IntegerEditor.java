@@ -280,7 +280,7 @@ public class IntegerEditor extends NumberEditor {
      * Converts the specified {@link String} into its integer value.
      * <p>
      * A {@code null}, empty, or otherwise invalid argument returns zero and
-     * also executes the editor reset callback, if any.
+     * also executes the textField reset callback, if any.
      *
      * @param stringValue
      *            The {@link String} to convert
