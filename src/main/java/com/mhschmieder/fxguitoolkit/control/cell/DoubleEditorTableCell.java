@@ -91,10 +91,9 @@ public class DoubleEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, 
         }
         
         // This text goes to the editor, so we don't want to clutter the user's
-        // editing session with formatting and measurement units.
-        // TODO: Determine whether we at least need to apply the Number
-        //  Formatter for proper localization of commas, periods, etc.
-        final String stringValue = Double.toString( doubleValue );
+        // editing session with measurement units, but do need localization.
+        final String stringValue 
+            = ( ( DoubleEditor ) textField ).toFormattedString( doubleValue );
         
         return stringValue;
     }
