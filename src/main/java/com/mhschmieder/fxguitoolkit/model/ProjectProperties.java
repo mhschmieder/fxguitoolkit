@@ -80,7 +80,9 @@ public final class ProjectProperties {
               pProjectProperties.getProjectNotes() );
     }
 
-    /** This is the fully qualified constructor. */
+    /*
+     * This is the fully qualified constructor. 
+     */
     public ProjectProperties( final String pProjectName,
                               final String pVenue,
                               final String pDesigner,
@@ -164,7 +166,9 @@ public final class ProjectProperties {
         return projectNotes;
     }
 
-    /** Default pseudo-constructor. */
+    /** 
+     * Default pseudo-constructor. 
+     */
     public void reset() {
         setProjectProperties( PROJECT_NAME_DEFAULT,
                               VENUE_DEFAULT,
@@ -189,8 +193,11 @@ public final class ProjectProperties {
         projectNotes.set( pProjectNotes );
     }
 
-    /*
+    /**
      * Copy pseudo-constructor. 
+     *
+     * @param pProjectProperties
+     *            The Project Properties reference for the copy
      */
     public void setProjectProperties( final ProjectProperties pProjectProperties ) {
         setProjectProperties( pProjectProperties.getProjectName(),
