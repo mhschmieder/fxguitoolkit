@@ -375,7 +375,8 @@ public class DoubleEditor extends NumberEditor {
     }
 
     /**
-     * Converts the specified double into its {@link String} form.
+     * Converts the specified double into its {@link String} form, with the
+     * measurement unit string appended for a complete representation.
      * <p>
      * A {@code null} argument is converted into the default value.
      *
@@ -386,6 +387,24 @@ public class DoubleEditor extends NumberEditor {
     public final String toString( final double doubleValue ) {
         // Do a simple string conversion to a number, in case we get arithmetic
         // exceptions using the number formatter.
+        String stringValue = toFormattedString( doubleValue );
+        stringValue += _measurementUnitString;
+
+        return stringValue;
+    }
+
+    /**
+     * Converts the specified double into its {@link String} form.
+     * <p>
+     * A {@code null} argument is converted into the default value.
+     *
+     * @param doubleValue
+     *            The double to convert
+     * @return The {@link String} form of {@code doubleValue}
+     */
+    public final String toFormattedString( final double doubleValue ) {
+        // Do a simple string conversion to a number, in case we get arithmetic
+        // exceptions using the number formatter.
         String stringValue = Double.toString( doubleValue );
 
         try {
@@ -394,8 +413,6 @@ public class DoubleEditor extends NumberEditor {
         catch ( final ArithmeticException ae ) {
             ae.printStackTrace();
         }
-
-        stringValue += _measurementUnitString;
 
         return stringValue;
     }

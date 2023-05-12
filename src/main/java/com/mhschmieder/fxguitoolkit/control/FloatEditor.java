@@ -375,7 +375,8 @@ public class FloatEditor extends NumberEditor {
     }
 
     /**
-     * Converts the specified floar into its {@link String} form.
+     * Converts the specified float into its {@link String} form, with the
+     * measurement unit string appended for a complete representation.
      * <p>
      * A {@code null} argument is converted into the default value.
      *
@@ -386,7 +387,25 @@ public class FloatEditor extends NumberEditor {
     public final String toString( final float floatValue ) {
         // Do a simple string conversion to a number, in case we get arithmetic
         // exceptions using the number formatter.
-        String stringValue = Double.toString( floatValue );
+        String stringValue = toFormattedString( floatValue );
+        stringValue += _measurementUnitString;
+
+        return stringValue;
+    }
+
+    /**
+     * Converts the specified float into its {@link String} form.
+     * <p>
+     * A {@code null} argument is converted into the default value.
+     *
+     * @param floatValue
+     *            The float to convert
+     * @return The {@link String} form of {@code floatValue}
+     */
+    public final String toFormattedString( final float floatValue ) {
+        // Do a simple string conversion to a number, in case we get arithmetic
+        // exceptions using the number formatter.
+        String stringValue = Float.toString( floatValue );
 
         try {
             stringValue = _numberFormat.format( floatValue );
@@ -394,8 +413,6 @@ public class FloatEditor extends NumberEditor {
         catch ( final ArithmeticException ae ) {
             ae.printStackTrace();
         }
-
-        stringValue += _measurementUnitString;
 
         return stringValue;
     }

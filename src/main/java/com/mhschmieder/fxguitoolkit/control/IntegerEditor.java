@@ -326,7 +326,8 @@ public class IntegerEditor extends NumberEditor {
     }
 
     /**
-     * Converts the specified integer into its {@link String} form.
+     * Converts the specified integer into its {@link String} form, with the
+     * measurement unit string appended for a complete representation.
      * <p>
      * A {@code null} argument is converted into the default value.
      *
@@ -335,6 +336,24 @@ public class IntegerEditor extends NumberEditor {
      * @return The {@link String} form of {@code intValue}
      */
     public final String toString( final int intValue ) {
+        // Do a simple string conversion to a number, in case we get arithmetic
+        // exceptions using the number formatter.
+        String stringValue = toFormattedString( intValue );
+        stringValue += _measurementUnitString;
+
+        return stringValue;
+    }
+
+    /**
+     * Converts the specified integer into its {@link String} form.
+     * <p>
+     * A {@code null} argument is converted into the default value.
+     *
+     * @param intValue
+     *            The integer to convert
+     * @return The {@link String} form of {@code intValue}
+     */
+    public final String toFormattedString( final int intValue ) {
         // Do a simple string conversion to a number, in case we get arithmetic
         // exceptions using the number formatter.
         String stringValue = Integer.toString( intValue );
@@ -346,9 +365,6 @@ public class IntegerEditor extends NumberEditor {
             ae.printStackTrace();
         }
 
-        stringValue += _measurementUnitString;
-
         return stringValue;
     }
-
 }

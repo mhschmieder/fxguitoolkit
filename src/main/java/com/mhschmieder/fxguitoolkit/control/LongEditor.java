@@ -327,7 +327,8 @@ public class LongEditor extends NumberEditor {
     }
 
     /**
-     * Converts the specified long into its {@link String} form.
+     * Converts the specified long into its {@link String} form, with the
+     * measurement unit string appended for a complete representation.
      * <p>
      * A {@code null} argument is converted into the default value.
      *
@@ -336,6 +337,24 @@ public class LongEditor extends NumberEditor {
      * @return The {@link String} form of {@code longValue}
      */
     public final String toString( final long longValue ) {
+        // Do a simple string conversion to a number, in case we get arithmetic
+        // exceptions using the number formatter.
+        String stringValue = toFormattedString( longValue );
+        stringValue += _measurementUnitString;
+
+        return stringValue;
+    }
+
+    /**
+     * Converts the specified long into its {@link String} form.
+     * <p>
+     * A {@code null} argument is converted into the default value.
+     *
+     * @param longValue
+     *            The long to convert
+     * @return The {@link String} form of {@code longValue}
+     */
+    public final String toFormattedString( final long longValue ) {
         // Do a simple string conversion to a number, in case we get arithmetic
         // exceptions using the number formatter.
         String stringValue = Long.toString( longValue );
@@ -347,9 +366,6 @@ public class LongEditor extends NumberEditor {
             ae.printStackTrace();
         }
 
-        stringValue += _measurementUnitString;
-
         return stringValue;
     }
-
 }
