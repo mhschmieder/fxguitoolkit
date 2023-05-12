@@ -189,7 +189,9 @@ public final class ProjectProperties {
         projectNotes.set( pProjectNotes );
     }
 
-    /** Copy pseudo-constructor. */
+    /*
+     * Copy pseudo-constructor. 
+     */
     public void setProjectProperties( final ProjectProperties pProjectProperties ) {
         setProjectProperties( pProjectProperties.getProjectName(),
                               pProjectProperties.getVenue(),
@@ -198,7 +200,9 @@ public final class ProjectProperties {
                               pProjectProperties.getProjectNotes() );
     }
 
-    /** Fully qualified pseudo-constructor. */
+    /*
+     * Fully qualified pseudo-constructor. 
+     */
     public void setProjectProperties( final String pProjectName,
                                       final String pVenue,
                                       final String pDesigner,
