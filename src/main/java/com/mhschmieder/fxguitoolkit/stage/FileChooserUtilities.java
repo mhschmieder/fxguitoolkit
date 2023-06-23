@@ -46,6 +46,7 @@ import com.mhschmieder.fxguitoolkit.MessageFactory;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;
@@ -101,6 +102,27 @@ public final class FileChooserUtilities {
         }
 
         return fileChooser;
+    }
+
+    // Get a Directory Chooser with fully initialized properties.
+    public static DirectoryChooser getDirectoryChooser( 
+            final String title,
+            final File initialDirectory ) {
+        final DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle( title );
+        
+        try {
+            // It's OK for there to not be a valid initial default directory.
+            if ( ( initialDirectory != null ) 
+                    && Files.isDirectory( initialDirectory.toPath() ) ) {
+                directoryChooser.setInitialDirectory( initialDirectory );
+            }
+        }
+        catch ( final SecurityException | InvalidPathException | NullPointerException e ) {
+            e.printStackTrace();
+        }
+
+        return directoryChooser;
     }
 
     /**
@@ -205,6 +227,35 @@ public final class FileChooserUtilities {
 
         // Return the file(s), even if none was chosen.
         return files;
+    }
+
+    /**
+     * Get a directory for a batch action or other action that traverses or 
+     * browses a full directory . Wraps
+     * {@link DirectoryChooser#showDialog(javafx.stage.Window) showDialog}.
+     *
+     * @param title
+     *            the title to use for the directory chooser
+     * @param initialDirectory
+     *            the initial default directory for the user
+     * @param parent
+     *            If an invalid or null parent is provided, the dialog will not
+     *            be modal.
+     * @return a directory corresponding to the one selected in the chooser
+     */
+    public static File getDirectory( final String title,
+                                     final File initialDirectory,
+                                     final Window parent ) {
+        // Get a directory chooser with fully initialized properties.
+        final DirectoryChooser directoryChooser = getDirectoryChooser( 
+                title,
+                initialDirectory );
+
+        // Throw up a modal directory chooser dialog for the directory name.
+        final File directory = directoryChooser.showDialog( parent );
+
+        // Return the directory, even if none was chosen.
+        return directory;
     }
 
     // Conditionally rename a file (such as when it is missing an extension).
