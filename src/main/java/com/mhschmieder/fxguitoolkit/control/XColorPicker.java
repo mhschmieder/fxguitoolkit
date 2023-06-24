@@ -49,9 +49,22 @@ import javafx.scene.paint.Color;
  */
 public class XColorPicker extends ColorPicker {
 
+    /**
+     * Creates a default XColorPicker instance with a selected color set to white.
+     */
     public XColorPicker( final String tooltipText ) {
+        this( Color.WHITE, tooltipText );
+    }
+
+    /**
+     * Creates a XColorPicker instance and sets the selected color to the given color.
+     *
+     * @param color to be set as the currently selected color of the ColorPicker.
+     */
+    public XColorPicker( final Color color,
+                         final String tooltipText ) {
         // Always call the superclass constructor first!
-        super();
+        super( color );
 
         try {
             initColorPicker( tooltipText );
