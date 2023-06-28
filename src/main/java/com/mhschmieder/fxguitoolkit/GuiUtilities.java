@@ -1036,10 +1036,10 @@ public final class GuiUtilities {
     // As with some other methods here, this one actually comes from
     // FxGuiToolkit's ColorUtilities class, which we use very little of.
     public static String colorToRgba( final Color color ) {
-        return "rgba(" + String.valueOf( FastMath.floor( color.getRed() * 255d ) ) + ", "
-                + String.valueOf( FastMath.floor( color.getGreen() * 255d ) ) + ", "
-                + String.valueOf( FastMath.floor( color.getBlue() * 255d ) ) + ", "
-                + String.valueOf( color.getOpacity() ) + ")";
+        return "rgba(" + Double.toString( FastMath.floor( color.getRed() * 255.0d ) ) + ", "
+                + Double.toString( FastMath.floor( color.getGreen() * 255.0d ) ) + ", "
+                + Double.toString( FastMath.floor( color.getBlue() * 255.0d ) ) + ", "
+                + Double.toString( color.getOpacity() ) + ")";
     }
 
     // Never speak of this code... ever again!
