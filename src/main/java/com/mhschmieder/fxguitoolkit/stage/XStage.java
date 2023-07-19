@@ -41,6 +41,7 @@ import java.util.prefs.Preferences;
 import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
+import com.mhschmieder.commonstoolkit.io.FileStatus;
 import com.mhschmieder.commonstoolkit.io.FileUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.SystemType;
@@ -1735,4 +1736,36 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
     
     // NOTE: This is a placeholder until we get file support into this class.
     protected void fileExportVectorGraphics( final String graphicsCategory ) {}
+    
+    // NOTE: The default implementation has been backed out until we can get
+    //  the third-party JFXConverter into Maven and thus be able to build our
+    //  convertertoolkit and jfxconvertertoolkit again, which get used here.
+    public FileStatus exportToEps( final File tempFile,
+                                   final File file ) {
+        return FileStatus.NOT_SAVED;
+    }
+
+    // NOTE: The default implementation has been backed out until we can get
+    //  the third-party JFXConverter into Maven and thus be able to build our
+    //  convertertoolkit and jfxconvertertoolkit again, which get used here.
+    public FileStatus exportToPdf( final File tempFile,
+                                   final File file ) {
+        return FileStatus.NOT_SAVED;
+    }
+        
+    // NOTE: The default implementation has been backed out until we can get
+    //  the third-party JFXConverter into Maven and thus be able to build our
+    //  convertertoolkit and jfxconvertertoolkit again, which get used here.
+    public FileStatus exportToPpt( final File tempFile,
+                                   final File file ) {
+        return FileStatus.NOT_SAVED;
+    }
+    
+    // NOTE: The default implementation has been backed out until we can get
+    //  the third-party JFXConverter into Maven and thus be able to build our
+    //  convertertoolkit and jfxconvertertoolkit again, which get used here.
+    public FileStatus exportToSvg( final File tempFile,
+                                   final File file ) {
+        return FileStatus.NOT_SAVED;
+    }
 }

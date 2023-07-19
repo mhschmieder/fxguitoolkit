@@ -37,7 +37,6 @@ import com.mhschmieder.fxguitoolkit.control.FloatEditor;
 
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleFloatProperty;
-import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 
 public class FloatEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Float > {

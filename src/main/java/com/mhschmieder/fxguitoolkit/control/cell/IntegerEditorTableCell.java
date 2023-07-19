@@ -37,7 +37,6 @@ import com.mhschmieder.fxguitoolkit.control.IntegerEditor;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 
 public class IntegerEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Integer > {

@@ -35,5 +35,10 @@
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/commonstoolkit"/>
 	<classpathentry kind="src" path="/guitoolkit"/>
+	<classpathentry kind="lib" path="/server/deployment/jars/jsoup-1.13.1.jar" sourcepath="/server/deployment/jars/jsoup-1.13.1-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/server/deployment/jars/jsoup-1.13.1-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

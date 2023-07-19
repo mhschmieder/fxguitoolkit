@@ -37,7 +37,6 @@ import com.mhschmieder.fxguitoolkit.control.LongEditor;
 
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
-import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 
 public class LongEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Long > {
