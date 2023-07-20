@@ -135,6 +135,14 @@ public final class ExtensionFilterUtilities {
         return extensionFilterAdditions;
     }
 
+    public static List< ExtensionFilter > getPdfExtensionFilters() {
+        final List< ExtensionFilter > extensionFilterAdditions = new ArrayList<>();
+
+        extensionFilterAdditions.add( ExtensionFilters.PDF_EXTENSION_FILTER );
+
+        return extensionFilterAdditions;
+    }
+
     public static List< ExtensionFilter > getPngExtensionFilters() {
         final List< ExtensionFilter > extensionFilterAdditions = new ArrayList<>();
 
