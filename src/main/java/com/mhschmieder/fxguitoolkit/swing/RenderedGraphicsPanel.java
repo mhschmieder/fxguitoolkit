@@ -30,27 +30,27 @@
  */
 package com.mhschmieder.fxguitoolkit.swing;
 
-import com.mhschmieder.fxgraphicstoolkit.io.FormattedVectorGraphicsExportOptions;
+import com.mhschmieder.fxgraphicstoolkit.io.RenderedGraphicsExportOptions;
 import com.mhschmieder.guitoolkit.component.TitledVectorizationXPanel;
 
 /**
  * This is an abstract parent class for Swing panels that form the main content
- * layout region for a legacy Formatted Vector Graphics presentation wrapper.
+ * layout region for a legacy Java 2D API Rendered Graphics presentation wrapper.
  */
-public abstract class FormattedVectorGraphicsPanel extends TitledVectorizationXPanel {
+public abstract class RenderedGraphicsPanel extends TitledVectorizationXPanel {
     /**
      *
      */
     private static final long                      serialVersionUID = -946301966269233300L;
 
-    // Cache the most recent Formatted Vector Graphics Export Options.
-    protected FormattedVectorGraphicsExportOptions _formattedVectorGraphicsExportOptions;
+    // Cache the most recent Rendered Graphics Export Options.
+    protected RenderedGraphicsExportOptions _renderedGraphicsExportOptions;
 
-    protected FormattedVectorGraphicsPanel() {
+    protected RenderedGraphicsPanel() {
         // Always call the superclass constructor first!
         super();
 
-        _formattedVectorGraphicsExportOptions = new FormattedVectorGraphicsExportOptions();
+        _renderedGraphicsExportOptions = new RenderedGraphicsExportOptions();
 
         try {
             initPanel();
@@ -66,18 +66,17 @@ public abstract class FormattedVectorGraphicsPanel extends TitledVectorizationXP
     public void setAuxiliaryPanelVisible( final boolean visible ) {}
 
     /**
-     * Cache the Formatted Vector Graphics Options for the next Vector Graphics
-     * Export.
+     * Cache the Rendered Graphics Options for the next Vector Graphics Export.
      *
-     * @param formattedVectorGraphicsExportOptions
-     *            The Formatted Vector Graphics Export Options for which
-     *            components to include in the Vector Graphics File
+     * @param renderedGraphicsExportOptions
+     *            The Rendered Graphics Export Options for which components to
+     *            include in the Vector Graphics File
      */
-    public final void setFormattedVectorGraphicsExportOptions( final FormattedVectorGraphicsExportOptions formattedVectorGraphicsExportOptions ) {
-        _formattedVectorGraphicsExportOptions = formattedVectorGraphicsExportOptions;
+    public final void setRenderedGraphicsExportOptions( final RenderedGraphicsExportOptions renderedGraphicsExportOptions ) {
+        _renderedGraphicsExportOptions = renderedGraphicsExportOptions;
 
         // Make sure the Title is in sync with the most recent user selection.
-        setTitle( formattedVectorGraphicsExportOptions.getTitle() );
+        setTitle( renderedGraphicsExportOptions.getTitle() );
     }
 
     // NOTE: It is up to the subclasses to decide which sub-panel to hide/show.
@@ -86,10 +85,9 @@ public abstract class FormattedVectorGraphicsPanel extends TitledVectorizationXP
     // NOTE: It is up to the subclasses to decide which sub-panel to hide/show.
     public void setOptionalItemVisible( final boolean visible ) {}
 
-    public final void syncViewToExportOptions( final FormattedVectorGraphicsExportOptions formattedVectorGraphicsExportOptions ) {
-        setAuxiliaryPanelVisible( formattedVectorGraphicsExportOptions.isExportAuxiliaryPanel() );
-        setInformationTablesVisible( formattedVectorGraphicsExportOptions
-                .isExportInformationTables() );
-        setOptionalItemVisible( formattedVectorGraphicsExportOptions.isExportOptionalItem() );
+    public final void syncViewToExportOptions( final RenderedGraphicsExportOptions renderedGraphicsExportOptions ) {
+        setAuxiliaryPanelVisible( renderedGraphicsExportOptions.isExportAuxiliaryPanel() );
+        setInformationTablesVisible( renderedGraphicsExportOptions.isExportInformationTables() );
+        setOptionalItemVisible( renderedGraphicsExportOptions.isExportOptionalItem() );
     }
 }

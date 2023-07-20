@@ -512,10 +512,10 @@ public class LabeledActionFactory {
     public static XActionGroup getExportActionGroup( final ClientProperties pClientProperties,
                                                      final ExportActions exportActions,
                                                      final boolean vectorGraphicsSupported,
-                                                     final boolean formattedVectorGraphicsSupported ) {
+                                                     final boolean renderedGraphicsSupported ) {
         final Collection< Action > exportActionCollection = exportActions
                 .getExportActionCollection( vectorGraphicsSupported,
-                                            formattedVectorGraphicsSupported );
+                                            renderedGraphicsSupported );
 
         final XActionGroup exportActionGroup = ActionFactory
                 .makeActionGroup( pClientProperties,
@@ -528,11 +528,11 @@ public class LabeledActionFactory {
     }
 
     @SuppressWarnings("nls")
-    public static XAction getExportFormattedVectorGraphicsAction( final ClientProperties pClientProperties ) {
+    public static XAction getExportRenderedGraphicsAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
                                          BUNDLE_NAME,
                                          "export",
-                                         "formattedVectorGraphics",
+                                         "renderedGraphics",
                                          "/icons/fatCow/FileExtensionEps16.png" );
     }
 
@@ -558,11 +558,11 @@ public class LabeledActionFactory {
     public static XActionGroup getFileActionGroup( final ClientProperties pClientProperties,
                                                    final FileActions fileActions,
                                                    final boolean vectorGraphicsSupported,
-                                                   final boolean formattedVectorGraphicsSupported ) {
+                                                   final boolean renderedGraphicsSupported ) {
         final Collection< Action > fileActionCollection = fileActions
                 .getFileActionCollection( pClientProperties,
                                           vectorGraphicsSupported,
-                                          formattedVectorGraphicsSupported );
+                                          renderedGraphicsSupported );
 
         // TODO: Review whether this is the correct bundle name to use for this action group.
         final XActionGroup fileActionGroup = ActionFactory

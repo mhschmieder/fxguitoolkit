@@ -679,12 +679,12 @@ public final class LabeledControlFactory {
     public static Menu getExportMenu( final ClientProperties pClientProperties,
                                       final ExportActions exportActions,
                                       final boolean vectorGraphicsSupported,
-                                      final boolean formattedVectorGraphicsSupported ) {
+                                      final boolean renderedGraphicsSupported ) {
         final XActionGroup exportActionGroup = LabeledActionFactory
                 .getExportActionGroup( pClientProperties,
                                        exportActions,
                                        vectorGraphicsSupported,
-                                       formattedVectorGraphicsSupported );
+                                       renderedGraphicsSupported );
         final Menu exportMenu = XActionUtilities.createMenu( exportActionGroup );
         return exportMenu;
     }
@@ -692,12 +692,12 @@ public final class LabeledControlFactory {
     public static Menu getFileMenu( final ClientProperties pClientProperties,
                                     final FileActions fileActions,
                                     final boolean vectorGraphicsSupported,
-                                    final boolean formattedVectorGraphicsSupported ) {
+                                    final boolean renderedGraphicsSupported ) {
         final XActionGroup fileActionGroup = LabeledActionFactory
                 .getFileActionGroup( pClientProperties,
                                      fileActions,
                                      vectorGraphicsSupported,
-                                     formattedVectorGraphicsSupported );
+                                     renderedGraphicsSupported );
         final Menu fileMenu = XActionUtilities.createMenu( fileActionGroup );
         return fileMenu;
     }

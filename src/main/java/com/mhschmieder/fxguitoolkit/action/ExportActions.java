@@ -46,21 +46,21 @@ public class ExportActions {
 
     public XAction _exportImageGraphicsAction;
     public XAction _exportVectorGraphicsAction;
-    public XAction _exportFormattedVectorGraphicsAction;
+    public XAction _exportRenderedGraphicsAction;
 
     public ExportActions( final ClientProperties pClientProperties ) {
         _exportImageGraphicsAction = LabeledActionFactory
                 .getExportImageGraphicsAction( pClientProperties );
         _exportVectorGraphicsAction = LabeledActionFactory
                 .getExportVectorGraphicsAction( pClientProperties );
-        _exportFormattedVectorGraphicsAction = LabeledActionFactory
-                .getExportFormattedVectorGraphicsAction( pClientProperties );
+        _exportRenderedGraphicsAction = LabeledActionFactory
+                .getExportRenderedGraphicsAction( pClientProperties );
     }
 
     // NOTE: This method is not final, so that it can be derived for
     // additions.
     public Collection< Action > getExportActionCollection( final boolean vectorGraphicsSupported,
-                                                           final boolean formattedVectorGraphicsSupported ) {
+                                                           final boolean renderedGraphicsSupported ) {
         final Collection< Action > exportActionCollection = new ArrayList<>();
 
         exportActionCollection.add( _exportImageGraphicsAction );
@@ -69,8 +69,8 @@ public class ExportActions {
             exportActionCollection.add( _exportVectorGraphicsAction );
         }
 
-        if ( formattedVectorGraphicsSupported ) {
-            exportActionCollection.add( _exportFormattedVectorGraphicsAction );
+        if ( renderedGraphicsSupported ) {
+            exportActionCollection.add( _exportRenderedGraphicsAction );
         }
 
         return exportActionCollection;

@@ -84,22 +84,22 @@ public class FileActions {
     }
 
     public final Collection< Action > getExportActionCollection( final boolean vectorGraphicsSupported,
-                                                                 final boolean formattedVectorGraphicsSupported ) {
+                                                                 final boolean renderedGraphicsSupported ) {
         // Forward this method to the Export actions container.
         return _exportActions.getExportActionCollection( vectorGraphicsSupported,
-                                                         formattedVectorGraphicsSupported );
+                                                         renderedGraphicsSupported );
     }
 
     // NOTE: This method is not final, so that it can be derived for
     // additions.
     public Collection< Action > getFileActionCollection( final ClientProperties pClientProperties,
                                                          final boolean vectorGraphicsSupported,
-                                                         final boolean formattedVectorGraphicsSupported ) {
+                                                         final boolean renderedGraphicsSupported ) {
         final XActionGroup exportActionGroup = LabeledActionFactory
                 .getExportActionGroup( pClientProperties,
                                        _exportActions,
                                        vectorGraphicsSupported,
-                                       formattedVectorGraphicsSupported );
+                                       renderedGraphicsSupported );
 
         final Collection< Action > fileActionCollection = new ArrayList<>();
 

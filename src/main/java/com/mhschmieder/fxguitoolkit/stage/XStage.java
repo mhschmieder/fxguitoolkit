@@ -167,9 +167,9 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
     // Cache a reference to the product branding information.
     protected final ProductBranding                     _productBranding;
 
-    // Declare a flag for whether this window supports Formatted Vector Graphics
+    // Declare a flag for whether this window supports Rendered Graphics
     // Export.
-    protected boolean               _supportsFormattedVectorGraphicsExport;
+    protected boolean               _supportsRenderedGraphicsExport;
 
     // Declare a Window Manager to act as a container for all window references.
     public final WindowManager      _windowManager;
@@ -210,7 +210,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
                       final String windowKeyPrefix,
                       final boolean showDirtyFlag,
                       final boolean frameTitleManager,
-                      final boolean supportsFormattedVectorGraphicsExport,
+                      final boolean supportsRenderedGraphicsExport,
                       final ProductBranding productBranding,
                       final ClientProperties pClientProperties ) {
         this( Modality.NONE,
@@ -218,7 +218,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
               windowKeyPrefix,
               showDirtyFlag,
               frameTitleManager,
-              supportsFormattedVectorGraphicsExport,
+              supportsRenderedGraphicsExport,
               productBranding,
               pClientProperties );
     }
@@ -245,7 +245,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
                       final String windowKeyPrefix,
                       final boolean showDirtyFlag,
                       final boolean frameTitleManager,
-                      final boolean supportsFormattedVectorGraphicsExport,
+                      final boolean supportsRenderedGraphicsExport,
                       final ProductBranding productBranding,
                       final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
@@ -271,7 +271,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
         _windowKeyPrefix = windowKeyPrefix;
         _showDirtyFlag = showDirtyFlag;
         _frameTitleManager = frameTitleManager;
-        _supportsFormattedVectorGraphicsExport = supportsFormattedVectorGraphicsExport;
+        _supportsRenderedGraphicsExport = supportsRenderedGraphicsExport;
         _productBranding = productBranding;
         clientProperties = pClientProperties;
 
@@ -1700,34 +1700,33 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
     }
 
     /**
-     * This method wraps behavior for canceling Formatted Vector Graphics
-     * Export actions. It should be overridden by classes that need to clean up
+     * This method wraps behavior for canceling Rendered Graphics Export
+     * actions. It should be overridden by classes that need to clean up
      * duplication of large memory resources.
      */
-    protected void cancelFormattedVectorGraphicsExport() {}
+    protected void cancelRenderedGraphicsExport() {}
 
-    // NOTE: Most windows won't need to support Formatted Vector Graphics
-    // Export.
-    protected void updateFormattedVectorGraphicsExportSource() {}
+    // NOTE: Most windows won't need to support Rendered Graphics Export.
+    protected void updateRenderedGraphicsExportSource() {}
 
-    // NOTE: This label is for Formatted Vector Graphics Export.
+    // NOTE: This label is for Rendered Graphics Export.
     // NOTE: Derived classes should override this default if they expose
     // either charts or auxiliary information for Graphics Export.
-    public String getFormattedVectorGraphicsExportAuxiliaryLabel() {
+    public String getRenderedGraphicsExportAuxiliaryLabel() {
         return ""; //$NON-NLS-1$
     }
 
-    // NOTE: This label is for Formatted Vector Graphics Export.
+    // NOTE: This label is for Rendered Graphics Export.
     // NOTE: Derived classes should override this default if they expose
     // either charts or auxiliary information for Graphics Export.
-    public String getFormattedVectorGraphicsExportInformationTablesLabel() {
+    public String getRenderedGraphicsExportInformationTablesLabel() {
         return ""; //$NON-NLS-1$
     }
 
-    // NOTE: This label is for Formatted Vector Graphics Export.
+    // NOTE: This label is for Rendered Graphics Export.
     // NOTE: Derived classes should override this default if they expose
     // either charts or auxiliary information for Graphics Export.
-    public String getFormattedVectorGraphicsExportOptionalItemLabel() {
+    public String getRenderedGraphicsExportOptionalItemLabel() {
         return ""; //$NON-NLS-1$
     }
     

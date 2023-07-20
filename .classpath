@@ -40,5 +40,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/server/deployment/jars/jsoup-1.13.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="/convertertoolkit"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

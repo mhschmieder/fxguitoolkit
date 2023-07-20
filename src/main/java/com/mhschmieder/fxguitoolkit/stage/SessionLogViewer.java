@@ -345,7 +345,7 @@ public class SessionLogViewer extends XStage {
     @SuppressWarnings("nls")
     protected final void initStage() {
         // First have the superclass initialize its content.
-        initStage( "/com/everaldo/icons/EasyMobLog16.png", 840d, 480d, true );
+        initStage( "/icons/everaldo/EasyMobLog16.png", 840d, 480d, true );
     }
 
     @SuppressWarnings("nls")

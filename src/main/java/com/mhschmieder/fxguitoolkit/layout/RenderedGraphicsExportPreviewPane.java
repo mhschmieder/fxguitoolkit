@@ -33,10 +33,10 @@ package com.mhschmieder.fxguitoolkit.layout;
 import java.awt.EventQueue;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.fxgraphicstoolkit.io.FormattedVectorGraphicsExportOptions;
+import com.mhschmieder.fxgraphicstoolkit.io.RenderedGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.TextEditor;
-import com.mhschmieder.fxguitoolkit.swing.FormattedVectorGraphicsPanel;
+import com.mhschmieder.fxguitoolkit.swing.RenderedGraphicsPanel;
 
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Insets;
@@ -49,35 +49,35 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
 /**
- * This is the main content pane for Formatted Vector Graphics Export Preview
+ * This is the main content pane for Rendered Graphics Export Preview
  * windows.
  */
-public final class FormattedVectorGraphicsExportPreviewPane extends BorderPane {
+public final class RenderedGraphicsExportPreviewPane extends BorderPane {
 
     protected HBox                                 _titleBox;
     protected TextEditor                           _titleEditor;
 
-    // Cache the Formatted Vector Graphics Export Options.
-    protected FormattedVectorGraphicsExportOptions _formattedVectorGraphicsExportOptions;
+    // Cache the Rendered Graphics Export Options.
+    protected RenderedGraphicsExportOptions        _renderedGraphicsExportOptions;
 
     // Cache the Swing Node wrapper for the Graphics Export Source, for
     // background fills.
     protected SwingNode                            _graphicsPreviewNode;
 
     // Maintain a Swing Component reference for Graphics Export actions.
-    protected FormattedVectorGraphicsPanel         _formattedVectorGraphicsExportSource;
+    protected RenderedGraphicsPanel                _renderedGraphicsExportSource;
 
     // Cache the Client Properties (System Type, Locale, Client Type, etc.).
     public ClientProperties                        _clientProperties;
 
-    public FormattedVectorGraphicsExportPreviewPane( final ClientProperties pClientProperties,
-                                                     final FormattedVectorGraphicsExportOptions formattedVectorGraphicsExportOptions ) {
+    public RenderedGraphicsExportPreviewPane( final ClientProperties pClientProperties,
+                                              final RenderedGraphicsExportOptions renderedGraphicsExportOptions ) {
         // Always call the superclass constructor first!
         super();
 
         _clientProperties = pClientProperties;
 
-        _formattedVectorGraphicsExportOptions = formattedVectorGraphicsExportOptions;
+        _renderedGraphicsExportOptions = renderedGraphicsExportOptions;
 
         _graphicsPreviewNode = new SwingNode();
 
@@ -89,12 +89,12 @@ public final class FormattedVectorGraphicsExportPreviewPane extends BorderPane {
         }
     }
 
-    public FormattedVectorGraphicsExportOptions getFormattedVectorGraphicsExportOptions() {
-        return _formattedVectorGraphicsExportOptions;
+    public RenderedGraphicsExportOptions getRenderedGraphicsExportOptions() {
+        return _renderedGraphicsExportOptions;
     }
 
     private void initPane() {
-        final String title = _formattedVectorGraphicsExportOptions.getTitle();
+        final String title = _renderedGraphicsExportOptions.getTitle();
         _titleEditor = new TextEditor( title,
                                        "Title for EPS Document Header", //$NON-NLS-1$
                                        true,
@@ -115,29 +115,29 @@ public final class FormattedVectorGraphicsExportPreviewPane extends BorderPane {
 
         // Bind the Title Editor to its associated property.
         _titleEditor.textProperty()
-                .bindBidirectional( _formattedVectorGraphicsExportOptions.titleProperty() );
+                .bindBidirectional( _renderedGraphicsExportOptions.titleProperty() );
 
         // Load the change listener for the Export Auxiliary Panel property.
-        _formattedVectorGraphicsExportOptions.exportAuxiliaryPanelProperty()
+        _renderedGraphicsExportOptions.exportAuxiliaryPanelProperty()
                 .addListener( ( observable, oldValue, newValue ) -> {
                     // Update the visibility of the associated panel.
-                    EventQueue.invokeLater( () -> _formattedVectorGraphicsExportSource
+                    EventQueue.invokeLater( () -> _renderedGraphicsExportSource
                             .setAuxiliaryPanelVisible( newValue ) );
                 } );
 
         // Load the change listener for the Export Information Tables property.
-        _formattedVectorGraphicsExportOptions.exportInformationTablesProperty()
+        _renderedGraphicsExportOptions.exportInformationTablesProperty()
                 .addListener( ( observable, oldValue, newValue ) -> {
                     // Update the visibility of the associated panel.
-                    EventQueue.invokeLater( () -> _formattedVectorGraphicsExportSource
+                    EventQueue.invokeLater( () -> _renderedGraphicsExportSource
                             .setInformationTablesVisible( newValue ) );
                 } );
 
         // Load the change listener for the Export Optional Item property.
-        _formattedVectorGraphicsExportOptions.exportOptionalItemProperty()
+        _renderedGraphicsExportOptions.exportOptionalItemProperty()
                 .addListener( ( observable, oldValue, newValue ) -> {
                     // Update the visibility of the associated panel.
-                    EventQueue.invokeLater( () -> _formattedVectorGraphicsExportSource
+                    EventQueue.invokeLater( () -> _renderedGraphicsExportSource
                             .setOptionalItemVisible( newValue ) );
                 } );
     }
@@ -170,25 +170,25 @@ public final class FormattedVectorGraphicsExportPreviewPane extends BorderPane {
         _titleBox.setBackground( background );
     }
 
-    public void setFormattedVectorGraphicsExportOptions( final FormattedVectorGraphicsExportOptions formattedVectorGraphicsExportOptions ) {
+    public void setRenderedGraphicsExportOptions( final RenderedGraphicsExportOptions renderedGraphicsExportOptions ) {
         // Update the current export options (usually from preferences).
-        _formattedVectorGraphicsExportOptions
-                .setFormattedVectorGraphicsExportOptions( formattedVectorGraphicsExportOptions );
+        _renderedGraphicsExportOptions
+                .setRenderedGraphicsExportOptions( renderedGraphicsExportOptions );
     }
 
     /**
      * This method sets the container reference for exported graphics.
      *
-     * @param formattedVectorGraphicsExportSource
+     * @param renderedGraphicsExportSource
      *            The Swing container for the layout group to be exported
      */
-    public void setFormattedVectorGraphicsExportSource( final FormattedVectorGraphicsPanel formattedVectorGraphicsExportSource ) {
+    public void setRenderedGraphicsExportSource( final RenderedGraphicsPanel renderedGraphicsExportSource ) {
         // Cache the Graphics Export Source locally, for reference by panel
         // visibility change listeners.
-        _formattedVectorGraphicsExportSource = formattedVectorGraphicsExportSource;
+        _renderedGraphicsExportSource = renderedGraphicsExportSource;
 
         // Set the Swing Node wrapper for the provided Swing container.
-        _graphicsPreviewNode.setContent( _formattedVectorGraphicsExportSource );
+        _graphicsPreviewNode.setContent( _renderedGraphicsExportSource );
 
         // Reset the Exported Graphics Preview Node to the Border Layout.
         setExportedGraphicsPreviewNode( _graphicsPreviewNode );
@@ -197,8 +197,8 @@ public final class FormattedVectorGraphicsExportPreviewPane extends BorderPane {
     public void syncViewToExportOptions() {
         // Make sure the previously selected options immediately take hold.
         EventQueue.invokeLater( () -> {
-            _formattedVectorGraphicsExportSource
-                    .syncViewToExportOptions( _formattedVectorGraphicsExportOptions );
+            _renderedGraphicsExportSource
+                    .syncViewToExportOptions( _renderedGraphicsExportOptions );
         } );
     }
 }
