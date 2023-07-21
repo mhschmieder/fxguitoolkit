@@ -172,6 +172,11 @@ public final class ExtensionFilterUtilities {
     public static List< ExtensionFilter > getRasterImageExtensionFilters() {
         final List< ExtensionFilter > extensionFilterAdditions = new ArrayList<>();
 
+        // NOTE: TIFF requires either ImageIO-Ext or JAI 1.1.3 JAR's. Both
+        //  are quite large (especially the former, which also has JNI
+        //  support that might not include the Mac, but otherwise is a more
+        //  direct analog to how we do other formats currently vs. the
+        //  different JAI approach). Therefore, we do not yet support TIFF.
         extensionFilterAdditions
                 .add( new ExtensionFilter( FileExtensions.RASTER_IMAGE_DESCRIPTION,
                                            FileExtensions.RASTER_IMAGE_EXTENSIONS ) );
