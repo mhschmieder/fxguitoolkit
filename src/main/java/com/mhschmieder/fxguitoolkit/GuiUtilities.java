@@ -54,6 +54,7 @@ import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxguitoolkit.control.XToggleButton;
 import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
+import com.mhschmieder.guitoolkit.component.ButtonUtilities;
 
 import javafx.application.HostServices;
 import javafx.collections.ObservableList;
@@ -330,32 +331,6 @@ public final class GuiUtilities {
     }
 
     @SuppressWarnings("nls")
-    public static String getButtonLabel( final String groupName,
-                                         final String itemName,
-                                         final ResourceBundle resourceBundle ) {
-        // There must always at least be a group name for each button.
-        if ( ( groupName == null ) || groupName.trim().isEmpty() ) {
-            return "";
-        }
-
-        // Composite the button name from the group and item names.
-        final String buttonName = ( ( itemName == null ) || itemName.trim().isEmpty() )
-            ? groupName
-            : groupName + "." + itemName;
-
-        // Generate the resource lookup key for the button label.
-        final String resourceKey = buttonName + ".label";
-
-        try {
-            return resourceBundle.getString( resourceKey );
-        }
-        catch ( final Exception e ) {
-            e.printStackTrace();
-            return '!' + buttonName + '!';
-        }
-    }
-
-    @SuppressWarnings("nls")
     public static Label getTitleLabel( final String title ) {
         final Label titleLabel = new Label( title );
 
@@ -394,7 +369,8 @@ public final class GuiUtilities {
                                         final String itemName,
                                         final ResourceBundle resourceBundle ) {
         // Get the button label from the resource bundle, if applicable.
-        final String buttonLabel = getButtonLabel( groupName, itemName, resourceBundle );
+        final String buttonLabel = ButtonUtilities.getButtonLabel( 
+                groupName, itemName, resourceBundle );
         if ( buttonLabel.trim().isEmpty() ) {
             return -1;
         }
@@ -410,32 +386,6 @@ public final class GuiUtilities {
     // the lookup and then replace it with the JavaFX symbol downstream.
     public static int getMnemonicMarkerIndex( final String key ) {
         return key.indexOf( SWING_MNEMONIC_MARKER );
-    }
-
-    public static String handleMnemonicMarker( final String label, final boolean replaceMnemonic ) {
-        final int mnemonicMarkerIndex = getMnemonicMarkerIndex( label );
-        final int mnemonicIndex = ( mnemonicMarkerIndex >= 0 ) ? mnemonicMarkerIndex + 1 : 0;
-        try {
-            // NOTE: If no mnemonic marker is found, "-1" is returned, which is
-            // then incremented to use the first character as the mnemonic (by
-            // default).
-            final String labelPreMnemonic = label.substring( 0, mnemonicMarkerIndex );
-            final String labelPostMnemonic = label.substring( mnemonicIndex );
-
-            // Conditionally strip the mnemonic marker from the label, or
-            // replace the Swing mnemonic marker with the one for JavaFX.
-            final StringBuilder adjustedLabel = new StringBuilder();
-            adjustedLabel.append( labelPreMnemonic );
-            if ( replaceMnemonic ) {
-                adjustedLabel.append( JAVAFX_MNEMONIC_MARKER );
-            }
-            adjustedLabel.append( labelPostMnemonic );
-            return adjustedLabel.toString();
-        }
-        catch ( final IndexOutOfBoundsException ioobe ) {
-            ioobe.printStackTrace();
-            return label;
-        }
     }
 
     public static void applyLabeledButtonStyle( final Button button,
@@ -1312,20 +1262,6 @@ public final class GuiUtilities {
                                                                           Insets.EMPTY ) );
 
         return background;
-    }
-
-    // Get the button text from the resource bundle, if applicable.
-    public static String getButtonText( final String groupName,
-                                        final String itemName,
-                                        final ResourceBundle resourceBundle ) {
-        // Get the button label from the resource bundle, if applicable.
-        final String buttonLabel = getButtonLabel( groupName, itemName, resourceBundle );
-        if ( ( buttonLabel == null ) || buttonLabel.trim().isEmpty() ) {
-            return null;
-        }
-
-        // Strip the mnemonic marker from the button label.
-        return handleMnemonicMarker( buttonLabel, false );
     }
 
     /**

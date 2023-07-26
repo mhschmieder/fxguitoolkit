@@ -41,6 +41,7 @@ import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxguitoolkit.SceneGraphUtilities;
+import com.mhschmieder.guitoolkit.component.ButtonUtilities;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
@@ -424,11 +425,10 @@ public final class ActionFactory {
                 .getResourceBundle( clientProperties, bundleName, false );
 
         // If long text is assigned, get it from a resource bundle.
-        final String longText = SceneGraphUtilities
+        final String longText = ButtonUtilities
                 .getButtonToolTipText( groupName, itemName, resourceBundle );
         if ( ( longText != null ) && !longText.trim().isEmpty() ) {
             action.setLongText( longText );
         }
     }
-
 }

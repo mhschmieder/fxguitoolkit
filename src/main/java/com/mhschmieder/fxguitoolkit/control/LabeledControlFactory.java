@@ -48,6 +48,7 @@ import com.mhschmieder.fxguitoolkit.action.XAction;
 import com.mhschmieder.fxguitoolkit.action.XActionGroup;
 import com.mhschmieder.fxguitoolkit.action.XActionUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
+import com.mhschmieder.guitoolkit.component.ButtonUtilities;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -432,7 +433,7 @@ public final class LabeledControlFactory {
         final ResourceBundle resourceBundle = GlobalUtilities
                 .getResourceBundle( pClientProperties, BUNDLE_NAME, false );
         final String fileMruNumber = "mru" + Integer.toString( mruFileNumber );
-        final String fileMruHeader = GuiUtilities
+        final String fileMruHeader = ButtonUtilities
                 .getButtonText( "file", fileMruNumber, resourceBundle );
         return fileMruHeader;
     }
@@ -507,7 +508,7 @@ public final class LabeledControlFactory {
     public static String getEditPropertiesLabel( final ClientProperties pClientProperties ) {
         final ResourceBundle resourceBundle = GlobalUtilities
                 .getResourceBundle( pClientProperties, BUNDLE_NAME, false );
-        final String editPropertiesLabel = GuiUtilities
+        final String editPropertiesLabel = ButtonUtilities
                 .getButtonText( "edit", "properties", resourceBundle );
         return editPropertiesLabel;
     }

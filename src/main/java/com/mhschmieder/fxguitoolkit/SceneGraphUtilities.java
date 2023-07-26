@@ -41,6 +41,7 @@ import com.mhschmieder.fxguitoolkit.control.DoubleEditor;
 import com.mhschmieder.fxguitoolkit.control.NumberSlider;
 import com.mhschmieder.fxguitoolkit.control.XToggleButton;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
+import com.mhschmieder.guitoolkit.component.ButtonUtilities;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -65,41 +66,6 @@ public class SceneGraphUtilities {
      */
     private SceneGraphUtilities() {}
 
-    @SuppressWarnings("nls")
-    public static String getButtonToolTipText( final String groupName,
-                                               final String itemName,
-                                               final ResourceBundle resourceBundle ) {
-        // There must always at least be a group name for each Button.
-        if ( ( groupName == null ) || groupName.trim().isEmpty() ) {
-            return null;
-        }
-
-        // Composite the button name from the group and item names.
-        final String buttonName = ( ( itemName == null ) || itemName.trim().isEmpty() )
-            ? groupName
-            : groupName + "." + itemName;
-
-        // Generate the resource lookup key for the Button Tool Tip.
-        final String resourceKey = buttonName + ".toolTip";
-
-        try {
-            // NOTE: Not all actions have Tool Tips, so we have to check first
-            // to see if one is present, to avoid unnecessary exceptions.
-            if ( !resourceBundle.containsKey( resourceKey ) ) {
-                return null;
-            }
-            return resourceBundle.getString( resourceKey );
-        }
-        catch ( final Exception e ) {
-            // NOTE: It is OK to be missing a Tool Tip, but as we first check
-            // for a key entry, this exception indicates a structural problem
-            // that shouldn't be allowed to confuse the end users, but which
-            // might benefit the developers or indicate file corruption.
-            // e.printStackTrace();
-            return null;
-        }
-    }
-
     public static Tooltip getTooltip( final ClientProperties clientProperties,
                                       final String bundleName,
                                       final String groupName,
@@ -107,7 +73,8 @@ public class SceneGraphUtilities {
         final ResourceBundle resourceBundle = GlobalUtilities
                 .getResourceBundle( clientProperties, bundleName, false );
 
-        final String tooltipText = getButtonToolTipText( groupName, itemName, resourceBundle );
+        final String tooltipText = ButtonUtilities.getButtonToolTipText( 
+                groupName, itemName, resourceBundle );
 
         final Tooltip tooltip = new Tooltip( tooltipText );
 
@@ -123,15 +90,16 @@ public class SceneGraphUtilities {
                 .getResourceBundle( clientProperties, bundleName, false );
 
         // Get the control label from the resource bundle, if applicable.
-        final String buttonLabel =
-                                 GuiUtilities.getButtonLabel( groupName, itemName, resourceBundle );
+        final String buttonLabel = ButtonUtilities.getButtonLabel( 
+                groupName, itemName, resourceBundle );
         if ( buttonLabel.trim().isEmpty() ) {
             return null;
         }
 
         // Conditionally strip the mnemonic marker from the label, or
         // replace the Swing mnemonic marker with the JavaFX version.
-        final String buttonText = GuiUtilities.handleMnemonicMarker( buttonLabel, replaceMnemonic );
+        final String buttonText = ButtonUtilities.handleMnemonicMarker(
+                buttonLabel, replaceMnemonic );
         if ( ( buttonText == null ) || buttonText.trim().isEmpty() ) {
             return null;
         }
