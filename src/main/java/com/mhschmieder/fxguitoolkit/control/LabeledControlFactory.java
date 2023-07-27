@@ -606,7 +606,7 @@ public final class LabeledControlFactory {
                 + " Display Between Visible and Hidden";
 
         // NOTE: JavaFX CSS automatically darkens unselected buttons, and
-        // auto-selects the foreground for text fill, but we mimic Compass.
+        // auto-selects the foreground for text fill, but we override.
         final XToggleButton toggleButton = new XToggleButton( selectedText,
                                                               deselectedText,
                                                               tooltipText,
