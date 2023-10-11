@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,20 +40,20 @@ import javafx.scene.input.KeyEvent;
 
 /**
  * This class formalizes aspects of list selection that are specific to
- * double precision floating point value sets.
+ * single precision floating point value sets.
  */
-public class DoubleSelector extends NumberSelector {
+public class FloatSelector extends NumberSelector {
 
-    public DoubleSelector( final ClientProperties clientProperties,
-                           final int minFractionDigitsFormat,
-                           final int maxFractionDigitsFormat,
-                           final int minFractionDigitsParse,
-                           final int maxFractionDigitsParse,
-                           final boolean useLocale,
-                           final String tooltipText,
-                           final boolean applyToolkitCss,
-                           final boolean editable,
-                           final boolean searchable ) {
+    public FloatSelector( final ClientProperties clientProperties,
+                          final int minFractionDigitsFormat,
+                          final int maxFractionDigitsFormat,
+                          final int minFractionDigitsParse,
+                          final int maxFractionDigitsParse,
+                          final boolean useLocale,
+                          final String tooltipText,
+                          final boolean applyToolkitCss,
+                          final boolean editable,
+                          final boolean searchable ) {
         // Always call the superclass constructor first!
         super( clientProperties,
                minFractionDigitsFormat,
@@ -67,19 +67,19 @@ public class DoubleSelector extends NumberSelector {
                searchable );
     }
 
-    public DoubleSelector( final ClientProperties clientProperties,
-                           final int minFractionDigitsFormat,
-                           final int maxFractionDigitsFormat,
-                           final int minFractionDigitsParse,
-                           final int maxFractionDigitsParse,
-                           final boolean useLocale,
-                           final String tooltipText,
-                           final boolean applyToolkitCss,
-                           final boolean editable,
-                           final boolean searchable,
-                           final double minimumValue,
-                           final double maximumValue,
-                           final double increment ) {
+    public FloatSelector( final ClientProperties clientProperties,
+                          final int minFractionDigitsFormat,
+                          final int maxFractionDigitsFormat,
+                          final int minFractionDigitsParse,
+                          final int maxFractionDigitsParse,
+                          final boolean useLocale,
+                          final String tooltipText,
+                          final boolean applyToolkitCss,
+                          final boolean editable,
+                          final boolean searchable,
+                          final float minimumValue,
+                          final float maximumValue,
+                          final float increment ) {
         this( clientProperties,
               minFractionDigitsFormat,
               maxFractionDigitsFormat,
@@ -100,26 +100,26 @@ public class DoubleSelector extends NumberSelector {
     }
 
     @SuppressWarnings("nls")
-    private final void initComboBox( final double minimumValue,
-                                     final double maximumValue,
-                                     final double increment ) {
+    private final void initComboBox( final float minimumValue,
+                                     final float maximumValue,
+                                     final float increment ) {
         // Put together the monotonically increasing list of choices.
         final int numberOfChoices = ( int ) FastMath
                 .floor( ( ( maximumValue - minimumValue ) + 1 ) / increment );
-        final String[] doubleValues = new String[ numberOfChoices ];
+        final String[] floatValues = new String[ numberOfChoices ];
 
-        double doubleValue = minimumValue;
+        float floatValue = minimumValue;
         for ( int i = 0; i < numberOfChoices; i++ ) {
-            doubleValues[ i ] = NumberFormatUtilities.formatDouble( doubleValue, _numberFormat );
-            doubleValue += increment;
+            floatValues[ i ] = NumberFormatUtilities.formatFloat( floatValue, _numberFormat );
+            floatValue += increment;
         }
 
         // Ensure that most items are visible before scrolling, but also make
         // sure the overall list doesn't get unwieldy.
         setVisibleRowCount( FastMath.min( numberOfChoices, 25 ) );
 
-        // Set the non-editable list of supported double values.
-        setItems( FXCollections.observableArrayList( doubleValues ) );
+        // Set the non-editable list of supported float values.
+        setItems( FXCollections.observableArrayList( floatValues ) );
 
         // Restrict keyboard input to numerals, sign, and delimiters.
         final String allowedCharacters = ( minimumValue < 0.0d )
@@ -132,16 +132,16 @@ public class DoubleSelector extends NumberSelector {
         } );
     }
 
-    public final double getDoubleValue() {
+    public final double getSingleValue() {
         final String formattedValue = getValue();
-        final double doubleValue =
-                                 NumberFormatUtilities.parseDouble( formattedValue, _numberFormat );
-        return doubleValue;
+        final float floatValue =
+                                 NumberFormatUtilities.parseFloat( formattedValue, _numberFormat );
+        return floatValue;
     }
 
-    public final void setDoubleValue( final double doubleValue ) {
-        final String formattedValue = NumberFormatUtilities.formatDouble( doubleValue,
-                                                                          _numberFormat );
+    public final void setDoubleValue( final float FloatSelector ) {
+        final String formattedValue = NumberFormatUtilities.formatFloat( FloatSelector,
+                                                                         _numberFormat );
         setValue( formattedValue );
     }
 }

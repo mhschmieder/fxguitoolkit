@@ -77,8 +77,36 @@ public class XComboBox< T > extends ComboBox< T > {
                       final boolean applyToolkitCss,
                       final boolean editable,
                       final boolean searchable ) {
+        this( pClientProperties,
+              tooltipText,
+              applyToolkitCss,
+              editable,
+              searchable,
+              FXCollections.< T >observableArrayList() );
+    }
+
+    public XComboBox( final ClientProperties pClientProperties,
+                      final String tooltipText,
+                      final boolean applyToolkitCss,
+                      final boolean editable,
+                      final boolean searchable,
+                      final T[] items) {
+        this( pClientProperties,
+              tooltipText,
+              applyToolkitCss,
+              editable,
+              searchable,
+              FXCollections.< T >observableArrayList( items ) );
+    }
+
+   public XComboBox( final ClientProperties pClientProperties,
+                      final String tooltipText,
+                      final boolean applyToolkitCss,
+                      final boolean editable,
+                      final boolean searchable,
+                      final ObservableList< T > items ) {
         // Always call the superclass constructor first!
-        super();
+        super( items );
 
         clientProperties = pClientProperties;
 

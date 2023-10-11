@@ -43,33 +43,23 @@ import javafx.collections.ObservableList;
  */
 public class TextSelector extends XComboBox< String > {
 
-    // Default constructor, when nothing much is known at creation time.
-    public TextSelector( final ClientProperties pClientProperties ) {
-        this( pClientProperties, null, false, false, false, 16 );
-    }
-
     // This is the constructor to use when we don't know the initial drop-list
     // right away, or when it is too awkward to construct or reference inside a
-    // constructor hierarchy (super() and this() have to be the first code).
+    // constructor hierarchy (super() or this() has to be the first call).
     public TextSelector( final ClientProperties pClientProperties,
                          final String tooltipText,
                          final boolean applyToolkitCss,
                          final boolean editable,
                          final boolean searchable,
                          final int visibleRowCount ) {
-        // Always call the superclass constructor first!
-        super( pClientProperties, 
+        this( pClientProperties, 
                tooltipText, 
                applyToolkitCss, 
                editable, 
-               searchable );
-
-        try {
-            initComboBox( visibleRowCount );
-        }
-        catch ( final Exception ex ) {
-            ex.printStackTrace();
-        }
+               searchable,
+               visibleRowCount,
+               null,
+               FXCollections.observableArrayList() );
     }
 
     // This is the constructor to call when we know the initial drop-list.
@@ -79,16 +69,20 @@ public class TextSelector extends XComboBox< String > {
                          final boolean applyToolkitCss,
                          final boolean editable,
                          final boolean searchable,
-                         final String[] textValues,
-                         final String defaultValue ) {
+                         final int visibleRowCount,
+                         final String defaultValue,
+                         final String[] textValues ) {
         // By default, make sure the list displays all items without scrolling.
         this( pClientProperties,
               tooltipText,
               applyToolkitCss,
               editable,
               searchable,
-              FXCollections.observableArrayList( textValues ),
-              defaultValue );
+              visibleRowCount,
+              defaultValue,
+              ( textValues != null ) && ( textValues.length > 0 )
+                  ? FXCollections.observableArrayList( textValues )
+                  : FXCollections.observableArrayList() );
     }
 
     // This is the constructor to call when we know the initial drop-list.
@@ -98,21 +92,29 @@ public class TextSelector extends XComboBox< String > {
                          final boolean applyToolkitCss,
                          final boolean editable,
                          final boolean searchable,
-                         final ObservableList< String > valuesList,
-                         final String defaultValue ) {
-        // By default, make sure the list displays all items without scrolling.
-        this( pClientProperties,
-              tooltipText,
-              applyToolkitCss,
-              editable,
-              searchable,
-              valuesList.size() );
+                         final int visibleRowCount,
+                         final String defaultValue,
+                         final ObservableList< String > valuesList ) {
+        // Always call the superclass constructor first!
+        super( pClientProperties, 
+               tooltipText, 
+               applyToolkitCss, 
+               editable, 
+               searchable,
+               valuesList );
 
-        // Set the list of supported text values.
-        setItems( valuesList );
+        // If provided, set the default value as the initial choice.
+        if ( defaultValue != null ) {
+            setValue( defaultValue );
+        }
 
-        // Set the initial choice as the default.
-        setValue( defaultValue );
+        try {
+            // By default, make sure the list displays all items without scrolling.
+            initComboBox( visibleRowCount );
+        }
+        catch ( final Exception ex ) {
+            ex.printStackTrace();
+        }
     }
 
     public final String getTextValue() {

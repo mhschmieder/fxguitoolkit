@@ -90,8 +90,9 @@ public final class ImageSizePane extends VBox {
                                                 true,
                                                 true,
                                                 false,
-                                                pixelWidths,
-                                                pixelWidthDefault );
+                                                pixelWidths.length,
+                                                pixelWidthDefault,
+                                                pixelWidths );
 
         final Label pixelHeightLabel = GuiUtilities.getControlLabel( "Height" ); //$NON-NLS-1$
 
@@ -105,8 +106,9 @@ public final class ImageSizePane extends VBox {
                                                  true,
                                                  true,
                                                  false,
-                                                 pixelHeights,
-                                                 pixelHeightDefault );
+                                                 pixelHeights.length,
+                                                 pixelHeightDefault,
+                                                 pixelHeights );
 
         final GridPane gridPane = new GridPane();
         gridPane.setHgap( 6.0d );
