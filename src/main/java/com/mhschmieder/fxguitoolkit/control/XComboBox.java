@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
+import org.apache.commons.math3.util.FastMath;
+
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 
@@ -100,11 +102,29 @@ public class XComboBox< T > extends ComboBox< T > {
     }
 
    public XComboBox( final ClientProperties pClientProperties,
-                      final String tooltipText,
-                      final boolean applyToolkitCss,
-                      final boolean editable,
-                      final boolean searchable,
-                      final ObservableList< T > items ) {
+                     final String tooltipText,
+                     final boolean applyToolkitCss,
+                     final boolean editable,
+                     final boolean searchable,
+                     final ObservableList< T > items ) {
+        this( pClientProperties,
+              tooltipText,
+              applyToolkitCss,
+              editable,
+              searchable,
+              items != null ? items.size() : 10,
+              null,
+              items );
+    }
+
+   public XComboBox( final ClientProperties pClientProperties,
+                     final String tooltipText,
+                     final boolean applyToolkitCss,
+                     final boolean editable,
+                     final boolean searchable,
+                     final int visibleRowCount,
+                     final T defaultValue,
+                     final ObservableList< T > items ) {
         // Always call the superclass constructor first!
         super( items );
 
@@ -115,7 +135,11 @@ public class XComboBox< T > extends ComboBox< T > {
         // _backupList = FXCollections.observableArrayList();
 
         try {
-            initComboBox( tooltipText, applyToolkitCss, editable );
+            initComboBox( tooltipText, 
+                          applyToolkitCss, 
+                          editable,
+                          visibleRowCount,
+                          defaultValue );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -129,7 +153,9 @@ public class XComboBox< T > extends ComboBox< T > {
 
     private final void initComboBox( final String tooltipText,
                                      final boolean applyToolkitCss,
-                                     final boolean editable ) {
+                                     final boolean editable,
+                                     final int visibleRowCount,
+                                     final T defaultValue ) {
         // Provide Tool Tips in case this component is used in a sparse context
         // like a Tool Bar, where there may be no associated descriptive label.
         if ( ( tooltipText != null ) && !tooltipText.trim().isEmpty() ) {
@@ -138,6 +164,15 @@ public class XComboBox< T > extends ComboBox< T > {
 
         // It's best to set editable status before modifying CSS attributes.
         setEditable( editable );
+        
+        // Ensure that the desired number of rows are visible before scrolling,
+        // but also make sure the overall list doesn't get unwieldy.
+        setVisibleRowCount( FastMath.min( visibleRowCount, 25 ) );
+
+        // If provided, set the default value as the initial choice.
+        if ( defaultValue != null ) {
+            setValue( defaultValue );
+        }
 
         if ( applyToolkitCss ) {
             // Set the full list of this toolkit's custom Combo Box Properties.
