@@ -80,14 +80,6 @@ public abstract class NumberEditor extends XTextField {
         _numberFormat.setGroupingUsed( true );
         _numberParse.setGroupingUsed( true );
 
-        // Restrict keyboard input to numerals, sign, and delimiters.
-        final String allowedCharacters = getAllowedCharacters();
-        addEventFilter( KeyEvent.KEY_TYPED, keyEvent -> {
-            if ( !keyEvent.getCharacter().matches( allowedCharacters ) ) {
-                keyEvent.consume();
-            }
-        } );
-
         // Use a TextFormatter to wrap and bind the provided number format.
         // NOTE: This stops measurement unit changes from falsely triggering
         // the dirty flag, but also means the formatting is applied but not the
@@ -131,6 +123,24 @@ public abstract class NumberEditor extends XTextField {
 
                 // Update the displayed text to match the cached value.
                 updateText();
+            }
+        } );
+    }
+    
+    /**
+     * Restricts keyboard input to a custom set of allowed characters.
+     * <p>
+     * As the allowed characters will be specific to any implementing class, and 
+     * likely will depend on class-local variables not present on this abstract
+     * base class, this method is not called during this class's own initialization
+     * and should instead be invoked by implementing classes at a safe time.
+     */
+    public void restrictKeyboardInput() {
+        // Restrict keyboard input to numerals, sign, and delimiters.
+        final String allowedCharacters = getAllowedCharacters();
+        addEventFilter( KeyEvent.KEY_TYPED, keyEvent -> {
+            if ( !keyEvent.getCharacter().matches( allowedCharacters ) ) {
+                keyEvent.consume();
             }
         } );
     }

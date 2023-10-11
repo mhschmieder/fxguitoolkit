@@ -111,7 +111,11 @@ public class LongEditor extends NumberEditor {
 
     @SuppressWarnings("nls")
     private final void initEditor() {
-        // Make sure the value property is clamped to the required range, then
+        // Now it is safe to restrict keyboard input while referencing class
+        // variables and potentially local number formatting instances.
+        restrictKeyboardInput();
+
+       // Make sure the value property is clamped to the required range, then
         // update the text field to be in sync with the clamped value.
         valueProperty().addListener( ( observableValue, oldValue, newValue ) -> {
             if ( newValue == null ) {

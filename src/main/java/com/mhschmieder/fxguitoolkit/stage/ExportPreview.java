@@ -116,23 +116,23 @@ public abstract class ExportPreview extends XStage {
         }
     }
 
-    /**
+    /*
      * The File Export method must be overridden by subclasses, to take care
      * of the domain-specific export actions associated with the preview.
      */
     protected abstract boolean fileExport();
 
-    /**
+    /*
      * The domain-specific Cancel Button must be provided by the subclasses.
      */
     protected abstract Button getCancelButton();
 
-    /**
+    /*
      * The domain-specific Export Button must be provided by the subclasses.
      */
     protected abstract Button getExportButton();
 
-    /**
+    /*
      * Not all Export Previews need to expose Export Options, so this method
      * is declared as a null return, and is not enforced to be implemented by
      * subclasses, unless the "hasExportOptions" is passed to "initStage()".
