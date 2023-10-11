@@ -44,12 +44,12 @@ public class ListViewUtilities {
      */
     private ListViewUtilities() {}
 
-    public static Callback< ListView < ListViewConverter >, ListCell< ListViewConverter > >
-        makeListViewCellFactory( final ListViewConverter listViewConverter ) {
-        final Callback< ListView < ListViewConverter >, ListCell< ListViewConverter > >
-                cellFactory = new Callback< ListView< ListViewConverter >, ListCell< ListViewConverter > >() {
+    public static Callback< ListView < ? extends ListViewConverter >, ListCell< ? extends ListViewConverter > >
+        makeListViewCellFactory() {
+        final Callback< ListView < ? extends ListViewConverter >, ListCell< ? extends ListViewConverter > >
+                cellFactory = new Callback< ListView< ? extends ListViewConverter >, ListCell< ? extends ListViewConverter > >() {
             @Override
-            public ListCell< ListViewConverter > call( ListView< ListViewConverter > p) {
+            public ListCell< ? extends ListViewConverter > call( ListView< ? extends ListViewConverter > p ) {
                 return new ListCell< ListViewConverter >() {
                     {
                         setContentDisplay( ContentDisplay.TEXT_ONLY );
