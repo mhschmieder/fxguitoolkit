@@ -44,7 +44,8 @@ public class ListViewUtilities {
      */
     private ListViewUtilities() {}
 
-    public static void makeListViewCellFactory( final ListViewConverter listViewConverter ) {
+    public static Callback< ListView < ListViewConverter >, ListCell< ListViewConverter > >
+        makeListViewCellFactory( final ListViewConverter listViewConverter ) {
         final Callback< ListView < ListViewConverter >, ListCell< ListViewConverter > >
                 cellFactory = new Callback< ListView< ListViewConverter >, ListCell< ListViewConverter > >() {
             @Override
@@ -68,5 +69,7 @@ public class ListViewUtilities {
                     }
                 };
             } };
+            
+            return cellFactory;
     }
 }
