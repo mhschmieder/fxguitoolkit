@@ -59,12 +59,12 @@ public class ListViewUtilities {
                     protected void updateItem( final ListViewConverter item, boolean empty ) {
                         super.updateItem( item, empty );
 
-                        final ListViewConverter currentThreatLevel
+                        final ListViewConverter currentValue
                                 = ( ( item == null ) || empty )
                                 ? getItem()
                                 : item;
-                        if ( currentThreatLevel != null ) {
-                            setText( currentThreatLevel.toListCellText() );
+                        if ( currentValue != null ) {
+                            setText( currentValue.toListCellText() );
                         }
                     }
                 };
