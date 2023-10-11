@@ -44,8 +44,8 @@ public class ListViewUtilities {
      */
     private ListViewUtilities() {}
 
-    public static Callback< ListView < ? extends ListViewConverter >, ListCell< ? extends ListViewConverter > >
-        makeListViewCellFactory() {
+    public static Callback< ListView< ? extends ListViewConverter >, ListCell< ? extends ListViewConverter > >
+        makeListViewCellFactory( final ListViewConverter listViewConverter ) {
         final Callback< ListView < ? extends ListViewConverter >, ListCell< ? extends ListViewConverter > >
                 cellFactory = new Callback< ListView< ? extends ListViewConverter >, ListCell< ? extends ListViewConverter > >() {
             @Override
@@ -56,7 +56,7 @@ public class ListViewUtilities {
                     }
 
                     @Override
-                    protected void updateItem( ListViewConverter item, boolean empty ) {
+                    protected void updateItem( final ListViewConverter item, boolean empty ) {
                         super.updateItem( item, empty );
 
                         final ListViewConverter currentThreatLevel
