@@ -385,7 +385,7 @@ public final class DialogUtilities {
                                                                   .equals( response.get() );
         if ( rasterGraphicsExportOptionsCaptured ) {
             // Sync the data model to final edits before caching the result.
-            rasterGraphicsExportOptionsDialog.syncModelToView();
+            rasterGraphicsExportOptionsDialog.updateModel();
             rasterGraphicsExportOptions
                     .setRasterGraphicsExportOptions( rasterGraphicsExportOptionsCandidate );
         }
@@ -428,7 +428,7 @@ public final class DialogUtilities {
                                                                   .equals( response.get() );
         if ( vectorGraphicsExportOptionsCaptured ) {
             // Sync the data model to final edits before caching the result.
-            vectorGraphicsExportOptionsDialog.syncModelToView();
+            vectorGraphicsExportOptionsDialog.updateModel();
             vectorGraphicsExportOptions
                     .setVectorGraphicsExportOptions( vectorGraphicsExportOptionsCandidate );
         }

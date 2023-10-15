@@ -376,8 +376,8 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
     }
 
     @Override
-    public void syncViewToModel() {
+    public void updateView() {
         // Forward this method to the Rendered Graphics Export Preview Pane.
-        _renderedGraphicsExportPreviewPane.syncViewToExportOptions();
+        _renderedGraphicsExportPreviewPane.updateExportOptionsView();
     }
 }

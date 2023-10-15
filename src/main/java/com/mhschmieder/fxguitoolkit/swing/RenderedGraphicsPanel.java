@@ -85,7 +85,7 @@ public abstract class RenderedGraphicsPanel extends TitledVectorizationXPanel {
     // NOTE: It is up to the subclasses to decide which sub-panel to hide/show.
     public void setOptionalItemVisible( final boolean visible ) {}
 
-    public final void syncViewToExportOptions( final RenderedGraphicsExportOptions renderedGraphicsExportOptions ) {
+    public final void updateExportOptionsView( final RenderedGraphicsExportOptions renderedGraphicsExportOptions ) {
         setAuxiliaryPanelVisible( renderedGraphicsExportOptions.isExportAuxiliaryPanel() );
         setInformationTablesVisible( renderedGraphicsExportOptions.isExportInformationTables() );
         setOptionalItemVisible( renderedGraphicsExportOptions.isExportOptionalItem() );

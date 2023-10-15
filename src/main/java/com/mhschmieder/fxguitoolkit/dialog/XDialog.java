@@ -132,7 +132,7 @@ public abstract class XDialog extends Dialog< ButtonType > {
      */
     public Optional< ButtonType > showModalDialog() {
         // Sync the initial state to the current data model before showing.
-        syncViewToModel();
+        updateView();
 
         // Forward the show as a modal blocking call.
         final Optional< ButtonType > response = showAndWait();
@@ -145,10 +145,10 @@ public abstract class XDialog extends Dialog< ButtonType > {
 
     // NOTE: We are phasing out Swing-style model/view syncing in favor of Data
     // Binding, so these methods are no longer required of subclasses.
-    public void syncModelToView() {}
+    public void updateModel() {}
 
     // NOTE: We are phasing out Swing-style model/view syncing in favor of Data
     // Binding, so these methods are no longer required of subclasses.
-    public void syncViewToModel() {}
+    public void updateView() {}
 
 }

@@ -159,8 +159,8 @@ public final class ProjectPropertiesEditor extends XStage {
     }
 
     @Override
-    public void syncViewToModel() {
+    public void updateView() {
         // Forward this reference to the Project Properties Pane.
-        _projectPropertiesPane.syncViewToModel();
+        _projectPropertiesPane.updateView();
     }
 }

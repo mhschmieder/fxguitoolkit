@@ -135,7 +135,7 @@ public final class ProjectPropertiesPane extends VBox {
         projectProperties.reset();
 
         // Update the view to match the new model.
-        syncViewToModel();
+        updateView();
     }
 
     // Set and bind the Project Properties reference.
@@ -148,7 +148,7 @@ public final class ProjectPropertiesPane extends VBox {
         bindProperties();
     }
 
-    public void syncViewToModel() {
+    public void updateView() {
         // NOTE: Project Notes (TextArea) seems to re-sync automatically.
         _projectNameTextField.setValue( projectProperties.getProjectName() );
         _venueTextField.setValue( projectProperties.getVenue() );

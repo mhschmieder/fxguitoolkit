@@ -194,11 +194,11 @@ public final class RenderedGraphicsExportPreviewPane extends BorderPane {
         setExportedGraphicsPreviewNode( _graphicsPreviewNode );
     }
 
-    public void syncViewToExportOptions() {
+    public void updateExportOptionsView() {
         // Make sure the previously selected options immediately take hold.
         EventQueue.invokeLater( () -> {
             _renderedGraphicsExportSource
-                    .syncViewToExportOptions( _renderedGraphicsExportOptions );
+                    .updateExportOptionsView( _renderedGraphicsExportOptions );
         } );
     }
 }

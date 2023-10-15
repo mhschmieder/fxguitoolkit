@@ -1435,9 +1435,9 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
 
     // NOTE: We generally only sync in one direction as the model is mostly in
     // the Main Application Stage.
-    public void syncModelToView() {}
+    public void updateModel() {}
 
-    public void syncViewToModel() {}
+    public void updateView() {}
 
     // NOTE: Not all Stages have contextual settings, so a concrete no-op
     // implementation is provided rather than making this method abstract and

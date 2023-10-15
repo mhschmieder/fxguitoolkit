@@ -118,7 +118,7 @@ public abstract class ObjectPropertiesEditor extends XStage {
     // NOTE: This basic implementation may be enough for all sub-cases.
     protected void apply() {
         // Propagate values from the GUI to the selected object's properties.
-        syncModelToView();
+        updateModel();
 
         // Notify all clients that an object's properties were edited.
         if ( !isInsertMode() ) {
@@ -440,7 +440,7 @@ public abstract class ObjectPropertiesEditor extends XStage {
     protected void revert() {
         // Propagate properties of the cached reference object to the GUI
         // components (this throws out current GUI edits).
-        syncViewToModel();
+        updateView();
 
         // Notify all clients that an object's properties were reverted.
         if ( !isInsertMode() ) {
@@ -466,7 +466,7 @@ public abstract class ObjectPropertiesEditor extends XStage {
         // also want to revert any user changes, by re-syncing the view to the
         // cached model, without triggering dirty flags and extra computations.
         if ( disable && isShowing() && isEditMode() ) {
-            syncViewToModel();
+            updateView();
         }
 
         // The action buttons are top-level controls and thus must be explicitly
@@ -506,14 +506,14 @@ public abstract class ObjectPropertiesEditor extends XStage {
     // updated when the object reference is switched for another one or when
     // changes happen outside this textField.
     // TODO: Rename as "updateProperties()" or "storeProperties()"?
-    protected abstract void syncEditorToObjectReference();
+    protected abstract void updateObjectPropertiesView();
 
     // NOTE: We make this final because we want to discourage this old Swing
     // based terminology once we're at the level of object-editing.
     @Override
-    public final void syncModelToView() {
+    public final void updateModel() {
         // Propagate values from the GUI to the selected object's properties.
-        syncObjectReferenceToEditor();
+        updateObjectPropertiesModel();
 
         // Update the preview of the current object reference.
         updatePreview();
@@ -526,14 +526,14 @@ public abstract class ObjectPropertiesEditor extends XStage {
     // updated when the object reference is switched for another one or when
     // changes happen outside this textField.
     // TODO: Rename as "loadProperties()" or "recallProperties()"?
-    protected abstract void syncObjectReferenceToEditor();
+    protected abstract void updateObjectPropertiesModel();
 
     // NOTE: We make this final because we want to discourage this old Swing
     // based terminology once we're at the level of object-editing.
     @Override
-    public final void syncViewToModel() {
+    public final void updateView() {
         // Propagate properties of the selected object to the GUI.
-        syncEditorToObjectReference();
+        updateObjectPropertiesView();
 
         // Update the preview of the current object reference.
         updatePreview();
