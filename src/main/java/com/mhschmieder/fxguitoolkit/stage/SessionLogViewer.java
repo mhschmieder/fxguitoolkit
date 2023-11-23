@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -235,7 +235,8 @@ public class SessionLogViewer extends XStage {
     }
 
     // Generic method to export a text dump of the Session Log.
-    protected final FileStatus exportToTxt( final PrintWriter printWriter, final String filename ) {
+    protected final FileStatus exportToTxt( final PrintWriter printWriter, 
+                                            final String filename ) {
         // Avoid throwing unnecessary exceptions by filtering for bad print
         // writers.
         if ( printWriter == null ) {
@@ -289,18 +290,18 @@ public class SessionLogViewer extends XStage {
                 // Export the Session Log to a standard ASCII text log file,
                 // overwriting it if it already exists.
                 //
-                // Chain a PrintWriter to an OutputStreamWriter to a
-                // BufferedOutputStream to a FileOutputStream using UTF-8
-                // encoding, for better performance and to guarantee
-                // platform-independence of newlines and overall
-                // system-neutrality and locale-sensitivity of text data.
-                try ( final FileOutputStream fileOutputStream = new FileOutputStream( tempFile );
-                        final BufferedOutputStream bufferedOutputStream =
-                                                                        new BufferedOutputStream( fileOutputStream );
-                        final OutputStreamWriter outputStreamWriter =
-                                                                    new OutputStreamWriter( bufferedOutputStream,
-                                                                                            "UTF8" );
-                        final PrintWriter printWriter = new PrintWriter( outputStreamWriter ) ) {
+                // Chain a PrintWriter to a BufferedWriter to an OutputStreamWriter
+                // (using UTF-8 encoding) to a FileOutputStream, for better 
+                // performance and to guarantee platform-independence of newlines
+                // and overall system-neutrality and locale-sensitivity of text data.
+                try ( final FileOutputStream fileOutputStream 
+                                = new FileOutputStream( tempFile );
+                        final OutputStreamWriter outputStreamWriter 
+                                = new OutputStreamWriter( fileOutputStream, "UTF8" );
+                        final BufferedWriter bufferedWriter 
+                                = new BufferedWriter( outputStreamWriter );
+                        final PrintWriter printWriter 
+                                = new PrintWriter( bufferedWriter ) ) {
                     fileStatus = exportToTxt( printWriter, file.getCanonicalPath() );
                 }
             }
@@ -325,8 +326,12 @@ public class SessionLogViewer extends XStage {
         // simply redirect to a file in the user's default temporary directory.
         // try ( final LogOutputStream sessionLogOutputStream = new
         // LogOutputStream() ) {
-        try ( final BufferedReader bufferedReader =
-                                                  new BufferedReader( new InputStreamReader( new FileInputStream( _sessionLogFileName ) ) ); ) {
+        try ( final FileInputStream fileInputStream 
+                        = new FileInputStream( _sessionLogFileName );
+                final InputStreamReader inputStreamReader
+                        = new InputStreamReader( fileInputStream );
+                final BufferedReader bufferedReader 
+                        = new BufferedReader( inputStreamReader ) ) {
             String line;
             while ( ( line = bufferedReader.readLine() ) != null ) {
                 // NOTE: Need the new line character as it gets discarded by
