@@ -44,11 +44,9 @@ public class LabeledActionFactory {
      */
     private LabeledActionFactory() {}
 
-    // TODO: Review whether this is still correct, now that we have to package
-    // all non-Java resource files in a separate hierarchy from the Java package
-    // for the source code.
+    // NOTE: We must substitute "." for resource directory tree delimiters.
     @SuppressWarnings("nls") public static final String BUNDLE_NAME =
-                                                                    "properties.ActionLabels";
+                                                                    "properties.CommonActionLabels";
 
     // TODO: Load an icon that is a stylized representation of the MRU number.
     @SuppressWarnings("nls")
