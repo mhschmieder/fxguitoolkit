@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
@@ -35,14 +35,10 @@ import java.util.List;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
-public abstract class EditorTableCell< RT, VT > extends TableCell< RT, VT > {
+public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
 
     // This is a custom cell so we declare our own Text Field to handle it.
     protected TextField       textField;
@@ -263,28 +259,6 @@ public abstract class EditorTableCell< RT, VT > extends TableCell< RT, VT > {
     private final void saveEdits() {
         // Potentially adjust the current edits from the Text Field.
         adjustValue();
-    }
-
-    // NOTE: This method requires knowledge of which bean properties are in
-    // use so cannot have a default or base class implementation and is required
-    // for all subclasses to override in order to achieve proper data binding.
-    protected void setBeanProperty( final RT selectedRecord ) {}
-
-    public void setValue( final VT editorValue ) {
-        // Commit the edited text to the table cell itself.
-        commitEdit( editorValue );
-
-        // Save edits from the Text Field to the property bean.
-        final TableView< RT > tableView = getTableView();
-        final TableRow< RT > tableRow = getTableRow();
-        if ( tableRow != null ) {
-            final int selectedIndex = tableRow.getIndex();
-            final ObservableList< RT > items = tableView.getItems();
-            if ( !items.isEmpty() && ( selectedIndex >= 0 ) && ( selectedIndex < items.size() ) ) {
-                final RT selectedRecord = items.get( selectedIndex );
-                setBeanProperty( selectedRecord );
-            }
-        }
     }
 
     @Override

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
@@ -38,13 +38,12 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 
 // NOTE: This needs to be a CheckBoxTableCell derivative in order to inherit
 // all the correct table cell height, width, gaps, and other rendering details.
-public abstract class ToggleButtonTableCell< RT, VT > extends CheckBoxTableCell< RT, Boolean > {
+public abstract class ToggleButtonTableCell< RT, VT > extends XCheckBoxTableCell< RT, Boolean > {
 
     // This is a custom cell so we declare our own Toggle Button to handle it.
     // NOTE: Custom XToggleButton backed out, as CSS based implementations
@@ -173,11 +172,6 @@ public abstract class ToggleButtonTableCell< RT, VT > extends CheckBoxTableCell<
             }
         }
     }
-
-    // NOTE: This method requires knowledge of which bean properties are in
-    // use so cannot have a default or base class implementation and is required
-    // for all subclasses to override in order to achieve proper data binding.
-    protected abstract void setBeanProperty( final RT selectedRecord );
 
     @Override
     public void updateItem( final Boolean item, final boolean empty ) {

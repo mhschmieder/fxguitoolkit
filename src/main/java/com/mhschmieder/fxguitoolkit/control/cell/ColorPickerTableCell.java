@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
@@ -32,11 +32,8 @@ package com.mhschmieder.fxguitoolkit.control.cell;
 
 import com.mhschmieder.fxguitoolkit.control.XColorPicker;
 
-import javafx.collections.ObservableList;
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.paint.Color;
@@ -48,7 +45,7 @@ import javafx.scene.paint.Color;
  *
  * @author Mark Schmieder
  */
-public abstract class ColorPickerTableCell< RT > extends TableCell< RT, Color > {
+public abstract class ColorPickerTableCell< RT > extends XTableCell< RT, Color > {
 
     // This is a custom cell so we declare our own Color Picker to handle it.
     protected XColorPicker _colorPicker;
@@ -118,28 +115,6 @@ public abstract class ColorPickerTableCell< RT > extends TableCell< RT, Color > 
 
         // Commit the edited Color value, and sync to the property bean.
         setValue( color );
-    }
-
-    // NOTE: This method requires knowledge of which bean properties are in
-    // use so cannot have a default or base class implementation and is required
-    // for all subclasses to override in order to achieve proper data binding.
-    protected abstract void setBeanProperty( final RT selectedRecord );
-
-    public void setValue( final Color editorValue ) {
-        // Commit the edited Color value to the table cell itself.
-        commitEdit( editorValue );
-
-        // Save edits from the Color Picker to the property bean.
-        final TableView< RT > tableView = getTableView();
-        final TableRow< RT > tableRow = getTableRow();
-        if ( tableRow != null ) {
-            final int selectedIndex = tableRow.getIndex();
-            final ObservableList< RT > items = tableView.getItems();
-            if ( !items.isEmpty() && ( selectedIndex >= 0 ) && ( selectedIndex < items.size() ) ) {
-                final RT selectedRecord = items.get( selectedIndex );
-                setBeanProperty( selectedRecord );
-            }
-        }
     }
 
     @Override
