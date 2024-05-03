@@ -38,41 +38,23 @@ import org.controlsfx.control.action.Action;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 /**
- * This is a struct-like container for common Export actions.
+ * This is a struct-like container for common Import actions.
  * <p>
  * NOTE: This class is not final, so that it can be derived for additions.
  */
-public class ExportActions {
+public class ImportActions {
 
-    public XAction _exportImageGraphicsAction;
-    public XAction _exportVectorGraphicsAction;
-    public XAction _exportRenderedGraphicsAction;
+    public XAction _importGraphicsAction;
 
-    public ExportActions( final ClientProperties pClientProperties ) {
-        _exportImageGraphicsAction = LabeledActionFactory
-                .getExportImageGraphicsAction( pClientProperties );
-        _exportVectorGraphicsAction = LabeledActionFactory
-                .getExportVectorGraphicsAction( pClientProperties );
-        _exportRenderedGraphicsAction = LabeledActionFactory
-                .getExportRenderedGraphicsAction( pClientProperties );
+    public ImportActions( final ClientProperties clientProperties ) {
+        _importGraphicsAction = LabeledActionFactory.getImportGraphicsAction( clientProperties );
     }
 
-    // NOTE: This method is not final, so that it can be derived for
-    // additions.
-    public Collection< Action > getExportActionCollection( final boolean vectorGraphicsSupported,
-                                                           final boolean renderedGraphicsSupported ) {
-        final Collection< Action > exportActionCollection = new ArrayList<>();
+    public final Collection< Action > getImportActionCollection() {
+        final Collection< Action > importActionCollection = new ArrayList<>();
 
-        exportActionCollection.add( _exportImageGraphicsAction );
+        importActionCollection.add( _importGraphicsAction );
 
-        if ( vectorGraphicsSupported ) {
-            exportActionCollection.add( _exportVectorGraphicsAction );
-        }
-
-        if ( renderedGraphicsSupported ) {
-            exportActionCollection.add( _exportRenderedGraphicsAction );
-        }
-
-        return exportActionCollection;
+        return importActionCollection;
     }
 }

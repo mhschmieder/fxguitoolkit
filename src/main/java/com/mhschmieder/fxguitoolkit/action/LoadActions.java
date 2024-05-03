@@ -38,41 +38,30 @@ import org.controlsfx.control.action.Action;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 /**
- * This is a struct-like container for common Export actions.
+ * This is a struct-like container for common Load actions.
  * <p>
  * NOTE: This class is not final, so that it can be derived for additions.
  */
-public class ExportActions {
+public class LoadActions {
 
-    public XAction _exportImageGraphicsAction;
-    public XAction _exportVectorGraphicsAction;
-    public XAction _exportRenderedGraphicsAction;
-
-    public ExportActions( final ClientProperties pClientProperties ) {
-        _exportImageGraphicsAction = LabeledActionFactory
-                .getExportImageGraphicsAction( pClientProperties );
-        _exportVectorGraphicsAction = LabeledActionFactory
-                .getExportVectorGraphicsAction( pClientProperties );
-        _exportRenderedGraphicsAction = LabeledActionFactory
-                .getExportRenderedGraphicsAction( pClientProperties );
+    public XAction _projectSettingsAction;
+    
+    /**
+     * This is the default constructor, when no customization is required.
+     *
+     * @param pClientProperties
+     *            The Client Properties, including Client Type and OS Name
+     */
+    public LoadActions( final ClientProperties pClientProperties ) {
+        _projectSettingsAction = LabeledActionFactory
+                .getProjectSettingsAction( pClientProperties );
     }
 
-    // NOTE: This method is not final, so that it can be derived for
-    // additions.
-    public Collection< Action > getExportActionCollection( final boolean vectorGraphicsSupported,
-                                                           final boolean renderedGraphicsSupported ) {
-        final Collection< Action > exportActionCollection = new ArrayList<>();
+    public final Collection< Action > getLoadActionCollection( final ClientProperties clientProperties ) {
+        final Collection< Action > loadActionCollection = new ArrayList<>();
 
-        exportActionCollection.add( _exportImageGraphicsAction );
+        loadActionCollection.add( _projectSettingsAction );
 
-        if ( vectorGraphicsSupported ) {
-            exportActionCollection.add( _exportVectorGraphicsAction );
-        }
-
-        if ( renderedGraphicsSupported ) {
-            exportActionCollection.add( _exportRenderedGraphicsAction );
-        }
-
-        return exportActionCollection;
+        return loadActionCollection;
     }
 }

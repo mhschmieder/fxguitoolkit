@@ -720,6 +720,22 @@ public class LabeledActionFactory {
     }
 
     @SuppressWarnings("nls")
+    public static XActionGroup getImportActionGroup( final ClientProperties clientProperties,
+                                                     final ImportActions importActions ) {
+        final Collection< Action > importActionCollection =
+                                                          importActions.getImportActionCollection();
+
+        final XActionGroup importActionGroup = ActionFactory
+                .makeActionGroup( clientProperties,
+                                  importActionCollection,
+                                  LabeledActionFactory.BUNDLE_NAME,
+                                  "import",
+                                  "/icons/happyIconStudio/ImportBlack16.png" );
+
+        return importActionGroup;
+    }
+
+    @SuppressWarnings("nls")
     public static XAction getImportGraphicsAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
                                          BUNDLE_NAME,
@@ -735,6 +751,31 @@ public class LabeledActionFactory {
                                          "settings",
                                          "layerManagement",
                                          "/icons/ahaSoft/Layers16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XActionGroup getLoadActionGroup( final ClientProperties clientProperties,
+                                                   final LoadActions loadActions ) {
+        final Collection< Action > loadActionCollection = loadActions
+                .getLoadActionCollection( clientProperties );
+
+        final XActionGroup loadActionGroup = ActionFactory
+                .makeActionGroup( clientProperties,
+                                  loadActionCollection,
+                                  LabeledActionFactory.BUNDLE_NAME,
+                                  "load",
+                                  "/icons/everaldo/FileImport16.png" );
+
+        return loadActionGroup;
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getProjectSettingsAction( final ClientProperties clientProperties ) {
+        return ActionFactory.makeAction( clientProperties,
+                                         BUNDLE_NAME,
+                                         "load",
+                                         "projectSettings",
+                                         "/icons/fatCow/Cog16.png" );
     }
 
     @SuppressWarnings("nls")
