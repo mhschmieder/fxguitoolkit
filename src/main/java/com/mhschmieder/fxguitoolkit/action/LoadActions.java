@@ -57,9 +57,10 @@ public class LoadActions {
                 .getProjectSettingsAction( pClientProperties );
     }
 
-    public final Collection< Action > getLoadActionCollection( final ClientProperties clientProperties ) {
+    public final Collection< Action > getLoadActionCollection() {
         final Collection< Action > loadActionCollection = new ArrayList<>();
 
+        // Flag for support project settings.
         loadActionCollection.add( _projectSettingsAction );
 
         return loadActionCollection;

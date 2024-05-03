@@ -58,11 +58,12 @@ public class ExportActions {
     }
 
     // NOTE: This method is not final, so that it can be derived for
-    // additions.
+    //  additions.
     public Collection< Action > getExportActionCollection( final boolean vectorGraphicsSupported,
                                                            final boolean renderedGraphicsSupported ) {
         final Collection< Action > exportActionCollection = new ArrayList<>();
 
+        // Image Graphics generally correspond to a JavaFX-generated screenshot.
         exportActionCollection.add( _exportImageGraphicsAction );
 
         if ( vectorGraphicsSupported ) {

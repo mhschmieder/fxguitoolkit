@@ -44,16 +44,37 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
  */
 public class ImportActions {
 
-    public XAction _importGraphicsAction;
+    public XAction _importImageGraphicsAction;
+    public XAction _importVectorGraphicsAction;
+    public XAction _importCadGraphicsAction;
 
     public ImportActions( final ClientProperties clientProperties ) {
-        _importGraphicsAction = LabeledActionFactory.getImportGraphicsAction( clientProperties );
+        _importImageGraphicsAction = LabeledActionFactory
+                .getImportImageGraphicsAction( clientProperties );
+        _importVectorGraphicsAction = LabeledActionFactory
+                .getImportVectorGraphicsAction( clientProperties );
+        _importImageGraphicsAction = LabeledActionFactory
+                .getImportImageGraphicsAction( clientProperties );
     }
 
-    public final Collection< Action > getImportActionCollection() {
+    // NOTE: This method is not final, so that it can be derived for
+    //  additions.
+    public Collection< Action > getImportActionCollection( final boolean imageGraphicsSupported,
+                                                           final boolean vectorGraphicsSupported,
+                                                           final boolean cadGraphicsSupported ) {
         final Collection< Action > importActionCollection = new ArrayList<>();
 
-        importActionCollection.add( _importGraphicsAction );
+        if ( imageGraphicsSupported ) {
+            importActionCollection.add( _importImageGraphicsAction );
+        }
+
+        if ( vectorGraphicsSupported ) {
+            importActionCollection.add( _importVectorGraphicsAction );
+        }
+
+        if ( cadGraphicsSupported ) {
+            importActionCollection.add( _importCadGraphicsAction );
+        }
 
         return importActionCollection;
     }

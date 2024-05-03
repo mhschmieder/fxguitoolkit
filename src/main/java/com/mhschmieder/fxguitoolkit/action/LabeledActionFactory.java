@@ -526,21 +526,21 @@ public class LabeledActionFactory {
     }
 
     @SuppressWarnings("nls")
-    public static XAction getExportRenderedGraphicsAction( final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction( pClientProperties,
-                                         BUNDLE_NAME,
-                                         "export",
-                                         "renderedGraphics",
-                                         "/icons/fatCow/FileExtensionEps16.png" );
-    }
-
-    @SuppressWarnings("nls")
     public static XAction getExportImageGraphicsAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
                                          BUNDLE_NAME,
                                          "export",
                                          "imageGraphics",
                                          "icons/fatCow/FileExtensionJpg16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getExportRenderedGraphicsAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "export",
+                                         "renderedGraphics",
+                                         "/icons/fatCow/FileExtensionEps16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -721,9 +721,14 @@ public class LabeledActionFactory {
 
     @SuppressWarnings("nls")
     public static XActionGroup getImportActionGroup( final ClientProperties clientProperties,
-                                                     final ImportActions importActions ) {
-        final Collection< Action > importActionCollection =
-                                                          importActions.getImportActionCollection();
+                                                     final ImportActions importActions,
+                                                     final boolean imageGraphicsSupported,
+                                                     final boolean vectorGraphicsSupported,
+                                                     final boolean cadGraphicsSupported ) {
+        final Collection< Action > importActionCollection = importActions
+                .getImportActionCollection( imageGraphicsSupported,
+                                            vectorGraphicsSupported,
+                                            cadGraphicsSupported );
 
         final XActionGroup importActionGroup = ActionFactory
                 .makeActionGroup( clientProperties,
@@ -736,12 +741,30 @@ public class LabeledActionFactory {
     }
 
     @SuppressWarnings("nls")
-    public static XAction getImportGraphicsAction( final ClientProperties pClientProperties ) {
+    public static XAction getImportCadGraphicsAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
                                          BUNDLE_NAME,
                                          "import",
-                                         "graphics",
+                                         "cadGraphics",
                                          "/icons/fatCow/FileExtensionDwg16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getImportImageGraphicsAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "import",
+                                         "imageGraphics",
+                                         "icons/fatCow/FileExtensionJpg16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getImportVectorGraphicsAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "import",
+                                         "vectorGraphics",
+                                         "icons/fatCow/FileExtensionPdf16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -757,7 +780,7 @@ public class LabeledActionFactory {
     public static XActionGroup getLoadActionGroup( final ClientProperties clientProperties,
                                                    final LoadActions loadActions ) {
         final Collection< Action > loadActionCollection = loadActions
-                .getLoadActionCollection( clientProperties );
+                .getLoadActionCollection();
 
         final XActionGroup loadActionGroup = ActionFactory
                 .makeActionGroup( clientProperties,
