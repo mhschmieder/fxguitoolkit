@@ -105,7 +105,7 @@ public final class XActionUtilities {
      * with all relevant properties bound to the properties of the Action.
      * <p>
      * NOTE: This is a revision of the method in ControlsFX ActionUtils, to
-     * extend coverage for ActionGroup needs.
+     *  extend coverage for ActionGroup needs in the enhanced configure() call.
      *
      * @param action
      *            The {@link Action} that the {@link Menu} should bind to.
@@ -114,35 +114,6 @@ public final class XActionUtilities {
      */
     public static Menu createMenu( final Action action ) {
         return configure( new Menu(), action );
-    }
-
-    /**
-     * Takes the provided {@link XActionGroup} and returns a {@link Menu}
-     * instance with all relevant properties bound to the properties of the
-     * Action.
-     * <p>
-     * NOTE: This is a revision of the method in ControlsFX ActionUtils, to
-     * extend coverage for ActionGroup needs.
-     *
-     * @param actionGroup
-     *            The {@link XActionGroup} that the {@link Menu} should bind
-     *            to.
-     * @return A {@link Menu} that is bound to the state of the provided
-     *         {@link Action}
-     */
-    public static Menu createMenu( final XActionGroup actionGroup ) {
-        final Menu menu = createMenu( actionGroup );
-
-        final Collection< MenuItem > menuItems = toMenuItems( actionGroup.getActions() );
-
-        if ( actionGroup.isChoiceGroup() ) {
-            // Set the Toggle Group for the Choice Group of Menu Items.
-            MenuUtilities.setToggleGroup( menuItems );
-        }
-
-        menu.getItems().addAll( menuItems );
-
-        return menu;
     }
 
     /**
@@ -250,7 +221,7 @@ public final class XActionUtilities {
     }
 
     // NOTE: This is a revision of the method in ControlsFX ActionUtils, to
-    // extend coverage for RadioMenuItem needs.
+    //  extend coverage for RadioMenuItem needs, including Menu Item ToggleGroups.
     private static Collection< MenuItem > toMenuItems( final Collection< ? extends Action > actions ) {
         final Collection< MenuItem > items = new ArrayList<>( actions.size() );
 
@@ -261,7 +232,14 @@ public final class XActionUtilities {
                 // Nothing to do here, but we want to avoid errors.
             }
             else if ( action instanceof XActionGroup ) {
-                final Menu menu = createMenu( ( XActionGroup ) action );
+                final Menu menu = createMenu( action );
+                final XActionGroup actionGroup = ( XActionGroup ) action;
+                final Collection< MenuItem > menuItems = toMenuItems( actionGroup.getActions() );
+                if ( actionGroup.isChoiceGroup() ) {
+                    // Set the Toggle Group for the Choice Group of Menu Items.
+                    MenuUtilities.setToggleGroup( menuItems );
+                }
+                menu.getItems().addAll( menuItems );
                 items.add( menu );
             }
             else if ( action instanceof ActionGroup ) {
@@ -326,7 +304,7 @@ public final class XActionUtilities {
     }
 
     // NOTE: This is a revision of the method in ControlsFX ActionUtils, to
-    // extend coverage for RadioMenuItem needs.
+    //  extend coverage for RadioMenuItem needs.
     private static < T extends MenuItem > T configure( final T menuItem, final Action action ) {
         if ( action == null ) {
             throw new NullPointerException( "Action cannot be null" ); //$NON-NLS-1$
