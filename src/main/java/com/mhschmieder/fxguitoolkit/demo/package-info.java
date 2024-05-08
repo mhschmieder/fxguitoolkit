@@ -29,11 +29,10 @@
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
 /**
- * This package contains the FxGuiToolkit Library's enhancements for JavaFX
- * Stages.
+ * This package contains the FxGuiToolkit Library's demo code for basic classes.
  *
  * @version 1.0
  *
  * @author Mark Schmieder
  */
-package com.mhschmieder.fxguitoolkit.stage;
+package com.mhschmieder.fxguitoolkit.demo;
