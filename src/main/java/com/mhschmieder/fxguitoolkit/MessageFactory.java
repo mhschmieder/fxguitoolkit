@@ -200,6 +200,21 @@ public class MessageFactory {
         return "File Save Options"; //$NON-NLS-1$
     }
 
+    public static final String getGeneratedReportWriteErrorMessage( final File file ) {
+        final String errorMessageBody =
+                                      " could not save generated report due to write access denied." //$NON-NLS-1$
+                                              + " Please see Session Log for details (if the JRE forwarded exceptions)."; //$NON-NLS-1$
+        final String reportNotSavedMessage = getFileErrorMessage( errorMessageBody, file );
+        return reportNotSavedMessage;
+    }
+
+    public static final String getGraphicsFileWriteErrorMessage( final File file ) {
+        final String errorMessageBody = " could not save graphics data due to parsing errors." //$NON-NLS-1$
+                + " Please Zoom to Extents and try again."; //$NON-NLS-1$
+        final String graphicsFileNotSavedMessage = getFileErrorMessage( errorMessageBody, file );
+        return graphicsFileNotSavedMessage;
+    }
+
     public static final String getIncompatibleClientMasthead( final String productName ) {
         return "Incompatible Client"; //$NON-NLS-1$
     }
