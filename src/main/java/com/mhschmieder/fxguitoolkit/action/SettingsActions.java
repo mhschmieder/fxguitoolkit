@@ -70,14 +70,13 @@ public class SettingsActions {
     }
 
     // NOTE: This method is not final, so that it can be derived for
-    // additions.
+    //  additions.
     public Collection< Action > getSettingsActionCollection( final ClientProperties pClientProperties,
                                                              final boolean maximumSizeSupported ) {
         final XActionGroup backgroundColorChoiceGroup = LabeledActionFactory
                 .getBackgroundColorChoiceGroup( pClientProperties, _backgroundColorChoices );
 
-        final XActionGroup windowSizeActionGroup =
-                                                 com.mhschmieder.fxguitoolkit.action.LabeledActionFactory
+        final XActionGroup windowSizeActionGroup = LabeledActionFactory
                                                          .makeWindowSizeActionGroup( pClientProperties,
                                                                                      _windowSizeActions,
                                                                                      maximumSizeSupported );
