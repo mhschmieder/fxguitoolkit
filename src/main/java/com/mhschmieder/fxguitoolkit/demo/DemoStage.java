@@ -42,12 +42,12 @@ import javafx.scene.Node;
  */
 public class DemoStage extends MainApplicationStage {
 
-    protected DemoStage( String title,
-                         String windowKeyPrefix,
-                         String jarRelativeSplashScreenFileName,
-                         boolean supportsRenderedGraphicsExport,
-                         ProductBranding productBranding,
-                         ClientProperties pClientProperties ) {
+    public DemoStage( final String title,
+                      final String windowKeyPrefix,
+                      final String jarRelativeSplashScreenFileName,
+                      final boolean supportsRenderedGraphicsExport,
+                      final ProductBranding productBranding,
+                      final ClientProperties pClientProperties ) {
         super( title,
                windowKeyPrefix,
                jarRelativeSplashScreenFileName,

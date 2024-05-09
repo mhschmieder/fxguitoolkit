@@ -36,9 +36,6 @@ import java.util.List;
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
-import com.mhschmieder.fxguitoolkit.stage.AboutBox;
-import com.mhschmieder.fxguitoolkit.stage.MacAppMenuEventHandler;
-import com.mhschmieder.fxguitoolkit.stage.NoticeBox;
 
 import javafx.application.HostServices;
 import javafx.application.Platform;
@@ -326,6 +323,8 @@ public abstract class MainApplicationStage extends XStage implements MacAppMenuE
 
     /**
      * Like fileClose, but upon Cancel, consumes a WindowEvent to avoid exiting.
+     * 
+     * @param event The {@link WindowEvent} that triggered this window close
      */
     protected final void windowClose( final WindowEvent event ) {
         // Make sure the window doesn't auto-close, by consuming the event.
