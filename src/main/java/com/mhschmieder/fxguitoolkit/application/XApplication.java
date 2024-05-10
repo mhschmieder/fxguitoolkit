@@ -32,6 +32,9 @@ package com.mhschmieder.fxguitoolkit.application;
 
 import java.io.File;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
@@ -99,6 +102,13 @@ public class XApplication extends Application {
     protected SplashScreenManager   splashScreenManager ;
 
     /**
+     * Declare an executor for convenient access to concurrency and threading.
+     */
+    private final ScheduledExecutorService executor 
+        = Executors.newScheduledThreadPool( 1,
+                                            Executors.defaultThreadFactory() );
+
+    /**
      * Initializes the controller class. This method is automatically called
      * after the FXML file (when present) has been loaded.
      */
@@ -108,7 +118,7 @@ public class XApplication extends Application {
         setUpLogging();
 
         // Get the encapsulated application parameters to forward to the session
-        // context initialization. It includes JNLP parameters and command-line
+        // context initialization. This includes JNLP parameters and command-line
         // JVM arguments. The preferred CSS Style Sheet can be passed here too.
         // NOTE: We currently set system parameters and do not pass command
         //  line arguments, but it is worth revisiting this strategy.
@@ -131,6 +141,20 @@ public class XApplication extends Application {
                                                cssStylesheet );
     }
 
+    /**
+     * The main entry point for all JavaFX applications. The start method is
+     * called after the init method has returned, and after the system is ready
+     * for the application to begin running.
+     * <p>
+     * NOTE: This method is called on the JavaFX Application Thread.
+     * 
+     * @param primaryStage The primary stage for this application, returned by
+     *                     the JavaFX platform at startup, and which a scene can
+     *                     be set for a primary application window or a startup
+     *                     splash screen. Applications may create other stages,
+     *                     and the primary stage is not as configurable anyway.
+     * @throws Exception if a security block or other issue happens at startup
+     */
     @Override
     public void start( final Stage primaryStage ) throws Exception {
         // Make sure to set the preferred CSS style sheet explicitly, in case a
@@ -192,6 +216,7 @@ public class XApplication extends Application {
 
         // This is a fail-safe in case exiting the JavaFX Application Thread
         // failed to exit the Java Runtime Environment for this Application.
+        // NOTE: It is safer for JavaFX Platform manage application shutdown.
         System.exit( 0 );
     }
     
@@ -238,6 +263,13 @@ public class XApplication extends Application {
      *            including JNLP parameters and command-line JVM arguments
      */
     public void initVariables( final Map< String, String > namedArguments ) {
+        // Add a shutdown hook so that JavaFX can close the app, which is cleaner
+        // and safer than calling System.exit(), which is deprecated.
+        Runtime.getRuntime().addShutdownHook( new Thread( () -> {
+            LOG.log( Level.INFO, "System Shutting Down" );
+            executor.shutdownNow();
+        } ) );
+
         // Get the Session Context from Java and JNLP properties etc.
         // NOTE: This culls information from a variety of sources, subsystems,
         //  and API's, so needs to be vetted carefully for threading as well as
