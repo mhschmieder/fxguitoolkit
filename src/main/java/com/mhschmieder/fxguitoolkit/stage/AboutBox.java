@@ -92,8 +92,8 @@ public final class AboutBox extends Popup {
         final VBox root = new VBox();
         final ObservableList< Node > nodes = root.getChildren();
         if ( useAppInfo ) {
-            final String revisionNotice = "Release Version: " //$NON-NLS-1$
-                    + productBranding.productVersion + ",  Last Updated: " //$NON-NLS-1$
+            final String revisionNotice = "Release Version: "
+                    + productBranding.productVersion + ",  Last Updated: "
                     + productBranding.revisionDate;
 
             final HBox banner = GuiUtilities.getBanner( revisionNotice );

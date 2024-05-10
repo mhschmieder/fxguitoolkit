@@ -210,10 +210,8 @@ public abstract class MainApplicationStage extends XStage implements MacAppMenuE
         // Initialize the superclass properties.
         super.initProperties();
 
-        // NOTE: We now pass in the fully qualified application name so we can
-        // distinguish which server the deployment is targeted towards, making
-        // it easier to compare behavior between the test server, the staging
-        // server and the public server.
+        // Use the fully qualified application name, which defaults to the
+        // basic product name augmented by the optional product level.
         _defaultTitle = new StringBuilder( _productBranding.applicationName );
 
         // Make the container for the necessary third-party attributions.

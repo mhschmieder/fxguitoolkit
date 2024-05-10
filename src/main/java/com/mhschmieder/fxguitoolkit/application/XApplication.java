@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
+import com.mhschmieder.commonstoolkit.branding.ProductVersion;
 import com.mhschmieder.commonstoolkit.io.IoUtilities;
 import com.mhschmieder.commonstoolkit.io.LogUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
@@ -84,6 +85,7 @@ public class XApplication extends Application {
     // stop() methods. Everything else can be local method variables.
     protected String                sessionLogFilename;
     protected ClientProperties      clientProperties;
+    protected ProductVersion        productVersion;
     protected ProductBranding       productBranding;
     protected String                cssStylesheet;
 
@@ -244,6 +246,9 @@ public class XApplication extends Application {
         //  are queried via JavaFX. Maybe that's dangerous at this point?
         clientProperties = GlobalUtilities.makeClientProperties( namedArguments );
 
+        // Get the application's product version information.
+        productVersion = getProductVersion();
+
         // Get the application's product branding information.
         productBranding = getProductBranding();
         
@@ -268,7 +273,32 @@ public class XApplication extends Application {
     }
     
     /**
-     * Returns an instance of {@link ProductBranding} to identify name, 
+     * Returns an instance of {@link ProductVersion} to identify product name, 
+     * version, build date, and other product attributes. This is a convenient
+     * struct-style wrapper that avoids copy/paste code throughout an app as
+     * well as eliminating the need for repeated queries to system properties.
+     * <p>
+     * NOTE: This method should be overridden by your application to provide
+     *  the preferred branding details of your application's build, date, etc.
+     * 
+     * @return an instance of {@link ProductVersion}
+     */
+    public ProductVersion getProductVersion() {
+        // Get Product Version for the application using demo placeholders.
+        return new ProductVersion( "",
+                                   "JavaFX",
+                                   "Demo",
+                                   "", 
+                                   1,
+                                   0,
+                                   0,
+                                   0L,
+                                   "",
+                                   "10 May 2024" );    
+    }
+   
+    /**
+     * Returns an instance of {@link ProductBranding} to identify product name, 
      * version, build date, and other product attributes. This is a convenient
      * struct-style wrapper that avoids copy/paste code throughout an app as
      * well as eliminating the need for repeated queries to system properties.
@@ -280,11 +310,8 @@ public class XApplication extends Application {
      */
     public ProductBranding getProductBranding() {
         // Get Product Branding for the application using demo placeholders.
-        return new ProductBranding( "JavaFX Demo - Standalone", 
-                                    "JavaFX Demo", 
-                                    "JavaFX Demo 1.0.0", 
-                                    "Mhschmieder JavaFX Free Demo 1.0.0",
-                                    "9 May 2024" );    
+        return new ProductBranding( "",
+                                    productVersion );    
     }
     
     /**
@@ -327,12 +354,7 @@ public class XApplication extends Application {
      */
     public MainApplicationStage getMainApplicationStage() {
         // Get a demo stage as a placeholder, so this class can be tested.
-        return new DemoStage( "JavaFX Demo",
-                              "javafxDemo",
-                              jarRelativeSplashScreenFilename,
-                              false,
-                              productBranding,
-                              clientProperties );
+        return new DemoStage( productBranding, clientProperties );
     }
     
     /**

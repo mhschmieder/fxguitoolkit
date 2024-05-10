@@ -42,25 +42,25 @@ import javafx.scene.Node;
  */
 public class DemoStage extends MainApplicationStage {
 
-    public DemoStage( final String title,
-                      final String windowKeyPrefix,
-                      final String jarRelativeSplashScreenFileName,
-                      final boolean supportsRenderedGraphicsExport,
-                      final ProductBranding productBranding,
+    public DemoStage( final ProductBranding productBranding,
                       final ClientProperties pClientProperties ) {
-        super( title,
-               windowKeyPrefix,
-               jarRelativeSplashScreenFileName,
-               supportsRenderedGraphicsExport,
+        super( "JavaFX Demo",
+               "demoStage",
+               "/java/JavaFxLogo64.png",
+               false,
                productBranding,
                pClientProperties );
-        // NOTE Auto-generated constructor stub
     }
 
     @Override
     public void initStage( boolean resizable ) {
-        // NOTE Auto-generated method stub
-        
+        initStage( "/java/JavaFxLogo64.png",
+                   200.0d,
+                   240.0d,
+                   resizable );
+
+        // Now that the GUI itself is built, we can initialize the application.
+        initApplication();
     }
 
     @Override

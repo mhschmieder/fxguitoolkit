@@ -134,9 +134,9 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
         // Unless we add a GUI field for creator, set this app as default
         // creator, as usually this DSC Header field refers to the app anyway.
         final StringBuilder savedFrom = new StringBuilder();
-        savedFrom.append( "Saved from " ); //$NON-NLS-1$
+        savedFrom.append( "Saved from " );
         savedFrom.append( _productBranding.productVersionProtected );
-        savedFrom.append( "; Locale = " ); //$NON-NLS-1$
+        savedFrom.append( "; Locale = " );
         savedFrom.append( clientProperties.locale.getDisplayName() );
         final String creator = savedFrom.toString();
 
