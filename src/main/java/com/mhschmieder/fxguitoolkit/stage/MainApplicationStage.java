@@ -89,6 +89,17 @@ public abstract class MainApplicationStage extends XStage implements MacAppMenuE
         blockSession();
     }
 
+    /**
+     * Initializes the main application stage. This should not be called until
+     * after the Splash Screen timer has started.
+     * <p>
+     * Although this base class does not include a status bar, this initializer 
+     * must be overridden; derived classes can add one to the bottom of window.
+     * 
+     * @param resizable {@code true} if this window can be resized by the user
+     */
+    public abstract void initStage( final boolean resizable );
+
     @Override
     public void about() {
         // Display the About Box until the user dismisses it.
@@ -176,7 +187,7 @@ public abstract class MainApplicationStage extends XStage implements MacAppMenuE
      * Take care of initialization tasks that pertain to all applications, e.g.
      * load User Preferences and set the default project.
      */
-    protected final void initApplication() {
+    public final void initApplication() {
         // It should now be safe to register dirty flag listeners, without
         // causing false dirty flags at startup.
         addDirtyFlagListeners();
@@ -195,7 +206,7 @@ public abstract class MainApplicationStage extends XStage implements MacAppMenuE
 
     // Set local properties that are static per application session.
     @Override
-    protected void initProperties() {
+    public void initProperties() {
         // Initialize the superclass properties.
         super.initProperties();
 

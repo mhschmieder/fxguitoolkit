@@ -48,6 +48,7 @@ import org.apache.commons.math3.util.FastMath;
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.io.FileStatus;
 import com.mhschmieder.commonstoolkit.io.FileUtilities;
+import com.mhschmieder.commonstoolkit.io.IoUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
 import com.mhschmieder.commonstoolkit.util.SystemType;
@@ -263,9 +264,9 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
                    final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
         // NOTE: The commented-out example code shows how to remove the
-        // minimize and maximize buttons on the Mac. It isn't possible to just
-        // remove the maximize button, nor is there a callback to ignore, and as
-        // we need the minimize button, this code is disabled for now.
+        //  minimize and maximize buttons on the Mac. It isn't possible to just
+        //  remove the maximize button, nor is there a callback to ignore, and as
+        //  we need the minimize button, this code is disabled for now.
         // super( SystemType.MACOS.equals( sessionContext.systemType ) ?
         // StageStyle.UTILITY : StageStyle.DECORATED );
         super( StageStyle.DECORATED );
@@ -277,7 +278,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
         // Application Quit Menu Item) to ignore the request, and override as
         // necessary. We will manage our windows directly instead.
         // NOTE: This also blocks the "red circle" window closing button on
-        // macOS, as we have to back this out for now.
+        //  macOS, as we have to back this out for now.
         // setOnCloseRequest( evt -> evt.consume() );
 
         _defaultTitle = new StringBuilder( title );
@@ -298,6 +299,21 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
 
         // Make the Window Manager in the base class as it is a stock utility.
         _windowManager = new WindowManager();
+    }
+    
+    /**
+     * Returns the JAR-relative filename of the window's icon.
+     * <p>
+     * NOTE: This method should be overridden by your application to provide
+     *  the filename of your window's icon.
+     * 
+     * @return the JAR-relative filename of the application's splash screen
+     */
+    public String getJarRelativeIconFilename() {
+        // Get the window icon filename, using a demo JavaFX placeholder image.
+        return IoUtilities.getJarResourceFilename( "/java/", 
+                                                   "JavaFxTextLogo", 
+                                                   "png" );        
     }
 
     // Actions are not required for stages, so this method is not declared
@@ -765,10 +781,10 @@ public abstract class XStage extends Stage implements ForegroundManager, FileHan
 
     // This is the main Stage initializer.
     // NOTE It is the responsibility of the subclasses to invoke this method,
-    // as it needs to happen after basic initialization is completed and as this
-    // avoids complicated parameter lists.
+    //  as it needs to happen after basic initialization is completed and as this
+    //  avoids complicated parameter lists.
     // NOTE: This is declared "final" to reduce the chance of accidentally
-    // overriding it and losing the contracted behavior in a subclass.
+    //  overriding it and losing the contracted behavior in a subclass.
     public final void initStage( final String jarRelativeIconFilename,
                                  final double defaultWidth,
                                  final double defaultHeight,

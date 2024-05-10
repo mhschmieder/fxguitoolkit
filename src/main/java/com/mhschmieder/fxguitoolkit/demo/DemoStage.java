@@ -58,6 +58,12 @@ public class DemoStage extends MainApplicationStage {
     }
 
     @Override
+    public void initStage( boolean resizable ) {
+        // NOTE Auto-generated method stub
+        
+    }
+
+    @Override
     protected Node loadContent() {
         // NOTE Auto-generated method stub
         return null;
@@ -75,10 +81,6 @@ public class DemoStage extends MainApplicationStage {
 
     @Override
     protected void setDefaultProject( boolean applicationInitMode ) {
-        // NOTE Auto-generated method stub
-    }
-
-    public void initStage( boolean b ) {
         // NOTE Auto-generated method stub
     }
 }

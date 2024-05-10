@@ -42,6 +42,7 @@ import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
 import com.mhschmieder.commonstoolkit.util.SystemUtilities;
 import com.mhschmieder.fxguitoolkit.demo.DemoStage;
 import com.mhschmieder.fxguitoolkit.stage.MainApplicationLoadTask;
+import com.mhschmieder.fxguitoolkit.stage.MainApplicationStage;
 
 import javafx.application.Application;
 import javafx.application.HostServices;
@@ -99,7 +100,6 @@ public class XApplication extends Application {
      * Initializes the controller class. This method is automatically called
      * after the FXML file (when present) has been loaded.
      */
-    @SuppressWarnings("nls")
     @Override
     public void init() {
         // Set up logging in the way that your application prefers.
@@ -153,27 +153,25 @@ public class XApplication extends Application {
             // Start the progress bar updater on the Splash Screen.
             new Thread( mainApplicationLoadTask ).start();
 
-            // Instantiate the main application stage (i.e. Demo Stage).
-            final DemoStage demoStage = new DemoStage( "JavaFX Demo",
-                                                       "javafxDemo",
-                                                       jarRelativeSplashScreenFilename,
-                                                       false,
-                                                       productBranding,
-                                                       clientProperties );
+            // Instantiate the main application stage.
+            final MainApplicationStage mainApplicationStage = getMainApplicationStage();
 
             // Pass the main stage reference to the application load task.
-            mainApplicationLoadTask.setMainApplicationStage( demoStage );
+            mainApplicationLoadTask.setMainApplicationStage( mainApplicationStage );
 
             // Host Services cannot be statically invoked, and are needed for
             // stuff like launching the default browser.
             final HostServices hostServices = getHostServices();
-            demoStage.setHostServices( hostServices );
+            mainApplicationStage.setHostServices( hostServices );
 
             // Now it is safe to start longer tasks, such as initializing the
             // main application stage, as the Splash Screen should now be
             // showing, and nothing expensive should have been done beforehand.
             // NOTE: This also makes all the secondary stages, pop-ups, etc.
-            demoStage.initStage( true );
+            mainApplicationStage.initStage( true );
+
+            // Now that the GUI itself is built, we can initialize the application.
+            mainApplicationStage.initApplication();
         }
         catch ( final Throwable throwable ) {
             // Recoverable Throwables should be handled lower down.
@@ -293,7 +291,7 @@ public class XApplication extends Application {
      * Returns the URL of the preferred default CSS stylesheet, as a String.
      * <p>
      * NOTE: This method should be overridden by your application if you want
-     *  to use somedthing other than the default JavaFX 8 Modena CSS stylesheet
+     *  to use something other than the default JavaFX 8 Modena CSS stylesheet
      *  of if you want to add OS-switching logic for Aqua CSS or Metro CSS.
      * 
      * @return the URL of the preferred default CSS stylesheet, as a String
@@ -317,6 +315,24 @@ public class XApplication extends Application {
         return IoUtilities.getJarResourceFilename( "/java/", 
                                                    "JavaFxTextLogo", 
                                                    "png" );        
+    }
+    
+    /**
+     * Returns an instance of the Main Application Stage for this application.
+     * <p>
+     * NOTE: This method should be overridden by your application to provide
+     *  the Main Application Stage that is defined for your application.
+     * 
+     * @return an instance of the Main Application Stage for this application
+     */
+    public MainApplicationStage getMainApplicationStage() {
+        // Get a demo stage as a placeholder, so this class can be tested.
+        return new DemoStage( "JavaFX Demo",
+                              "javafxDemo",
+                              jarRelativeSplashScreenFilename,
+                              false,
+                              productBranding,
+                              clientProperties );
     }
     
     /**
