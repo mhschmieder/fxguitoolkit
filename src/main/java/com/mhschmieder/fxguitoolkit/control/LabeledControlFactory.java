@@ -395,7 +395,7 @@ public final class LabeledControlFactory {
 
         return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, cssStyleId );
     }
-
+ 
     @SuppressWarnings("nls")
     public static Button getExportGraphicsButton( final String tooltipText ) {
         return GuiUtilities.getLabeledButton( "Export Graphics", tooltipText, "export-button" );
