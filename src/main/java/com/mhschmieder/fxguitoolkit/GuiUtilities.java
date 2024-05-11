@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -78,6 +78,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.MenuItem;
@@ -104,9 +105,12 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -114,6 +118,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -738,6 +743,60 @@ public final class GuiUtilities {
                 node.setEffect( null );
             }
         } );
+    }
+    
+    
+    /**
+     * Makes a stack from text and an image, for a controlled overlay, but
+     * does not return it as the user provides containers to host the stack.
+     * 
+     * @param imageContainer The square that hosts the text and image
+     * @param imageContainerDimension The width/height dimension of the square
+     * @param imagePlaceholder The shape to use as an image placeholder
+     * @param textItems The text items to overlay, in their VBox container
+     * @param hbox1 The HBox that provides some initial offsets for the stack
+     * @param hbox2 The HBox that provides some final offsets for the stack
+     */
+    public static void initTextAndImageStack( final Rectangle imageContainer,  
+                                              final double imageContainerDimension,
+                                              final Shape imagePlaceholder,
+                                              final VBox textItems,
+                                              final HBox hBox1,
+                                              final HBox hBox2 ) {
+        final Region imagePlaceholderIconRegion = new Region();
+        imagePlaceholderIconRegion.setShape( imagePlaceholder );
+        imagePlaceholderIconRegion.setBackground(
+                LayoutFactory.makeRegionBackground( Color.WHITE, new Insets( 8d ) ) );
+
+        final StackPane imagePane = new StackPane();
+        imagePane.getChildren().add( imageContainer );
+        imagePane.getChildren().add( imagePlaceholderIconRegion );
+        imagePane.setAlignment( Pos.CENTER );
+        imagePane.setMinSize( imageContainerDimension, imageContainerDimension );
+        imagePane.setMaxSize( imageContainerDimension, imageContainerDimension );
+        imagePane.setPadding( new Insets( 8d ) );
+
+        // Create a border region that spans grid columns to avoid clipping.
+        final Region borderRegion = new Region();
+
+        final GridPane listItemRoot = new GridPane();
+        listItemRoot.add( hBox1, 0, 0 );
+        listItemRoot.add( imagePane, 1, 0 );
+        listItemRoot.add( textItems, 2, 0 );
+        listItemRoot.add( borderRegion, 1, 0, 3, 1 );
+        listItemRoot.add( hBox2, 3, 0 );
+
+        // NOTE: This didn't create the expected look, at least on macOS.
+        // listItemRoot.setGridLinesVisible( true );
+
+        listItemRoot.setHgap( 8d );
+
+        final ColumnConstraints col0 = new ColumnConstraints();
+        final ColumnConstraints col1 = new ColumnConstraints();
+        final ColumnConstraints col2 = new ColumnConstraints(
+                Double.MIN_VALUE, Control.USE_COMPUTED_SIZE, Double.MAX_VALUE );
+        col2.setHgrow( Priority.ALWAYS );
+        listItemRoot.getColumnConstraints().addAll( col0, col1, col2 );
     }
 
     /**
