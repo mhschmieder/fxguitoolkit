@@ -54,7 +54,7 @@ public class LoadActions {
      */
     public LoadActions( final ClientProperties pClientProperties ) {
         _projectSettingsAction = LabeledActionFactory
-                .getProjectSettingsAction( pClientProperties );
+                .getLoadProjectSettingsAction( pClientProperties );
     }
 
     public final Collection< Action > getLoadActionCollection() {

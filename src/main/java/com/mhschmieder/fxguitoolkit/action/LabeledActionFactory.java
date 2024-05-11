@@ -793,7 +793,7 @@ public class LabeledActionFactory {
     }
 
     @SuppressWarnings("nls")
-    public static XAction getProjectSettingsAction( final ClientProperties clientProperties ) {
+    public static XAction getLoadProjectSettingsAction( final ClientProperties clientProperties ) {
         return ActionFactory.makeAction( clientProperties,
                                          BUNDLE_NAME,
                                          "load",
