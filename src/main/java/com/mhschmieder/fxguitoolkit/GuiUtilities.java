@@ -754,8 +754,8 @@ public final class GuiUtilities {
      * @param imageContainerDimension The width/height dimension of the square
      * @param imagePlaceholder The shape to use as an image placeholder
      * @param textItems The text items to overlay, in their VBox container
-     * @param hbox1 The HBox that provides some initial offsets for the stack
-     * @param hbox2 The HBox that provides some final offsets for the stack
+     * @param hBox1 The HBox that provides some initial offsets for the stack
+     * @param hBox2 The HBox that provides some final offsets for the stack
      */
     public static void initTextAndImageStack( final Rectangle imageContainer,  
                                               final double imageContainerDimension,
