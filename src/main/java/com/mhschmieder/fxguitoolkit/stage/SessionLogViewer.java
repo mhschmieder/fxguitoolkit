@@ -66,7 +66,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 public class SessionLogViewer extends XStage {
 
-    public static final String     SESSION_LOG_VIEWER_TITLE_DEFAULT = " - Session Log Viewer"; //$NON-NLS-1$
+    public static final String     SESSION_LOG_VIEWER_TITLE_DEFAULT = " - Session Log Viewer";
 
     // Declare the main tool bar.
     public SessionLogViewerToolBar _toolBar;
@@ -75,27 +75,54 @@ public class SessionLogViewer extends XStage {
     protected TextArea             _sessionLogTextArea;
 
     // Declare a string to hold the filename for this Session Log File Cache.
-    private final String           _sessionLogFileName;
+    private final String           _sessionLogFilename;
 
     public SessionLogViewer( final String title,
                              final String windowKeyPrefix,
-                             final String sessionLogFileName,
+                             final String sessionLogFilename,
                              final ProductBranding productBranding,
                              final ClientProperties pClientProperties ) {
+        this( title, 
+              windowKeyPrefix, 
+              sessionLogFilename, 
+              productBranding, 
+              pClientProperties, 
+              true );
+    }
+
+    public SessionLogViewer( final String title,
+                             final String windowKeyPrefix,
+                             final String sessionLogFilename,
+                             final ProductBranding productBranding,
+                             final ClientProperties pClientProperties,
+                             final boolean allowSessionLogRestart ) {
         // Always call the superclass constructor first!
         super( title, windowKeyPrefix, productBranding, pClientProperties );
 
-        _sessionLogFileName = sessionLogFileName;
+        _sessionLogFilename = sessionLogFilename;
 
         _defaultTitle = new StringBuilder( title );
 
         try {
-            initStage();
+            initStage( allowSessionLogRestart );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
         }
     }
+
+    protected final void initStage( final boolean allowSessionLogRestart ) {
+       // First have the superclass initialize its content.
+       initStage( "/icons/everaldo/EasyMobLog16.png", 840d, 480d, true );
+       
+       // NOTE: When using Log4J and some other logging mechanisms, there may
+       //  be race conditions or security violations if the user resets the log.
+       // TODO: Write forwarding methods down the hierarchy to avoid indirection.
+       if ( !allowSessionLogRestart ) {
+           _toolBar._sessionLogNewUpdateButtons._newSessionLogButton.setDisable( true );
+           _toolBar._sessionLogNewUpdateButtons._newSessionLogButton.setVisible( false );
+       }
+   }
 
     // Add the Tool Bar's event listeners.
     // TODO: Use appropriate methodology to add an action linked to both
@@ -327,7 +354,7 @@ public class SessionLogViewer extends XStage {
         // try ( final LogOutputStream sessionLogOutputStream = new
         // LogOutputStream() ) {
         try ( final FileInputStream fileInputStream 
-                        = new FileInputStream( _sessionLogFileName );
+                        = new FileInputStream( _sessionLogFilename );
                 final InputStreamReader inputStreamReader
                         = new InputStreamReader( fileInputStream );
                 final BufferedReader bufferedReader 
@@ -347,13 +374,6 @@ public class SessionLogViewer extends XStage {
         return sessionLogStringBuilder.toString();
     }
 
-    @SuppressWarnings("nls")
-    protected final void initStage() {
-        // First have the superclass initialize its content.
-        initStage( "/icons/everaldo/EasyMobLog16.png", 840d, 480d, true );
-    }
-
-    @SuppressWarnings("nls")
     @Override
     protected final Node loadContent() {
         // Instantiate and return the custom Content Node.
@@ -392,14 +412,14 @@ public class SessionLogViewer extends XStage {
     // Start a new Session Log File Cache and related settings.
     public void newSessionLogFileCache() {
         // Redirect the logging from scratch, to start with a clean log.
-        LogUtilities.redirectLogging( _sessionLogFileName );
+        LogUtilities.redirectLogging( _sessionLogFilename );
 
         // Restore the Session Log Header (important for service calls).
         // NOTE: As we might change the main CSS stylesheet at run-time, it is
-        // best to query it anew rather than cache and forward it to this class.
+        //  best to query it anew rather than cache and forward it to this class.
         String cssStylesheet = Application.getUserAgentStylesheet();
         if ( cssStylesheet == null ) {
-            cssStylesheet = "*** UNSPECIFIED ***"; //$NON-NLS-1$
+            cssStylesheet = "*** UNSPECIFIED ***";
         }
         LogUtilities.generateSessionLogHeader( clientProperties, _productBranding, cssStylesheet );
 
