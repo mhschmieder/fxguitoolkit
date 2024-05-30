@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
@@ -39,8 +39,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
  * based file extensions.
  * <p>
  * NOTE: This code is copied from GraphicsToolkit on GitHub until it is
- * published
- * to Maven Central from where it can be pulled via Gradle.
+ * published to Maven Central from where it can be pulled via Gradle.
  */
 public final class ExtensionFilters {
 
@@ -49,6 +48,8 @@ public final class ExtensionFilters {
      */
     private ExtensionFilters() {}
 
+    public static final ExtensionFilter ALL_EXTENSION_FILTER             = ExtensionFilterUtilities
+            .getExtensionFilter( FileExtensions.ALL_DESCRIPTION, FileExtensions.ALL_EXTENSIONS );
     public static final ExtensionFilter BMP_EXTENSION_FILTER             = ExtensionFilterUtilities
             .getExtensionFilter( FileExtensions.BMP_DESCRIPTION, FileExtensions.BMP_EXTENSIONS );
     public static final ExtensionFilter CSV_EXTENSION_FILTER             = ExtensionFilterUtilities
