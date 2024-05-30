@@ -176,7 +176,7 @@ public class ProgressMonitor extends Stage {
         final ObservableList< Node > actionButtons = actionButtonBar.getButtons();
         actionButtons.add( cancelButton );
         
-       final BorderPane borderPane = new BorderPane();
+        final BorderPane borderPane = new BorderPane();
         borderPane.setCenter( gridPane );
         borderPane.setBottom( actionButtonBar );
         
