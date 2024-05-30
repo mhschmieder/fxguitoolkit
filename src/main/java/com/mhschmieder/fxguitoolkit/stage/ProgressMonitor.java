@@ -183,7 +183,8 @@ public class ProgressMonitor extends Stage {
         
         final List< String > jarRelativeStelesheetFilenames = GuiUtilities
                 .getJarRelativeStylesheetFilenames( systemType );
-        GuiUtilities.addStylesheetsAsJarResource( scene, null );
+        GuiUtilities.addStylesheetsAsJarResource( scene, 
+                                                  jarRelativeStelesheetFilenames );
         
         final Color backColor = ColorConstants.WINDOW_BACKGROUND_COLOR;
         final Background background = LayoutFactory.makeRegionBackground( 
