@@ -140,23 +140,15 @@ public class ProgressMonitor extends Stage {
         
         progressBanner = new Label( bannerText );
         progressBanner.getStyleClass().add( "banner-text" );
-        
+       
         final Label progressControlsLabel = new Label( "Progress: " );
         progressRatioLabel = new Label();
         progressBar = new ProgressBar( -1.0d );
         progressIndicator = new ProgressIndicator( -1.0d );
         
-        final ButtonBar actionButtonBar = new ButtonBar();
-        actionButtonBar.setPadding( new Insets( 6.0d, 12.0d, 6.0d, 12.0d ) );
-        cancelButton = GuiUtilities.getLabeledButton( 
-                cancelText, null, "cancel-button" );
-        ButtonBar.setButtonData( cancelButton, ButtonData.CANCEL_CLOSE );
-        cancelButton.setPrefWidth( 160.0d );
-        final ObservableList< Node > actionButtons = actionButtonBar.getButtons();
-        actionButtons.add( cancelButton );
-        
         GridPane.setHalignment( progressBanner, HPos.LEFT );
         
+        GridPane.setValignment( progressControlsLabel, VPos.TOP );
         GridPane.setValignment( progressRatioLabel, VPos.TOP );
         GridPane.setValignment( progressBar, VPos.TOP );
         GridPane.setValignment( progressIndicator, VPos.TOP );
@@ -175,7 +167,16 @@ public class ProgressMonitor extends Stage {
         
         gridPane.add( progressIndicator, 3, 1, 1, 2 );
         
-        final BorderPane borderPane = new BorderPane();
+        final ButtonBar actionButtonBar = new ButtonBar();
+        actionButtonBar.setPadding( new Insets( 6.0d, 12.0d, 6.0d, 12.0d ) );
+        cancelButton = GuiUtilities.getLabeledButton( 
+                cancelText, null, "cancel-button" );
+        ButtonBar.setButtonData( cancelButton, ButtonData.CANCEL_CLOSE );
+        cancelButton.setPrefWidth( 160.0d );
+        final ObservableList< Node > actionButtons = actionButtonBar.getButtons();
+        actionButtons.add( cancelButton );
+        
+       final BorderPane borderPane = new BorderPane();
         borderPane.setCenter( gridPane );
         borderPane.setBottom( actionButtonBar );
         
