@@ -190,11 +190,11 @@ public class ProgressMonitor extends Stage {
         final Color backColor = ColorConstants.WINDOW_BACKGROUND_COLOR;
         final Background background = LayoutFactory.makeRegionBackground( 
                 backColor );
-        gridPane.setBackground( background );
+        borderPane.setBackground( background );
         GuiUtilities.setStylesheetForTheme( scene, 
                                             backColor, 
-                                            bannerText, 
-                                            cancelText );
+                                            XStage.DARK_BACKGROUND_CSS, 
+                                            XStage.LIGHT_BACKGROUND_CSS );
         
         setWidth( preferredWidth );
         setHeight( preferredHeight );
