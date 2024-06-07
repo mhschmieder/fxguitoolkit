@@ -30,8 +30,10 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
+import java.text.NumberFormat;
 import java.util.List;
 
+import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
@@ -225,11 +227,20 @@ public class ProgressMonitor extends Stage {
     }
     
     public void updateProgress( final int currentStep ) {
-        final double progressRatio = MathUtilities.roundDecimal( 
+        // NOTE: Progress is percentile based, so we round down to avoid
+        //  exceeding 100% at the end.
+        final double progressRatio = MathUtilities.roundDownDecimal( 
                 ( double ) currentStep / numberOfSteps, 2 );
         
         // Show the percentage of executed steps in the Progress Bar.
-        progressRatioLabel.setText( Double.toString( progressRatio ) );
+        // NOTE: For consistency, we always show exactly two decimal places.
+        final NumberFormat numberFormat = NumberFormat.getNumberInstance();
+        numberFormat.setMinimumIntegerDigits( 1 );
+        numberFormat.setMaximumIntegerDigits( 1 );
+        numberFormat.setMinimumFractionDigits( 2 );
+        numberFormat.setMaximumFractionDigits( 2 );
+        progressRatioLabel.setText( NumberFormatUtilities.formatDouble( 
+                progressRatio, numberFormat ) );
         progressBar.setProgress( progressRatio );
         progressIndicator.setProgress( progressRatio );
         
