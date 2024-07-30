@@ -46,6 +46,13 @@ import com.mhschmieder.commonstoolkit.util.SystemType;
  * NOTE: This class is not final, so that it can be derived for additions.
  */
 public class FileActions {
+    
+    private static void modifyActionLabel( final Action action,
+                                           final String projectCategory ) {
+        final String oldLabel = action.getText();
+        final String newLabel = oldLabel.replace( "Project", projectCategory );
+        action.setText( newLabel );
+    }
 
     /**
      * Flag for whether project actions are supported; used when making File
@@ -104,12 +111,38 @@ public class FileActions {
     }
 
     /**
+     * This is the default constructor, when no customization is required, but
+     * with additional information about whether project actions are supported.
+     * <p>
+     * NOTE: If the custom project category is left null or blank, we use the
+     *  default project category of "Project" in all the menu item labels.
+     *
+     *
+     * @param pClientProperties
+     *            The Client Properties, including Client Type and OS Name
+     * @param pProjectActionsSupported
+     *            {@code true} if project actions are supported
+     * @param projectCategory
+     *            Optional custom category to use in place of default "Project"
+     */
+    public FileActions( final ClientProperties pClientProperties,
+                        final boolean pProjectActionsSupported,
+                        final String projectCategory ) {
+        this( pClientProperties, 
+              pProjectActionsSupported,
+              projectCategory,
+              new LoadActions( pClientProperties ),
+              new ImportActions( pClientProperties ),
+              new ExportActions( pClientProperties ) );
+    }
+
+    /**
      * This is a special constructor that takes pre-constructed Load, Import and
      * Export Actions containers. Use this when you need customization of the 
      * Load, Import and/or Export Actions, to avoid cut/paste of the basic File
      * Actions and to allow for method override in helper methods and thus avoid
      * potential code divergence.
-     *
+     * 
      * @param pClientProperties
      *            The Client Properties, including Client Type and OS Name
      * @param pProjectActionsSupported
@@ -126,6 +159,46 @@ public class FileActions {
      */
     public FileActions( final ClientProperties pClientProperties,
                         final boolean pProjectActionsSupported,
+                        final LoadActions loadActions,
+                        final ImportActions importActions,
+                        final ExportActions exportActions ) {
+        this( pClientProperties,
+              pProjectActionsSupported,
+              null,
+              loadActions,
+              importActions,
+              exportActions );
+    }
+
+    /**
+     * This is a special constructor that takes pre-constructed Load, Import and
+     * Export Actions containers. Use this when you need customization of the 
+     * Load, Import and/or Export Actions, to avoid cut/paste of the basic File
+     * Actions and to allow for method override in helper methods and thus avoid
+     * potential code divergence.
+     * <p>
+     * NOTE: If the custom project category is left null or blank, we use the
+     *  default project category of "Project" in all the menu item labels.
+     *
+     * @param pClientProperties
+     *            The Client Properties, including Client Type and OS Name
+     * @param pProjectActionsSupported
+     *            {@code true} if project actions are supported
+     * @param projectCategory
+     *            Optional custom category to use in place of default "Project"
+     * @param loadActions
+     *            A pre-constructed custom Load Actions container that derives
+     *            from the basic functionality and adds more capabilities
+     * @param importActions
+     *            A pre-constructed custom Import Actions container that derives
+     *            from the basic functionality and adds more capabilities
+     * @param exportActions
+     *            A pre-constructed custom Export Actions container that derives
+     *            from the basic functionality and adds more capabilities
+     */
+    public FileActions( final ClientProperties pClientProperties,
+                        final boolean pProjectActionsSupported,
+                        final String projectCategory,
                         final LoadActions loadActions,
                         final ImportActions importActions,
                         final ExportActions exportActions ) {
@@ -152,6 +225,21 @@ public class FileActions {
         _mruFileActions = new MruFileActions( pClientProperties );
         
         _exitAction = LabeledActionFactory.getExitAction( pClientProperties );
+        
+        // If project actions are support and the project category is provided
+        // and is different from the default category of "Project", modify labels.
+        if ( pProjectActionsSupported && ( projectCategory != null ) 
+                && !projectCategory.isEmpty() && !"Project".equals( projectCategory ) ) {
+            modifyActionLabels( projectCategory );
+        }
+    }
+
+    private void modifyActionLabels( final String projectCategory ) {
+        modifyActionLabel( _newProjectAction, projectCategory  );
+        modifyActionLabel( _openProjectAction, projectCategory  );
+        modifyActionLabel( _saveProjectAction, projectCategory  );
+        modifyActionLabel( _saveProjectAsAction, projectCategory  );
+        modifyActionLabel( _projectPropertiesAction, projectCategory  );
     }
 
     public final Collection< Action > getLoadActionCollection() {
