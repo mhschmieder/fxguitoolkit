@@ -244,6 +244,11 @@ public final class XActionUtilities {
             }
             else if ( action instanceof ActionGroup ) {
                 final Menu menu = ActionUtils.createMenu( action );
+
+                // Make sure the mnemonic is used to underline a character vs. printing
+                // as a separate literal character.
+                menu.setMnemonicParsing( true );
+
                 final Collection< MenuItem > menuItems = toMenuItems( ( ( ActionGroup ) action )
                         .getActions() );
                 menu.getItems().addAll( menuItems );
@@ -255,6 +260,11 @@ public final class XActionUtilities {
             }
             else if ( action instanceof Action ) {
                 final MenuItem menuItem = ActionUtils.createMenuItem( action );
+
+                // Make sure the mnemonic is used to underline a character vs. printing
+                // as a separate literal character.
+                menuItem.setMnemonicParsing( true );
+
                 items.add( menuItem );
             }
             else if ( ActionUtils.ACTION_SEPARATOR.equals( action ) ) {
@@ -312,6 +322,10 @@ public final class XActionUtilities {
 
         // Button bind to action properties.
         bindStyle( menuItem, action );
+
+        // Make sure the mnemonic is used to underline a character vs. printing
+        // as a separate literal character.
+        menuItem.setMnemonicParsing( true );
 
         menuItem.textProperty().bind( action.textProperty() );
         menuItem.disableProperty().bind( action.disabledProperty() );

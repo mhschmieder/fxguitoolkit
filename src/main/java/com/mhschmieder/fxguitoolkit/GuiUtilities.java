@@ -1332,6 +1332,11 @@ public final class GuiUtilities {
      */
     public static CheckBox getCheckBox( final String label, final boolean selected ) {
         final CheckBox checkBox = new CheckBox( label );
+        
+        // Make sure the mnemonic is used to underline a character vs. printing
+        // as a separate literal character.
+        checkBox.setMnemonicParsing( true );
+
         checkBox.setSelected( selected );
 
         // Apply drop-shadow effects when the mouse enters a check box.

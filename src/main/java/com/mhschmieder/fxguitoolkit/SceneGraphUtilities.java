@@ -214,6 +214,10 @@ public class SceneGraphUtilities {
                                                            false );
 
         final Button button = new Button( buttonLabel );
+        
+        // Make sure the mnemonic is used to underline a character vs. printing
+        // as a separate literal character.
+        button.setMnemonicParsing( true );
 
         // Style the buttons with optional custom background.
         // NOTE: CSS automatically chooses an appropriate foreground.
@@ -256,6 +260,10 @@ public class SceneGraphUtilities {
                                                              3.0d,
                                                              false,
                                                              false );
+
+        // Make sure the mnemonic is used to underline a character vs. printing
+        // as a separate literal character.
+        toggleButton.setMnemonicParsing( true );
 
         // Add the toggle button to its toggle group, if it exists.
         if ( toggleGroup != null ) {
@@ -336,12 +344,7 @@ public class SceneGraphUtilities {
                                                            groupName,
                                                            itemName,
                                                            false );
-        final ToggleButton toggleButton = getLabeledToggleButton( toggleGroup,
-                                                                  buttonLabel,
-                                                                  null,
-                                                                  null );
-
-        return toggleButton;
+        return getLabeledToggleButton( toggleGroup, buttonLabel, null, null );
     }
 
     public static CheckBox getLabeledCheckBox( final XAction action ) {
@@ -363,9 +366,7 @@ public class SceneGraphUtilities {
                                                              itemName,
                                                              false );
 
-        final CheckBox checkBox = GuiUtilities.getCheckBox( checkBoxLabel, false );
-
-        return checkBox;
+        return GuiUtilities.getCheckBox( checkBoxLabel, false );
     }
 
     public static Label getLabeledLabel( final ClientProperties clientProperties,
