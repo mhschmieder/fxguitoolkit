@@ -38,7 +38,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 
 import com.mhschmieder.commonstoolkit.io.FileUtilities;
-import com.mhschmieder.fxguitoolkit.stage.FileHandler;
+import com.mhschmieder.fxguitoolkit.stage.FileActionHandler;
 
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -60,12 +60,12 @@ public class DragDropUtilities {
     /**
      * Placeholder for drag/drop of images; needs File Handler class written.
      *
-     * @param fileHandler
+     * @param fileActionHandler
      *            A Window derived object that implements File Handler protocols
      *
      * @return An Event Handler for image drag events
      */
-    public static EventHandler< DragEvent > getImageDragHandler( final FileHandler fileHandler ) {
+    public static EventHandler< DragEvent > getImageDragHandler( final FileActionHandler fileActionHandler ) {
         return dragEvent -> {
             final Dragboard dragboard = dragEvent.getDragboard();
 
@@ -87,7 +87,7 @@ public class DragDropUtilities {
                             dragEvent.acceptTransferModes( TransferMode.ANY );
                         }
                         else if ( DragEvent.DRAG_DROPPED.equals( eventType ) ) {
-                            dropCompleted = fileHandler.fileOpen( file );
+                            dropCompleted = fileActionHandler.fileOpen( file );
                         }
                     }
                 }

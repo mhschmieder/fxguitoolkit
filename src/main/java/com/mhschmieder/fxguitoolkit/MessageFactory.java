@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -120,8 +120,12 @@ public class MessageFactory {
         }
     }
 
+    public static final String getFileCloseMasthead() {
+        return "Confirm Save File Changes and Close Window"; //$NON-NLS-1$
+    }
+
     public static final String getFileExitMasthead() {
-        return "Confirm Save File Changes and Exit"; //$NON-NLS-1$
+        return "Confirm Save File Changes and Exit Application"; //$NON-NLS-1$
     }
 
     public static final String getFileExitMessage( final File file ) {

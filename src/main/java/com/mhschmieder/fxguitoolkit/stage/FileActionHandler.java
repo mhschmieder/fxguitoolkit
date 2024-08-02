@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,11 +46,11 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;
 
 /**
- * {@code FileHandler} is an interface that contracts Window-derived classes to
- * supply basic file handling. To minimize the amount of coupling, it attempts
- * to standardize as much as possible in default implementations herein.
+ * {@code FileActionHandler} is an interface that contracts Window-derived classes
+ * to supply basic file action handling. To minimize the amount of coupling, it 
+ * attempts to standardize as much as possible in default implementations herein.
  */
-public interface FileHandler {
+public interface FileActionHandler {
 
     default void fileOpen( final Window parent,
                            final String fileChooserTitle,
@@ -233,10 +233,9 @@ public interface FileHandler {
     }
 
     // NOTE: Not all implementing Windows support File Close actions, so this
-    // lower level method is given a default implementation that signifies
-    // failure.
+    //  method is given a default implementation that indicates cancellation.
     default boolean fileClose() {
-        return true;
+        return false;
     }
 
     // NOTE: Not all implementing Windows support MRU File Lists, but the

@@ -281,10 +281,10 @@ public abstract class MainApplicationStage extends XStage implements MacAppMenuE
     @Override
     public final void quit() {
         // Perform the normal File Close action, which asks for confirmation.
-        final boolean canceled = fileClose();
+        final boolean closeFile = fileClose();
 
         // If the user cancels, exit the Quit request.
-        if ( canceled ) {
+        if ( !closeFile ) {
             return;
         }
 

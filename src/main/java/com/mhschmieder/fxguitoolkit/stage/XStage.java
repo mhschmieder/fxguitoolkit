@@ -92,7 +92,7 @@ import javafx.stage.Window;
  * {@code XStage} is a skeletal abstract base class that extends the JavaFX
  * Stage class enough to serve as a better boilerplate starting point for most.
  */
-public abstract class XStage extends Stage implements ForegroundManager, FileHandler {
+public abstract class XStage extends Stage implements ForegroundManager, FileActionHandler {
 
     // To avoid cut/paste errors with resource references, make global constants
     // for the CSS theme to be used for dark vs. light backgrounds.
