@@ -46,11 +46,14 @@ import com.mhschmieder.commonstoolkit.util.SystemType;
  * NOTE: This class is not final, so that it can be derived for additions.
  */
 public class FileActions {
+    public static final String PROJECT_CATEGORY_DEFAULT = "Project";
+    
     
     private static void modifyActionLabel( final Action action,
                                            final String projectCategory ) {
         final String oldLabel = action.getText();
-        final String newLabel = oldLabel.replace( "Project", projectCategory );
+        final String newLabel = oldLabel.replace( PROJECT_CATEGORY_DEFAULT, 
+                                                  projectCategory );
         action.setText( newLabel );
     }
 
@@ -105,9 +108,7 @@ public class FileActions {
                         final boolean pProjectActionsSupported ) {
         this( pClientProperties, 
               pProjectActionsSupported,
-              new LoadActions( pClientProperties ),
-              new ImportActions( pClientProperties ),
-              new ExportActions( pClientProperties ) );
+              PROJECT_CATEGORY_DEFAULT );
     }
 
     /**
@@ -164,7 +165,7 @@ public class FileActions {
                         final ExportActions exportActions ) {
         this( pClientProperties,
               pProjectActionsSupported,
-              null,
+              PROJECT_CATEGORY_DEFAULT,
               loadActions,
               importActions,
               exportActions );
@@ -229,7 +230,8 @@ public class FileActions {
         // If project actions are support and the project category is provided
         // and is different from the default category of "Project", modify labels.
         if ( pProjectActionsSupported && ( projectCategory != null ) 
-                && !projectCategory.isEmpty() && !"Project".equals( projectCategory ) ) {
+                && !projectCategory.isEmpty() 
+                && !PROJECT_CATEGORY_DEFAULT.equals( projectCategory ) ) {
             modifyActionLabels( projectCategory );
         }
     }
@@ -270,6 +272,7 @@ public class FileActions {
                                                          final boolean vectorGraphicsExportSupported,
                                                          final boolean renderedGraphicsExportSupported ) {
         return getFileActionCollection( pClientProperties,
+                                        true,
                                         false,
                                         false,
                                         false,
@@ -280,6 +283,7 @@ public class FileActions {
     // NOTE: This method is not final, so that it can be derived for
     // additions.
     public Collection< Action > getFileActionCollection( final ClientProperties pClientProperties,
+                                                         final boolean supportCloseWindow,
                                                          final boolean imageGraphicsImportSupported,
                                                          final boolean vectorGraphicsImportSupported,
                                                          final boolean cadGraphicsImportSupported,
@@ -300,6 +304,7 @@ public class FileActions {
                                        renderedGraphicsExportSupported );
         
         return getFileActionCollection( pClientProperties,
+                                        supportCloseWindow,
                                         loadActionGroup,
                                         importActionGroup,
                                         exportActionGroup );
@@ -308,6 +313,7 @@ public class FileActions {
     // NOTE: This method is not final, so that it can be derived for
     // additions.
     public Collection< Action > getFileActionCollection( final ClientProperties pClientProperties,
+                                                         final boolean supportCloseWindow,
                                                          final XActionGroup loadActionGroup,
                                                          final XActionGroup importActionGroup,
                                                          final XActionGroup exportActionGroup ) {
@@ -320,7 +326,8 @@ public class FileActions {
                 fileActionCollection.add( loadActionGroup );
             }
         }
-        else {
+        
+        if ( supportCloseWindow ) {
             fileActionCollection.add( _closeWindowAction );           
         }
 
