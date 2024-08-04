@@ -34,6 +34,7 @@ import java.io.File;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 
+import com.mhschmieder.commonstoolkit.io.FileAction;
 import com.mhschmieder.commonstoolkit.security.LoginType;
 
 /**
@@ -100,6 +101,39 @@ public class MessageFactory {
     public static final String getEulaBanner( final String productName ) {
         final String eulaBanner = productName + " End User License Agreement"; //$NON-NLS-1$
         return eulaBanner;
+    }
+    
+    /**
+     * Returns the descriptive clause to insert in "Confirm File Changes" alert
+     * boxes for the action that follows the File Save.
+     * 
+     * @param fileAction The file action type that determines the post-save clause
+     * @return the descriptive clause to insert in "Confirm File Changes" alert
+     */
+    public static final String getFileSavePostActionClause( final FileAction fileAction ) {
+        String actionClause = "";
+        switch ( fileAction ) {
+        case NEW:
+            actionClause = "creating a new one";
+            break;
+        case OPEN:
+            actionClause = "opening another one";
+            break;
+        case RUN_BATCH:
+            actionClause = "running a batch directory";
+            break;
+        case CLOSE:
+            actionClause = "closing the window";
+            break;
+        case EXIT:
+            actionClause = "exiting the application";
+            break;
+            //$CASES-OMITTED$
+        default:
+            break;       
+        }
+        
+        return actionClause;
     }
 
     public static final String getFileAutoSaveTitle() {

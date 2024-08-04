@@ -33,6 +33,7 @@ package com.mhschmieder.fxguitoolkit.stage;
 import java.io.File;
 import java.util.Optional;
 
+import com.mhschmieder.commonstoolkit.io.FileAction;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
 
@@ -46,12 +47,6 @@ import javafx.scene.control.ButtonType;
  * attempts to standardize as much as possible in default implementations herein.
  */
 public interface FileCloseHandler {
-    
-    public static final String FILE_NEW_ACTION_CLAUSE = "creating a new one";
-    public static final String FILE_OPEN_ACTION_CLAUSE = "opening another one";
-    public static final String FILE_BATCH_ACTION_CLAUSE = "running a batch directory";
-    public static final String FILE_CLOSE_ACTION_CLAUSE = "closing the window";
-    public static final String FILE_EXIT_ACTION_CLAUSE = "exiting the application";
      
     /**
      * Returns the user confirmation response ("save" vs. "cancel") to changes.
@@ -77,20 +72,20 @@ public interface FileCloseHandler {
      * @param title The title to use for the confirmation dialog
      * @param file The file to check for unsaved changes
      * @param fileCategory The descriptive category of the file (not file suffix)
-     * @param actionClause The descriptive file action clause to insert in messages
+     * @param fileAction The file action type that triggered the "Save Changes"
      * @param isChanged {@code true} if the file has changed; {@code false} if not
      * @return {@code true} if the user clicked "cancel"; {@code false} if "save"
      */
     default boolean checkFileClose( final String title,
                                     final File file,
                                     final String fileCategory,
-                                    final String actionClause,
+                                    final FileAction fileAction,
                                     final boolean isChanged ) {
         boolean closeFile = true;
         
         // Check if the user could lose changes to the file before closing.
         if ( isChanged ) {
-            closeFile = confirmFileClose( title, file, fileCategory, actionClause );
+            closeFile = confirmFileClose( title, file, fileCategory, fileAction );
         }
         
         return closeFile;
@@ -117,30 +112,30 @@ public interface FileCloseHandler {
      * @param title The title to use for the confirmation dialog
      * @param file The file to check for unsaved changes
      * @param fileCategory The descriptive category of the file (not file suffix)
-     * @param actionClause The descriptive file action clause to insert in messages
+     * @param fileAction The file action type that triggered the "Save Changes"
      * @return {@code true} if the user clicked "cancel"; {@code false} if "save"
      */
     default boolean confirmFileClose( final String title,
                                       final File file,
                                       final String fileCategory,
-                                      final String actionClause ) {
+                                      final FileAction fileAction ) {
         // Make sure we can handle unexpected edge cases by using Optionals.
         Optional< ButtonType > response = Optional.empty();
 
         // Conditionally give the user the opportunity to save the current file,
         // if anything changed since the file was last opened.
-        final String message = getSaveFileChangesMessage( file, fileCategory, actionClause );
+        final String message = getSaveFileChangesMessage( file, fileCategory, fileAction );
         String masthead = null;
-        switch ( actionClause ) {
-        case FILE_NEW_ACTION_CLAUSE:
-        case FILE_OPEN_ACTION_CLAUSE:
-        case FILE_BATCH_ACTION_CLAUSE:
+        switch ( fileAction ) {
+        case NEW:
+        case OPEN:
+        case RUN_BATCH:
             masthead = MessageFactory.getSaveFileChangesMasthead();
             break;
-        case FILE_CLOSE_ACTION_CLAUSE:
+        case CLOSE:
             masthead = MessageFactory.getFileCloseMasthead();
             break;
-        case FILE_EXIT_ACTION_CLAUSE:
+        case EXIT:
             masthead = MessageFactory.getFileExitMasthead();
             break;
         // $CASES-OMITTED$
@@ -179,12 +174,12 @@ public interface FileCloseHandler {
      * 
      * @param file The file to check for unsaved changes
      * @param fileCategory The descriptive category of the file (not file suffix)
-     * @param actionClause The descriptive file action clause to insert in messages
+     * @param fileAction The file action type that triggered the "Save Changes"
      * @return the message to use in the Confirm File Changes alert box
      */
     default String getSaveFileChangesMessage( final File file,
                                               final String fileCategory,
-                                              final String actionClause ) {
+                                              final FileAction fileAction ) {
         return MessageFactory.getSaveFileChangesMessage( file );
     }
 
