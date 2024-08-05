@@ -46,11 +46,12 @@ import com.mhschmieder.commonstoolkit.util.SystemType;
  * NOTE: This class is not final, so that it can be derived for additions.
  */
 public class FileActions {
+    
     public static final String PROJECT_CATEGORY_DEFAULT = "Project";
     
     
-    private static void modifyActionLabel( final Action action,
-                                           final String projectCategory ) {
+    public static void modifyActionLabel( final Action action,
+                                          final String projectCategory ) {
         final String oldLabel = action.getText();
         final String newLabel = oldLabel.replace( PROJECT_CATEGORY_DEFAULT, 
                                                   projectCategory );
@@ -237,11 +238,15 @@ public class FileActions {
     }
 
     private void modifyActionLabels( final String projectCategory ) {
-        modifyActionLabel( _newProjectAction, projectCategory  );
-        modifyActionLabel( _openProjectAction, projectCategory  );
-        modifyActionLabel( _saveProjectAction, projectCategory  );
-        modifyActionLabel( _saveProjectAsAction, projectCategory  );
-        modifyActionLabel( _projectPropertiesAction, projectCategory  );
+        modifyActionLabel( _newProjectAction, projectCategory );
+        modifyActionLabel( _openProjectAction, projectCategory );
+        
+        modifyActionLabel( _loadActions._projectSettingsAction, projectCategory );
+        
+        modifyActionLabel( _saveProjectAction, projectCategory );
+        modifyActionLabel( _saveProjectAsAction, projectCategory );
+       
+        modifyActionLabel( _projectPropertiesAction, projectCategory );
     }
 
     public final Collection< Action > getLoadActionCollection() {
