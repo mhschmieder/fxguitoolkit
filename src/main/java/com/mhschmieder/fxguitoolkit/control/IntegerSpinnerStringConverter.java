@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -111,18 +111,20 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
                                                                                  ( SpinnerValueFactory.IntegerSpinnerValueFactory ) integerSpinner
                                                                                          .getValueFactory();
 
+        // NOTE: Java 21 throws an exception for "already bound property"
+        //  if you set the tool tip on the editor rather than on the spinner.
         final int minimumNumericValue = spinnerValueFactory.getMin();
         final int maximumNumericValue = spinnerValueFactory.getMax();
         final String tooltipText = TextUtilities.getValueRangeTooltipText( valueDescriptor,
                                                                            minimumNumericValue,
                                                                            maximumNumericValue,
                                                                            numberFormat );
+        integerSpinner.setTooltip( new Tooltip( tooltipText ) );
 
         final TextField editor = integerSpinner.getEditor();
         final IntegerSpinnerStringConverter converter =
                                                       new IntegerSpinnerStringConverter( spinnerValueFactory,
                                                                                          editor,
-                                                                                         tooltipText,
                                                                                          minimumNumericValue,
                                                                                          maximumNumericValue,
                                                                                          defaultNumericValue,
@@ -192,8 +194,6 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
      *            value list for the associated {@link Spinner}
      * @param textField
      *            The {@link TextField} providing user-edited strings
-     * @param tooltipText
-     *            The pre-formatted text to display for the tool tip
      * @param minimumNumericValue
      *            The smallest valid {@link Integer} value
      * @param maximumNumericValue
@@ -210,7 +210,6 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
      */
     public IntegerSpinnerStringConverter( final SpinnerValueFactory.IntegerSpinnerValueFactory spinnerValueFactory,
                                           final TextField textField,
-                                          final String tooltipText,
                                           final int minimumNumericValue,
                                           final int maximumNumericValue,
                                           final int defaultNumericValue,
@@ -235,8 +234,6 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
         _numberFormat = numberFormat;
 
         _reset = () -> _editor.setText( Integer.toString( _defaultNumericValue ) );
-
-        _editor.setTooltip( new Tooltip( tooltipText ) );
 
         // Restrict keyboard input to numerals, sign, and delimiters.
         final String allowedCharacters = ( _minimumNumericValue < 0 ) ? "[0-9.,-]" : "[0-9.,]"; //$NON-NLS-1$ //$NON-NLS-2$
