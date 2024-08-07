@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -67,7 +67,7 @@ public class DoubleEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, 
     @Override
     protected TextField makeTextField() {
         return new DoubleEditor(
-            clientProperties, "0", "", blankTextAllowed, 0, 2, 0, 4);
+            clientProperties, "0", "", blankTextAllowed, 0, 2, 0, 4 );
     }
 
     @Override
