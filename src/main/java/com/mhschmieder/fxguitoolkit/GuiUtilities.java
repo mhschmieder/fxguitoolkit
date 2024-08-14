@@ -2065,7 +2065,8 @@ public final class GuiUtilities {
      */
     public static Color wrapNodeWithJFXPanel( final Node node,
                                               final JFXPanel jfxPanel,
-                                              final java.awt.Color awtColor ) {
+                                              final java.awt.Color awtColor,
+                                              final SystemType systemType ) {
         final BorderPane contentPane = new BorderPane();
         final Color fxColor = ColorUtilities.getColor( awtColor );
         contentPane.setBackground( getButtonBackground(fxColor ) );
@@ -2076,6 +2077,13 @@ public final class GuiUtilities {
         
         final Scene scene = new Scene( rootGroup );
         jfxPanel.setScene( scene );
+        
+        // As the JavaFX Node will be hosted by a Swing JFXPanel, it is
+        // necessary to manually set the CSS stylesheet on the owning Scene.
+        final List< String > jarRelativeStylesheetFilenames 
+            = getJarRelativeStylesheetFilenames( systemType );
+        jarRelativeStylesheetFilenames.add( LIGHT_BACKGROUND_CSS );
+        addStylesheetsAsJarResource( scene, jarRelativeStylesheetFilenames );
         
         return fxColor;
     }
