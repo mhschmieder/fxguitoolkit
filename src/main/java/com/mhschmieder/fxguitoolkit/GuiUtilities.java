@@ -51,6 +51,7 @@ import org.controlsfx.tools.Borders;
 
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
+import com.mhschmieder.fxgraphicstoolkit.paint.ColorUtilities;
 import com.mhschmieder.fxguitoolkit.control.XToggleButton;
 import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
@@ -58,6 +59,7 @@ import com.mhschmieder.guitoolkit.component.ButtonUtilities;
 
 import javafx.application.HostServices;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -104,6 +106,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -2047,6 +2050,34 @@ public final class GuiUtilities {
                 .thickness( 1.0d ).title( title ).radius( 2.5d, 2.5d, 2.5d, 2.5d ).build().build();
 
         return titledBorderWrappedNode;
+    }
+    
+    /**
+     * Wraps the provided {@link Node} with the provided {@link JFXPanel}.
+     * <p>
+     * The provided background color is converted from AWT to JavaFX, applied
+     * to the JavaFX content pane that hosts the {@link Node}, and returned.
+     * 
+     * @param node The JavaFX Node to wrap in JFXPanel for use in Swing
+     * @param jfxPanel The JFXPanel to use to wrap the JavaFX Node for Swing
+     * @param awtColor The AWT color to convert to JavaFX and use for the panel
+     * @return The background {@link Color} of the wrapped panel
+     */
+    public static Color wrapNodeWithJFXPanel( final Node node,
+                                              final JFXPanel jfxPanel,
+                                              final java.awt.Color awtColor ) {
+        final BorderPane contentPane = new BorderPane();
+        final Color fxColor = ColorUtilities.getColor( awtColor );
+        contentPane.setBackground( getButtonBackground(fxColor ) );
+        contentPane.setCenter( node );
+        
+        final Group rootGroup = new Group();
+        rootGroup.getChildren().add( contentPane );
+        
+        final Scene scene = new Scene( rootGroup );
+        jfxPanel.setScene( scene );
+        
+        return fxColor;
     }
 
     /**
