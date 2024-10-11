@@ -389,7 +389,12 @@ public class FloatEditor extends NumberEditor {
      * @return The {@link String} form of {@code floatValue}
      */
     public final String toString( final float floatValue ) {
-        // Do a simple string conversion to a number, in case we get arithmetic
+        // If the new error text feature has been set, use it for illegal values.
+        if ( !Float.isFinite( floatValue ) && !_errorText.isEmpty() ) {
+            return _errorText;
+        }
+        
+       // Do a simple string conversion to a number, in case we get arithmetic
         // exceptions using the number formatter.
         String stringValue = toFormattedString( floatValue );
         stringValue += _measurementUnitString;

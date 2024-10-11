@@ -43,6 +43,9 @@ import javafx.scene.input.KeyEvent;
  * This class formalizes aspects of text editing that are specific to numbers.
  */
 public abstract class NumberEditor extends XTextField {
+    
+    // Cache the error text value, to display when illegal values are present.
+    protected String             _errorText;
 
     // Maintain a reference to the Measurement Unit string (can be blank).
     protected String       _measurementUnitString;
@@ -62,8 +65,12 @@ public abstract class NumberEditor extends XTextField {
                          final boolean applyToolkitCss ) {
         // Always call the superclass constructor first!
         super( initialText, tooltipText, applyToolkitCss, clientProperties );
+        
+        // As this is a new feature, it is better to set later and ignore if empty.
+        _errorText = "";
 
-        _measurementUnitString = ""; //$NON-NLS-1$
+        // Set the measurement unit string after construction time, once known.
+        _measurementUnitString = "";
 
         try {
             initEditor();
@@ -143,6 +150,14 @@ public abstract class NumberEditor extends XTextField {
                 keyEvent.consume();
             }
         } );
+    }
+    
+    public String getErrorText() {
+        return _errorText;
+    }
+    
+    public void setErrorText( final String pErrorText ) {
+        _errorText = pErrorText;
     }
 
     public final String getMeasurementUnitString() {

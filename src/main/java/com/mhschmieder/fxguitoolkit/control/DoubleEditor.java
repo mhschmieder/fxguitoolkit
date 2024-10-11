@@ -52,7 +52,7 @@ public class DoubleEditor extends NumberEditor {
     // Cache the maximum allowed data value (positive).
     protected double             _maximumValue;
 
-    // Cache the default data value.
+    // Cache the default data value, to use when backing out edits.
     protected double             _defaultValue;
 
     // The amount to increment or decrement by, using the arrow keys.
@@ -125,7 +125,7 @@ public class DoubleEditor extends NumberEditor {
 
         _minimumValue = minimumValue;
         _maximumValue = maximumValue;
-
+        
         _valueIncrement = valueIncrement;
 
         value = new SimpleDoubleProperty( _defaultValue );
@@ -389,6 +389,11 @@ public class DoubleEditor extends NumberEditor {
      * @return The {@link String} form of {@code doubleValue}
      */
     public final String toString( final double doubleValue ) {
+        // If the new error text feature has been set, use it for illegal values.
+        if ( !Double.isFinite( doubleValue ) && !_errorText.isEmpty() ) {
+            return _errorText;
+        }
+        
         // Do a simple string conversion to a number, in case we get arithmetic
         // exceptions using the number formatter.
         String stringValue = toFormattedString( doubleValue );
