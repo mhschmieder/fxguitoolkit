@@ -37,35 +37,39 @@
  	/* Define a full set of achromatic gray values, for easy comprehension */
  	COLOR_GRAY05: #0d0d0d; /* aka "Night" */
  	COLOR_GRAY10: #1a1a1a; /* aka "Background Gray" in US Navy UX standards */
- 	COLOR_GRAY15: #272727;
+ 	COLOR_GRAY15: #272727; /* 15.5% Gray, simplified to 15% Gray in label */
     COLOR_GRAY17: #2b2b2b; /* aka "Very Dark Gray" in US Navy UX standards */
- 	COLOR_GRAY19: #313131;
- 	COLOR_GRAY20: #333333;
- 	COLOR_GRAY25: #404040;
- 	COLOR_GRAY30: #4d4d4d;
- 	COLOR_GRAY32_5: #535353;
+ 	COLOR_GRAY19: #313131; /* 19.5% Gray, simplified to 19% Gray in label */
+ 	COLOR_GRAY20: #333333; /* aka "Dark Charcoal" */
+ 	COLOR_GRAY25: #404040; /* 25% Gray */
+ 	COLOR_GRAY30: #4d4d4d; /* 30% Gray */
+ 	COLOR_GRAY32_5: #535353; /* 32.5% Gray */
  	COLOR_GRAY33_3: #555555; /* fractional 1/3 Gray, aka "Davy's Gray" */
- 	COLOR_GRAY40: #666666;
+ 	COLOR_GRAY40: #666666; /* 40% Gray */
  	COLOR_GRAY41: #696969; /* aka "Dim Gray" */
- 	COLOR_GRAY45: #737373;
+ 	COLOR_GRAY45: #737373; /* 45% Gray */
  	COLOR_GRAY50: #808080; /* aka "Gray" */
- 	COLOR_GRAY60: #999999;
- 	COLOR_GRAY60_5: #9b9b9b;
+    COLOR_GRAY59_5: #989898; /* aka "Spanish Gray" */
+ 	COLOR_GRAY60: #999999; /* 60% Gray */
+ 	COLOR_GRAY60_5: #9b9b9b; /* 60.5% Gray */
+    COLOR_GRAY66: #a9a9a9; /* aka "Dark Gray" */
  	COLOR_GRAY66_6: #aaaaaa; /* fractional 2/3 Gray */
- 	COLOR_GRAY70: #b1b1b1;
+ 	COLOR_GRAY70: #b1b1b1; /* 69.5% Gray, simplified to 70% Gray in label */
+    COLOR_GRAY74_5: #bebebe; /* aka "Medium Gray */
  	COLOR_GRAY75: #c0c0c0; /* aka "Silver */
- 	COLOR_GRAY80: #cbcbcb;
- 	COLOR_GRAY85: #d8d8d8;
+ 	COLOR_GRAY80: #cbcbcb; /* 79.5% Gray, simplified to 80% Gray in label */
+    COLOR_GRAY82_5: #d3d3d3; /* aka "Light Gray" */
+ 	COLOR_GRAY85: #d8d8d8; /* 84.5% Gray, simplified to 85% Gray in label */
  	COLOR_GRAY86: #dcdcdc; /* aka "Gainsboro" */
  	COLOR_GRAY90: #e7e7e7; /* aka "Day" */
  	COLOR_GRAY96: #f5f5f5; /* aka "Whitesmoke" */
- }
+}
  
- /*******************************************************************************
-  *                                                                             *
-  * Dialogs                                                                     *
-  *                                                                             *
-  ******************************************************************************/
+/*******************************************************************************
+ *                                                                             *
+ * Dialogs                                                                     *
+ *                                                                             *
+ ******************************************************************************/
  
 /* The dialogs and alerts should all follow our default window background. */
 .dialog-pane {
