@@ -35,9 +35,10 @@
  
  .root {
  	/* Define a full set of achromatic gray values, for easy comprehension */
- 	COLOR_GRAY05: #0d0d0d; /* aka "Night Mode" */
- 	COLOR_GRAY10: #1a1a1a;
+ 	COLOR_GRAY05: #0d0d0d; /* aka "Night" */
+ 	COLOR_GRAY10: #1a1a1a; /* aka "Background Gray" in US Navy UX standards */
  	COLOR_GRAY15: #272727;
+    COLOR_GRAY17: #2b2b2b; /* aka "Very Dark Gray" */
  	COLOR_GRAY19: #313131;
  	COLOR_GRAY20: #333333;
  	COLOR_GRAY25: #404040;
@@ -56,7 +57,8 @@
  	COLOR_GRAY80: #cbcbcb;
  	COLOR_GRAY85: #d8d8d8;
  	COLOR_GRAY86: #dcdcdc; /* aka "Gainsboro" */
- 	COLOR_GRAY90: #e7e7e7; /* aka "Day Mode" */
+ 	COLOR_GRAY90: #e7e7e7; /* aka "Day" */
+ 	COLOR_GRAY96: #f5f5f5; /* aka "Whitesmoke" */
  }
  
  /*******************************************************************************

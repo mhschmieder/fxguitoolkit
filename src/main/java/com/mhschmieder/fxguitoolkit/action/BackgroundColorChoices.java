@@ -64,26 +64,23 @@ public final class BackgroundColorChoices {
         case "night":
             backgroundColor = ColorConstants.NIGHT_MODE;
             break;
-        case "gray15":
-            backgroundColor = ColorConstants.GRAY15;
+        case "dark charcoal":
+            backgroundColor = ColorConstants.DARK_CHARCOAL;
             break;
-        case "gray25":
-            backgroundColor = ColorConstants.GRAY25;
-            break;
-        case "gray33":
-            backgroundColor = ColorConstants.GRAY33_3;
+        case "davy's gray":
+            backgroundColor = ColorConstants.DAVYS_GRAY;
             break;
         case "dim gray":
             backgroundColor = Color.DIMGRAY;
             break;
-        case "gray50":
-            backgroundColor = ColorConstants.GRAY50;
+        case "spanish gray":
+            backgroundColor = ColorConstants.SPANISH_GRAY;
             break;
         case "dark gray":
             backgroundColor = Color.DARKGRAY;
             break;
-        case "gray75":
-            backgroundColor = ColorConstants.GRAY75;
+        case "medium gray":
+            backgroundColor = ColorConstants.MEDIUM_GRAY;
             break;
         case "light gray":
             backgroundColor = Color.LIGHTGRAY;
@@ -135,32 +132,28 @@ public final class BackgroundColorChoices {
             return "night";
         }
         
-        if ( ColorConstants.GRAY15.equals( backgroundColor ) ) {
-            return "gray15";
+        if ( ColorConstants.DARK_CHARCOAL.equals( backgroundColor ) ) {
+            return "dark charcoal";
         }
         
-        if ( ColorConstants.GRAY25.equals( backgroundColor ) ) {
-            return "gray25";
-        }
-        
-        if ( ColorConstants.GRAY33_3.equals( backgroundColor ) ) {
-            return "gray33";
+        if ( ColorConstants.DAVYS_GRAY.equals( backgroundColor ) ) {
+            return "davy's gray";
         }
         
         if ( Color.DIMGRAY.equals( backgroundColor ) ) {
             return "dim gray";
         }
         
-        if ( ColorConstants.GRAY50.equals( backgroundColor ) ) {
-            return "gray50";
+        if ( ColorConstants.SPANISH_GRAY.equals( backgroundColor ) ) {
+            return "spanish gray";
         }
         
         if ( Color.DARKGRAY.equals( backgroundColor ) ) {
             return "dark gray";
         }
         
-        if ( ColorConstants.GRAY75.equals( backgroundColor ) ) {
-            return "gray75";
+        if ( ColorConstants.MEDIUM_GRAY.equals( backgroundColor ) ) {
+            return "medium gray";
         }
         
         if ( Color.LIGHTGRAY.equals( backgroundColor ) ) {
@@ -210,28 +203,27 @@ public final class BackgroundColorChoices {
         return DEFAULT_BACKGROUND_COLOR_NAME;
     }
 
-    // List all of the equal weighted gray scale colors.
+    // List all of the equal weighted (achromatic) gray scale colors.
     public XAction _backgroundColorBlackChoice;
     public XAction _backgroundColorNightChoice;
-    public XAction _backgroundColorGray15Choice;
-    public XAction _backgroundColorGray25Choice;
-    public XAction _backgroundColorGray33Choice;
+    public XAction _backgroundColorDarkCharcoalChoice;
+    public XAction _backgroundColorDavysGrayChoice;
     public XAction _backgroundColorDimGrayChoice;
-    public XAction _backgroundColorGray50Choice;
+    public XAction _backgroundColorSpanishGrayChoice;
     public XAction _backgroundColorDarkGrayChoice;
-    public XAction _backgroundColorGray75Choice;
+    public XAction _backgroundColorMediumGrayChoice;
     public XAction _backgroundColorLightGrayChoice;
     public XAction _backgroundColorGainsboroChoice;
     public XAction _backgroundColorDayChoice;
     public XAction _backgroundColorWhiteSmokeChoice;
     public XAction _backgroundColorWhiteChoice;
 
-    // List all of the slate gray hues.
+    // List all of the chromatic slate gray hues.
     public XAction _backgroundColorDarkSlateGrayChoice;
     public XAction _backgroundColorSlateGrayChoice;
     public XAction _backgroundColorLightSlateGrayChoice;
 
-    // List all of the custom blue-gray hues.
+    // List all of the chromatic custom blue-gray hues.
     public XAction _backgroundColorDarkBlueGrayChoice;
     public XAction _backgroundColorBlueGrayChoice;
     public XAction _backgroundColorLightBlueGrayChoice;
@@ -241,20 +233,19 @@ public final class BackgroundColorChoices {
                 .getBackgroundColorBlackChoice( pClientProperties );
         _backgroundColorNightChoice = LabeledActionFactory
                 .getBackgroundColorNightChoice( pClientProperties );
-        _backgroundColorGray15Choice = LabeledActionFactory
-                .getBackgroundColorGray15Choice( pClientProperties );
-        _backgroundColorGray25Choice = LabeledActionFactory
-                .getBackgroundColorGray25Choice( pClientProperties );
-        _backgroundColorGray33Choice = LabeledActionFactory
-                .getBackgroundColorGray33Choice( pClientProperties );
+        _backgroundColorDarkCharcoalChoice = LabeledActionFactory
+                .getBackgroundColorVeryDarkGrayChoice( pClientProperties );
+        _backgroundColorDavysGrayChoice = LabeledActionFactory
+                .getBackgroundColorDavysGrayChoice( pClientProperties );
         _backgroundColorDimGrayChoice = LabeledActionFactory
                 .getBackgroundColorDimGrayChoice( pClientProperties );
-        _backgroundColorGray50Choice = LabeledActionFactory
-                .getBackgroundColorGray50Choice( pClientProperties );
+        
+        _backgroundColorSpanishGrayChoice = LabeledActionFactory
+                .getBackgroundColorSpanishGrayChoice( pClientProperties );
         _backgroundColorDarkGrayChoice = LabeledActionFactory
                 .getBackgroundColorDarkGrayChoice( pClientProperties );
-        _backgroundColorGray75Choice = LabeledActionFactory
-                .getBackgroundColorGray75Choice( pClientProperties );
+        _backgroundColorMediumGrayChoice = LabeledActionFactory
+                .getBackgroundColorMediumGrayChoice( pClientProperties );
         _backgroundColorLightGrayChoice = LabeledActionFactory
                 .getBackgroundColorLightGrayChoice( pClientProperties );
         _backgroundColorGainsboroChoice = LabeledActionFactory
@@ -285,14 +276,13 @@ public final class BackgroundColorChoices {
         final Collection< Action > backgroundColorChoiceCollection = Arrays
                 .asList( _backgroundColorBlackChoice,
                          _backgroundColorNightChoice,
-                         _backgroundColorGray15Choice,
-                         _backgroundColorGray25Choice,
-                         _backgroundColorGray33Choice,
+                         _backgroundColorDarkCharcoalChoice,
+                         _backgroundColorDavysGrayChoice,
                          _backgroundColorDimGrayChoice,
-                         _backgroundColorGray50Choice,
                          ActionUtils.ACTION_SEPARATOR,
+                         _backgroundColorSpanishGrayChoice,
                          _backgroundColorDarkGrayChoice,
-                         _backgroundColorGray75Choice,
+                         _backgroundColorMediumGrayChoice,
                          _backgroundColorLightGrayChoice,
                          _backgroundColorGainsboroChoice,
                          _backgroundColorDayChoice,
@@ -324,32 +314,28 @@ public final class BackgroundColorChoices {
             return "night";
         }
         
-        if ( _backgroundColorGray15Choice.isSelected() ) {
-            return "gray15";
+        if ( _backgroundColorDarkCharcoalChoice.isSelected() ) {
+            return "dark Charcoal";
         }
         
-        if ( _backgroundColorGray25Choice.isSelected() ) {
-            return "gray25";
-        }
-        
-        if ( _backgroundColorGray33Choice.isSelected() ) {
-            return "gray33";
+        if ( _backgroundColorDavysGrayChoice.isSelected() ) {
+            return "davy's gray";
         }
         
         if ( _backgroundColorDimGrayChoice.isSelected() ) {
             return "dim gray";
         }
         
-        if ( _backgroundColorGray50Choice.isSelected() ) {
-            return "gray50";
+        if ( _backgroundColorSpanishGrayChoice.isSelected() ) {
+            return "spanish gray";
         }
         
-        if ( _backgroundColorDarkGrayChoice.isSelected() ) {
+       if ( _backgroundColorDarkGrayChoice.isSelected() ) {
             return "dark gray";
         }
         
-        if ( _backgroundColorGray75Choice.isSelected() ) {
-            return "gray75";
+        if ( _backgroundColorMediumGrayChoice.isSelected() ) {
+            return "medium gray";
         }
         
         if ( _backgroundColorLightGrayChoice.isSelected() ) {
@@ -412,33 +398,29 @@ public final class BackgroundColorChoices {
             _backgroundColorNightChoice.setSelected( true );
             backgroundColor = ColorConstants.NIGHT_MODE;
             break;
-        case "gray15":
-            _backgroundColorGray15Choice.setSelected( true );
-            backgroundColor = ColorConstants.GRAY15;
+        case "dark charcoal":
+            _backgroundColorDarkCharcoalChoice.setSelected( true );
+            backgroundColor = ColorConstants.DARK_CHARCOAL;
             break;
-        case "gray25":
-            _backgroundColorGray25Choice.setSelected( true );
-            backgroundColor = ColorConstants.GRAY25;
-            break;
-        case "gray33":
-            _backgroundColorGray33Choice.setSelected( true );
-            backgroundColor = ColorConstants.GRAY33_3;
+        case "davy's gray":
+            _backgroundColorDavysGrayChoice.setSelected( true );
+            backgroundColor = ColorConstants.DAVYS_GRAY;
             break;
         case "dim gray":
             _backgroundColorDimGrayChoice.setSelected( true );
             backgroundColor = Color.DIMGRAY;
             break;
-        case "gray50":
-            _backgroundColorGray50Choice.setSelected( true );
-            backgroundColor = ColorConstants.GRAY50;
+        case "spanish gray":
+            _backgroundColorSpanishGrayChoice.setSelected( true );
+            backgroundColor = ColorConstants.SPANISH_GRAY;
             break;
         case "dark gray":
             _backgroundColorDarkGrayChoice.setSelected( true );
             backgroundColor = Color.DARKGRAY;
             break;
-        case "gray75":
-            _backgroundColorGray75Choice.setSelected( true );
-            backgroundColor = ColorConstants.GRAY75;
+        case "medium gray":
+            _backgroundColorMediumGrayChoice.setSelected( true );
+            backgroundColor = ColorConstants.MEDIUM_GRAY;
             break;
         case "light gray":
             _backgroundColorLightGrayChoice.setSelected( true );

@@ -1586,20 +1586,18 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
                 .setEventHandler( evt -> doBackgroundColorBlack() );
         backgroundColorChoices._backgroundColorNightChoice
                 .setEventHandler( evt -> doBackgroundColorNight() );
-        backgroundColorChoices._backgroundColorGray15Choice
-                .setEventHandler( evt -> doBackgroundColorGray15() );
-        backgroundColorChoices._backgroundColorGray25Choice
-                .setEventHandler( evt -> doBackgroundColorGray25() );
-        backgroundColorChoices._backgroundColorGray33Choice
-                .setEventHandler( evt -> doBackgroundColorGray33() );
+        backgroundColorChoices._backgroundColorDarkCharcoalChoice
+                .setEventHandler( evt -> doBackgroundColorDarkCharcoal() );
+         backgroundColorChoices._backgroundColorDavysGrayChoice
+                .setEventHandler( evt -> doBackgroundColorDavysGray() );
         backgroundColorChoices._backgroundColorDimGrayChoice
                 .setEventHandler( evt -> doBackgroundColorDimGray() );
-        backgroundColorChoices._backgroundColorGray50Choice
-                .setEventHandler( evt -> doBackgroundColorGray50() );
+        backgroundColorChoices._backgroundColorSpanishGrayChoice
+                .setEventHandler( evt -> doBackgroundColorSpanishGray() );
         backgroundColorChoices._backgroundColorDarkGrayChoice
                 .setEventHandler( evt -> doBackgroundColorDarkGray() );
-        backgroundColorChoices._backgroundColorGray75Choice
-                .setEventHandler( evt -> doBackgroundColorGray75() );
+        backgroundColorChoices._backgroundColorMediumGrayChoice
+                .setEventHandler( evt -> doBackgroundColorMediumGray() );
         backgroundColorChoices._backgroundColorLightGrayChoice
                 .setEventHandler( evt -> doBackgroundColorLightGray() );
         backgroundColorChoices._backgroundColorGainsboroChoice
@@ -1643,6 +1641,11 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
         setForegroundFromBackground( ColorConstants.DARKBLUEGRAY );
     }
 
+    public final void doBackgroundColorDarkCharcoal() {
+        // Set the stage background color to Dark Charcoal.
+        setForegroundFromBackground( ColorConstants.DARK_CHARCOAL );
+    }
+
     public final void doBackgroundColorDarkGray() {
         // Set the stage background color to Dark Gray.
         setForegroundFromBackground( Color.DARKGRAY );
@@ -1651,6 +1654,11 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
     public final void doBackgroundColorDarkSlateGray() {
         // Set the stage background color to Dark Slate Gray.
         setForegroundFromBackground( Color.DARKSLATEGRAY );
+    }
+
+    public final void doBackgroundColorDavysGray() {
+        // Set the stage background color to Davy's Gray.
+        setForegroundFromBackground( ColorConstants.DAVYS_GRAY );
     }
 
     public final void doBackgroundColorDay() {
@@ -1668,31 +1676,6 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
         setForegroundFromBackground( Color.GAINSBORO );
     }
 
-    public final void doBackgroundColorGray15() {
-        // Set the stage background color to 15% Gray.
-        setForegroundFromBackground( ColorConstants.GRAY15 );
-    }
-
-    public final void doBackgroundColorGray25() {
-        // Set the stage background color to 25% Gray.
-        setForegroundFromBackground( ColorConstants.GRAY25 );
-    }
-
-    public final void doBackgroundColorGray33() {
-        // Set the stage background color to 33% Gray.
-        setForegroundFromBackground( ColorConstants.GRAY33_3 );
-    }
-
-    public final void doBackgroundColorGray50() {
-        // Set the stage background color to 50% Gray.
-        setForegroundFromBackground( ColorConstants.GRAY50 );
-    }
-
-    public final void doBackgroundColorGray75() {
-        // Set the stage background color to 75% Gray.
-        setForegroundFromBackground( ColorConstants.GRAY75 );
-    }
-
     public final void doBackgroundColorLightBlueGray() {
         // Set the stage background color to Light Blue Gray.
         setForegroundFromBackground( ColorConstants.LIGHTBLUEGRAY );
@@ -1708,6 +1691,11 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
         setForegroundFromBackground( Color.LIGHTSLATEGRAY );
     }
 
+    public final void doBackgroundColorMediumGray() {
+        // Set the stage background color to Medium Gray.
+        setForegroundFromBackground( ColorConstants.MEDIUM_GRAY );
+    }
+
     public final void doBackgroundColorNight() {
         // Set the stage background color to Night Mode.
         setForegroundFromBackground( ColorConstants.NIGHT_MODE );
@@ -1716,6 +1704,11 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
     public final void doBackgroundColorSlateGray() {
         // Set the stage background color to Slate Gray.
         setForegroundFromBackground( Color.SLATEGRAY );
+    }
+
+    public final void doBackgroundColorSpanishGray() {
+        // Set the stage background color to Spanish Gray.
+        setForegroundFromBackground( ColorConstants.SPANISH_GRAY );
     }
 
     public final void doBackgroundColorWhite() {
