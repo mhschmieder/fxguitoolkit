@@ -829,6 +829,45 @@ public class LabeledActionFactory {
     }
 
     @SuppressWarnings("nls")
+    public static XAction getMouseToolChoice( final ClientProperties pClientProperties,
+                                              final String itemName,
+                                              final String jarRelativeIconFilename ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "mouseTool",
+                                         itemName,
+                                         jarRelativeIconFilename );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getSelectToolChoice( final ClientProperties pClientProperties ) {
+        return getMouseToolChoice( pClientProperties,
+                                   "selectTool",
+                                   "/icons/everaldo/Select16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getRotateToolChoice( final ClientProperties pClientProperties ) {
+        return getMouseToolChoice( pClientProperties,
+                                   "rotateTool",
+                                   "/icons/everaldo/RotateCWLight16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getZoomToolChoice( final ClientProperties pClientProperties ) {
+        return getMouseToolChoice( pClientProperties,
+                                   "zoomTool",
+                                   "/icons/everaldo/ViewMag16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getLineToolChoice( final ClientProperties pClientProperties ) {
+        return getMouseToolChoice( pClientProperties,
+                                   "lineTool",
+                                   "/icons/yusukeKamiyamane/LayerShapeLine16.png" );
+    }
+
+    @SuppressWarnings("nls")
     public static XAction getPageSetupAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
                                          BUNDLE_NAME,
