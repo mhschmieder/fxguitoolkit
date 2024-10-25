@@ -234,7 +234,7 @@ public final class BackgroundColorChoices {
         _backgroundColorNightChoice = LabeledActionFactory
                 .getBackgroundColorNightChoice( pClientProperties );
         _backgroundColorDarkCharcoalChoice = LabeledActionFactory
-                .getBackgroundColorVeryDarkGrayChoice( pClientProperties );
+                .getBackgroundColorDarkCharcoalChoice( pClientProperties );
         _backgroundColorDavysGrayChoice = LabeledActionFactory
                 .getBackgroundColorDavysGrayChoice( pClientProperties );
         _backgroundColorDimGrayChoice = LabeledActionFactory

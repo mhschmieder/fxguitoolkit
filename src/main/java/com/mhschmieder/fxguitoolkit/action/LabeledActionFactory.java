@@ -336,6 +336,15 @@ public class LabeledActionFactory {
     }
 
     @SuppressWarnings("nls")
+    public static XAction getBackgroundColorDarkCharcoalChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "darkCharcoal",
+                                         "/icons/mhschmieder/DarkCharcoal16.png" );
+    }
+
+    @SuppressWarnings("nls")
     public static XAction getBackgroundColorDarkGrayChoice( final ClientProperties pClientProperties ) {
         return ActionFactory.makeChoice( pClientProperties,
                                          BUNDLE_NAME,
@@ -468,15 +477,6 @@ public class LabeledActionFactory {
                                          "backgroundColor",
                                          "spanishGray",
                                          "/icons/mhschmieder/SpanishGray16.png" );
-    }
-
-    @SuppressWarnings("nls")
-    public static XAction getBackgroundColorVeryDarkGrayChoice( final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice( pClientProperties,
-                                         BUNDLE_NAME,
-                                         "backgroundColor",
-                                         "veryDarkGray",
-                                         "/icons/mhschmieder/VeryDarkGray16.png" );
     }
 
     @SuppressWarnings("nls")
