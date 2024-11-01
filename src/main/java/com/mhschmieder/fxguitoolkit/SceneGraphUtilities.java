@@ -73,8 +73,8 @@ public class SceneGraphUtilities {
         final ResourceBundle resourceBundle = GlobalUtilities
                 .getResourceBundle( clientProperties, bundleName, false );
 
-        final String tooltipText = ButtonUtilities.getButtonToolTipText( 
-                groupName, itemName, resourceBundle );
+        final String tooltipText = ButtonUtilities
+                .getButtonToolTipText( groupName, itemName, resourceBundle );
 
         final Tooltip tooltip = new Tooltip( tooltipText );
 
@@ -90,16 +90,16 @@ public class SceneGraphUtilities {
                 .getResourceBundle( clientProperties, bundleName, false );
 
         // Get the control label from the resource bundle, if applicable.
-        final String buttonLabel = ButtonUtilities.getButtonLabel( 
-                groupName, itemName, resourceBundle );
+        final String buttonLabel = ButtonUtilities
+                .getButtonLabel( groupName, itemName, resourceBundle );
         if ( buttonLabel.trim().isEmpty() ) {
             return null;
         }
 
         // Conditionally strip the mnemonic marker from the label, or
         // replace the Swing mnemonic marker with the JavaFX version.
-        final String buttonText = ButtonUtilities.handleMnemonicMarker(
-                buttonLabel, replaceMnemonic );
+        final String buttonText = ButtonUtilities.handleMnemonicMarker( buttonLabel,
+                                                                        replaceMnemonic );
         if ( ( buttonText == null ) || buttonText.trim().isEmpty() ) {
             return null;
         }
@@ -214,7 +214,7 @@ public class SceneGraphUtilities {
                                                            false );
 
         final Button button = new Button( buttonLabel );
-        
+
         // Make sure the mnemonic is used to underline a character vs. printing
         // as a separate literal character.
         button.setMnemonicParsing( true );
@@ -462,7 +462,7 @@ public class SceneGraphUtilities {
         if ( potentialHierarchyNode == null ) {
             return true;
         }
-    
+
         Node node = sourceNode;
         while ( node != null ) {
             if ( node.equals( potentialHierarchyNode ) ) {
@@ -470,8 +470,82 @@ public class SceneGraphUtilities {
             }
             node = node.getParent();
         }
-    
+
         return false;
     }
 
+    /**
+     * This method uses the Action Framework to make a Button from an existing
+     * Action, which it then stylizes.
+     * <p>
+     * Use this version when needing an icon and no text, such as for a toolbar.
+     *
+     * @param action
+     *            The @XAction reference that contains most of the resources
+     *            needed for making an associated @Button
+     * @return A labeled icon-only @Button adhering to custom style guidelines
+     */
+    public static Button getIconButton( final XAction action ) {
+        return getIconButton( action, "fxguitoolkit-button" );
+    }
+
+    /**
+     * This method uses the Action Framework to make a Button from an existing
+     * Action, which it then stylizes.
+     * <p>
+     * Use this version when needing an icon and no text, such as for a toolbar.
+     *
+     * @param action
+     *            The @XAction reference that contains most of the resources
+     *            needed for making an associated @Button
+     * @param cssStyleClass
+     *            The Style Class of the CSS attributes that customize the
+     *            button
+     * @return A labeled icon-only @Button adhering to custom style guidelines
+     */
+    public static Button getIconButton( final XAction action, final String cssStyleClass ) {
+        final Button button =
+                            ActionUtils.createButton( action, ActionUtils.ActionTextBehavior.HIDE );
+
+        // Set the CSS Style ID in place of direct setting of colors.
+        GuiUtilities.setButtonProperties( button, cssStyleClass );
+
+        return button;
+    }
+
+    // Use when there's no need to change the text for selected vs. unselected,
+    // such as when this is part of a toggle group of mutually exclusive
+    // buttons. This version uses the Action Framework, unlike the labeled 
+    // version earlier in this class. That version isn't used from menus.
+    // TODO: Write proper Javadocs for this method, similar to the ones above.
+    public static ToggleButton getIconToggleButton( final XAction action,
+                                                    final ToggleGroup toggleGroup ) {
+        return getIconToggleButton( action, "tool-bar-toggle", toggleGroup );
+    }
+
+    // Use when there's no need to change the text for selected vs. unselected,
+    // such as when this is part of a toggle group of mutually exclusive
+    // buttons. This version uses the Action Framework, unlike the labeled 
+    // version earlier in this class. That version isn't used from menus.
+    // TODO: Write proper Javadocs for this method, similar to the ones above.
+    public static ToggleButton getIconToggleButton( final XAction action,
+                                                    final String cssStyleClass,
+                                                    final ToggleGroup toggleGroup ) {
+        final ToggleButton toggleButton = ActionUtils
+                .createToggleButton( action, ActionUtils.ActionTextBehavior.HIDE );
+
+        // Set the CSS Style ID in place of direct setting of colors.
+        GuiUtilities.setToggleButtonProperties( toggleButton, cssStyleClass );
+
+        // Make sure the mnemonic is used to underline a character vs. printing
+        // as a separate literal character.
+        toggleButton.setMnemonicParsing( true );
+
+        // Add the toggle button to its toggle group, if it exists.
+        if ( toggleGroup != null ) {
+            toggleButton.setToggleGroup( toggleGroup );
+        }
+
+        return toggleButton;
+    }
 }
