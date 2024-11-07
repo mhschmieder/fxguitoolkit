@@ -227,11 +227,14 @@ public final class XActionUtilities {
 
         for ( final Action action : actions ) {
             // Due to class derivation, it is important to check for class
-            // instanceof in descending order of the class hierarchy.
+            // instanceof in descending order of the class hierarchy, but
+            // special-case instances of Action must be called out as string
+            // comparisons as ControlsFX uses them to flag Menu Separators etc.
             if ( action == null ) {
-                // Nothing to do here, but we want to avoid errors.
+                continue;
             }
-            else if ( action instanceof XActionGroup ) {
+            
+            if ( action instanceof XActionGroup ) {
                 final Menu menu = createMenu( action );
                 final XActionGroup actionGroup = ( XActionGroup ) action;
                 final Collection< MenuItem > menuItems = toMenuItems( actionGroup.getActions() );
@@ -254,6 +257,14 @@ public final class XActionUtilities {
                 menu.getItems().addAll( menuItems );
                 items.add( menu );
             }
+            else if ( ActionUtils.ACTION_SEPARATOR.toString().equals( action.toString() ) ) {
+                // This code is unreachable unless we check it before instanceof.
+                items.add( new SeparatorMenuItem() );
+            }
+            else if ( ActionUtils.ACTION_SPAN.toString().equals( action.toString() ) ) {
+                // This code is unreachable unless we check it before instanceof.
+                // NOTE: Nothing to do here yet, but we want to avoid future errors.
+            }
             else if ( action instanceof XAction ) {
                 final MenuItem menuItem = createMenuItem( ( XAction ) action );
                 items.add( menuItem );
@@ -266,15 +277,6 @@ public final class XActionUtilities {
                 menuItem.setMnemonicParsing( true );
 
                 items.add( menuItem );
-            }
-            else if ( ActionUtils.ACTION_SEPARATOR.equals( action ) ) {
-                items.add( new SeparatorMenuItem() );
-            }
-            else if ( ActionUtils.ACTION_SPAN.equals( action ) ) {
-                // Nothing to do here, but we want to avoid errors.
-            }
-            else {
-                // Nothing to do here, but we want to avoid errors.
             }
         }
 
