@@ -32,6 +32,7 @@ package com.mhschmieder.fxguitoolkit;
 
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.SegmentedButton;
 import org.controlsfx.control.action.ActionUtils;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
@@ -47,6 +48,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBase;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -54,7 +56,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
@@ -73,8 +74,8 @@ public class SceneGraphUtilities {
         final ResourceBundle resourceBundle = GlobalUtilities
                 .getResourceBundle( clientProperties, bundleName, false );
 
-        final String tooltipText = ButtonUtilities.getButtonToolTipText( 
-                groupName, itemName, resourceBundle );
+        final String tooltipText = ButtonUtilities
+                .getButtonToolTipText( groupName, itemName, resourceBundle );
 
         final Tooltip tooltip = new Tooltip( tooltipText );
 
@@ -90,16 +91,16 @@ public class SceneGraphUtilities {
                 .getResourceBundle( clientProperties, bundleName, false );
 
         // Get the control label from the resource bundle, if applicable.
-        final String buttonLabel = ButtonUtilities.getButtonLabel( 
-                groupName, itemName, resourceBundle );
+        final String buttonLabel = ButtonUtilities
+                .getButtonLabel( groupName, itemName, resourceBundle );
         if ( buttonLabel.trim().isEmpty() ) {
             return null;
         }
 
         // Conditionally strip the mnemonic marker from the label, or
         // replace the Swing mnemonic marker with the JavaFX version.
-        final String buttonText = ButtonUtilities.handleMnemonicMarker(
-                buttonLabel, replaceMnemonic );
+        final String buttonText = ButtonUtilities.handleMnemonicMarker( buttonLabel,
+                                                                        replaceMnemonic );
         if ( ( buttonText == null ) || buttonText.trim().isEmpty() ) {
             return null;
         }
@@ -131,8 +132,50 @@ public class SceneGraphUtilities {
     }
 
     /**
-     * This method uses the Action Framework to make a Button from an existing
-     * Action, which it then stylizes.
+     * This method uses resource lookup, via custom locale-sensitive text-based
+     * properties files, to get a button label which is then fed into a more
+     * fully qualified getter method to return a completely initialized and
+     * styled button. This version does not use the Action Framework.
+     *
+     * Use this version when needing custom background colors.
+     *
+     * @param clientProperties
+     *            The {@link ClientProperties} grabbed at application startup
+     * @param bundleName
+     *            Resource Name for looking up locale-sensitive tags
+     * @param groupName
+     *            Group Name for resource lookup (e.g. Menu Name)
+     * @param itemName
+     *            Item Name for resource lookup (e.g. Menu Item Name)
+     * @param backColor
+     *            Custom background {@link Color} to apply to the {@link Button}
+     * @return A labeled {@link Button} adhering to custom style guidelines
+     */
+    public static Button getLabeledButton( final ClientProperties clientProperties,
+                                           final String bundleName,
+                                           final String groupName,
+                                           final String itemName,
+                                           final Color backColor ) {
+        final String buttonLabel = getLabeledControlLabel( clientProperties,
+                                                           bundleName,
+                                                           groupName,
+                                                           itemName,
+                                                           false );
+
+        final Button button = new Button( buttonLabel );
+
+        // Style the buttons with optional custom background.
+        GuiUtilities.setButtonProperties( button, backColor );
+
+        // Set the common button parameters that aren't part of the constructor.
+        setButtonParameters( button, true );
+
+        return button;
+    }
+
+    /**
+     * This method uses the Action Framework to make a {@link Button} from an existing
+     * Action, which it then stylizes. This version adds a label and an icon (if valid).
      *
      * Use this version when needing custom background colors.
      *
@@ -147,31 +190,24 @@ public class SceneGraphUtilities {
         final Button button = ActionUtils.createButton( action );
 
         // Style the buttons with optional custom background.
-        // NOTE: CSS automatically chooses an appropriate foreground.
-        if ( backColor != null ) {
-            final Background background = GuiUtilities.getButtonBackground( backColor );
-            button.setBackground( background );
-        }
-
-        // Apply drop-shadow effects when the mouse enters a Button.
-        GuiUtilities.applyDropShadowEffect( button );
+        GuiUtilities.setButtonProperties( button, backColor );
 
         return button;
     }
 
     /**
-     * This method uses the Action Framework to make a Button from an existing
-     * Action, which it then stylizes.
+     * This method uses the Action Framework to make a {@link Button} from an existing
+     * Action, which it then stylizes. This version adds a label and an icon (if valid).
      *
      * Use this version when needing custom background colors.
      *
      * @param action
-     *            The @XAction reference that contains most of the resources
-     *            needed for making an associated @Button
+     *            The {@link XAction} reference that contains most of the resources
+     *            needed for making an associated {@link Button}
      * @param cssStyleClass
      *            The Style Class of the CSS attributes that customize the
      *            button
-     * @return A labeled @Button adhering to custom style guidelines
+     * @return A labeled {@link Button} adhering to custom style guidelines
      */
     public static Button getLabeledButton( final XAction action, final String cssStyleClass ) {
         final Button button = ActionUtils.createButton( action );
@@ -183,53 +219,94 @@ public class SceneGraphUtilities {
     }
 
     /**
-     * This method uses resource lookup, via custom locale-sensitive text-based
-     * properties files, to get a button label which is then fed into a more
-     * fully qualified getter method to return a completely initialized and
-     * styled button.
+     * This method uses the Action Framework to make a {@link Button} from an existing
+     * Action, which it then stylizes using our custom CSS tag for buttons. The 
+     * versions in {@link GuiUtilities} assume no Action basis for menus.
+     * <p>
+     * Use this version when needing an icon and no text, such as for a toolbar.
      *
-     * Use this version when needing custom background colors.
+     * @param action
+     *            The {@link XAction} reference that contains most of the resources
+     *            needed for making an associated {@link Button}
+     * @return A labeled icon-only {@link Button} adhering to custom style guidelines
+     */
+    public static Button getIconButton( final XAction action ) {
+        return getIconButton( action, "fxguitoolkit-button" );
+    }
+
+    /**
+     * This method uses the Action Framework to make a {@link Button} from an existing
+     * Action, which it then stylizes using our custom CSS tag for buttons. The 
+     * versions in {@link GuiUtilities} assume no Action basis for menus.
+     * <p>
+     * Use this version when needing an icon and no text, such as for a toolbar.
+     *
+     * @param action
+     *            The {@link XAction} reference that contains most of the resources
+     *            needed for making an associated {@link Button}
+     * @param cssStyleClass
+     *            The Style Class of the CSS attributes that customize the
+     *            button
+     * @return A labeled icon-only {@link Button} adhering to custom style guidelines
+     */
+    public static Button getIconButton( final XAction action, final String cssStyleClass ) {
+        final Button button = ActionUtils.createButton( action, ActionUtils.ActionTextBehavior.HIDE );
+
+        // Set the CSS Style ID in place of direct setting of colors.
+        GuiUtilities.setButtonProperties( button, cssStyleClass );
+
+        // Set the common button parameters that aren't part of the constructor.
+        setButtonParameters( button, true );
+
+        return button;
+    }
+    
+    /**
+     * Sets the common button parameters that aren't part of the constructor.
+     * 
+     * @param button The Button whose extra parameters are to be set
+     * @param forceMnemonicParsing {@code true} if we should set mnemonic parsing;
+     *        {@code false} if current mnemonic parsing should be left unaltered
+     */
+    public static void setButtonParameters( final ButtonBase button,
+                                            final boolean forceMnemonicParsing ) {
+        // Make sure the mnemonic is used to underline a character vs. printing
+        // as a separate literal character.
+        if ( forceMnemonicParsing ) {
+            button.setMnemonicParsing( true );
+        }
+    }
+
+    /**
+     * This method returns a completely initialized and styled toggle button.
+     *
+     * Use this version when not needing custom background or foreground colors,
+     * but when resource lookup is necessary for determining the label text. All
+     * other parameters are optional and check for null pointers.
      *
      * @param clientProperties
-     *            The @ClientProperties grabbed at application startup
+     *            The {@link ClientProperties} grabbed at application startup
+     * @param toggleGroup
+     *            The {@link ToggleGroup} to which this {@link ToggleButton} is to be assigned
      * @param bundleName
      *            Resource Name for looking up locale-sensitive tags
      * @param groupName
      *            Group Name for resource lookup (e.g. Menu Name)
      * @param itemName
      *            Item Name for resource lookup (e.g. Menu Item Name)
-     * @param backColor
-     *            Custom background @Color to apply to the @Button
-     * @return A labeled @Button adhering to custom style guidelines
+     * @return A labeled {@link ToggleButton} adhering to custom style guidelines
      */
-    public static Button getLabeledButton( final ClientProperties clientProperties,
-                                           final String bundleName,
-                                           final String groupName,
-                                           final String itemName,
-                                           final Color backColor ) {
+    public static ToggleButton getLabeledToggleButton( final ClientProperties clientProperties,
+                                                       final ToggleGroup toggleGroup,
+                                                       final String bundleName,
+                                                       final String groupName,
+                                                       final String itemName ) {
         final String buttonLabel = getLabeledControlLabel( clientProperties,
                                                            bundleName,
                                                            groupName,
                                                            itemName,
                                                            false );
-
-        final Button button = new Button( buttonLabel );
-        
-        // Make sure the mnemonic is used to underline a character vs. printing
-        // as a separate literal character.
-        button.setMnemonicParsing( true );
-
-        // Style the buttons with optional custom background.
-        // NOTE: CSS automatically chooses an appropriate foreground.
-        if ( backColor != null ) {
-            final Background background = GuiUtilities.getButtonBackground( backColor );
-            button.setBackground( background );
-        }
-
-        // Apply drop-shadow effects when the mouse enters a Button.
-        GuiUtilities.applyDropShadowEffect( button );
-
-        return button;
+        return getLabeledToggleButton( toggleGroup, buttonLabel, null, null );
     }
 
     /**
@@ -240,14 +317,14 @@ public class SceneGraphUtilities {
      * hand. All other parameters are optional and check for null pointers.
      *
      * @param toggleGroup
-     *            The @ToggleGroup to which this @ToggleButton is to be assigned
+     *            The {@link ToggleGroup} to which this {@link ToggleButton} is to be assigned
      * @param buttonLabel
-     *            The @Label text used for both selected and unselected status
+     *            The {@link Label} text used for both selected and unselected status
      * @param tooltipText
-     *            Optional @Tooltip text
+     *            Optional {@link Tooltip} text
      * @param cssStyleId
      *            The CSS Style ID used for all button colors in all states
-     * @return A labeled @ToggleButton adhering to custom style guidelines
+     * @return A labeled {@link ToggleButton} adhering to custom style guidelines
      */
     public static ToggleButton getLabeledToggleButton( final ToggleGroup toggleGroup,
                                                        final String buttonLabel,
@@ -261,14 +338,9 @@ public class SceneGraphUtilities {
                                                              false,
                                                              false );
 
-        // Make sure the mnemonic is used to underline a character vs. printing
-        // as a separate literal character.
-        toggleButton.setMnemonicParsing( true );
-
-        // Add the toggle button to its toggle group, if it exists.
-        if ( toggleGroup != null ) {
-            toggleButton.setToggleGroup( toggleGroup );
-        }
+        
+        // Set the toggle button parameters that aren't part of the constructor.
+        setToggleButtonParameters( toggleButton, toggleGroup, true );
 
         return toggleButton;
     }
@@ -282,16 +354,16 @@ public class SceneGraphUtilities {
      * pointers. Foreground colors are matched automatically by CSS.
      *
      * @param toggleGroup
-     *            The @ToggleGroup to which this @ToggleButton is to be assigned
+     *            The {@link ToggleGroup} to which this {@link ToggleButton} is to be assigned
      * @param selectedText
-     *            The @Label text used for both selected status
+     *            The {@link Label} text used for both selected status
      * @param deselectedText
-     *            The @Label text used for unselected status
+     *            The {@link Label} text used for unselected status
      * @param tooltipText
-     *            Optional @Tooltip text
+     *            Optional {@link Tooltip} text
      * @param cssStyleId
      *            The CSS Style ID used for all button colors in all states
-     * @return A labeled @ToggleButton adhering to custom style guidelines
+     * @return A labeled {@link ToggleButton} adhering to custom style guidelines
      */
     public static ToggleButton getLabeledToggleButton( final ToggleGroup toggleGroup,
                                                        final String selectedText,
@@ -307,44 +379,83 @@ public class SceneGraphUtilities {
                                                              false,
                                                              false );
 
-        // Add the toggle button to its toggle group, if it exists.
-        if ( toggleGroup != null ) {
-            toggleButton.setToggleGroup( toggleGroup );
-        }
+        
+        // Set the toggle button parameters that aren't part of the constructor.
+        setToggleButtonParameters( toggleButton, toggleGroup, false );
 
         return toggleButton;
     }
 
     /**
-     * This method returns a completely initialized and styled toggle button.
+     * This method uses the Action Framework to make a Toggle Button from an 
+     * existing Action, which it then stylizes using our custom CSS tag for 
+     * toggles. The versions in {@link GuiUtilities} assume no Action basis for menus.
+     * <p>
+     * Use this version when needing an icon and no text, such as when this is
+     * part of a toggle group or a {@link SegmentedButton} or is being used in a toolbar,
+     * and when there is no need to change the background/etc for selected state.
      *
-     * Use this version when not needing custom background or foreground colors,
-     * but when resource lookup is necessary for determining the label text. All
-     * other parameters are optional and check for null pointers.
-     *
-     * @param clientProperties
-     *            The @ClientProperties grabbed at application startup
-     * @param toggleGroup
-     *            The @ToggleGroup to which this @ToggleButton is to be assigned
-     * @param bundleName
-     *            Resource Name for looking up locale-sensitive tags
-     * @param groupName
-     *            Group Name for resource lookup (e.g. Menu Name)
-     * @param itemName
-     *            Item Name for resource lookup (e.g. Menu Item Name)
-     * @return A labeled @ToggleButton adhering to custom style guidelines
+     * @param action
+     *            The {@link XAction} reference that contains most of the resources
+     *            needed for making an associated {@link ToggleButton}
+     * @return A labeled icon-only {@link ToggleButton} adhering to custom style 
+     * guidelines
      */
-    public static ToggleButton getLabeledToggleButton( final ClientProperties clientProperties,
-                                                       final ToggleGroup toggleGroup,
-                                                       final String bundleName,
-                                                       final String groupName,
-                                                       final String itemName ) {
-        final String buttonLabel = getLabeledControlLabel( clientProperties,
-                                                           bundleName,
-                                                           groupName,
-                                                           itemName,
-                                                           false );
-        return getLabeledToggleButton( toggleGroup, buttonLabel, null, null );
+    public static ToggleButton getIconToggleButton( final XAction action,
+                                                    final ToggleGroup toggleGroup ) {
+        return getIconToggleButton( action, "tool-bar-toggle", toggleGroup );
+    }
+
+    /**
+     * This method uses the Action Framework to make a Toggle Button from an 
+     * existing Action, which it then stylizes using our custom CSS tag for 
+     * toggles. The versions in {@link GuiUtilities} assume no Action basis for menus.
+     * <p>
+     * Use this version when needing an icon and no text, such as for a toolbar,
+     * and when there is no need to change the background/etc for selected state.
+     *
+     * @param action
+     *            The {@link XAction} reference that contains most of the resources
+     *            needed for making an associated {@link ToggleButton}
+     * @param cssStyleClass
+     *            The Style Class of the CSS attributes that customize the toggle
+     *            button
+     * @return A labeled icon-only {@link ToggleButton} adhering to custom style 
+     * guidelines
+     */
+    public static ToggleButton getIconToggleButton( final XAction action,
+                                                    final String cssStyleClass,
+                                                    final ToggleGroup toggleGroup ) {
+        final ToggleButton toggleButton = ActionUtils
+                .createToggleButton( action, ActionUtils.ActionTextBehavior.HIDE );
+
+        // Set the CSS Style ID in place of direct setting of colors.
+        GuiUtilities.setToggleButtonProperties( toggleButton, cssStyleClass );
+        
+        // Set the toggle button parameters that aren't part of the constructor.
+        setToggleButtonParameters( toggleButton, toggleGroup, true );
+
+        return toggleButton;
+    }
+    
+    /**
+     * Sets the toggle button parameters that aren't part of the constructor.
+     * 
+     * @param toggleButton The Toggle Button whose extra parameters are to be set
+     * @param toggleGroup The optional Toggle Group to add the Toggle Button to
+     * @param forceMnemonicParsing {@code true} if we should set mnemonic parsing;
+     *        {@code false} if current mnemonic parsing should be left unaltered
+     */
+    public static void setToggleButtonParameters( final ToggleButton toggleButton,
+                                                  final ToggleGroup toggleGroup,
+                                                  final boolean forceMnemonicParsing ) {
+        // Set the common button parameters that aren't part of the constructor.
+        setButtonParameters( toggleButton, true );
+
+        // Add the toggle button to its toggle group, if it exists.
+        if ( toggleGroup != null ) {
+            toggleButton.setToggleGroup( toggleGroup );
+        }
     }
 
     public static CheckBox getLabeledCheckBox( final XAction action ) {
@@ -462,7 +573,7 @@ public class SceneGraphUtilities {
         if ( potentialHierarchyNode == null ) {
             return true;
         }
-    
+
         Node node = sourceNode;
         while ( node != null ) {
             if ( node.equals( potentialHierarchyNode ) ) {
@@ -470,8 +581,7 @@ public class SceneGraphUtilities {
             }
             node = node.getParent();
         }
-    
+
         return false;
     }
-
 }

@@ -107,8 +107,8 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -121,8 +121,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.scene.shape.SVGPath;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -2275,7 +2275,8 @@ public final class GuiUtilities {
                                         jarRelativeStylesheetFilenameNew );
     }
 
-    public static void setButtonProperties( final Button button, final String cssStyleClass ) {
+    public static void setButtonProperties( final Button button, 
+                                            final String cssStyleClass ) {
         // Set the CSS Style Class in place of direct setting of colors.
         // NOTE: Some Controls are meant to just blend in with their
         // background, or have complex rules for rendering, so we flag whether
@@ -2289,6 +2290,19 @@ public final class GuiUtilities {
 
         // Apply drop-shadow effects when the mouse enters a Button.
         applyDropShadowEffect( button );
+    }
+    
+    public static void setButtonProperties( final Button button,
+                                            final Color backColor ) {
+        // Style the buttons with optional custom background.
+        // NOTE: CSS automatically chooses an appropriate foreground.
+        if ( backColor != null ) {
+            final Background background = GuiUtilities.getButtonBackground( backColor );
+            button.setBackground( background );
+        }
+
+        // Apply drop-shadow effects when the mouse enters a Button.
+        GuiUtilities.applyDropShadowEffect( button );
     }
 
     public static void setColumnHeaderLabelForeground( final GridPane gridPane,
