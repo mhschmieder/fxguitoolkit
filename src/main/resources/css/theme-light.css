@@ -64,6 +64,9 @@
     COLOR_SPINNER: COLOR_GRAY45;
     FILL_SPINNER: white;
 
+    COLOR_TOOL_BAR_BUTTON: COLOR_GRAY92
+    FILL_TOOL_BAR_BUTTON: black;
+ 
     /* Control Color Palette */
     COLOR_TAB: COLOR_GRAY60;
     FILL_TAB: black;
@@ -350,6 +353,14 @@
     -fx-background-color: FILL_SPINNER; /* Counter-intuitive but correct */
 }
 
+/* Match the "Day Mode" color for Tool Bar Buttons. */
+.tool-bar-button {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, COLOR_TOOL_BAR_BUTTON;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-text-fill: FILL_TOOL_BAR_BUTTON;
+}
+
 /* Match the "Day Mode" color for Polarity Toggle Buttons. */
 .polarity-toggle {
     -fx-background-color: COLOR_POLARITY_NORMAL;
@@ -465,16 +476,16 @@
 
 /* Match the "Day Mode" color for Tool Bar Toggle Buttons. */
 .tool-bar-toggle {
-    -fx-background-color: COLOR_TOOL_BAR_TOGGLE_OFF;
-    -fx-background-insets: 0, 1;
-    -fx-background-radius: 3, 2;
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, COLOR_TOOL_BAR_TOGGLE_OFF;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-text-fill: FILL_TOOL_BAR_TOGGLE_OFF;
 }
 
 .tool-bar-toggle:selected {
-    -fx-background-color: COLOR_TOOL_BAR_TOGGLE_ON;
-    -fx-background-insets: 0, 1;
-    -fx-background-radius: 3, 2;
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, COLOR_TOOL_BAR_TOGGLE_ON;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-text-fill: FILL_TOOL_BAR_TOGGLE_ON;
 }
 
