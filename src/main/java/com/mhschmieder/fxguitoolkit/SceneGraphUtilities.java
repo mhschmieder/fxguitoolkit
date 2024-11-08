@@ -231,7 +231,7 @@ public class SceneGraphUtilities {
      * @return A labeled icon-only {@link Button} adhering to custom style guidelines
      */
     public static Button getIconButton( final XAction action ) {
-        return getIconButton( action, "fxguitoolkit-button" );
+        return getIconButton( action, "tool-bar-button" );
     }
 
     /**
