@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -597,7 +597,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "file",
                                          "newProject",
-                                         "/icons/ahaSoft/Project16.png" );
+                                         "/icons/oxygenIcons/FileNew16.png" );
     }
 
     @SuppressWarnings("nls")
