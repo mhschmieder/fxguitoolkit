@@ -45,15 +45,17 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
  */
 public class HelpActions {
 
-    public XAction _helpAction;
-    public XAction _releaseNotesAction;
-    public XAction _checkForUpdatesAction;
-    public XAction _accountManagementAction;
-    public XAction _sessionLogAction;
-    public XAction _teamMembersAction;
-    public XAction _thirdPartyLibrariesAction;
-    public XAction _aboutAction;
-    public XAction _eulaAction;
+    public final XAction _helpAction;
+    public final XAction _releaseNotesAction;
+    public final XAction _checkForUpdatesAction;
+    public final XAction _accountManagementAction;
+    public final XAction _knowledgeBaseAction;
+    public final XAction _reportIssueAction;
+    public final XAction _sessionLogAction;
+    public final XAction _teamMembersAction;
+    public final XAction _thirdPartyLibrariesAction;
+    public final XAction _aboutAction;
+    public final XAction _eulaAction;
 
     public HelpActions( final ClientProperties pClientProperties, final String applicationName ) {
         _helpAction = LabeledActionFactory.getHelpHelpAction( pClientProperties );
@@ -62,6 +64,8 @@ public class HelpActions {
                                LabeledActionFactory.getHelpCheckForUpdatesAction( pClientProperties );
         _accountManagementAction = LabeledActionFactory
                 .getHelpAccountManagementAction( pClientProperties );
+        _knowledgeBaseAction = LabeledActionFactory.getKnowledgeBaseAction( pClientProperties );
+        _reportIssueAction = LabeledActionFactory.getReportIssueAction( pClientProperties );
         _sessionLogAction = LabeledActionFactory.getHelpSessionLogAction( pClientProperties );
         _teamMembersAction = LabeledActionFactory.getHelpTeamMembersAction( pClientProperties );
         _thirdPartyLibrariesAction = LabeledActionFactory
@@ -71,7 +75,7 @@ public class HelpActions {
     }
 
     // NOTE: This method is not final, so that it can be derived for
-    // additions.
+    // additions and/or subtractions.
     public Collection< Action > getHelpActionCollection() {
         final Collection< Action > helpActionCollection = new ArrayList<>();
 
@@ -79,6 +83,9 @@ public class HelpActions {
         helpActionCollection.add( _releaseNotesAction );
         helpActionCollection.add( _checkForUpdatesAction );
         helpActionCollection.add( _accountManagementAction );
+        helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
+        helpActionCollection.add( _knowledgeBaseAction );
+        helpActionCollection.add( _reportIssueAction );
         helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
         helpActionCollection.add( _sessionLogAction );
         helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );

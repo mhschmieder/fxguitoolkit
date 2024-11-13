@@ -644,7 +644,7 @@ public class LabeledActionFactory {
                              BUNDLE_NAME,
                              "help",
                              "about",
-                             "/icons/icojam/BlueInformation16.png" );
+                             "/icons/ahaSoft/Info16.png" );
 
         // Modify the Menu Label to tag the Application Name.
         final String actionText = helpAction.getText();
@@ -698,7 +698,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "help",
                                          "help",
-                                         "/icons/icojam/BlueQuestion16.png" );
+                                         "/icons/icojam/blueberry/Help16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -735,6 +735,28 @@ public class LabeledActionFactory {
                                          "help",
                                          "thirdPartyLibraries",
                                          "/icons/pc/Library16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getKnowledgeBaseAction(
+            final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction(
+                pClientProperties,
+                BUNDLE_NAME,
+                "help",
+                "knowledgeBase",
+                "/icons/oxygenIcons/HelpBook16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getReportIssueAction(
+            final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction(
+                pClientProperties,
+                BUNDLE_NAME,
+                "help",
+                "reportIssue",
+                "/icons/pc/berlin/Issue16.png" );
     }
 
     @SuppressWarnings("nls")
