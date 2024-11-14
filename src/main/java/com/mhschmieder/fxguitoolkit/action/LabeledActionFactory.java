@@ -606,7 +606,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "file",
                                          "openProject",
-                                         "/icons/led24/PageWhiteZip16.png" );
+                                         "/icons/insomnia/tango/DocumentOpen16.png" );
     }
 
     @SuppressWarnings("nls")
