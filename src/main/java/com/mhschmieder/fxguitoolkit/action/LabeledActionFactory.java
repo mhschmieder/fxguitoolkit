@@ -748,6 +748,7 @@ public class LabeledActionFactory {
                 "/icons/oxygenIcons/HelpBook16.png" );
     }
     
+    @SuppressWarnings("nls")
     public static XAction getCheckIssueTrackingAction(
             final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction(
