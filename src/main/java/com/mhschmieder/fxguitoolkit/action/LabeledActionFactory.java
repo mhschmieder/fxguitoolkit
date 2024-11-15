@@ -81,7 +81,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "windowSize",
                                          "defaultSize",
-                                         "/icons/yusukeKamiyamane/ApplicationResizeActual16.png" );
+                                         "/icons/yusukeKamiyamane/fugue/ApplicationResizeActual16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -90,7 +90,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "windowSize",
                                          "maximumSize",
-                                         "/icons/yusukeKamiyamane/ApplicationResizeFull16.png" );
+                                         "/icons/yusukeKamiyamane/fugue/ApplicationResizeFull16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -99,7 +99,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "windowSize",
                                          "preferredSize",
-                                         "/icons/yusukeKamiyamane/ApplicationResize16.png" );
+                                         "/icons/yusukeKamiyamane/fugue/ApplicationResize16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -637,6 +637,17 @@ public class LabeledActionFactory {
     }
 
     @SuppressWarnings("nls")
+    public static XActionGroup getHelpActionGroup( final ClientProperties pClientProperties,
+                                                   final HelpActions helpActions ) {
+        final Collection< Action > helpActionCollection = helpActions.getHelpActionCollection();
+
+        final XActionGroup helpActionGroup = ActionFactory
+                .makeActionGroup( pClientProperties, helpActionCollection, BUNDLE_NAME, "help", null );
+
+        return helpActionGroup;
+    }
+
+    @SuppressWarnings("nls")
     public static XAction getHelpAboutAction( final ClientProperties pClientProperties,
                                               final String applicationName ) {
         final XAction helpAction = ActionFactory
@@ -661,17 +672,6 @@ public class LabeledActionFactory {
                                          "help",
                                          "accountManagement",
                                          "/icons/pc/MyAccount16.png" );
-    }
-
-    @SuppressWarnings("nls")
-    public static XActionGroup getHelpActionGroup( final ClientProperties pClientProperties,
-                                                   final HelpActions helpActions ) {
-        final Collection< Action > helpActionCollection = helpActions.getHelpActionCollection();
-
-        final XActionGroup helpActionGroup = ActionFactory
-                .makeActionGroup( pClientProperties, helpActionCollection, BUNDLE_NAME, "help", null );
-
-        return helpActionGroup;
     }
 
     @SuppressWarnings("nls")
@@ -747,16 +747,26 @@ public class LabeledActionFactory {
                 "knowledgeBase",
                 "/icons/oxygenIcons/HelpBook16.png" );
     }
-
-    @SuppressWarnings("nls")
-    public static XAction getReportIssueAction(
+    
+    public static XAction getCheckIssueTrackingAction(
             final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction(
                 pClientProperties,
                 BUNDLE_NAME,
                 "help",
-                "reportIssue",
+                "checkIssueTracking",
                 "/icons/pc/berlin/Issue16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getReportAnIssueAction(
+            final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction(
+                pClientProperties,
+                BUNDLE_NAME,
+                "help",
+                "reportAnIssue",
+                "/icons/led24/Bug16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -886,7 +896,7 @@ public class LabeledActionFactory {
     public static XAction getLineToolChoice( final ClientProperties pClientProperties ) {
         return getMouseToolChoice( pClientProperties,
                                    "lineTool",
-                                   "/icons/yusukeKamiyamane/LayerShapeLine16.png" );
+                                   "/icons/yusukeKamiyamane/fugue/LayerShapeLine16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -895,7 +905,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "file",
                                          "pageSetup",
-                                         "/icons/yusukeKamiyamane/Setup16.png" );
+                                         "/icons/yusukeKamiyamane/diagone/Setup16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -1034,7 +1044,7 @@ public class LabeledActionFactory {
                                         BUNDLE_NAME,
                                         "view",
                                         "showAxisZeroLines",
-                                        "/icons/yusukeKamiyamane/BorderInside16.png" );
+                                        "/icons/yusukeKamiyamane/fugue/BorderInside16.png" );
     }
 
     @SuppressWarnings("nls")

@@ -301,7 +301,7 @@ public final class LabeledControlFactory {
     @SuppressWarnings("nls")
     public static Button getPageSetupButton( final ClientProperties pClientProperties ) {
         final Button button =
-                            GuiUtilities.getIconButton( "/icons/yusukeKamiyamane/Setup16.png" );
+                            GuiUtilities.getIconButton( "/icons/yusukeKamiyamane/diagone/Setup16.png" );
 
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,

@@ -46,31 +46,36 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
 public class HelpActions {
 
     public final XAction _helpAction;
-    public final XAction _releaseNotesAction;
-    public final XAction _checkForUpdatesAction;
-    public final XAction _accountManagementAction;
     public final XAction _knowledgeBaseAction;
-    public final XAction _reportIssueAction;
+    public final XAction _releaseNotesAction;
+    public final XAction _checkIssueTrackingAction;
+    public final XAction _reportAnIssueAction;
     public final XAction _sessionLogAction;
+    public final XAction _accountManagementAction;
+    public final XAction _checkForUpdatesAction;
+    public final XAction _aboutAction;
     public final XAction _teamMembersAction;
     public final XAction _thirdPartyLibrariesAction;
-    public final XAction _aboutAction;
     public final XAction _eulaAction;
 
-    public HelpActions( final ClientProperties pClientProperties, final String applicationName ) {
+    public HelpActions( final ClientProperties pClientProperties, 
+                        final String applicationName ) {
         _helpAction = LabeledActionFactory.getHelpHelpAction( pClientProperties );
+        _knowledgeBaseAction = LabeledActionFactory.getKnowledgeBaseAction( pClientProperties );
         _releaseNotesAction = LabeledActionFactory.getHelpReleaseNotesAction( pClientProperties );
-        _checkForUpdatesAction =
-                               LabeledActionFactory.getHelpCheckForUpdatesAction( pClientProperties );
+        _checkIssueTrackingAction = LabeledActionFactory
+                .getCheckIssueTrackingAction( pClientProperties );
+        _reportAnIssueAction = LabeledActionFactory.getReportAnIssueAction( pClientProperties );
+        _sessionLogAction = LabeledActionFactory.getHelpSessionLogAction( pClientProperties );
         _accountManagementAction = LabeledActionFactory
                 .getHelpAccountManagementAction( pClientProperties );
-        _knowledgeBaseAction = LabeledActionFactory.getKnowledgeBaseAction( pClientProperties );
-        _reportIssueAction = LabeledActionFactory.getReportIssueAction( pClientProperties );
-        _sessionLogAction = LabeledActionFactory.getHelpSessionLogAction( pClientProperties );
+        _checkForUpdatesAction =
+                LabeledActionFactory.getHelpCheckForUpdatesAction( pClientProperties );
         _teamMembersAction = LabeledActionFactory.getHelpTeamMembersAction( pClientProperties );
         _thirdPartyLibrariesAction = LabeledActionFactory
                 .getHelpThirdPartyLibrariesAction( pClientProperties );
-        _aboutAction = LabeledActionFactory.getHelpAboutAction( pClientProperties, applicationName );
+        _aboutAction = LabeledActionFactory
+                .getHelpAboutAction( pClientProperties, applicationName );
         _eulaAction = LabeledActionFactory.getHelpEulaAction( pClientProperties );
     }
 
@@ -80,25 +85,29 @@ public class HelpActions {
         final Collection< Action > helpActionCollection = new ArrayList<>();
 
         helpActionCollection.add( _helpAction );
-        helpActionCollection.add( _releaseNotesAction );
-        helpActionCollection.add( _checkForUpdatesAction );
-        helpActionCollection.add( _accountManagementAction );
         helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
         helpActionCollection.add( _knowledgeBaseAction );
-        helpActionCollection.add( _reportIssueAction );
+        helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
+        helpActionCollection.add( _releaseNotesAction );
+        helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
+        helpActionCollection.add( _checkIssueTrackingAction );
+        helpActionCollection.add( _reportAnIssueAction );
         helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
         helpActionCollection.add( _sessionLogAction );
         helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
-        helpActionCollection.add( _teamMembersAction );
-        helpActionCollection.add( _thirdPartyLibrariesAction );
+        helpActionCollection.add( _accountManagementAction );
+        helpActionCollection.add( _checkForUpdatesAction );
 
         // NOTE: The Mac's global Application Menu has its own About Menu Item,
         // but we use the Help Menu anyway, because it's the only way we have
         // full control over the displayed text and the callback hooks.
         // if ( !SystemType.MACOS.equals( clientProperties.systemType ) ) {
-        helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
         helpActionCollection.add( _aboutAction );
         // }
+        
+        helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
+        helpActionCollection.add( _teamMembersAction );
+        helpActionCollection.add( _thirdPartyLibrariesAction );
         helpActionCollection.add( _eulaAction );
 
         return helpActionCollection;
