@@ -48,7 +48,7 @@ public class HelpActions {
     public final XAction _helpAction;
     public final XAction _knowledgeBaseAction;
     public final XAction _releaseNotesAction;
-    public final XAction _checkIssueTrackingAction;
+    public final XAction _issueTrackingAction;
     public final XAction _reportAnIssueAction;
     public final XAction _sessionLogAction;
     public final XAction _accountManagementAction;
@@ -63,8 +63,7 @@ public class HelpActions {
         _helpAction = LabeledActionFactory.getHelpHelpAction( pClientProperties );
         _knowledgeBaseAction = LabeledActionFactory.getKnowledgeBaseAction( pClientProperties );
         _releaseNotesAction = LabeledActionFactory.getHelpReleaseNotesAction( pClientProperties );
-        _checkIssueTrackingAction = LabeledActionFactory
-                .getCheckIssueTrackingAction( pClientProperties );
+        _issueTrackingAction = LabeledActionFactory.getIssueTrackingAction( pClientProperties );
         _reportAnIssueAction = LabeledActionFactory.getReportAnIssueAction( pClientProperties );
         _sessionLogAction = LabeledActionFactory.getHelpSessionLogAction( pClientProperties );
         _accountManagementAction = LabeledActionFactory
@@ -90,7 +89,7 @@ public class HelpActions {
         helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
         helpActionCollection.add( _releaseNotesAction );
         helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
-        helpActionCollection.add( _checkIssueTrackingAction );
+        helpActionCollection.add( _issueTrackingAction );
         helpActionCollection.add( _reportAnIssueAction );
         helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
         helpActionCollection.add( _sessionLogAction );

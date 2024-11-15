@@ -749,13 +749,13 @@ public class LabeledActionFactory {
     }
     
     @SuppressWarnings("nls")
-    public static XAction getCheckIssueTrackingAction(
+    public static XAction getIssueTrackingAction(
             final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction(
                 pClientProperties,
                 BUNDLE_NAME,
                 "help",
-                "checkIssueTracking",
+                "issueTracking",
                 "/icons/pc/berlin/Issue16.png" );
     }
 
