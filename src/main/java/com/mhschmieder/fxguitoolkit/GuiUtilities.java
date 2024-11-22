@@ -1132,9 +1132,9 @@ public final class GuiUtilities {
      * @param maximumSpinnerWidth
      *            Maximum spinner width in pixels
      */
-    public static void applyNumberSpinnerAttributes( final Spinner< ? extends Number > spinner,
-                                                     final String tooltipText,
-                                                     final double maximumSpinnerWidth ) {
+    public static void applySpinnerAttributes( final Spinner< ? > spinner,
+                                               final String tooltipText,
+                                               final double maximumSpinnerWidth ) {
         final Tooltip tooltip = new Tooltip( tooltipText );
         spinner.setTooltip( tooltip );
 
@@ -1150,15 +1150,15 @@ public final class GuiUtilities {
         // on the textField to manually handle the arrow keys there instead.
         spinner.getEditor().setOnKeyPressed( event -> {
             switch ( event.getCode() ) {
-            case UP:
-                spinner.increment( 1 );
-                break;
-            case DOWN:
-                spinner.decrement( 1 );
-                break;
-            // $CASES-OMITTED$
-            default:
-                break;
+                case UP:
+                    spinner.increment( 1 );
+                    break;
+                case DOWN:
+                    spinner.decrement( 1 );
+                    break;
+                // $CASES-OMITTED$
+                default:
+                    break;
             }
         } );
     }

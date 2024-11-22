@@ -139,7 +139,7 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
 
         // Set the attributes and callbacks common to all Number Spinners.
         GuiUtilities
-                .applyNumberSpinnerAttributes( integerSpinner, tooltipText, maximumSpinnerWidth );
+                .applySpinnerAttributes( integerSpinner, tooltipText, maximumSpinnerWidth );
 
         return converter;
     }

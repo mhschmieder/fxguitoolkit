@@ -139,7 +139,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
 
         // Set the attributes and callbacks common to all Number Spinners.
         GuiUtilities
-                .applyNumberSpinnerAttributes( doubleSpinner, tooltipText, maximumSpinnerWidth );
+                .applySpinnerAttributes( doubleSpinner, tooltipText, maximumSpinnerWidth );
 
         return converter;
     }
