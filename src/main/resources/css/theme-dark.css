@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -71,6 +71,11 @@
     FILL_TAB: white;
     
     /* Toggle Action Color Palette */
+    COLOR_TOOL_BAR_TOGGLE_OFF: #747584; /* #6e7f80 = AuroMetalSaurus */
+    FILL_TOOL_BAR_TOGGLE_OFF: black;
+    COLOR_TOOL_BAR_TOGGLE_ON: #a4a6a8; /* #a9a9a9 = dark gray */
+    FILL_TOOL_BAR_TOGGLE_ON: black;
+    
     COLOR_POLARITY_NORMAL: COLOR_GRAY20;
     FILL_POLARITY_NORMAL: white;
     COLOR_POLARITY_REVERSED: COLOR_GRAY80;
@@ -105,12 +110,11 @@
     FILL_INACTIVE: black;
     COLOR_ACTIVE: derive( #00ffff, -15% ); /* aqua (aka cyan) */
     FILL_ACTIVE: black;
-    
-    /* Toggle Action Color Palette */
-    COLOR_TOOL_BAR_TOGGLE_OFF: #747584; /* #6e7f80 = AuroMetalSaurus */
-    FILL_TOOL_BAR_TOGGLE_OFF: black;
-    COLOR_TOOL_BAR_TOGGLE_ON: #a4a6a8; /* #a9a9a9 = dark gray */
-    FILL_TOOL_BAR_TOGGLE_ON: black;
+     
+    COLOR_EXCLUDED: derive( #dc143c, -15% ); /* crimson */
+    FILL_EXCLUDED: derive( #20b2aa, -15% ); /* light sea green */
+    COLOR_INCLUDED: derive( #20b2aa, -15% ); /* light sea green */
+    FILL_INCLUDED: derive( #dc143c, -15% ); /* crimson */
     
     COLOR_LAYER_INACTIVE: COLOR_GRAY30;
     FILL_LAYER_INACTIVE: white;
@@ -139,7 +143,6 @@
     COLOR_DELETE: derive( #dc143c, -15% ); /* crimson */
     COLOR_REVERT: derive( #00a321, -15% ); /* #059033 = North Texas Green */
     
-    /* Action Color Palette */
     COLOR_HELP: COLOR_GRAY50;
     COLOR_HELP_ALTERNATE: COLOR_GRAY41;
     COLOR_INSERT: COLOR_CREATE;
@@ -505,6 +508,21 @@
     -fx-background-insets: 0, 1;
     -fx-background-radius: 3, 2;
     -fx-text-fill: FILL_LAYER_ACTIVE;
+}
+
+/* Match the "Night Mode" color for Included Toggle Buttons. */
+.included-toggle {
+    -fx-background-color: COLOR_EXCLUDE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_EXCLUDE;
+}
+
+.included-toggle:selected {
+    -fx-background-color: COLOR_INCLUDE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_INCLUDE;
 }
 
 /* Match the "Night Mode" color for Layer Visible Toggle Buttons. */

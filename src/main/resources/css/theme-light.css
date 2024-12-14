@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -72,6 +72,11 @@
     FILL_TAB: black;
     
     /* Toggle Action Color Palette */
+    COLOR_TOOL_BAR_TOGGLE_OFF: #a4a6a8; /* #a9a9a9 = dark gray */
+    FILL_TOOL_BAR_TOGGLE_OFF: black;
+    COLOR_TOOL_BAR_TOGGLE_ON: #d4d8e0; /* #dcdcdc = gainsboro */
+    FILL_TOOL_BAR_TOGGLE_ON: black;
+ 
     COLOR_POLARITY_NORMAL: COLOR_GRAY15;
     FILL_POLARITY_NORMAL: white;
     COLOR_POLARITY_REVERSED: COLOR_GRAY85;
@@ -107,12 +112,11 @@
     COLOR_ACTIVE: #00ffff; /* aqua (aka cyan) */
     FILL_ACTIVE: black;
     
-    /* Toggle Action Color Palette */
-    COLOR_TOOL_BAR_TOGGLE_OFF: #a4a6a8; /* #a9a9a9 = dark gray */
-    FILL_TOOL_BAR_TOGGLE_OFF: black;
-    COLOR_TOOL_BAR_TOGGLE_ON: #d4d8e0; /* #dcdcdc = gainsboro */
-    FILL_TOOL_BAR_TOGGLE_ON: black;
-    
+    COLOR_EXCLUDED: #dc143c; /* crimson */
+    FILL_EXCLUDED: #20b2aa; /* light sea green */
+    COLOR_INCLUDED: #20b2aa; /* light sea green */
+    FILL_INCLUDED: #dc143c; /* crimson */
+        
     COLOR_LAYER_INACTIVE: COLOR_GRAY30;
     FILL_LAYER_INACTIVE: white;
     COLOR_LAYER_ACTIVE: #0aff0a; /* bright green */
@@ -472,6 +476,21 @@
     -fx-background-insets: 0, 1;
     -fx-background-radius: 3, 2;
     -fx-text-fill: FILL_ACTIVE;
+}
+
+/* Match the "Day Mode" color for Included Toggle Buttons. */
+.included-toggle {
+    -fx-background-color: COLOR_EXCLUDE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_EXCLUDE;
+}
+
+.included-toggle:selected {
+    -fx-background-color: COLOR_INCLUDE;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 2;
+    -fx-text-fill: FILL_INCLUDE;
 }
 
 /* Match the "Day Mode" color for Tool Bar Toggle Buttons. */

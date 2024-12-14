@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -609,6 +609,29 @@ public final class LabeledControlFactory {
                                                               deselectedText,
                                                               tooltipText,
                                                               "visible-toggle",
+                                                              applyAspectRatio,
+                                                              3.0d,
+                                                              false,
+                                                              selected );
+
+        return toggleButton;
+    }
+
+    @SuppressWarnings("nls")
+    public static XToggleButton getIncludeExcludeToggleButton( final String targetName,
+                                                               final boolean applyAspectRatio,
+                                                               final boolean selected ) {
+        final String selectedText = "Include";
+        final String deselectedText = "Exclude";
+        final String tooltipText = "Click to Toggle " + targetName
+                + " Display Between Include and Exclude";
+
+        // NOTE: JavaFX CSS automatically darkens unselected buttons, and
+        // auto-selects the foreground for text fill, but we override.
+        final XToggleButton toggleButton = new XToggleButton( selectedText,
+                                                              deselectedText,
+                                                              tooltipText,
+                                                              "included-toggle",
                                                               applyAspectRatio,
                                                               3.0d,
                                                               false,
