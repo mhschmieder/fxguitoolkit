@@ -111,10 +111,10 @@
     COLOR_ACTIVE: derive( #00ffff, -15% ); /* aqua (aka cyan) */
     FILL_ACTIVE: black;
      
-    COLOR_EXCLUDED: derive( #dc143c, -15% ); /* crimson */
-    FILL_EXCLUDED: derive( #20b2aa, -15% ); /* light sea green */
-    COLOR_INCLUDED: derive( #20b2aa, -15% ); /* light sea green */
-    FILL_INCLUDED: derive( #dc143c, -15% ); /* crimson */
+    COLOR_EXCLUDED: COLOR_GRAY30;
+    FILL_EXCLUDED: white
+    COLOR_INCLUDED: #0aff0a; /* bright green */
+    FILL_INCLUDED: #0000ff; /* blue */
     
     COLOR_LAYER_INACTIVE: COLOR_GRAY30;
     FILL_LAYER_INACTIVE: white;

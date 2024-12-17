@@ -112,10 +112,10 @@
     COLOR_ACTIVE: #00ffff; /* aqua (aka cyan) */
     FILL_ACTIVE: black;
     
-    COLOR_EXCLUDED: #dc143c; /* crimson */
-    FILL_EXCLUDED: #20b2aa; /* light sea green */
-    COLOR_INCLUDED: #20b2aa; /* light sea green */
-    FILL_INCLUDED: #dc143c; /* crimson */
+    COLOR_EXCLUDED: COLOR_GRAY30;
+    FILL_EXCLUDED: white
+    COLOR_INCLUDED: #0aff0a; /* bright green */
+    FILL_INCLUDED: #0000ff; /* blue */
         
     COLOR_LAYER_INACTIVE: COLOR_GRAY30;
     FILL_LAYER_INACTIVE: white;

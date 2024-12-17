@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,12 +31,18 @@
 package com.mhschmieder.fxguitoolkit.control;
 
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 
@@ -101,8 +107,8 @@ public final class TableUtilities {
      */
     public static < TD, CT > void setCellValueFactory( final TableColumn< TD, CT > tableColumn,
                                                        final String columnPropertyName ) {
-        final Callback< CellDataFeatures< TD, CT >, ObservableValue< CT > > callback =
-                                                                                     new PropertyValueFactory<>( columnPropertyName );
+        final Callback< CellDataFeatures< TD, CT >, ObservableValue< CT > > callback 
+            = new PropertyValueFactory<>( columnPropertyName );
         tableColumn.setCellValueFactory( callback );
     }
 
@@ -144,4 +150,124 @@ public final class TableUtilities {
         } );
     }
 
+
+    public static < TD > void addDragDropSupport( final TableView< TD > tableView ) {
+        // Define a custom row factory to allow drag and drop of table rows.
+        final Callback< TableView< TD >, TableRow< TD > > callback = ( table ) -> {
+            final TableRow< TD > row = new TableRow<>();
+
+            // Enable row to be draggable.
+            row.setOnDragDetected( event -> {
+                // If the drag didn't start due to a blank row being selected, we
+                // start the visual drag feedback but don't let the row be dropped.
+                // This is achieved by not consuming this event, so the user takes
+                // note that the row can't be dropped and chooses another row.
+                if ( startDrag( row ) ) {
+                    event.consume();
+                }
+            } );
+
+            // Enable rows to accept a dropped item.
+            row.setOnDragOver( event -> {
+                final Dragboard db = event.getDragboard();
+                
+                // If a drag row index was saved, accept dropped items on table,
+                // rows. Otherwise, there is no way we can drag it to another row.
+                if ( hasDragRowIndex( db ) ) {
+                    event.acceptTransferModes( TransferMode.MOVE );
+                }
+                
+                // Even if the row cannot be dragged, consume the event so that
+                // the full drag/drop sequence can finish and the user can start
+                // a new drag/drop request with a different row that is valid.
+                event.consume();
+            } );
+
+            // Handle the row drop.
+            row.setOnDragDropped( event -> {
+                final Dragboard db = event.getDragboard();
+                final boolean rowDropped = endDrag( table, row, db );               
+                
+                // Flag the drop status to indicate whether drag/drop completed.
+                event.setDropCompleted( rowDropped );
+                
+                // Even if the drop request was rejected, consume the event so
+                // the user isn't stuck in a drag sequence that can never end.
+                event.consume();
+            } );
+
+            return row;
+        };
+        
+        tableView.setRowFactory( callback );
+    }
+    
+    public static < TD > void setDragRowIndex( final TableRow< TD > row,
+                                               final Dragboard db ) {
+        // Save the row index of the row to be dragged.
+        final ClipboardContent cc = new ClipboardContent();
+        final int index = row.getIndex();
+        cc.putString( String.valueOf( index ) );
+        db.setContent( cc );
+    }
+    
+    public static < TD > boolean hasDragRowIndex( final Dragboard db ) {
+        // If no drag row index was saved, there is no way we can drag it.
+        return db.hasString();
+    }
+    
+    public static < TD > boolean startDrag( final TableRow< TD > row ) {
+        // Don't copy empty rows to the drag board as that confuses users.
+        if ( row.isEmpty() ) {
+            return false;
+        }
+        
+        // Start the visual feedback of live row dragging.
+        // TODO: Review whether we should cache the image reference.
+        final Dragboard db = row.startDragAndDrop( TransferMode.MOVE );
+        db.setDragView( row.snapshot( null, null ) );
+
+        // Save the row index of the row to be dragged.
+        setDragRowIndex( row, db );
+        
+        return true;
+    }
+    
+    public static < TD > boolean endDrag( final TableView< TD > table, 
+                                          final TableRow< TD > row,
+                                          final Dragboard db ) {
+        // If no drag row index was saved, there is no way we can drop it.
+        if ( !hasDragRowIndex( db ) ) {
+            return false;
+        }
+
+        // Exit early for efficiency, if the drag index is invalid.
+        final int dragIndex = Integer.parseInt( db.getString() );
+        if ( dragIndex < 0 ) {
+            return false;
+        }
+
+        // Calculate the drop index based on the mouse position, as that
+        // triggers which row receives this callback. Default to the "end
+        // of the table" to add as first row, if empty.
+        final ObservableList< TD > rows = table.getItems();
+        final int dropIndex = !row.isEmpty()
+                ? row.getIndex()
+                : rows.size();
+
+        // If the drop index is invalid or the same as the drag index,
+        // there is nothing to do, so we don't redundantly "move" the row.
+        if ( ( dropIndex < 0 ) || ( dragIndex == dropIndex ) ) {
+            return false;
+        }
+    
+        // Move (remove/add) the row within the backing list data model.
+        final TD rowData = rows.remove( dragIndex );
+        rows.add( dropIndex, rowData );
+
+        // Update the selection to the selected row at its new position.
+        table.getSelectionModel().select( dropIndex );
+        
+        return true;
+    }
 }
