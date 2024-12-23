@@ -111,10 +111,10 @@
     COLOR_ACTIVE: derive( #00ffff, -15% ); /* aqua (aka cyan) */
     FILL_ACTIVE: black;
      
-    COLOR_EXCLUDED: COLOR_GRAY30;
-    FILL_EXCLUDED: white
-    COLOR_INCLUDED: #0aff0a; /* bright green */
-    FILL_INCLUDED: #0000ff; /* blue */
+    COLOR_IGNORED: COLOR_GRAY30;
+    FILL_IGNORED: white;
+    COLOR_INCLUDED: aqua;
+    FILL_INCLUDED: black;
     
     COLOR_LAYER_INACTIVE: COLOR_GRAY30;
     FILL_LAYER_INACTIVE: white;
@@ -512,17 +512,17 @@
 
 /* Match the "Night Mode" color for Included Toggle Buttons. */
 .included-toggle {
-    -fx-background-color: COLOR_EXCLUDE;
+    -fx-background-color: COLOR_IGNORED;
     -fx-background-insets: 0, 1;
     -fx-background-radius: 3, 2;
-    -fx-text-fill: FILL_EXCLUDE;
+    -fx-text-fill: FILL_IGNORED;
 }
 
 .included-toggle:selected {
-    -fx-background-color: COLOR_INCLUDE;
+    -fx-background-color: COLOR_INCLUDED;
     -fx-background-insets: 0, 1;
     -fx-background-radius: 3, 2;
-    -fx-text-fill: FILL_INCLUDE;
+    -fx-text-fill: FILL_INCLUDED;
 }
 
 /* Match the "Night Mode" color for Layer Visible Toggle Buttons. */
