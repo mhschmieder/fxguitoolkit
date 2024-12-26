@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2023 Mark Schmieder
+ * Copyright (c) 2023, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.lang.ListViewConverter;
+import com.mhschmieder.commonstoolkit.lang.LabelAssignable;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
@@ -44,32 +45,88 @@ public class ListViewUtilities {
      */
     private ListViewUtilities() {}
 
-    public static Callback< ListView< ? extends ListViewConverter >, ListCell< ? extends ListViewConverter > >
-        makeListViewCellFactory( final ListViewConverter listViewConverter ) {
-        final Callback< ListView < ? extends ListViewConverter >, ListCell< ? extends ListViewConverter > >
-                cellFactory = new Callback< ListView< ? extends ListViewConverter >, ListCell< ? extends ListViewConverter > >() {
+
+    public static < T extends LabelAssignable< ? > > XComboBox< T > makeEnumSelector(
+            final ClientProperties pClientProperties,
+            final T[] supportedValues,
+            final String tooltipText,
+            final T defaultValue ) {
+        final XComboBox< T > selector = new XComboBox<>(
+                pClientProperties,
+                tooltipText,
+                true,
+                false,
+                false,
+                supportedValues );
+
+        // TODO: Solve this programming puzzle to decouple the Callback code.
+        /*
+        final Callback< ListView< T >, ListCell< T > > cellFactory 
+            = makeListViewCellFactory( defaultValue() );
+    
+        */
+        final Callback< ListView< T >, ListCell< T > > cellFactory 
+            = new Callback< ListView< T >, ListCell< T > >() {
             @Override
-            public ListCell< ? extends ListViewConverter > call( ListView< ? extends ListViewConverter > p ) {
-                return new ListCell< ListViewConverter >() {
+            public ListCell< T > call(final ListView< T > p ) {
+                return new ListCell< T >() {
                     {
                         setContentDisplay( ContentDisplay.TEXT_ONLY );
                     }
 
                     @Override
-                    protected void updateItem( final ListViewConverter item, boolean empty ) {
+                    protected void updateItem( final T item, boolean empty ) {
                         super.updateItem( item, empty );
 
-                        final ListViewConverter currentValue
+                        final LabelAssignable currentLabelAssignable
                                 = ( ( item == null ) || empty )
-                                ? getItem()
-                                : item;
-                        if ( currentValue != null ) {
-                            setText( currentValue.toListCellText() );
+                                  ? getItem()
+                                  : item;
+                        if ( currentLabelAssignable != null ) {
+                            setText( currentLabelAssignable.label() );
                         }
                     }
                 };
             } };
-            
-            return cellFactory;
+
+        // Set the custom cell view on the displayed value field.
+        selector.setButtonCell( cellFactory.call( null ) );
+
+        // Set the custom cell view on the Combo Box's drop list.
+        selector.setCellFactory( cellFactory );
+
+        selector.getSelectionModel().select( defaultValue );
+
+        return selector;
+    }
+
+   
+    public static Callback< ListView< LabelAssignable< ? > >, 
+                            ListCell< LabelAssignable< ? > > >
+            makeListViewCellFactory( final LabelAssignable< ? > labelAssignable ) {
+        return new Callback< ListView< LabelAssignable< ? > >, 
+                             ListCell< LabelAssignable< ? > > >() {
+            @Override
+            public ListCell< LabelAssignable< ? > > call( ListView< LabelAssignable< ? > > p ) {
+                return new ListCell< LabelAssignable< ? > >() {
+                    {
+                        setContentDisplay( ContentDisplay.TEXT_ONLY );
+                    }
+
+                    @Override
+                    protected void updateItem( final LabelAssignable< ? > item, 
+                                               final boolean empty ) {
+                        super.updateItem( item, empty );
+
+                        final LabelAssignable< ? > currentItem
+                                = ( ( item == null ) || empty )
+                                ? getItem()
+                                : item;
+                        if ( currentItem != null ) {
+                            setText( currentItem.label() );
+                        }
+                    }
+                };
+            } };
     }
 }
