@@ -45,20 +45,32 @@ public class ListViewUtilities {
      */
     private ListViewUtilities() {}
 
-
+    /**
+     * Returns a Combo Box that hosts labels from an enum that implements the
+     * {@link LabelAssignable} interface. It doesn't have to be enum-based but
+     * that is the most common and likely client, as the interface helps to
+     * partially get around enums being final classes in Java.
+     * <p>
+     * The goal is to allow for a combo box that doesn't need overrides of the
+     * control itself for string conversions of enum values. 
+     * <p>
+     * This approach allows for one factory method that covers all enums that
+     * implement the interface, with no verbosity of repetitive boilerplate
+     * code and copy paste of otherwise identical code between enum types.
+     * 
+     * @param <T> the object or enum that provides the Combo Box's choices
+     * @param pClientProperties client properties for OS, Locale, etc.
+     * @param supportedValues a list of supported values for the List View
+     * @param tooltipText the tooltip to show when hovering on the Combo Box
+     * @param defaultValue initial default value to set, to avoid nulls
+     * @return a Combo Box that hosts a curated list of labels from an enum 
+     */
     public static < T extends LabelAssignable< ? > > XComboBox< T > makeEnumSelector(
             final ClientProperties pClientProperties,
             final T[] supportedValues,
             final String tooltipText,
             final T defaultValue ) {
-        final XComboBox< T > selector = new XComboBox<>(
-                pClientProperties,
-                tooltipText,
-                true,
-                false,
-                false,
-                supportedValues );
-
+        // Make the callback for the ListCells to grab the custom enum label.
         final Callback< ListView< T >, ListCell< T > > cellFactory 
             = new Callback< ListView< T >, ListCell< T > >() {
             @Override
@@ -82,6 +94,15 @@ public class ListViewUtilities {
                     }
                 };
             } };
+
+        // Make the combo box using the supported enum values as objects.
+        final XComboBox< T > selector = new XComboBox<>(
+            pClientProperties,
+            tooltipText,
+            true,
+            false,
+            false,
+            supportedValues );
 
         // Set the custom cell view on the displayed value field.
         selector.setButtonCell( cellFactory.call( null ) );
