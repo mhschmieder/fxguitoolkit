@@ -59,12 +59,6 @@ public class ListViewUtilities {
                 false,
                 supportedValues );
 
-        // TODO: Solve this programming puzzle to decouple the Callback code.
-        /*
-        final Callback< ListView< T >, ListCell< T > > cellFactory 
-            = makeListViewCellFactory( defaultValue() );
-    
-        */
         final Callback< ListView< T >, ListCell< T > > cellFactory 
             = new Callback< ListView< T >, ListCell< T > >() {
             @Override
@@ -98,35 +92,5 @@ public class ListViewUtilities {
         selector.getSelectionModel().select( defaultValue );
 
         return selector;
-    }
-
-   
-    public static Callback< ListView< LabelAssignable< ? > >, 
-                            ListCell< LabelAssignable< ? > > >
-            makeListViewCellFactory( final LabelAssignable< ? > labelAssignable ) {
-        return new Callback< ListView< LabelAssignable< ? > >, 
-                             ListCell< LabelAssignable< ? > > >() {
-            @Override
-            public ListCell< LabelAssignable< ? > > call( ListView< LabelAssignable< ? > > p ) {
-                return new ListCell< LabelAssignable< ? > >() {
-                    {
-                        setContentDisplay( ContentDisplay.TEXT_ONLY );
-                    }
-
-                    @Override
-                    protected void updateItem( final LabelAssignable< ? > item, 
-                                               final boolean empty ) {
-                        super.updateItem( item, empty );
-
-                        final LabelAssignable< ? > currentItem
-                                = ( ( item == null ) || empty )
-                                ? getItem()
-                                : item;
-                        if ( currentItem != null ) {
-                            setText( currentItem.label() );
-                        }
-                    }
-                };
-            } };
     }
 }
