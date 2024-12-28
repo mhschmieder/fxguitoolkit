@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.lang.LabelAssignable;
+import com.mhschmieder.commonstoolkit.lang.Labeled;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.scene.control.ContentDisplay;
@@ -47,7 +47,7 @@ public class ListViewUtilities {
 
     /**
      * Returns a Combo Box that hosts labels from an enum that implements the
-     * {@link LabelAssignable} interface. It doesn't have to be enum-based but
+     * {@link Labeled} interface. It doesn't have to be enum-based but
      * that is the most common and likely client, as the interface helps to
      * partially get around enums being final classes in Java.
      * <p>
@@ -65,7 +65,7 @@ public class ListViewUtilities {
      * @param defaultValue initial default value to set, to avoid nulls
      * @return a Combo Box that hosts a curated list of labels from an enum 
      */
-    public static < T extends LabelAssignable< ? > > XComboBox< T > makeEnumSelector(
+    public static < T extends Labeled< ? > > XComboBox< T > makeEnumSelector(
             final ClientProperties pClientProperties,
             final T[] supportedValues,
             final String tooltipText,
@@ -84,7 +84,7 @@ public class ListViewUtilities {
                     protected void updateItem( final T item, boolean empty ) {
                         super.updateItem( item, empty );
 
-                        final LabelAssignable currentLabelAssignable
+                        final Labeled currentLabelAssignable
                                 = ( ( item == null ) || empty )
                                   ? getItem()
                                   : item;
