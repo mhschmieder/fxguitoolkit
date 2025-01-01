@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,15 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxCommonsToolkit Library
+ * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * FxCommonsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxcommonstoolkit
+ * Project: https://github.com/mhschmieder/fxguitoolkit
  */
 package com.mhschmieder.fxguitoolkit.model;
 
+import com.mhschmieder.fxgraphicstoolkit.beans.BeanFactory;
+
+import javafx.beans.Observable;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -50,7 +53,7 @@ public final class ProjectProperties {
     private final StringProperty projectNotes;
 
     // NOTE: This field has to follow JavaFX Property Beans conventions.
-    public BooleanBinding        projectPropertiesChanged;
+    private BooleanBinding        projectPropertiesChanged;
 
     /**
      * This is the default constructor; it sets all instance variables to
@@ -62,22 +65,6 @@ public final class ProjectProperties {
               DESIGNER_DEFAULT,
               DATE_DEFAULT,
               PROJECT_NOTES_DEFAULT );
-    }
-
-    /**
-     * This is the copy constructor, and is offered in place of clone() to
-     * guarantee that the source object is never modified by the new target
-     * object created here.
-     *
-     * @param pProjectProperties
-     *            The Project Properties reference for the copy
-     */
-    public ProjectProperties( final ProjectProperties pProjectProperties ) {
-        this( pProjectProperties.getProjectName(),
-              pProjectProperties.getVenue(),
-              pProjectProperties.getDesigner(),
-              pProjectProperties.getDate(),
-              pProjectProperties.getProjectNotes() );
     }
 
     /*
@@ -96,31 +83,29 @@ public final class ProjectProperties {
 
         // Bind all of the properties to the associated dirty flag.
         // NOTE: This is done during initialization, as it is best to make
-        // singleton objects and just update their values vs. reconstructing.
-        bindProperties();
+        //  singleton objects and just update their values vs. reconstructing.
+        projectPropertiesChanged = BeanFactory.makeBooleanBinding(
+               projectNameProperty(),
+               venueProperty(),
+               designerProperty(),
+               dateProperty(),
+               projectNotesProperty());
     }
 
-    private void bindProperties() {
-        // Establish the dirty flag criteria as any assignable value change.
-        projectPropertiesChanged = new BooleanBinding() {
-            {
-                // When any of these assignable values change, the
-                // projectPropertiesChanged Boolean Binding is invalidated
-                // and notifies its listeners.
-                super.bind( projectNameProperty(),
-                            venueProperty(),
-                            designerProperty(),
-                            dateProperty(),
-                            projectNotesProperty() );
-            }
-
-            // Just auto-clear the invalidation by overriding with a status that
-            // is affirmative of a change having triggered the call.
-            @Override
-            protected boolean computeValue() {
-                return true;
-            }
-        };
+    /**
+     * This is the copy constructor, and is offered in place of clone() to
+     * guarantee that the source object is never modified by the new target
+     * object created here.
+     *
+     * @param pProjectProperties
+     *            The Project Properties reference for the copy
+     */
+    public ProjectProperties( final ProjectProperties pProjectProperties ) {
+        this( pProjectProperties.getProjectName(),
+              pProjectProperties.getVenue(),
+              pProjectProperties.getDesigner(),
+              pProjectProperties.getDate(),
+              pProjectProperties.getProjectNotes() );
     }
 
     // NOTE: Cloning is disabled as it is dangerous; use the copy constructor
@@ -130,41 +115,6 @@ public final class ProjectProperties {
         throw new CloneNotSupportedException();
     }
 
-    public StringProperty dateProperty() {
-        return date;
-    }
-
-    public StringProperty designerProperty() {
-        return designer;
-    }
-
-    public String getDate() {
-        return date.get();
-    }
-
-    public String getDesigner() {
-        return designer.get();
-    }
-
-    public String getProjectName() {
-        return projectName.get();
-    }
-
-    public String getProjectNotes() {
-        return projectNotes.get();
-    }
-
-    public String getVenue() {
-        return venue.get();
-    }
-
-    public StringProperty projectNameProperty() {
-        return projectName;
-    }
-
-    public StringProperty projectNotesProperty() {
-        return projectNotes;
-    }
 
     /** 
      * Default pseudo-constructor. 
@@ -175,36 +125,6 @@ public final class ProjectProperties {
                               DESIGNER_DEFAULT,
                               DATE_DEFAULT,
                               PROJECT_NOTES_DEFAULT );
-    }
-
-    public void setDate( final String pDate ) {
-        date.set( pDate );
-    }
-
-    public void setDesigner( final String pDesigner ) {
-        designer.set( pDesigner );
-    }
-
-    public void setProjectName( final String pProjectName ) {
-        projectName.set( pProjectName );
-    }
-
-    public void setProjectNotes( final String pProjectNotes ) {
-        projectNotes.set( pProjectNotes );
-    }
-
-    /**
-     * Copy pseudo-constructor. 
-     *
-     * @param pProjectProperties
-     *            The Project Properties reference for the copy
-     */
-    public void setProjectProperties( final ProjectProperties pProjectProperties ) {
-        setProjectProperties( pProjectProperties.getProjectName(),
-                              pProjectProperties.getVenue(),
-                              pProjectProperties.getDesigner(),
-                              pProjectProperties.getDate(),
-                              pProjectProperties.getProjectNotes() );
     }
 
     /*
@@ -225,12 +145,85 @@ public final class ProjectProperties {
         }
     }
 
-    public void setVenue( final String pVenue ) {
-        venue.set( pVenue );
+    /**
+     * Copy pseudo-constructor. 
+     *
+     * @param pProjectProperties
+     *            The Project Properties reference for the copy
+     */
+    public void setProjectProperties( final ProjectProperties pProjectProperties ) {
+        setProjectProperties( pProjectProperties.getProjectName(),
+                              pProjectProperties.getVenue(),
+                              pProjectProperties.getDesigner(),
+                              pProjectProperties.getDate(),
+                              pProjectProperties.getProjectNotes() );
+    }
+
+    public StringProperty projectNameProperty() {
+        return projectName;
+    }
+
+    public String getProjectName() {
+        return projectName.get();
+    }
+
+    public void setProjectName( final String pProjectName ) {
+        projectName.set( pProjectName );
+    }
+
+    public StringProperty designerProperty() {
+        return designer;
+    }
+
+    public String getDesigner() {
+        return designer.get();
+    }
+
+    public void setDesigner( final String pDesigner ) {
+        designer.set( pDesigner );
     }
 
     public StringProperty venueProperty() {
         return venue;
     }
 
+    public String getVenue() {
+        return venue.get();
+    }
+
+    public void setVenue( final String pVenue ) {
+        venue.set( pVenue );
+    }
+
+    public StringProperty dateProperty() {
+        return date;
+    }
+
+    public String getDate() {
+        return date.get();
+    }
+
+    public void setDate( final String pDate ) {
+        date.set( pDate );
+    }
+
+    public StringProperty projectNotesProperty() {
+        return projectNotes;
+    }
+
+    public String getProjectNotes() {
+        return projectNotes.get();
+    }
+
+    public void setProjectNotes( final String pProjectNotes ) {
+        projectNotes.set( pProjectNotes );
+    }
+    
+    public BooleanBinding projectPropertiesChangedProperty() {
+        return projectPropertiesChanged;
+    }
+    
+    public boolean isProjectPropertiesChanged() {
+        return projectPropertiesChanged.get();
+    }
 }
