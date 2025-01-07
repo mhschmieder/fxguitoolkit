@@ -41,6 +41,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="/convertertoolkit"/>
-	<classpathentry kind="src" path="/fxcommonstoolkit"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
