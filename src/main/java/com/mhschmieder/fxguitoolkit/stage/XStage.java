@@ -92,7 +92,8 @@ import javafx.stage.Window;
  * {@code XStage} is a skeletal abstract base class that extends the JavaFX
  * Stage class enough to serve as a better boilerplate starting point for most.
  */
-public abstract class XStage extends Stage implements ForegroundManager, FileActionHandler {
+public abstract class XStage extends Stage implements ForegroundManager, 
+    FileActionHandler, ApplicationWindowHandler {
 
     // To avoid cut/paste errors with resource references, make global constants
     // for the CSS theme to be used for dark vs. light backgrounds.
@@ -434,6 +435,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
     protected void clearImportedGraphics() {}
 
     // Dispose of all resources allocated by this Stage.
+    @Override
     public final void disposeAllResources() {
         // Hide all windows owned by this Stage.
         hideAllWindows();
@@ -475,6 +477,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
     }
 
     // Hide all of the Windows associated with this Stage.
+    @Override
     public void hideAllWindows() {
         // First, hide all of the secondary windows owned by this Stage.
         _windowManager.hideAllWindows();
@@ -490,6 +493,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
     }
 
     // Load the User Preferences for all Windows associated with this Stage.
+    @Override
     public final void loadAllPreferences() {
         // First, load preferences for secondary windows owned by this Stage.
         _windowManager.loadAllPreferences();
@@ -513,6 +517,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
      * @param prefs
      *            The @Preferences reference for the key/value pairs
      */
+    @Override
     public final void restoreAllWindowLayouts( final Preferences prefs ) {
         // First, restore layouts for secondary windows owned by this Stage.
         _windowManager.restoreAllWindowLayouts( prefs );
@@ -522,6 +527,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
     }
 
     // Save the User Preferences for all Windows associated with this Stage.
+    @Override
     public final void saveAllPreferences() {
         // First, save preferences for secondary windows owned by this Stage.
         _windowManager.saveAllPreferences();
@@ -536,6 +542,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
      * @param prefs
      *            The @Preferences reference for the key/value pairs
      */
+    @Override
     public final void saveAllWindowLayouts( final Preferences prefs ) {
         // First, save layouts for secondary windows owned by this Stage.
         _windowManager.saveAllWindowLayouts( prefs );
@@ -659,29 +666,30 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
     }
 
     // NOTE: StringBuilder returns a reference and thus can result in side
-    // effects if a copy is not returned; unlike String which can be set
-    // directly to another String with no side effects.
+    //  effects if a copy is not returned; unlike String which can be set
+    //  directly to another String with no side effects.
+    @Override
     public final StringBuilder getDefaultTitle() {
         return new StringBuilder( _defaultTitle );
     }
 
     // NOTE: This label is for Graphics Export Options.
     // NOTE: Derived classes should override this default if they expose
-    // either charts or auxiliary information for Graphics Export.
+    //  either charts or auxiliary information for Graphics Export.
     public String getGraphicsExportAllLabel() {
         return ""; //$NON-NLS-1$
     }
 
     // NOTE: This label is for Graphics Export Options.
     // NOTE: Derived classes should override this default if they expose
-    // auxiliary information for Graphics Export.
+    //  auxiliary information for Graphics Export.
     public String getGraphicsExportAuxiliaryLabel() {
         return ""; //$NON-NLS-1$
     }
 
     // NOTE: This label is for Graphics Export Options.
     // NOTE: Derived classes should override this default if they expose charts
-    // for Graphics Export.
+    //  for Graphics Export.
     public String getGraphicsExportChartLabel() {
         return ""; //$NON-NLS-1$
     }
@@ -702,28 +710,9 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
         }
     }
 
+    @Override    
     public final Dimension2D getPreferredWindowSize() {
         return _preferredWindowSize;
-    }
-
-    // TODO: Re-enable the Mac conditionals once we figure out how to do the
-    // Mac's unique dirty flag in JavaFX (known as "document modified", where it
-    // puts a black dot in the red circle in the upper left corner of the
-    // window or frame's title bar, instead of the asterisk at the end).
-    @SuppressWarnings("static-method")
-    protected final StringBuilder getSubtitle( final String documentFileName,
-                                               final Boolean documentModified ) {
-        // Append the current document file name, with an asterisk at the end if
-        // the document is modified.
-        final StringBuilder subtitle = new StringBuilder( " - [" ); //$NON-NLS-1$
-        subtitle.append( documentFileName );
-        // if ( documentModified
-        // && !SystemType.MACOS.equals( clientProperties.systemType ) ) {
-        if ( documentModified ) {
-            subtitle.append( "*" ); //$NON-NLS-1$
-        }
-        subtitle.append( "]" ); //$NON-NLS-1$
-        return subtitle;
     }
 
     /**
@@ -732,7 +721,8 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
      * @return The string to be used as the window key prefix for window layout
      *         preferences
      */
-    protected final String getWindowKeyPrefix() {
+    @Override
+    public final String getWindowKeyPrefix() {
         return _windowKeyPrefix;
     }
 
@@ -964,6 +954,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
     // declared abstract and is instead given a default implementation that at
     // least loads the additional custom styles pertinent to the default
     // background being dark or light (currently it is light).
+    @Override
     public void loadPreferences() {
         setForegroundFromBackground( ColorConstants.WINDOW_BACKGROUND_COLOR );
     }
@@ -1115,7 +1106,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
      * @param prefs
      *            The @Preferences reference for the key/value pairs
      */
-    @SuppressWarnings("nls")
+    @Override
     public final void restoreWindowLayout( final Preferences prefs ) {
         // Get the window key prefix for Window Layout Preferences.
         final String windowKeyPrefix = getWindowKeyPrefix();
@@ -1178,6 +1169,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
 
     // Preferences are not applicable to all Stages, so this method is not
     // declared abstract and is instead given a default no-op implementation.
+    @Override
     public void savePreferences() {}
 
     /**
@@ -1189,7 +1181,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
      * @param prefs
      *            The @Preferences reference for the key/value pairs
      */
-    @SuppressWarnings("nls")
+    @Override
     public final void saveWindowLayout( final Preferences prefs ) {
         // Get the window key prefix for Window Layout Preferences.
         final String windowKeyPrefix = getWindowKeyPrefix();
@@ -1255,6 +1247,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
         _defaultDirectory = defaultDirectory;
     }
 
+    @Override
     public final void setDefaultWindowSize( final double defaultWidth,
                                             final double defaultHeight ) {
         // Cache the default size so it can be reasserted via the menu.
@@ -1268,7 +1261,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
     // NOTE: Do not set background on the Stage itself, as this ends up
     // affecting Tool Bars, Status Bars, and possibly even Menu Bars.
     // NOTE: This method is a minimal implementation shared by all windows,
-    // whether they need to override for more complex layout forwarding or not.
+    //  whether they need to override for more complex layout forwarding or not.
     @Override
     public void setForegroundFromBackground( final Color backColor ) {
         // Set the new Background first, so it sets context for CSS derivations.
@@ -1297,6 +1290,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
                                             LIGHT_BACKGROUND_CSS );
     }
 
+    @Override
     public final void setIcon( final String jarRelativeIconFilename ) {
         // NOTE: It is traditional to not use title bar icons on the Mac.
         if ( SystemType.MACOS.equals( clientProperties.systemType ) ) {
@@ -1325,7 +1319,9 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
         _actionPane.setTop( menuBar );
     }
 
-    public void setPreferredWindowSize( final double stageWidth, final double stageHeight ) {
+    @Override
+    public void setPreferredWindowSize( final double stageWidth, 
+                                        final double stageHeight ) {
         // To prevent Application startup issues with Windows only having a
         // minimal Frame Title Bar and no Content Pane (due to exceptions or
         // other problems), we enforce minimum dimensions (taken as the cached
@@ -1410,6 +1406,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
         }
     }
 
+    @Override
     public void setWindowLocation( final double stageX, final double stageY ) {
         // Get the full list of screens that are currently accessible.
         final List< Screen > screenList = Screen.getScreens();
@@ -1447,6 +1444,7 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
      * @param windowSize
      *            The window size to set as current window size
      */
+    @Override
     public void setWindowSize( final Dimension2D windowSize ) {
         // Make sure we explicitly exit Full Screen Mode.
         setFullScreen( false );
@@ -1469,14 +1467,16 @@ public abstract class XStage extends Stage implements ForegroundManager, FileAct
     public void updateView() {}
 
     // NOTE: Not all Stages have contextual settings, so a concrete no-op
-    // implementation is provided rather than making this method abstract and
-    // requiring all derived classes to implement it.
+    //  implementation is provided rather than making this method abstract and
+    //  requiring all derived classes to implement it.
     public void updateContextualSettings() {}
 
     // Conditionally append an asterisk to the filename, if document modified.
     // TODO: Learn how to set the black dot in the red circle in JavaFX --
-    // perhaps this is documented in the Stage API docs, or search for a tool.
-    public final void updateFrameTitle( final File documentFile, final boolean documentModified ) {
+    //  perhaps this is documented in the Stage API docs, or search for a tool.
+    @Override
+    public final void updateFrameTitle( final File documentFile, 
+                                        final boolean documentModified ) {
         final StringBuilder frameTitle = new StringBuilder( getDefaultTitle() );
         if ( _showDirtyFlag ) {
             frameTitle.append( getSubtitle( documentFile.getName(), documentModified ) );

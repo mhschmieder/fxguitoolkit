@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,8 @@ import javafx.stage.WindowEvent;
 
 // This class implements the basic features that all applications should share.
 // TODO: Find a JavaFX equivalent for the OSXAdapter, or delete for now.
-public abstract class MainApplicationStage extends XStage implements MacAppMenuEventHandler {
+public abstract class MainApplicationStage extends XStage 
+    implements MainApplicationWindowHandler {
 
     // Cache the Splash Screen File Name, as we load it in several places.
     public final String      _splashScreenFileName;
@@ -150,32 +151,6 @@ public abstract class MainApplicationStage extends XStage implements MacAppMenuE
         }
     }
 
-    /**
-     * Take care of exit tasks that pertain to all applications, e.g. save User
-     * Preferences and dispose of all resources.
-     *
-     * @param exitPlatform
-     *            Flag for whether to also exit the Java Platform
-     */
-    protected final void exitApplication( final boolean exitPlatform ) {
-        // Save the User Preferences for the entire Application (if applicable).
-        // NOTE: We do this BEFORE disposing of all resources, to avoid race
-        //  conditions with windows closing before their preferences have been
-        //  saved (if done as part of a window closing implementation).
-        saveAllPreferences();
-
-        // Dispose of all resources allocated by this Stage.
-        disposeAllResources();
-
-        // Exit the application via the JavaFX exit call. This is considered
-        // safer than the standard System.exit() call, and shuts down the GUI.
-        // NOTE: Without this call, Application.stop() never gets invoked,
-        //  which in turn means the application never gets properly shut down.
-        if ( exitPlatform ) {
-            Platform.exit();
-        }
-    }
-
     // NOTE: This must be overridden unconditionally so that the OSXAdapter can
     //  find it on this class.
     @Override
@@ -221,6 +196,7 @@ public abstract class MainApplicationStage extends XStage implements MacAppMenuE
         _thirdPartyAttributions = new ArrayList<>();
     }
 
+    @Override
     public final boolean isInitialized() {
         return _initialized;
     }
@@ -303,6 +279,7 @@ public abstract class MainApplicationStage extends XStage implements MacAppMenuE
         _hostServices = hostServices;
     }
 
+    @Override
     public void startSession() {
         // Reset the session context for visualization, export, undo, redo, etc.
         resetSessionContext();
@@ -324,24 +301,9 @@ public abstract class MainApplicationStage extends XStage implements MacAppMenuE
     }
 
     // NOTE: This must be overridden unconditionally so that the OSXAdapter can
-    // find it on this class.
+    //  find it on this class.
     @Override
     public void toFront() {
         super.toFront();
-    }
-
-    /**
-     * Like fileClose, but upon Cancel, consumes a WindowEvent to avoid exiting.
-     * 
-     * @param event The {@link WindowEvent} that triggered this window close
-     */
-    protected final void windowClose( final WindowEvent event ) {
-        // Make sure the window doesn't auto-close, by consuming the event.
-        // NOTE: This only goes so far towards preventing other windows from
-        // receiving the event and closing, but is better than nothing.
-        event.consume();
-
-        // Now it is safe to process this like a normal Quit action.
-        quit();
     }
 }

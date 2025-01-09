@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -50,8 +50,8 @@ public final class MainApplicationLoadTask extends Task< Void > {
     // Cache the progress text so we can initialize it via the constructor.
     private String           progressText;
 
-    // Cache a reference to the main application stage.
-    private MainApplicationStage mainApplicationStage;
+    // Cache a reference to the main application window handler (likely a stage).
+    private MainApplicationWindowHandler mainApplicationWindowHandler;
 
     public MainApplicationLoadTask( final String pProgressText ) {
         // Always call the super-constructor first!
@@ -59,7 +59,7 @@ public final class MainApplicationLoadTask extends Task< Void > {
 
         progressText = pProgressText;
 
-        mainApplicationStage = null;
+        mainApplicationWindowHandler = null;
     }
 
     @Override
@@ -75,10 +75,11 @@ public final class MainApplicationLoadTask extends Task< Void > {
 
             updateProgress( i + 1, MAXIMUM_THREAD_SLEEP_INCREMENTS );
 
-            // If the main application stage has finished initializing, exit the
-            // Splash Screen timer loop.
+            // If the main application window handler has finished initializing, 
+            // exit the Splash Screen timer loop.
             // TODO: Make this an observable, if bindings help.
-            if ( ( mainApplicationStage != null ) && mainApplicationStage.isInitialized() ) {
+            if ( ( mainApplicationWindowHandler != null ) 
+                    && mainApplicationWindowHandler.isInitialized() ) {
                 break;
             }
         }
@@ -87,25 +88,26 @@ public final class MainApplicationLoadTask extends Task< Void > {
     }
 
     /**
-     * Set the main application stage.
+     * Set the main application window handler.
      *
-     * @param pMainApplicationStage
-     *            The main stage for this application
+     * @param pMainApplicationWindowHandler
+     *            The main application stage window handler
      */
-    public void setMainApplicationStage( final MainApplicationStage pMainApplicationStage ) {
-        mainApplicationStage = pMainApplicationStage;
+    public void setMainApplicationWindowHandler( 
+            final MainApplicationWindowHandler pMainApplicationWindowHandler ) {
+        mainApplicationWindowHandler = pMainApplicationWindowHandler;
     }
 
     /**
-     * Show the main application stage (if set).
+     * Show the main application window (if the handler is set).
      */
-    public void showMainApplicationStage() {
+    public void showMainApplicationWindow() {
         // Start an application session. This also shows the main stage.
         // NOTE: We run this on a deferred thread, to give the GUI
         //  initialization more time to complete any deferred tasks.
         Platform.runLater( () -> {
-            if ( mainApplicationStage != null ) {
-                mainApplicationStage.startSession();
+            if ( mainApplicationWindowHandler != null ) {
+                mainApplicationWindowHandler.startSession();
             }
         } );
     }

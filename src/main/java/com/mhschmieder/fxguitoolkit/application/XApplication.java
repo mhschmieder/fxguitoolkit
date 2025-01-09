@@ -174,7 +174,7 @@ public class XApplication extends Application {
             // Show the Splash Screen until the main stage shows.
             splashScreenManager.showSplashScreen( primaryStage,
                                                   mainApplicationLoadTask,
-                                                  () -> mainApplicationLoadTask.showMainApplicationStage() );
+                                                  () -> mainApplicationLoadTask.showMainApplicationWindow() );
 
             // Start the progress bar updater on the Splash Screen.
             new Thread( mainApplicationLoadTask ).start();
@@ -183,7 +183,7 @@ public class XApplication extends Application {
             final MainApplicationStage mainApplicationStage = getMainApplicationStage();
 
             // Pass the main stage reference to the application load task.
-            mainApplicationLoadTask.setMainApplicationStage( mainApplicationStage );
+            mainApplicationLoadTask.setMainApplicationWindowHandler( mainApplicationStage );
 
             // Host Services cannot be statically invoked, and are needed for
             // stuff like launching the default browser.
