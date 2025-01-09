@@ -89,7 +89,11 @@ public class ListViewUtilities {
                                   ? getItem()
                                   : item;
                         if ( currentLabelAssignable != null ) {
-                            setText( currentLabelAssignable.label() );
+                            // Remove leading whitespace when using in a 
+                            // drop-list, as some labels are designed to
+                            // serve as measurement units following a
+                            // numeric value and many of those use a space.
+                            setText( currentLabelAssignable.label().trim() );
                         }
                     }
                 };
