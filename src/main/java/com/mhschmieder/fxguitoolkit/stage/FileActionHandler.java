@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -632,14 +632,36 @@ public interface FileActionHandler {
     default void updateMruCache( final File file, final boolean addToCache ) {}
 
     // NOTE: We allow separate default directories per implementing Window as
-    //  often they have different functionality and the user needs one default
-    //  directories per functional scope.
-    void setDefaultDirectory( final File defaultDirectory );
+    //  often they have different functionality and the user generally needs one
+    //  default directory per functional scope.
+    default void setDefaultDirectory( final File defaultDirectory ) {}
     
-    void updateRasterGraphicsExportSource();    
-    void updateVectorGraphicsExportSource();
+    // Implementing classes should set the class variable used for raster
+    // graphics export. Interfaces can't do that due to no class variables.
+    default void updateRasterGraphicsExportSource() {}
     
-    String getGraphicsExportAllLabel();
-    String getGraphicsExportChartLabel();
-    String getGraphicsExportAuxiliaryLabel();
+    // Implementing classes should set the class variable used for vector
+    // graphics export. Interfaces can't do that due to no class variables.
+    default void updateVectorGraphicsExportSource() {}
+    
+    // NOTE: This label is for Graphics Export Options.
+    // NOTE: Implementing classes should override this default if they expose
+    //  either charts or auxiliary information for Graphics Export.
+    default String getGraphicsExportAllLabel() {
+        return "";
+    }
+
+    // NOTE: This label is for Graphics Export Options.
+    // NOTE: Implementing classes should override this default if they expose
+    //  auxiliary information for Graphics Export.
+    default String getGraphicsExportAuxiliaryLabel() {
+        return "";
+    }
+
+    // NOTE: This label is for Graphics Export Options.
+    // NOTE: Implementing classes should override this default if they expose 
+    //  charts for Graphics Export.
+    default String getGraphicsExportChartLabel() {
+        return "";
+    }
 }

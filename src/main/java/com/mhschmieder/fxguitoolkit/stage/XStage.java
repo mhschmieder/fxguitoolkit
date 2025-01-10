@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -651,27 +651,6 @@ public abstract class XStage extends Stage implements ForegroundManager,
     @Override
     public final StringBuilder getDefaultTitle() {
         return new StringBuilder( _defaultTitle );
-    }
-
-    // NOTE: This label is for Graphics Export Options.
-    // NOTE: Derived classes should override this default if they expose
-    //  either charts or auxiliary information for Graphics Export.
-    public String getGraphicsExportAllLabel() {
-        return ""; //$NON-NLS-1$
-    }
-
-    // NOTE: This label is for Graphics Export Options.
-    // NOTE: Derived classes should override this default if they expose
-    //  auxiliary information for Graphics Export.
-    public String getGraphicsExportAuxiliaryLabel() {
-        return ""; //$NON-NLS-1$
-    }
-
-    // NOTE: This label is for Graphics Export Options.
-    // NOTE: Derived classes should override this default if they expose charts
-    //  for Graphics Export.
-    public String getGraphicsExportChartLabel() {
-        return ""; //$NON-NLS-1$
     }
 
     @Override
@@ -1478,7 +1457,8 @@ public abstract class XStage extends Stage implements ForegroundManager,
     // Unless more granularity is supported via the Export Options, it should
     // be sufficient to grab the main Content Node as Graphics Export Source,
     // so that Tool Bars and Menus don't become part of the exported graphics.
-    protected void updateRasterGraphicsExportSource() {
+    @Override
+    public void updateRasterGraphicsExportSource() {
         // Set the default Node reference for Raster Graphics Export operations.
         _rasterGraphicsExportSource = _content;
     }
@@ -1486,7 +1466,8 @@ public abstract class XStage extends Stage implements ForegroundManager,
     // Unless more granularity is supported via the Export Options, it should
     // be sufficient to grab the main Content Node as Graphics Export Source,
     // so that Tool Bars and Menus don't become part of the exported graphics.
-    protected void updateVectorGraphicsExportSource() {
+    @Override
+    public void updateVectorGraphicsExportSource() {
         // Set the default Node reference for Vector Graphics Export operations.
         _vectorGraphicsExportSource = _content;
     }
