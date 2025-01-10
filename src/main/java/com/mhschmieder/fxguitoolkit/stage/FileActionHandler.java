@@ -368,8 +368,7 @@ public interface FileActionHandler {
         // The only error handling for most file loads is to check the incoming
         // load status and to alert the user if there were file load errors. It
         // is possible that additional logic may be needed in overrides to this
-        // method, such as to make sure the results of the file load are
-        // non-empty.
+        // method, such as to make sure the results of file load are non-empty.
         boolean sawErrors = true;
         switch ( fileStatus ) {
         case CREATED:
@@ -378,6 +377,30 @@ public interface FileActionHandler {
         case OPENED:
         case OPENED_FOR_RENAME:
             sawErrors = false;
+            break;
+        case READ_ERROR:
+            switch ( fileMode ) {
+            case NEW:
+            case OPEN:
+            case IMPORT_TEXT_DATA:
+            case IMPORT_BINARY_DATA:
+            case IMPORT_IMAGE_DATA:
+            case IMPORT_RASTER_GRAPHICS:
+            case IMPORT_VECTOR_GRAPHICS:
+            case IMPORT_CAD:
+            case LOAD:
+                // Alert the user that a file open error occurred.
+                final String fileReadErrorMessage = MessageFactory
+                        .getFileReadErrorMessage( file );
+                DialogUtilities.showFileOpenErrorAlert( fileReadErrorMessage );
+                break;
+            case OTHER:
+                sawErrors = otherReadErrorHandling( file );
+                break;
+            //$CASES-OMITTED$
+            default:
+                break;
+            }
             break;
         // $CASES-OMITTED$
         default:
@@ -490,29 +513,6 @@ public interface FileActionHandler {
                     .getGraphicsFileWriteErrorMessage( file );
             DialogUtilities.showFileSaveErrorAlert( graphicsFileWriteErrorMessage );
             break;
-        case READ_ERROR:
-            switch ( fileMode ) {
-            case NEW:
-            case OPEN:
-            case IMPORT_DATA:
-            case IMPORT_IMAGE:
-            case IMPORT_RASTER_GRAPHICS:
-            case IMPORT_VECTOR_GRAPHICS:
-            case IMPORT_CAD:
-            case LOAD:
-                // Alert the user that a file open error occurred.
-                final String fileReadErrorMessage = MessageFactory
-                        .getFileReadErrorMessage( file );
-                DialogUtilities.showFileOpenErrorAlert( fileReadErrorMessage );
-                break;
-            case OTHER:
-                sawErrors = otherReadErrorHandling( file );
-                break;
-            //$CASES-OMITTED$
-            default:
-                break;
-            }
-            break;
         case WRITE_ERROR:
             switch ( fileMode ) {
             case SAVE_REPORT:
@@ -538,8 +538,9 @@ public interface FileActionHandler {
             case SAVE:
             case SAVE_CONVERTED:
             case SAVE_LOG:
-            case EXPORT_DATA:
-            case EXPORT_IMAGE:
+            case EXPORT_TEXT_DATA:
+            case EXPORT_BINARY_DATA:
+            case EXPORT_IMAGE_DATA:
             case EXPORT_RASTER_GRAPHICS:
             case EXPORT_VECTOR_GRAPHICS:
             case EXPORT_CAD:
