@@ -37,12 +37,13 @@ import javafx.stage.WindowEvent;
  * Defines the contract for methods that main application windows and stages
  * must implement for handling basic primary application window functionality.
  */
-public interface MainApplicationWindowHandler extends ApplicationWindowHandler,
-    MacAppMenuEventHandler {
+public interface MainApplicationWindowHandler extends MacAppMenuEventHandler {
 
     void startSession();
     
     boolean isInitialized();
+
+    void disposeAllResources();
 
     /**
      * Like fileClose, but upon Cancel, consumes a WindowEvent to avoid exiting.
@@ -67,12 +68,6 @@ public interface MainApplicationWindowHandler extends ApplicationWindowHandler,
      *            Flag for whether to also exit the Java Platform
      */
     default void exitApplication( final boolean exitPlatform ) {
-        // Save the User Preferences for the entire Application (if applicable).
-        // NOTE: We do this BEFORE disposing of all resources, to avoid race
-        //  conditions with windows closing before their preferences have been
-        //  saved (if done as part of a window closing implementation).
-        saveAllPreferences();
-
         // Dispose of all resources allocated by the main application window.
         disposeAllResources();
 

@@ -39,9 +39,7 @@ import javafx.geometry.Dimension2D;
  * Defines the contract for methods that all application windows and stages
  * must implement for handling basic application session functionality.
  */
-public interface ApplicationWindowHandler {
-    
-    void disposeAllResources();
+public interface ApplicationWindowHandler { 
     
     void hideAllWindows();
     
@@ -56,7 +54,7 @@ public interface ApplicationWindowHandler {
     void restoreAllWindowLayouts( final Preferences prefs );
     
     void saveAllWindowLayouts( final Preferences prefs );
-    
+
     void restoreWindowLayout( final Preferences prefs );
     
     void saveWindowLayout( final Preferences prefs );
@@ -90,7 +88,7 @@ public interface ApplicationWindowHandler {
         final StringBuilder subtitle = new StringBuilder( " - [" );
         subtitle.append( documentFileName );
         
-        // TODO: Re-enable the Mac conditionals once we figure out how to do the
+        // TODO: Re-enable the Mac conditionals once we figure out how to do it.
         // if ( documentModified
         // && !SystemType.MACOS.equals( clientProperties.systemType ) ) {
         if ( documentModified ) {

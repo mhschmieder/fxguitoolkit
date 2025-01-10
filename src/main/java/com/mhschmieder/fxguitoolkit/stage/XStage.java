@@ -434,16 +434,6 @@ public abstract class XStage extends Stage implements ForegroundManager,
      */
     protected void clearImportedGraphics() {}
 
-    // Dispose of all resources allocated by this Stage.
-    @Override
-    public final void disposeAllResources() {
-        // Hide all windows owned by this Stage.
-        hideAllWindows();
-
-        // Hide this Stage, then dispose of it.
-        setVisible( false );
-    }
-
     // Clear all of the User Preferences for all Windows.
     public final void clearAllPreferences() {
         // First, clear User Preferences all of the secondary windows owned by
@@ -475,8 +465,8 @@ public abstract class XStage extends Stage implements ForegroundManager,
         // session ends, thus effectively undoing the Clear Preferences action.
         loadPreferences();
     }
-
-    // Hide all of the Windows associated with this Stage.
+ 
+    // Hide all of Windows associated with this Stage, including this Stage.
     @Override
     public void hideAllWindows() {
         // First, hide all of the secondary windows owned by this Stage.
@@ -524,16 +514,6 @@ public abstract class XStage extends Stage implements ForegroundManager,
 
         // Finally, restore this Stage's preferred layout.
         restoreWindowLayout( prefs );
-    }
-
-    // Save the User Preferences for all Windows associated with this Stage.
-    @Override
-    public final void saveAllPreferences() {
-        // First, save preferences for secondary windows owned by this Stage.
-        _windowManager.saveAllPreferences();
-
-        // Finally, save the User Preferences for this Stage itself.
-        savePreferences();
     }
 
     /**

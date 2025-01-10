@@ -252,6 +252,28 @@ public abstract class MainApplicationStage extends XStage
         super.prepareForInput( menuBar );
     }
 
+    // Save the User Preferences for all Windows associated with the Main Stage.
+    @Override
+    public final void saveAllPreferences() {
+        // First, save preferences for secondary windows owned by this Stage.
+        _windowManager.saveAllPreferences();
+
+        // Finally, save the User Preferences for the Main Stage itself.
+        savePreferences();
+    }
+
+    @Override
+    public void disposeAllResources() {
+        // Save the User Preferences for the entire Application (if applicable).
+        // NOTE: We do this BEFORE disposing of all resources, to avoid race
+        //  conditions with windows closing before their preferences have been
+        //  saved (if done as part of a window closing implementation).
+        saveAllPreferences();
+
+        // Hide all windows owned by this Stage. This also hides this Stage.
+        hideAllWindows();
+    }
+
     // Close this stage and exit the application, after first giving the user
     // the option to save or close the current file or to cancel the Quit.
     @Override

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -125,7 +125,8 @@ public final class WindowManager {
      */
     public void loadAllPreferences() {
         // Load the User Preferences for each Object Properties Editor.
-        _objectPropertiesEditors.stream().forEach( ObjectPropertiesEditor::loadAllPreferences );
+        _objectPropertiesEditors.stream().forEach( 
+                ObjectPropertiesEditor::loadAllPreferences );
 
         // Load the User Preferences for each individual Stage.
         _stages.stream().forEach( XStage::loadAllPreferences );
@@ -151,11 +152,11 @@ public final class WindowManager {
         // Restore the Object Properties Editors' preferred Layouts.
         _objectPropertiesEditors.stream().filter( ObjectPropertiesEditor::isResizable )
                 .forEach( objectPropertiesEditor -> objectPropertiesEditor
-                        .restoreWindowLayout( prefs ) );
+                        .restoreAllWindowLayouts( prefs ) );
 
         // Restore the secondary Stages' preferred Window Layouts.
         _stages.stream().filter( XStage::isResizable )
-                .forEach( stage -> stage.restoreWindowLayout( prefs ) );
+                .forEach( stage -> stage.restoreAllWindowLayouts( prefs ) );
     }
 
     /**
@@ -163,10 +164,11 @@ public final class WindowManager {
      */
     public void saveAllPreferences() {
         // Save the User Preferences for each Object Properties Editor.
-        _objectPropertiesEditors.stream().forEach( ObjectPropertiesEditor::savePreferences );
+        _objectPropertiesEditors.stream().forEach( 
+                ObjectPropertiesEditor::saveAllPreferences );
 
         // Save the User Preferences for each individual Stage.
-        _stages.stream().forEach( XStage::savePreferences );
+        _stages.stream().forEach( XStage::saveAllPreferences );
     }
 
     /**
@@ -177,11 +179,11 @@ public final class WindowManager {
      */
     public void saveAllWindowLayouts( final Preferences prefs ) {
         // Save the Object Properties Editors' preferred Window Layouts.
-        _objectPropertiesEditors.stream().forEach( objectPropertiesEditor -> objectPropertiesEditor
-                .saveWindowLayout( prefs ) );
+        _objectPropertiesEditors.stream().forEach( objectPropertiesEditor 
+                -> objectPropertiesEditor.saveAllWindowLayouts( prefs ) );
 
         // Save the individual stages' preferred Window Layouts.
-        _stages.stream().forEach( stage -> stage.saveWindowLayout( prefs ) );
+        _stages.stream().forEach( stage -> stage.saveAllWindowLayouts( prefs ) );
     }
 
     /**
@@ -198,10 +200,10 @@ public final class WindowManager {
         // Update the Object Properties Editors' Frame Titles.
         _objectPropertiesEditors.stream().filter( ObjectPropertiesEditor::isFrameTitleManager )
                 .forEach( objectPropertiesEditor -> objectPropertiesEditor
-                        .updateFrameTitle( documentFile, documentModified ) );
+                        .updateFrameTitles( documentFile, documentModified ) );
 
         // Update the Stages' Frame Titles.
         _stages.stream().filter( XStage::isFrameTitleManager )
-                .forEach( stage -> stage.updateFrameTitle( documentFile, documentModified ) );
+                .forEach( stage -> stage.updateFrameTitles( documentFile, documentModified ) );
     }
 }
