@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.List;
 
 import com.mhschmieder.commonstoolkit.io.FileMode;
@@ -64,52 +65,55 @@ public interface FileActionHandler {
                            final ExtensionFilter defaultExtensionFilter,
                            final boolean multiSelectionEnabled ) {
         // NOTE: JavaFX uses a different file chooser action for multi-select.
+        final List< File > files = Collections.emptyList();
         if ( multiSelectionEnabled ) {
             // Get a file (or list of files) for a "File Open" action.
-            final List< File > files =
-                                     FileChooserUtilities.getFilesForOpen( fileChooserTitle,
-                                                                           initialDirectory,
-                                                                           extensionFilterAdditions,
-                                                                           defaultExtensionFilter,
-                                                                           parent );
-
-            // Make sure the user actually selected a file and didn't cancel.
-            if ( ( files != null ) && ( files.size() >= 0 ) ) {
-                File openedFile = null;
-                for ( final File file : files ) {
-                    // Open the contextual content from the chosen (but possibly
-                    // renamed) filename.
-                    if ( fileOpen( file, fileMode ) ) {
-                        openedFile = file;
-                    }
-                }
-                if ( openedFile != null ) {
-                    // Set the default directory to the parent of any of the
-                    // successfully selected files.
-                    final File parentDirectory = openedFile.getParentFile();
-                    setDefaultDirectory( parentDirectory );
-                }
-            }
+            files.addAll( FileChooserUtilities.getFilesForOpen( 
+                    fileChooserTitle,
+                    initialDirectory,
+                    extensionFilterAdditions,
+                    defaultExtensionFilter,
+                    parent ) );
         }
         else {
             // Get a file for a "File Open" action.
-            final File file = FileChooserUtilities.getFileForOpen( fileChooserTitle,
-                                                                   initialDirectory,
-                                                                   extensionFilterAdditions,
-                                                                   defaultExtensionFilter,
-                                                                   parent );
-
-            // Make sure the user actually selected a file and didn't cancel.
-            if ( file != null ) {
-                // Open the contextual content from the chosen (but possibly
-                // renamed) filename.
-                if ( fileOpen( file, fileMode ) ) {
-                    // Set the default directory to the parent of the
-                    // successfully selected file.
-                    final File parentDirectory = file.getParentFile();
-                    setDefaultDirectory( parentDirectory );
-                }
+            files.add( FileChooserUtilities.getFileForOpen( 
+                    fileChooserTitle,
+                    initialDirectory,
+                    extensionFilterAdditions,
+                    defaultExtensionFilter,
+                    parent ) );
+        }
+        
+        // Make sure the user actually selected a file and didn't cancel.
+        if ( files.isEmpty() ) {
+            return;
+        }
+        
+        File lastOpenedFile = null;
+        for ( final File file : files ) {
+            // Open the chosen (but possibly renamed) file.
+            if ( fileOpen( file, fileMode ) ) {
+                lastOpenedFile = file;
             }
+        }
+ 
+        if ( lastOpenedFile != null ) {
+            // Set the default directory to the parent of the last opened file.
+            final File parentDirectory = lastOpenedFile.getParentFile();
+            setDefaultDirectory( parentDirectory );
+        }
+    }
+
+    // NOTE: Not all implementing Windows support MRU File Lists, but the
+    //  behavior tends to be generic across all applications when they do.
+    default void fileOpenMru( final int mruId ) {
+        // Open a new file of default type, using the cached filename.
+        // NOTE: By default, the MRU Cache is non-null and empty, but when
+        //  populated, it has a list of primary application objects/files.
+        final File mruFile = getMruFile( mruId );
+        if ( mruFile != null ) {
+            fileOpen( mruFile, FileMode.OPEN );
         }
     }
 
@@ -157,8 +161,50 @@ public interface FileActionHandler {
         return fileOpenPostProcessing( file, fileMode, fileStatus );
     }
 
-    // File Save As is not required for all stages, so this method is not
-    // declared abstract but is instead given a default implementation.
+    @SuppressWarnings("nls")
+    default FileStatus loadFromFile( final File file,
+                                     final FileMode fileMode ) {
+        // Pre-declare the File Load status in case of exceptions or unsupported
+        // File Modes or file types. Not all applications support File Load of
+        // types that are not native to the application, or of partial projects.
+        FileStatus fileStatus = FileStatus.NOT_OPENED;
+
+        final String fileExtension = FileUtilities.getExtension( file );
+        switch ( fileExtension ) {
+        case "gif":
+        case "jpe":
+        case "jpeg":
+        case "jpg":
+        case "png":
+            // Load the raster image file.
+            //
+            // Chain a BufferedInputStream to a FileInputStream, for better
+            // performance.
+            try ( final FileInputStream fileInputStream = new FileInputStream( file );
+                    final BufferedInputStream bufferedInputStream 
+                            = new BufferedInputStream( fileInputStream ) ) {
+                if ( importImage( bufferedInputStream, fileExtension ) ) {
+                    fileStatus = FileStatus.IMPORTED;
+                }
+            }
+            catch ( final SecurityException | IOException e ) {
+                e.printStackTrace();
+            }
+            break;
+        default:
+            break;
+        }
+
+        return fileStatus;
+    }
+
+    // NOTE: Not all implementing Windows support File Close actions, so this
+    //  method is given a default implementation that indicates cancellation.
+    default boolean fileClose() {
+        return false;
+    }
+
+    // File Save is not required for all stages, so we provide a default.
     default boolean fileSaveAs( final Window parent,
                                 final FileMode fileMode,
                                 final ClientProperties clientProperties,
@@ -194,8 +240,7 @@ public interface FileActionHandler {
         final File parentDirectory = file.getParentFile();
         setDefaultDirectory( parentDirectory );
 
-        // Save the contextual content to the chosen (but possibly renamed)
-        // filename.
+        // Save the content to the chosen (but possibly renamed) file.
         return fileSave( file, fileMode );
     }
 
@@ -251,44 +296,6 @@ public interface FileActionHandler {
                                  final File tempFile,
                                  final FileMode fileMode ) {
         return FileStatus.NOT_SAVED;
-    }
-
-    // NOTE: Not all implementing Windows support File Close actions, so this
-    //  method is given a default implementation that indicates cancellation.
-    default boolean fileClose() {
-        return false;
-    }
-
-    // NOTE: Not all implementing Windows support MRU File Lists, but the
-    //  behavior tends to be generic across all applications when they do.
-    default void fileOpenMru( final int mruId ) {
-        // Open a new file of default type, using the cached filename.
-        // NOTE: By default, the MRU Cache is non-null and empty, but when
-        //  populated, it has a list of primary application objects/files.
-        final File mruFile = getMruFile( mruId );
-        if ( mruFile != null ) {
-            fileOpen( mruFile, FileMode.OPEN );
-        }
-    }
-
-    // File Save is not required for all Windows, so this method is not
-    // declared abstract but is instead given a default implementation.
-    default FileStatus fileSaveExtensions( final File file, 
-                                           final File tempFile ,
-                                           final FileMode fileMode ) {
-        return FileStatus.NOT_SAVED;
-    }
-
-    /**
-     * Returns the file prefix to use for interim write operations that insert a
-     * randomizer-generated unique substring. Usually this is the application
-     * name.
-     *
-     * @return The prefix to use for generating a random temp file name.
-     */
-    @SuppressWarnings("nls")
-    default String getPrefixForTempFile() {
-        return "";
     }
 
     /**
@@ -498,6 +505,9 @@ public interface FileActionHandler {
                         .getFileReadErrorMessage( file );
                 DialogUtilities.showFileOpenErrorAlert( fileReadErrorMessage );
                 break;
+            case OTHER:
+                sawErrors = otherReadErrorHandling( file );
+                break;
             //$CASES-OMITTED$
             default:
                 break;
@@ -538,6 +548,9 @@ public interface FileActionHandler {
                         .getFileWriteErrorMessage( file );
                 DialogUtilities.showFileSaveErrorAlert( fileWriteErrorMessage );
                 break;
+            case OTHER:
+                sawErrors = otherWriteErrorHandling( file );
+                break;
             //$CASES-OMITTED$
             default:
                 break;
@@ -558,42 +571,57 @@ public interface FileActionHandler {
 
         return !sawErrors;
     }
+    
+    // This method is for overriding to handle custom File Modes not in the enum.
+    // Applications should define their own and reference a pre-cached class var.
+    default boolean otherReadErrorHandling( final File file ) {
+        return true;
+    }
+    
+    // This method is for overriding to handle custom File Modes not in the enum.
+    // Applications should define their own and reference a pre-cached class var.
+    default boolean otherWriteErrorHandling( final File file ) {
+        return true;
+    }
 
+    // NOTE: Not all implementing Windows support MRU File Lists, so this lower
+    //  level method is given a default implementation that returns a null File.
+    default File getMruFile( final int mruId ) {
+        return null;
+    }
+
+    // NOTE: Not all implementing Windows support an MRU list, so we define a
+    //  no-op default implementation rather than forcing an override.
+    default void updateMruCache( final File file, final boolean addToCache ) {}
+
+    /**
+     * Returns the file prefix to use for interim write operations that insert a
+     * random-generated unique substring. Usually this is the application name.
+     *
+     * @return The prefix to use for generating a random temp file name.
+     */
     @SuppressWarnings("nls")
-    default FileStatus loadFromFile( final File file,
-                                     final FileMode fileMode ) {
-        // Pre-declare the File Load status in case of exceptions or unsupported
-        // File Modes or file types. Not all applications support File Load of
-        // types that are not native to the application, or of partial projects.
-        FileStatus fileStatus = FileStatus.NOT_OPENED;
+    default String getPrefixForTempFile() {
+        return "";
+    }
 
-        final String fileExtension = FileUtilities.getExtension( file );
-        switch ( fileExtension ) {
-        case "gif":
-        case "jpe":
-        case "jpeg":
-        case "jpg":
-        case "png":
-            // Load the raster image file.
-            //
-            // Chain a BufferedInputStream to a FileInputStream, for better
-            // performance.
-            try ( final FileInputStream fileInputStream = new FileInputStream( file );
-                    final BufferedInputStream bufferedInputStream 
-                            = new BufferedInputStream( fileInputStream ) ) {
-                if ( importImage( bufferedInputStream, fileExtension ) ) {
-                    fileStatus = FileStatus.IMPORTED;
-                }
-            }
-            catch ( final SecurityException | IOException e ) {
-                e.printStackTrace();
-            }
-            break;
-        default:
-            break;
-        }
+    // NOTE: We allow separate default directories per implementing Window as
+    //  often they have different functionality and the user generally needs one
+    //  default directory per functional scope.
+    default void setDefaultDirectory( final File defaultDirectory ) {}
 
-        return fileStatus;
+    // File Save is not required for all stages, so this default is a no-op.
+    default FileStatus fileSaveExtensions( final File file, 
+                                           final File tempFile ,
+                                           final FileMode fileMode ) {
+        return FileStatus.NOT_SAVED;
+    }
+
+    // NOTE: Not all implementing Windows will support importing images, but we
+    //  are providing a convenience mechanism to do so in the file open hierarchy
+    //  of methods, so we default the image importer to return false.
+    default boolean importImage( final InputStream inputStream, final String fileExtension ) {
+        return false;
     }
 
     default void fileImportRasterImage( final Window parent,
@@ -613,28 +641,6 @@ public interface FileActionHandler {
                   ExtensionFilters.PNG_EXTENSION_FILTER,
                   false );
     }
-
-    // NOTE: Not all implementing Windows will support importing images, but we
-    //  are providing a convenience mechanism to do so in the file open hierarchy
-    //  of methods, so we default the image importer to return false.
-    default boolean importImage( final InputStream inputStream, final String fileExtension ) {
-        return false;
-    }
-
-    // NOTE: Not all implementing Windows support MRU File Lists, so this lower
-    //  level method is given a default implementation that returns a null File.
-    default File getMruFile( final int mruId ) {
-        return null;
-    }
-
-    // NOTE: Not all implementing Windows support an MRU list, so we define a
-    //  no-op default implementation rather than forcing an override.
-    default void updateMruCache( final File file, final boolean addToCache ) {}
-
-    // NOTE: We allow separate default directories per implementing Window as
-    //  often they have different functionality and the user generally needs one
-    //  default directory per functional scope.
-    default void setDefaultDirectory( final File defaultDirectory ) {}
     
     // Implementing classes should set the class variable used for raster
     // graphics export. Interfaces can't do that due to no class variables.
