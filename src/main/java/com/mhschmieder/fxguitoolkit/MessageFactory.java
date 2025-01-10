@@ -333,18 +333,16 @@ public class MessageFactory {
         return "Problem with Print Services"; //$NON-NLS-1$
     }
 
-    public static final String getProjectFileReadErrorMessage( final File file ) {
-        final String errorMessageBody = " could not open." //$NON-NLS-1$
-                + " Check the Session Log for possible run-time exceptions."; //$NON-NLS-1$
-        final String projectFileNotOpenedMessage = getFileErrorMessage( errorMessageBody, file );
-        return projectFileNotOpenedMessage;
+    public static final String getFileReadErrorMessage( final File file ) {
+        final String errorMessageBody = " could not open."
+                + " Check the Session Log for possible run-time exceptions.";
+        return getFileErrorMessage( errorMessageBody, file );
     }
 
-    public static final String getProjectFileWriteErrorMessage( final File file ) {
+    public static final String getFileWriteErrorMessage( final File file ) {
         final String errorMessageBody = " could not save." //$NON-NLS-1$
-                + " Check the Session Log for possible run-time exceptions."; //$NON-NLS-1$
-        final String projectFileNotSavedMessage = getFileErrorMessage( errorMessageBody, file );
-        return projectFileNotSavedMessage;
+                + " Check the Session Log for possible run-time exceptions.";
+        return getFileErrorMessage( errorMessageBody, file );
     }
 
     public static final String getRasterGraphicsExportOptionsMasthead() {
