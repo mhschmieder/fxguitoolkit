@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 
+import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.io.FileUtilities;
 import com.mhschmieder.fxguitoolkit.stage.FileActionHandler;
 
@@ -87,7 +88,9 @@ public class DragDropUtilities {
                             dragEvent.acceptTransferModes( TransferMode.ANY );
                         }
                         else if ( DragEvent.DRAG_DROPPED.equals( eventType ) ) {
-                            dropCompleted = fileActionHandler.fileOpen( file );
+                            dropCompleted = fileActionHandler.fileOpen( 
+                                file,
+                                FileMode.IMPORT_RASTER_GRAPHICS );
                         }
                     }
                 }
@@ -102,5 +105,4 @@ public class DragDropUtilities {
             dragEvent.consume();
         };
     }
-
 }

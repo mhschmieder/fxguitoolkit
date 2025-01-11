@@ -50,20 +50,17 @@ import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
 import com.mhschmieder.fxgraphicstoolkit.io.VectorGraphicsExportOptions;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
-import com.mhschmieder.fxgraphicstoolkit.print.PrintUtilities;
 import com.mhschmieder.fxguitoolkit.ForegroundManager;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
-import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.action.BackgroundColorChoices;
 import com.mhschmieder.fxguitoolkit.action.MruFileActions;
 import com.mhschmieder.fxguitoolkit.action.WindowSizeActions;
 import com.mhschmieder.fxguitoolkit.action.XAction;
-import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
+import com.mhschmieder.fxguitoolkit.print.PrintManager;
 
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
-import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -73,7 +70,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.scene.transform.Scale;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -119,9 +115,6 @@ public abstract class XStage extends Stage implements ForegroundManager,
 
     // Flag for whether this window is exempt from handling Full Screen Mode.
     protected boolean                                   _fullScreenModeExempt;
-
-    // We need an always active Printer Job in order to support Page Setup.
-    protected PrinterJob                                _printerJob;
 
     // Cache the window key prefix that is used for window layout preferences.
     private final String                                _windowKeyPrefix;
@@ -176,6 +169,9 @@ public abstract class XStage extends Stage implements ForegroundManager,
 
     // Declare a Window Manager to act as a container for all window references.
     public final WindowManager      _windowManager;
+    
+    // Declare a Print Manager so that all print functionality is usable anywhere.
+    public final PrintManager printManager;
 
     /**
      * Cache the Client Properties (System Type, Locale, etc.).
@@ -292,6 +288,11 @@ public abstract class XStage extends Stage implements ForegroundManager,
 
         // Make the Window Manager in the base class as it is a stock utility.
         _windowManager = new WindowManager();
+        
+        // Make the Print Manager at construction time, so Print Services are
+        // available as early as possible. User Preferences might need to
+        // access Page Setup, for instance.
+        printManager = new PrintManager( this );
     }
     
     /**
@@ -546,67 +547,18 @@ public abstract class XStage extends Stage implements ForegroundManager,
     }
 
     public final void doPageSetup() {
-        final String printCategory = "Page Setup"; 
-        final boolean printJobVerified = verifyPrinterJob( printCategory );
-        if ( !printJobVerified ) {
-            return;
-        }
-
-        try {
-            // NOTE: This runs internally on a separate synced thread.
-            // NOTE: On macOS, setting this window as owner, causes the menu
-            //  system to freeze up until another primary window is shown, and
-            //  the behavior and window stacking order seem no different when
-            //  setting the dialog's owner to null, so it is safer to do so.
-            // NOTE: On Windows, however, there was no side effect in using
-            //  this window as the dialog's owner, and not doing so causes it to
-            //  go to the upper left of the screen, and thus hard to notice.
-            final Window windowOwner = SystemType.MACOS.equals( clientProperties.systemType )
-                ? null
-                : this;
-            _printerJob.showPageSetupDialog( windowOwner );
-        }
-        catch ( final IllegalStateException ise ) {
-            ise.printStackTrace();
-        }
+        printManager.pageSetup( clientProperties.systemType );
     }
 
-    // TODO: Find a way to indicate and generate multiple pages.
-    public final void doPrint() {
-        final String printCategory = "Print"; //$NON-NLS-1$
-        final boolean printJobVerified = verifyPrinterJob( printCategory );
-        if ( !printJobVerified ) {
-            return;
-        }
-
-        boolean printConfirmed = false;
-        try {
-            // NOTE: This runs internally on a separate synced thread.
-            // NOTE: On macOS, setting this window as owner, causes the menu
-            //  system to freeze up until another primary window is shown, and
-            //  the behavior and window stacking order seem no different when
-            //  setting the dialog's owner to null, so it is safer to do so.
-            // NOTE: On Windows, however, there was no side effect in using
-            //  this window as the dialog's owner, and not doing so causes it to
-            //  go to the upper left of the screen, and thus hard to notice.
-            final Window windowOwner = SystemType.MACOS.equals( clientProperties.systemType )
-                ? null
-                : this;
-            printConfirmed = _printerJob.showPrintDialog( windowOwner );
-        }
-        catch ( final IllegalStateException ise ) {
-            ise.printStackTrace();
-        }
-        finally {
-            if ( printConfirmed ) {
-                // Print the requested pages.
-                print( printCategory );
-            }
-            else {
-                // Make sure the printer doesn't lock out new jobs.
-                renewPrintJob();
-            }
-        }
+    /**
+     * Prints the main content {@link Node} for this {@link Stage}.
+     * <p>
+     * Not marked as final, as derived classes may need to go through the
+     * {@link WebKit} toolkit instead, via {@link WebEngine} printing.
+     */
+    public void doPrint() {
+        // TODO: Find a way to indicate and generate multiple pages.
+        printManager.print( getContent(), clientProperties.systemType );
     }
 
     // Set the window to its configured default size.
@@ -971,45 +923,6 @@ public abstract class XStage extends Stage implements ForegroundManager,
         }
     }
 
-    protected void print( final String printCategory ) {
-        // Print the main Content Node, which excludes not only the Frame Title
-        // Bar, but also the Menu Bar, Tool Bar, Status Bar, Action Button Bar.
-        final Node printNode = _content;
-        final Scale printJobScale = PrintUtilities.getPrintJobScale( _printerJob, printNode );
-        try {
-            // Scale the Print Job to fit the printed page.
-            printNode.getTransforms().add( printJobScale );
-        }
-        catch ( final UnsupportedOperationException | ClassCastException | NullPointerException
-                | IllegalArgumentException e ) {
-            e.printStackTrace();
-        }
-
-        try {
-            // Print the requested node, with scaling applied.
-            final boolean pagePrinted = _printerJob.printPage( printNode );
-            if ( !pagePrinted ) {
-                GuiUtilities.handlePrintJobError( _printerJob, printCategory );
-            }
-        }
-        catch ( final NullPointerException npe ) {
-            npe.printStackTrace();
-        }
-
-        // Prepare for the next Print Job so the Printer isn't hung.
-        renewPrintJob();
-
-        try {
-            // Remove the print job scale transform or the node itself gets
-            // permanently scaled on the screen as well.
-            printNode.getTransforms().remove( printJobScale );
-        }
-        catch ( final UnsupportedOperationException | ClassCastException
-                | NullPointerException e ) {
-            e.printStackTrace();
-        }
-    }
-
     // Callback listeners are not required for stages, so this method is not
     // declared abstract but is instead given a default no-op implementation.
     protected void removeCallbackListeners() {}
@@ -1023,21 +936,6 @@ public abstract class XStage extends Stage implements ForegroundManager,
                 .removeListener( ( observableValue,
                                    oldSceneHeight,
                                    newSceneHeight ) -> handleWindowHeighthChange() );
-    }
-
-    // Prepare for the next Print Job so the Printer isn't hung.
-    protected final void renewPrintJob() {
-        // End the job even if it failed, as this also cancels a hung job and
-        // thus makes the printer available for another try.
-        _printerJob.endJob();
-
-        try {
-            // Make a new print job, or we can only print once per session.
-            _printerJob = PrinterJob.createPrinterJob();
-        }
-        catch ( final SecurityException se ) {
-            se.printStackTrace();
-        }
     }
 
     // A reset capability is not required for Stages, so this method is not
@@ -1500,37 +1398,6 @@ public abstract class XStage extends Stage implements ForegroundManager,
         catch ( final SecurityException se ) {
             se.printStackTrace();
         }
-    }
-
-    // TODO: Move the PrinterJob variable and related methods to a new class
-    //  called PrinterManager or something like that? Just so it's all together.
-    protected final boolean verifyPrinterJob( final String printCategory ) {
-        // NOTE: We need an always active Printer Job in order to support Page
-        //  Setup and Printing. Note that a printer may come on-line while the
-        //  application is running, and that each printer job is good once only.
-        if ( _printerJob == null ) {
-            try {
-                _printerJob = PrinterJob.createPrinterJob();
-            }
-            catch ( final SecurityException se ) {
-                se.printStackTrace();
-            }
-        }
-
-        // If the Printer Job is still null, alert the user that there are no
-        // printers available to the application.
-        if ( _printerJob == null ) {
-            final String noPrinterAvailableErrorMessage = MessageFactory
-                    .getNoPrinterAvailableMessage();
-            final String masthead = MessageFactory.getPrintServicesProblemMasthead();
-            DialogUtilities.showErrorAlert( noPrinterAvailableErrorMessage, 
-                                            masthead, 
-                                            printCategory );
-
-            return false;
-        }
-
-        return true;
     }
 
     // Background color is handled uniformly, when supported, so register all

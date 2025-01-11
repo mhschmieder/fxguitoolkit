@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -304,5 +304,11 @@ public class SvgViewer extends XStage {
 
         // Replace the SVG group Layout with the new SVG path Collection.
         _svgGroup.getChildren().setAll( svgPaths );
+    }
+
+    @Override
+    public void saveAllPreferences() {
+        // NOTE Auto-generated method stub
+        
     }
 }

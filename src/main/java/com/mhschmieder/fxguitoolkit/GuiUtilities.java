@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,7 +53,6 @@ import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorUtilities;
 import com.mhschmieder.fxguitoolkit.control.XToggleButton;
-import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 import com.mhschmieder.guitoolkit.component.ButtonUtilities;
 
@@ -67,8 +66,6 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.print.PrinterJob;
-import javafx.print.PrinterJob.JobStatus;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -2086,49 +2083,6 @@ public final class GuiUtilities {
         addStylesheetsAsJarResource( scene, jarRelativeStylesheetFilenames );
         
         return fxColor;
-    }
-
-    /**
-     * This method handles errors from Print Page commands.
-     *
-     * @param printerJob
-     *            The Printer Job that failed
-     * @param printCategory
-     *            The category or context for the Printer Job
-     */
-    public static void handlePrintJobError( final PrinterJob printerJob,
-                                            final String printCategory ) {
-        final String masthead = MessageFactory.getPrintServicesProblemMasthead();
-        final JobStatus jobStatus = printerJob.getJobStatus();
-        switch ( jobStatus ) {
-        case CANCELED:
-            // Print Information: Print Job Cancelled.
-            final String printJobCanceledMessage = MessageFactory.getPrintJobCanceledMessage();
-            DialogUtilities
-                    .showInformationAlert( printJobCanceledMessage, masthead, printCategory );
-            break;
-        case DONE:
-            // Print Warning: Cannot print due to Printer blocked by other Print
-            // Job.
-            final String printerBlockedMessage = MessageFactory.getPrinterBlockedMessage();
-            DialogUtilities.showWarningAlert( printerBlockedMessage, masthead, printCategory );
-            break;
-        case ERROR:
-            // Print Error: Nothing to print, or Printer not set up correctly.
-            final String nullPrintJobMessage = MessageFactory.getNullPrintJobMessage();
-            DialogUtilities.showErrorAlert( nullPrintJobMessage, masthead, printCategory );
-            break;
-        case NOT_STARTED:
-            // Print Error: Unknown internal failure; Print Job not started.
-            final String printJobNotStartedMessage = MessageFactory.getPrintJobNotStartedMessage();
-            DialogUtilities.showErrorAlert( printJobNotStartedMessage, masthead, printCategory );
-            break;
-        case PRINTING:
-            // This is the normal condition; nothing to do.
-            break;
-        default:
-            break;
-        }
     }
 
     /**
