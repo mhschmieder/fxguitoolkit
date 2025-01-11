@@ -32,7 +32,6 @@ package com.mhschmieder.fxguitoolkit.model;
 
 import com.mhschmieder.fxgraphicstoolkit.beans.BeanFactory;
 
-import javafx.beans.Observable;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

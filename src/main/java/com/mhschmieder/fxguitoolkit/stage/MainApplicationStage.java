@@ -42,7 +42,6 @@ import javafx.application.Platform;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 
 // This class implements the basic features that all applications should share.
 // TODO: Find a JavaFX equivalent for the OSXAdapter, or delete for now.

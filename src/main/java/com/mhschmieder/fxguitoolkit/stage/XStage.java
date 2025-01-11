@@ -30,10 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.LinkedList;
@@ -41,18 +38,14 @@ import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-import javax.imageio.ImageIO;
-
 import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.io.FileStatus;
 import com.mhschmieder.commonstoolkit.io.FileUtilities;
 import com.mhschmieder.commonstoolkit.io.IoUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
 import com.mhschmieder.commonstoolkit.util.SystemType;
-import com.mhschmieder.fxgraphicstoolkit.image.ImageSize;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
 import com.mhschmieder.fxgraphicstoolkit.io.VectorGraphicsExportOptions;
@@ -66,8 +59,6 @@ import com.mhschmieder.fxguitoolkit.action.MruFileActions;
 import com.mhschmieder.fxguitoolkit.action.WindowSizeActions;
 import com.mhschmieder.fxguitoolkit.action.XAction;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
-import com.mhschmieder.graphicstoolkit.image.ImageConversionUtilities;
-import com.mhschmieder.graphicstoolkit.image.ImageFormatUtilities;
 
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
@@ -1701,98 +1692,15 @@ public abstract class XStage extends Stage implements ForegroundManager,
 
     // NOTE: This label is for Rendered Graphics Export.
     // NOTE: Derived classes should override this default if they expose
-    // either charts or auxiliary information for Graphics Export.
+    //  either charts or auxiliary information for Graphics Export.
     public String getRenderedGraphicsExportInformationTablesLabel() {
-        return ""; //$NON-NLS-1$
+        return "";
     }
 
     // NOTE: This label is for Rendered Graphics Export.
     // NOTE: Derived classes should override this default if they expose
-    // either charts or auxiliary information for Graphics Export.
+    //  either charts or auxiliary information for Graphics Export.
     public String getRenderedGraphicsExportOptionalItemLabel() {
-        return ""; //$NON-NLS-1$
-    }
-    
-    // NOTE: This is a placeholder until we get file support into this class.
-    protected void fileExportImageGraphics( final String graphicsCategory ) {}
-    
-    // NOTE: This is a placeholder until we get file support into this class.
-    protected void fileExportVectorGraphics( final String graphicsCategory ) {}
-    
-    // NOTE: The default implementation has been backed out until we can get
-    //  the third-party JFXConverter into Maven and thus be able to build our
-    //  convertertoolkit and jfxconvertertoolkit again, which get used here.
-    public FileStatus exportToEps( final File tempFile,
-                                   final File file ) {
-        return FileStatus.NOT_SAVED;
-    }
-
-    // NOTE: The default implementation has been backed out until we can get
-    //  the third-party JFXConverter into Maven and thus be able to build our
-    //  convertertoolkit and jfxconvertertoolkit again, which get used here.
-    public FileStatus exportToPdf( final File tempFile,
-                                   final File file ) {
-        return FileStatus.NOT_SAVED;
-    }
-        
-    // NOTE: The default implementation has been backed out until we can get
-    //  the third-party JFXConverter into Maven and thus be able to build our
-    //  convertertoolkit and jfxconvertertoolkit again, which get used here.
-    public FileStatus exportToPpt( final File tempFile,
-                                   final File file ) {
-        return FileStatus.NOT_SAVED;
-    }
-    
-    // NOTE: The default implementation has been backed out until we can get
-    //  the third-party JFXConverter into Maven and thus be able to build our
-    //  convertertoolkit and jfxconvertertoolkit again, which get used here.
-    public FileStatus exportToSvg( final File tempFile,
-                                   final File file ) {
-        return FileStatus.NOT_SAVED;
-    }
-
-    public FileStatus exportRasterGraphics( final File file,
-                                            final String imageFormatName,
-                                            final ImageSize imageSize ) {
-        // Avoid throwing unnecessary exceptions by filtering for no-ops.
-        if ( _rasterGraphicsExportSource == null ) {
-            return FileStatus.NOT_SAVED;
-        }
-
-        // Get an AWT BufferedImage as the snapshot of the source Node.
-        final BufferedImage bufferedImage = ImageUtilities
-                .getBufferedImageSnapshot( _rasterGraphicsExportSource );
-
-        // If necessary, correct bugs in Oracle's Image Type assignment.
-        final BufferedImage correctedImage = ImageConversionUtilities
-                .swapImageType( bufferedImage, imageFormatName );
-
-        // Avoid unnecessary file buffering and image tasks if the image
-        // writer's validity check would reject this image and/or its format.
-        if ( !ImageFormatUtilities.isImageTypeSupportedForWrite( correctedImage,
-                                                                 imageFormatName ) ) {
-            return FileStatus.NOT_SAVED;
-        }
-
-        // Chain a BufferedOutputStream to a FileOutputStream, for better
-        // performance.
-        try ( final FileOutputStream fileOutputStream = new FileOutputStream( file );
-                final BufferedOutputStream bufferedOutputStream =
-                                                                new BufferedOutputStream( fileOutputStream ) ) {
-            // As long as no compression or other customization is needed, it is
-            // simpler and less risky to use the default raster image writer.
-            ImageIO.write( correctedImage, imageFormatName, bufferedOutputStream );
-        }
-        catch ( final Exception e ) {
-            e.printStackTrace();
-            return FileStatus.NOT_SAVED;
-        }
-
-        return FileStatus.EXPORTED;
-    }
-
-    // NOTE: Not all Stages support exporting a screen dump image.
-    public FileStatus exportRawImage( final File file, final String imageFormat ) {
-        return FileStatus.NOT_SAVED;
+        return "";
     }
 }

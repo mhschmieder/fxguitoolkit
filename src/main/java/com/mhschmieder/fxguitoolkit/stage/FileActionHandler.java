@@ -30,23 +30,36 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.FilenameUtils;
 
 import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.io.FileStatus;
 import com.mhschmieder.commonstoolkit.io.FileUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.fxgraphicstoolkit.image.ImageSize;
+import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
 import com.mhschmieder.fxgraphicstoolkit.io.VectorGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
+import com.mhschmieder.graphicstoolkit.image.ImageConversionUtilities;
+import com.mhschmieder.graphicstoolkit.image.ImageFormatUtilities;
 
+import javafx.scene.Node;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;
 
@@ -208,8 +221,6 @@ public interface FileActionHandler {
     default boolean fileSaveAs( final Window parent,
                                 final FileMode fileMode,
                                 final ClientProperties clientProperties,
-                                final RasterGraphicsExportOptions rasterGraphicsExportOptions,
-                                final VectorGraphicsExportOptions vectorGraphicsExportOptions,
                                 final String fileChooserTitle,
                                 final File initialDirectory,
                                 final List< ExtensionFilter > extensionFilterAdditions,
@@ -217,9 +228,7 @@ public interface FileActionHandler {
                                 final File defaultFile ) {
         // Pre-process the file save or export action. Exit if user canceled.
         if ( !fileSavePreProcessing( fileMode, 
-                                     clientProperties, 
-                                     rasterGraphicsExportOptions, 
-                                     vectorGraphicsExportOptions ) ) {
+                                     clientProperties ) ) {
             return false;
         }
 
@@ -295,7 +304,86 @@ public interface FileActionHandler {
     default FileStatus fileSave( final File file, 
                                  final File tempFile,
                                  final FileMode fileMode ) {
-        return FileStatus.NOT_SAVED;
+        // Pre-declare the File Save status in case of exceptions.
+        FileStatus fileStatus = FileStatus.WRITE_ERROR;
+
+        // TODO: Switch all of these to use the new JavaFX Imaging Engine.
+        // TODO: Handle the extensions downstream and make exportVectorGraphics()
+        //  and exportRenderedGraphics() to wrap the switching logic by sub-mode?
+        try {
+            final String fileName = file.getName();
+            final String fileNameCaseInsensitive = fileName.toLowerCase( Locale.ENGLISH );
+            if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "bmp" )
+                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "dib" ) ) {
+                // Rasterize the main content pane to a BMP file.
+                fileStatus = exportImage( tempFile, "bmp", fileMode );
+            }
+            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "eps" )
+                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "epsf" ) ) {
+                // Vectorize the main content pane to an EPS file.
+                fileStatus = exportToEps( tempFile, file, fileMode );
+            }
+            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "gif" ) ) {
+                // Rasterize the main content pane to a GIF file.
+                fileStatus = exportImage( tempFile, "gif", fileMode );
+            }
+            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "jpg" )
+                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "jpeg" )
+                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "jpe" ) ) {
+                // Rasterize the main content pane to a JPEG file.
+                fileStatus = exportImage( tempFile, "jpg", fileMode );
+            }
+            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "pdf" ) ) {
+                // NOTE: We hope to eventually support Export to PDF from
+                // Rendered Graphics Preview, but this is currently a no-op
+                // and not exposed in the file extensions drop-list.
+                if ( FileMode.EXPORT_VECTOR_GRAPHICS.equals( fileMode )
+                        || FileMode.EXPORT_RENDERED_GRAPHICS.equals( fileMode ) ) {
+                    // Vectorize the main content pane to a PDF file.
+                    fileStatus = exportToPdf( tempFile, file, fileMode );
+                }
+                else {
+                    // Take care of any extensions specific to sub-classes.
+                    fileStatus = fileSaveExtensions( file, tempFile, fileMode );
+                }
+            }
+            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "png" ) ) {
+                // Rasterize the main content pane to a PNG file.
+                fileStatus = exportImage( tempFile, "png", fileMode );
+            }
+            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "pnm" ) ) {
+                // Rasterize the main content pane to a PNM file.
+                fileStatus = exportImage( tempFile, "pnm", fileMode );
+            }
+            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "pptx" )
+                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "ppt" ) ) {
+                // Vectorize the main content pane to a PPT file.
+                fileStatus = exportToPpt( tempFile, file, fileMode );
+            }
+            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "svg" ) ) {
+                // Vectorize the main content pane to an SVG file.
+                fileStatus = exportToSvg( tempFile, file, fileMode );
+            }
+            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "tif" )
+                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "tiff" ) ) {
+                // Rasterize the main content pane to a TIFF file.
+                fileStatus = exportImage( tempFile, "tiff", fileMode );
+            }
+            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "wbm" )
+                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "wbmp" ) ) {
+                // Rasterize the main content pane to a WBMP file.
+                fileStatus = exportImage( tempFile, "wbmp", fileMode );
+            }
+            else {
+                // Take care of any extensions specific to sub-classes.
+                fileStatus = fileSaveExtensions( file, tempFile, fileMode );
+            }
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+        }
+
+        return fileStatus;
     }
 
     /**
@@ -383,10 +471,13 @@ public interface FileActionHandler {
             case NEW:
             case OPEN:
             case IMPORT_TEXT_DATA:
+            case IMPORT_TABLE_DATA:
+            case IMPORT_SPREADSHEET_DATA:
             case IMPORT_BINARY_DATA:
             case IMPORT_IMAGE_DATA:
             case IMPORT_RASTER_GRAPHICS:
             case IMPORT_VECTOR_GRAPHICS:
+            case IMPORT_RENDERED_GRAPHICS:
             case IMPORT_CAD:
             case LOAD:
                 // Alert the user that a file open error occurred.
@@ -420,9 +511,7 @@ public interface FileActionHandler {
     //  classes can override this default. Basic graphics export is supported in
     //  this default implementation, but acts as a no-op if apps don't support it.
     default boolean fileSavePreProcessing( final FileMode fileMode,
-                                           final ClientProperties clientProperties,
-                                           final RasterGraphicsExportOptions rasterGraphicsExportOptions,
-                                           final VectorGraphicsExportOptions vectorGraphicsExportOptions ) {
+                                           final ClientProperties clientProperties ) {
         // Gather the custom enablement and labels via class overrides.
         final String graphicsExportAllLabel = getGraphicsExportAllLabel();
         final String graphicsExportChartLabel = getGraphicsExportChartLabel();
@@ -435,7 +524,7 @@ public interface FileActionHandler {
             // Query the Image Graphics Export Options.
             if ( !DialogUtilities.showRasterGraphicsExportOptions( 
                     clientProperties,
-                    rasterGraphicsExportOptions,
+                    getRasterGraphicsExportOptions(),
                     hasChart,
                     hasAuxiliary,
                     graphicsExportAllLabel,
@@ -454,7 +543,7 @@ public interface FileActionHandler {
             // Query the Vector Graphics Export Options.
             if ( !DialogUtilities.showVectorGraphicsExportOptions( 
                     clientProperties,
-                    vectorGraphicsExportOptions,
+                    getVectorGraphicsExportOptions(),
                     true,
                     hasChart,
                     hasAuxiliary,
@@ -539,10 +628,13 @@ public interface FileActionHandler {
             case SAVE_CONVERTED:
             case SAVE_LOG:
             case EXPORT_TEXT_DATA:
+            case EXPORT_TABLE_DATA:
+            case EXPORT_SPREADSHEET_DATA:
             case EXPORT_BINARY_DATA:
             case EXPORT_IMAGE_DATA:
             case EXPORT_RASTER_GRAPHICS:
             case EXPORT_VECTOR_GRAPHICS:
+            case EXPORT_RENDERED_GRAPHICS:
             case EXPORT_CAD:
                 // Alert the user that a file save error occurred.
                 final String fileWriteErrorMessage = MessageFactory
@@ -606,11 +698,6 @@ public interface FileActionHandler {
         return "";
     }
 
-    // NOTE: We allow separate default directories per implementing Window as
-    //  often they have different functionality and the user generally needs one
-    //  default directory per functional scope.
-    default void setDefaultDirectory( final File defaultDirectory ) {}
-
     // File Save is not required for all stages, so this default is a no-op.
     default FileStatus fileSaveExtensions( final File file, 
                                            final File tempFile ,
@@ -618,20 +705,18 @@ public interface FileActionHandler {
         return FileStatus.NOT_SAVED;
     }
 
-    // NOTE: Not all implementing Windows will support importing images, but we
-    //  are providing a convenience mechanism to do so in the file open hierarchy
-    //  of methods, so we default the image importer to return false.
-    default boolean importImage( final InputStream inputStream, final String fileExtension ) {
-        return false;
-    }
+    // NOTE: We allow separate default directories per implementing Window as
+    //  often they have different functionality and the user generally needs one
+    //  default directory per functional scope.
+    default void setDefaultDirectory( final File defaultDirectory ) {}
 
     default void fileImportRasterImage( final Window parent,
                                         final FileMode fileMode,
                                         final String fileChooserTitle,
                                         final File initialDirectory ) {
         // Prepare to throw up a file chooser for the raster image filename.
-        final List< ExtensionFilter > extensionFilterAdditions = ExtensionFilterUtilities
-                .getRasterImageExtensionFilters();
+        final List< ExtensionFilter > extensionFilterAdditions 
+                = ExtensionFilterUtilities.getRasterImageExtensionFilters();
 
         // Load a single raster image file using the JavaFX File Chooser.
         fileOpen( parent,
@@ -642,7 +727,214 @@ public interface FileActionHandler {
                   ExtensionFilters.PNG_EXTENSION_FILTER,
                   false );
     }
+
+    // This is a wrapper to ensure that all spreadsheet data export actions
+    // are treated uniformly.
+    default void fileExportSpreadsheetData( final Window parent,
+                                            final File initialDirectory,
+                                            final ClientProperties clientProperties,
+                                            final String dataCategory ) {
+        // Throw up a file chooser for the spreadsheet filename.
+        final String title = "Export " + dataCategory + " Spreadsheet Data To";
+        final List< ExtensionFilter > extensionFilterAdditions = ExtensionFilterUtilities
+                .getXlsxExtensionFilters();
+
+        // Save a data file using the selected spreadsheet filename.
+        fileSaveAs( parent,
+                    FileMode.EXPORT_SPREADSHEET_DATA,
+                    clientProperties,
+                    title,
+                    initialDirectory,
+                    extensionFilterAdditions,
+                    ExtensionFilters.XLSX_EXTENSION_FILTER,
+                    null );
+    }
+
+    // This is a wrapper to ensure that all image data export actions are 
+    // treated uniformly.
+    default void fileExportImageData( final Window parent,
+                                      final File initialDirectory,
+                                      final ClientProperties clientProperties,
+                                      final String dataCategory ) {
+        // Throw up a file chooser for the raster image filename.
+        final String title = "Export " + dataCategory + " Image Data To";
+        final List< ExtensionFilter > extensionFilterAdditions 
+                = ExtensionFilterUtilities.getRasterImageExtensionFilters();
+
+        // Save a raster image file using the selected filename.
+        fileSaveAs( parent,
+                    FileMode.EXPORT_IMAGE_DATA,
+                    clientProperties,
+                    title,
+                    initialDirectory,
+                    extensionFilterAdditions,
+                    ExtensionFilters.PNG_EXTENSION_FILTER,
+                    null );
+    }
+
+    // This is a wrapper to ensure that all raster graphics export actions
+    // are treated uniformly.
+    default void fileExportRasterGraphics( final Window parent,
+                                           final File initialDirectory,
+                                           final ClientProperties clientProperties,
+                                           final String graphicsCategory ) {
+        // Throw up a file chooser for the raster graphics filename.
+        final String title = "Export " + graphicsCategory + " Raster Graphics To";
+        final List< ExtensionFilter > extensionFilterAdditions 
+                = ExtensionFilterUtilities.getImageGraphicsExtensionFilters();
+
+        // Save a raster graphics file using the selected filename.
+        fileSaveAs( parent,
+                    FileMode.EXPORT_RASTER_GRAPHICS,
+                    clientProperties,
+                    title,
+                    initialDirectory,
+                    extensionFilterAdditions,
+                    ExtensionFilters.IMAGE_GRAPHICS_EXTENSION_FILTER,
+                    null );
+    }
+
+    /**
+     * This is a wrapper to ensure that all vector graphics export actions are
+     * treated uniformly.
+     */
+    default void fileExportVectorGraphics( final Window parent,
+                                           final File initialDirectory,
+                                           final ClientProperties clientProperties,
+                                           final String graphicsCategory ) {
+        // Throw up a file chooser for the vector graphics filename.
+        final String title = "Export " + graphicsCategory + " Vector Graphics To";
+        final List< ExtensionFilter > extensionFilterAdditions 
+                = ExtensionFilterUtilities.getVectorGraphicsExtensionFilters();
+
+        // Save a vector graphics file using the selected filename.
+        fileSaveAs( parent,
+                    FileMode.EXPORT_VECTOR_GRAPHICS,
+                    clientProperties,
+                    title,
+                    initialDirectory,
+                    extensionFilterAdditions,
+                    ExtensionFilters.EPS_EXTENSION_FILTER,
+                    null );
+    }
+
+    // NOTE: Not all implementing Windows will support importing images, but we
+    //  are providing a convenience mechanism to do so in the file open hierarchy
+    //  of methods, so we default the image importer to return false.
+    default boolean importImage( final InputStream inputStream, 
+                                 final String fileExtension ) {
+        return false;
+    }
+
+
+    default FileStatus exportImage( final File file,
+                                    final String imageFormatName,
+                                    final FileMode fileMode ) {
+        if ( FileMode.EXPORT_IMAGE_DATA.equals( fileMode ) ) {
+            return exportImageData( file, imageFormatName );
+        }
+
+        final RasterGraphicsExportOptions rasterGraphicsExportOptions 
+                = getRasterGraphicsExportOptions();
+        if ( rasterGraphicsExportOptions == null ) {
+            return FileStatus.NOT_SAVED;
+        }
+        
+        final ImageSize imageSize = rasterGraphicsExportOptions.getImageSize();
+        return exportRasterGraphics( file, imageFormatName, imageSize );
+    }
+
+    // NOTE: Not all Stages support exporting an image that is a data item.
+    default FileStatus exportImageData( final File file, 
+                                        final String imageFormat ) {
+        return FileStatus.NOT_SAVED;
+    }
+   
+    default FileStatus exportRasterGraphics( final File file,
+                                             final String imageFormatName,
+                                             final ImageSize imageSize ) {
+        // Avoid throwing unnecessary exceptions by filtering for no-ops.
+        final Node rasterGraphicsExportSource = getRasterGraphicsExportSource();
+        if ( rasterGraphicsExportSource == null ) {
+            return FileStatus.NOT_SAVED;
+        }
+
+        // Get an AWT BufferedImage as the snapshot of the source Node.
+        final BufferedImage bufferedImage = ImageUtilities
+                .getBufferedImageSnapshot( rasterGraphicsExportSource );
+
+        // If necessary, correct bugs in Oracle's Image Type assignment.
+        final BufferedImage correctedImage = ImageConversionUtilities
+                .swapImageType( bufferedImage, imageFormatName );
+
+        // Avoid unnecessary file buffering and image tasks if the image
+        // writer's validity check would reject this image and/or its format.
+        if ( !ImageFormatUtilities.isImageTypeSupportedForWrite( correctedImage,
+                                                                 imageFormatName ) ) {
+            return FileStatus.NOT_SAVED;
+        }
+
+        // Chain a BufferedOutputStream to a FileOutputStream, for better
+        // performance.
+        try ( final FileOutputStream fileOutputStream = new FileOutputStream( file );
+                final BufferedOutputStream bufferedOutputStream 
+                        = new BufferedOutputStream( fileOutputStream ) ) {
+            // As long as no compression or other customization is needed, it is
+            // simpler and less risky to use the default raster image writer.
+            ImageIO.write( correctedImage, imageFormatName, bufferedOutputStream );
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+            return FileStatus.NOT_SAVED;
+        }
+
+        return FileStatus.EXPORTED;
+    }
     
+    // NOTE: This default implementation is a no-op as the generic version
+    //  would introduce a circular dependency with jfxconvertertoolkit.
+    default FileStatus exportToEps( final File tempFile,
+                                    final File file,
+                                    final FileMode fileMode ) {
+        return FileStatus.NOT_SAVED;
+    }
+
+    // NOTE: This default implementation is a no-op as the generic version
+    //  would introduce a circular dependency with jfxconvertertoolkit.
+    default FileStatus exportToPdf( final File tempFile,
+                                    final File file,
+                                    final FileMode fileMode ) {
+        return FileStatus.NOT_SAVED;
+    }
+        
+    // NOTE: This default implementation is a no-op as the generic version
+    //  would introduce a circular dependency with jfxconvertertoolkit.
+    default FileStatus exportToPpt( final File tempFile,
+                                    final File file,
+                                    final FileMode fileMode ) {
+        return FileStatus.NOT_SAVED;
+    }
+    
+    // NOTE: This default implementation is a no-op as the generic version
+    //  would introduce a circular dependency with jfxconvertertoolkit.
+    default FileStatus exportToSvg( final File tempFile,
+                                    final File file,
+                                    final FileMode fileMode ) {
+        return FileStatus.NOT_SAVED;
+    }
+    
+    // NOTE: Implementing classes that support raster graphics export should
+    //  override this method to return a local class variable.
+    default Node getRasterGraphicsExportSource() {
+        return null;
+    }
+    
+    // NOTE: Implementing classes that support vector graphics export should
+    //  override this method to return a local class variable.
+    default Node getVectorGraphicsExportSource() {
+        return null;
+    }
+
     // Implementing classes should set the class variable used for raster
     // graphics export. Interfaces can't do that due to no class variables.
     default void updateRasterGraphicsExportSource() {}
@@ -670,5 +962,17 @@ public interface FileActionHandler {
     //  charts for Graphics Export.
     default String getGraphicsExportChartLabel() {
         return "";
+    }
+    
+    // NOTE: Implementing classes that support raster graphics export should
+    //  override this method to return a local class variable.
+    default RasterGraphicsExportOptions getRasterGraphicsExportOptions() {
+        return null;
+    }
+    
+    // NOTE: Implementing classes that support vector graphics export should
+    //  override this method to return a local class variable.
+    default VectorGraphicsExportOptions getVectorGraphicsExportOptions() {
+        return null;
     }
 }

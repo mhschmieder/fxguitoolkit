@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -97,18 +97,18 @@ public final class ExtensionFilterUtilities {
 
     public static List< ExtensionFilter > getImageGraphicsExtensionFilters() {
         // NOTE: TIFF requires either ImageIO-Ext or JAI 1.1.3 JAR's.
-        // Both are quite large (especially the former, which also has
-        // JNI support that might not include the Mac, but otherwise is
-        // a more direct analog to how we do other formats currently vs.
-        // the different JAI approach). Better to wait until the switch
-        // to JavaFX, which has its own imaging API's.
+        //  Both are quite large (especially the former, which also has
+        //  JNI support that might not include the Mac, but otherwise is
+        //  a more direct analog to how we do other formats currently vs.
+        //  the different JAI approach). Better to wait until the switch
+        //  to JavaFX, which has its own imaging API's.
         // NOTE: WBMP isn't necessary anymore as most people's wireless
-        // devices can now handle the bandwidth of full color images, and it
-        // benefits from us doing the down-conversion to black and white.
+        //  devices can now handle the bandwidth of full color images, and it
+        //  benefits from us doing the down-conversion to black and white.
         // NOTE: PostScript requires Swing-based printer services so is now
-        // disabled due to removing Swing and AWT dependencies.
+        //  disabled due to removing Swing and AWT dependencies.
         // NOTE: A brief experiment with PNM failed to produce output, but no
-        // real time was spent on looking into what happened or changing type.
+        //  real time was spent on looking into what happened or changing type.
         final List< ExtensionFilter > extensionFilterAdditions = new ArrayList<>();
 
         extensionFilterAdditions.add( ExtensionFilters.IMAGE_GRAPHICS_EXTENSION_FILTER );
