@@ -71,6 +71,12 @@
 			<artifactId>controlsfx</artifactId>
 			<version>8.40.18</version>
 		</dependency>
+        <!-- https://mvnrepository.com/artifact/com.hynnet/pdfjet -->
+        <dependency>
+            <groupId>com.hynnet</groupId>
+            <artifactId>pdfjet</artifactId>
+            <version>5.75</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
         <dependency>
             <groupId>org.jsoup</groupId>
