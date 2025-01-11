@@ -58,6 +58,7 @@ import com.mhschmieder.fxguitoolkit.action.BackgroundColorChoices;
 import com.mhschmieder.fxguitoolkit.action.MruFileActions;
 import com.mhschmieder.fxguitoolkit.action.WindowSizeActions;
 import com.mhschmieder.fxguitoolkit.action.XAction;
+import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 
 import javafx.geometry.Dimension2D;
@@ -377,8 +378,8 @@ public abstract class XStage extends Stage implements ForegroundManager,
         // Listeners to the width and height properties of the scene.
         // NOTE: These events happen incrementally, which is way too much.
         // NOTE: Returning from Full Screen Mode works pretty well, if we
-        // re-enable these listeners, but they don't really help with manual
-        // resize actions.
+        //  re-enable these listeners, but they don't really help with manual
+        //  resize actions.
         getScene().widthProperty()
                 .addListener( ( observableValue,
                                 oldSceneWidth,
@@ -532,8 +533,8 @@ public abstract class XStage extends Stage implements ForegroundManager,
     }
 
     // NOTE: This method should be overridden if a Stage works with file
-    // objects in an MDI context and instead needs to close the current document
-    // (usually the window) and switch to another active and loaded document.
+    //  objects in an MDI context and instead needs to close the current document
+    //  (usually the window) and switch to another active and loaded document.
     public void doCloseWindow() {
         // Hide this window by setting invisible (was close() in Swing).
         setVisible( false );
@@ -545,7 +546,7 @@ public abstract class XStage extends Stage implements ForegroundManager,
     }
 
     public final void doPageSetup() {
-        final String printCategory = "Page Setup"; //$NON-NLS-1$
+        final String printCategory = "Page Setup"; 
         final boolean printJobVerified = verifyPrinterJob( printCategory );
         if ( !printJobVerified ) {
             return;
@@ -554,12 +555,12 @@ public abstract class XStage extends Stage implements ForegroundManager,
         try {
             // NOTE: This runs internally on a separate synced thread.
             // NOTE: On macOS, setting this window as owner, causes the menu
-            // system to freeze up until another primary window is shown, and
-            // the behavior and window stacking order seem no different when
-            // setting the dialog's owner to null, so it is safer to do so.
+            //  system to freeze up until another primary window is shown, and
+            //  the behavior and window stacking order seem no different when
+            //  setting the dialog's owner to null, so it is safer to do so.
             // NOTE: On Windows, however, there was no side effect in using
-            // this window as the dialog's owner, and not doing so causes it to
-            // go to the upper left of the screen, and thus hard to notice.
+            //  this window as the dialog's owner, and not doing so causes it to
+            //  go to the upper left of the screen, and thus hard to notice.
             final Window windowOwner = SystemType.MACOS.equals( clientProperties.systemType )
                 ? null
                 : this;
@@ -582,12 +583,12 @@ public abstract class XStage extends Stage implements ForegroundManager,
         try {
             // NOTE: This runs internally on a separate synced thread.
             // NOTE: On macOS, setting this window as owner, causes the menu
-            // system to freeze up until another primary window is shown, and
-            // the behavior and window stacking order seem no different when
-            // setting the dialog's owner to null, so it is safer to do so.
+            //  system to freeze up until another primary window is shown, and
+            //  the behavior and window stacking order seem no different when
+            //  setting the dialog's owner to null, so it is safer to do so.
             // NOTE: On Windows, however, there was no side effect in using
-            // this window as the dialog's owner, and not doing so causes it to
-            // go to the upper left of the screen, and thus hard to notice.
+            //  this window as the dialog's owner, and not doing so causes it to
+            //  go to the upper left of the screen, and thus hard to notice.
             final Window windowOwner = SystemType.MACOS.equals( clientProperties.systemType )
                 ? null
                 : this;
@@ -681,8 +682,8 @@ public abstract class XStage extends Stage implements ForegroundManager,
         // Listeners to the width and height properties of the scene.
         // NOTE: These events happen incrementally, which is way too much.
         // NOTE: Returning from Full Screen Mode works pretty well, if we
-        // re-enable this listener, but it doesn't really help with manual
-        // resize actions.
+        //  re-enable this listener, but it doesn't really help with manual
+        //  resize actions.
         if ( !isFullScreen() && !isMaximized() ) {
             // If neither in Full Screen Mode nor Maximized Mode, cache the new
             // window height as the preferred size's new height.
@@ -701,7 +702,7 @@ public abstract class XStage extends Stage implements ForegroundManager,
     @Override
     public void hide() {
         // NOTE: We have to be careful if in Full Screen Mode, to avoid
-        // crashes! So we must turn Full Screen Mode off before closing.
+        //  crashes! So we must turn Full Screen Mode off before closing.
         if ( !_fullScreenModeExempt && isFullScreen() ) {
             setFullScreen( false );
         }
@@ -713,8 +714,8 @@ public abstract class XStage extends Stage implements ForegroundManager,
     public void hideSecondaryWindows() {}
 
     // NOTE: Not all stages have file loaders, so a concrete no-op
-    // implementation is provided rather than making this method abstract and
-    // requiring all derived classes to implement it.
+    //  implementation is provided rather than making this method abstract and
+    //  requiring all derived classes to implement it.
     protected void initFileLoaders() {}
 
     protected void initProperties() {}
@@ -914,15 +915,15 @@ public abstract class XStage extends Stage implements ForegroundManager,
                                      final double defaultHeight,
                                      final boolean resizable ) {
         // NOTE: Our CSS default is already White, as is the JavaFX default,
-        // but setting it in code here, does no harm as it just avoids one level
-        // of constructor wrapping and gives us more flexibility if we change
-        // our minds about the default background color later on.
+        //  but setting it in code here, does no harm as it just avoids one level
+        //  of constructor wrapping and gives us more flexibility if we change
+        //  our minds about the default background color later on.
         final Scene scene = resizable
             ? new Scene( parent, defaultWidth, defaultHeight, Color.WHITE )
             : new Scene( parent, Color.WHITE );
 
         // TODO: Move the core CSS setting to the Application startup, so that
-        // non-stage windows also use our preferred styles?
+        //  non-stage windows also use our preferred styles?
         // NOTE: Unfortunately, the only way to do this involves Private API.
         final List< String > jarRelativeStylesheetFilenames = GuiUtilities
                 .getJarRelativeStylesheetFilenames( clientProperties.systemType );
@@ -946,25 +947,25 @@ public abstract class XStage extends Stage implements ForegroundManager,
         // Listeners to the width and height properties of the scene.
         // NOTE: These events happen incrementally, which is way too much.
         // NOTE: We remove before adding, as the default menu item construction
-        // for the Window Size Menu, and Preference loading, may otherwise
-        // result in multiple listeners, so that we never remove them all.
+        //  for the Window Size Menu, and Preference loading, may otherwise
+        //  result in multiple listeners, so that we never remove them all.
         removeWindowSizeListeners();
         addWindowSizeListeners();
 
         // NOTE: Although primarily for the Mac, this setting does no harm on
-        // systems that don't have a system-level menu bar.
+        //  systems that don't have a system-level menu bar.
         // NOTE: We do this last, as it hierarchically rebuilds the Menu Bar
-        // GUI and can thus cause menu icons to not show until the next time
-        // this window is brought to front.
+        //  GUI and can thus cause menu icons to not show until the next time
+        //  this window is brought to front.
         // NOTE: If this isn't run on a deferred thread, some menu shortcuts
-        // using the Alt/Option key don't work on macOS for some reason.
+        //  using the Alt/Option key don't work on macOS for some reason.
         // NOTE: After countless experiments (all removed from the code by
-        // now), we are temporarily giving up on the Apple Application Menu Bar,
-        // as it has continued to backslide while Oracle falls behind Apple's
-        // continuous changes that they keep private to themselves. Using the
-        // standard window-level menu bar fixes numerous problems on the macOS
-        // so it is better for now to hold off on using the Application Menu
-        // Bar; especially issues with ignored modifier keys on F1 shortcuts.
+        //  now), we are temporarily giving up on the Apple Application Menu Bar,
+        //  as it has continued to backslide while Oracle falls behind Apple's
+        //  continuous changes that they keep private to themselves. Using the
+        //  standard window-level menu bar fixes numerous problems on the macOS
+        //  so it is better for now to hold off on using the Application Menu
+        //  Bar; especially issues with ignored modifier keys on F1 shortcuts.
         if ( menuBar != null ) {
             // Platform.runLater( () -> menuBar.setUseSystemMenuBar( true ) );
         }
@@ -1103,7 +1104,7 @@ public abstract class XStage extends Stage implements ForegroundManager,
 
         // Restore the window's cached layout location from the last session.
         // NOTE: Default location accounts for issues with corner areas on some
-        // OS versions, but may be too much for smaller screens.
+        //  OS versions, but may be too much for smaller screens.
         final String windowXKey = windowKeyPrefix + "X";
         final double windowXValue = prefs.getDouble( windowXKey, 100d );
         final String windowYKey = windowKeyPrefix + "Y";
@@ -1189,9 +1190,9 @@ public abstract class XStage extends Stage implements ForegroundManager,
     }
 
     // NOTE: Unlike most applications, we allow separate default directories
-    // per window as usually there is different functionality that may use files
-    // that need to be in different locations due to how they are used in
-    // overall user workflow with other applications.
+    //  per window as usually there is different functionality that may use files
+    //  that need to be in different locations due to how they are used in
+    //  overall user workflow with other applications.
     @Override
     public void setDefaultDirectory( final File defaultDirectory ) {
         _defaultDirectory = defaultDirectory;
@@ -1209,30 +1210,30 @@ public abstract class XStage extends Stage implements ForegroundManager,
     }
 
     // NOTE: Do not set background on the Stage itself, as this ends up
-    // affecting Tool Bars, Status Bars, and possibly even Menu Bars.
+    //  affecting Tool Bars, Status Bars, and possibly even Menu Bars.
     // NOTE: This method is a minimal implementation shared by all windows,
     //  whether they need to override for more complex layout forwarding or not.
     @Override
     public void setForegroundFromBackground( final Color backColor ) {
         // Set the new Background first, so it sets context for CSS derivations.
         // NOTE: It appears to be more reliable to set this before loading CSS,
-        // as otherwise we seem to occasionally get cases where subtle changes
-        // in background color cause the CSS loading to be ignored. Perhaps this
-        // is because a switch from dark to light background causes the removal
-        // of one CSS before adding the new one. So maybe there is a race
-        // condition of sorts, regarding derivation within the infrastructure.
-        // More likely still, Core JavaFX CSS calls get triggered by the
-        // background property change and/or Java API calls happen, that step on
-        // our own custom CSS settings, due to Java taking precedence over CSS,
-        // or the CSS being on a deferred thread that executes after this one.
+        //  as otherwise we seem to occasionally get cases where subtle changes
+        //  in background color cause the CSS loading to be ignored. Perhaps this
+        //  is because a switch from dark to light background causes the removal
+        //  of one CSS before adding the new one. So maybe there is a race
+        //  condition of sorts, regarding derivation within the infrastructure.
+        //  More likely still, Core JavaFX CSS calls get triggered by the
+        //  background property change and/or Java API calls happen, that step on
+        //  our own custom CSS settings, due to Java taking precedence over CSS,
+        //  or the CSS being on a deferred thread that executes after this one.
         final Background background = LayoutFactory.makeRegionBackground( backColor );
         _root.setBackground( background );
 
         // Try to globally change the foreground theme for elements not exposed
         // in Java API calls, using our custom dark vs. light theme CSS files.
         // NOTE: In many cases, we need to load the main CSS first, before
-        // applying styles to layout children, as there are additional CSS
-        // stylesheets to load that depend on symbols defined in the main ones.
+        //  applying styles to layout children, as there are additional CSS
+        //  stylesheets to load that depend on symbols defined in the main ones.
         final Scene scene = _content.getScene();
         GuiUtilities.setStylesheetForTheme( scene,
                                             backColor,
@@ -1256,9 +1257,9 @@ public abstract class XStage extends Stage implements ForegroundManager,
 
         // Add the Icon to the Title Bar.
         // NOTE: It is recommended to add the Icons vs. using setAll() to
-        // replace them all, so we don't lose platform-provided Icons.
+        //  replace them all, so we don't lose platform-provided Icons.
         // TODO: Supply both a 16x16 and 32x32 Icon for each Stage? We only
-        // supply 16x16 currently. Some platforms use the biggest they can.
+        //  supply 16x16 currently. Some platforms use the biggest they can.
         getIcons().add( minimizeIconImage );
     }
 
@@ -1286,7 +1287,7 @@ public abstract class XStage extends Stage implements ForegroundManager,
         // Get the user's screen size, for Full Screen Mode and user statistics.
         // TODO: Also get and cache the minimum point, which may not be zero.
         // NOTE: This query is done on-the-fly as the user may switch screens
-        // between server calls.
+        //  between server calls.
         final Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
         final double screenWidth = visualBounds.getWidth();
         final double screenHeight = visualBounds.getHeight();
@@ -1294,8 +1295,8 @@ public abstract class XStage extends Stage implements ForegroundManager,
         // Likewise, as the Screen Size or resolution may have changed since the
         // previous session, we ensure that the Preferred Size can still fit.
         // NOTE: We subtract a bit of a margin to make sure the Window can be
-        // grabbed, resized, dragged, just in case decorations cause overflow,
-        // and also to account for the dock and other related OS-level stuff.
+        //  grabbed, resized, dragged, just in case decorations cause overflow,
+        //  and also to account for the dock and other related OS-level stuff.
         stageWidthAdjusted = FastMath.min( screenWidth - 60, stageWidthAdjusted );
         stageHeightAdjusted = FastMath.min( screenHeight - 60, stageHeightAdjusted );
 
@@ -1315,27 +1316,27 @@ public abstract class XStage extends Stage implements ForegroundManager,
 
     // TODO: Improve these comments in javadocs format.
     // NOTE: This method is a wrapper around show() and hide(), to enforce
-    // legal use of those methods as exceptions are thrown if you show
-    // something that is already being shown or if you hide something that is
-    // already hidden. This may not be the best name for this method, but it
-    // is also illegal to override show() and hide() so I decided to combine.
+    //  legal use of those methods as exceptions are thrown if you show
+    //  something that is already being shown or if you hide something that is
+    //  already hidden. This may not be the best name for this method, but it
+    //  is also illegal to override show() and hide() so I decided to combine.
     // TODO: Make greater use of this method in place of having manually
-    // duplicated it in so many places before enhancing our JavaFX base class
-    // with more of the functionality from our older Swing base class.
+    //  duplicated it in so many places before enhancing our JavaFX base class
+    //  with more of the functionality from our older Swing base class.
     public void setVisible( final boolean visible ) {
         setVisible( visible, true );
     }
 
     // TODO: Improve these comments in javadocs format.
     // NOTE: This method is a wrapper around show() and hide(), to enforce
-    // legal use of those methods as exceptions are thrown if you show
-    // something that is already being shown or if you hide something that is
-    // already hidden. This may not be the best name for this method, but it
-    // is also illegal to override show() and hide() so I decided to combine.
+    //  legal use of those methods as exceptions are thrown if you show
+    //  something that is already being shown or if you hide something that is
+    //  already hidden. This may not be the best name for this method, but it
+    //  is also illegal to override show() and hide() so I decided to combine.
     // NOTE: This is an enhanced version for when "force to front" is optional.
     // TODO: Make greater use of this method in place of having manually
-    // duplicated it in so many places before enhancing our JavaFX base class
-    // with more of the functionality from our older Swing base class.
+    //  duplicated it in so many places before enhancing our JavaFX base class
+    //  with more of the functionality from our older Swing base class.
     public void setVisible( final boolean visible, final boolean forceToFront ) {
         if ( visible ) {
             if ( isIconified() ) {
@@ -1501,10 +1502,12 @@ public abstract class XStage extends Stage implements ForegroundManager,
         }
     }
 
+    // TODO: Move the PrinterJob variable and related methods to a new class
+    //  called PrinterManager or something like that? Just so it's all together.
     protected final boolean verifyPrinterJob( final String printCategory ) {
         // NOTE: We need an always active Printer Job in order to support Page
-        // Setup and Printing. Note that a printer may come on-line while the
-        // application is running, and that each printer job is good once only.
+        //  Setup and Printing. Note that a printer may come on-line while the
+        //  application is running, and that each printer job is good once only.
         if ( _printerJob == null ) {
             try {
                 _printerJob = PrinterJob.createPrinterJob();
@@ -1520,8 +1523,9 @@ public abstract class XStage extends Stage implements ForegroundManager,
             final String noPrinterAvailableErrorMessage = MessageFactory
                     .getNoPrinterAvailableMessage();
             final String masthead = MessageFactory.getPrintServicesProblemMasthead();
-            com.mhschmieder.fxguitoolkit.dialog.DialogUtilities
-                    .showErrorAlert( noPrinterAvailableErrorMessage, masthead, printCategory );
+            DialogUtilities.showErrorAlert( noPrinterAvailableErrorMessage, 
+                                            masthead, 
+                                            printCategory );
 
             return false;
         }
@@ -1687,7 +1691,7 @@ public abstract class XStage extends Stage implements ForegroundManager,
     // NOTE: Derived classes should override this default if they expose
     // either charts or auxiliary information for Graphics Export.
     public String getRenderedGraphicsExportAuxiliaryLabel() {
-        return ""; //$NON-NLS-1$
+        return "";
     }
 
     // NOTE: This label is for Rendered Graphics Export.
