@@ -96,10 +96,4 @@ public class WebViewer extends XStage {
 
         return contentPane;
     }
-
-    @Override
-    public void saveAllPreferences() {
-        // NOTE Auto-generated method stub
-        
-    }
 }

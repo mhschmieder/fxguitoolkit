@@ -33,21 +33,16 @@ package com.mhschmieder.fxguitoolkit.stage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-import org.apache.commons.io.FilenameUtils;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.io.FileStatus;
+import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.control.SvgViewerToolBar;
 import com.mhschmieder.fxguitoolkit.control.ZoomPane;
-import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
 
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -160,31 +155,6 @@ public class SvgViewer extends XStage {
         fileOpenSvgAsSceneGraph();
     }
 
-    @Override
-    public final boolean fileOpenErrorHandling( final File file,
-                                                final FileStatus fileStatus ) {
-        boolean sawErrors = false;
-        
-        switch ( fileStatus ) {
-        case READ_ERROR:
-            // Alert the user that a general file open error occurred.
-            final String message = MessageFactory.getFileNotOpenedMessage( file );
-            DialogUtilities.showFileOpenErrorAlert( message );
-            break;
-        case CREATED:
-        case IMPORTED:
-        case LOADED:
-        case OPENED:
-            sawErrors = true;
-            break;
-        // $CASES-OMITTED$
-        default:
-            break;
-        }
-        
-        return sawErrors;
-    }
-
     // This is a wrapper to ensure that all SVG open actions are treated
     // uniformly.
     private final void fileOpenSvgAsSceneGraph() {
@@ -193,8 +163,9 @@ public class SvgViewer extends XStage {
         final List< ExtensionFilter > extensionFilterAdditions = ExtensionFilterUtilities
                 .getSvgExtensionFilters();
 
-        // Open a CSV file using the selected filename.
+        // Open an SVG file using the selected filename.
         fileOpen( this,
+                  FileMode.IMPORT_VECTOR_GRAPHICS,
                   title,
                   _defaultDirectory,
                   extensionFilterAdditions,
@@ -221,35 +192,6 @@ public class SvgViewer extends XStage {
         return contentPane;
     }
 
-    // This file loader uses a specified file for the open, and is the
-    // lowest-level shared call for all file open and import actions.
-    @Override
-    public final FileStatus loadFromFile( final File file ) {
-        // Open the file.
-        try {
-            final String fileName = file.getName();
-            final String fileNameCaseInsensitive = fileName.toLowerCase( Locale.ENGLISH );
-            if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "svg" ) ) { //$NON-NLS-1$
-                // Load the data from an SVG file.
-                final Document doc = Jsoup.parse( file, "UTF-8", "" ); //$NON-NLS-1$ //$NON-NLS-2$
-
-                // Update the full cache of displayed data and context, along
-                // with tools enablement criteria.
-                updateCache( file, doc );
-            }
-            else {
-                // Do not attempt to open unsupported file types.
-                return FileStatus.READ_ERROR;
-            }
-        }
-        catch ( final Exception e ) {
-            e.printStackTrace();
-            return FileStatus.READ_ERROR;
-        }
-
-        return FileStatus.OPENED;
-    }
-
     // Add the Tool Bar for this Frame.
     @Override
     public final ToolBar loadToolBar() {
@@ -260,7 +202,9 @@ public class SvgViewer extends XStage {
         return _toolBar;
     }
 
-    private final void updateCache( final File file, final Document doc ) {
+    @Override
+    public final void processSvgDocument( final File file, 
+                                          final Document doc ) {
         // Update the scene graph with the new SVG content.
         updateSceneGraph( doc );
 
@@ -304,11 +248,5 @@ public class SvgViewer extends XStage {
 
         // Replace the SVG group Layout with the new SVG path Collection.
         _svgGroup.getChildren().setAll( svgPaths );
-    }
-
-    @Override
-    public void saveAllPreferences() {
-        // NOTE Auto-generated method stub
-        
     }
 }

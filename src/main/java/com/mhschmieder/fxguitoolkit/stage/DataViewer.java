@@ -34,20 +34,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
-
-import org.apache.commons.io.FilenameUtils;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.io.CsvUtilities;
-import com.mhschmieder.commonstoolkit.io.FileStatus;
+import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
-import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.control.DataViewerToolBar;
 import com.mhschmieder.fxguitoolkit.control.TableUtilities;
 import com.mhschmieder.fxguitoolkit.control.XTableView;
-import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -205,42 +199,18 @@ public class DataViewer extends XStage {
     // uniformly.
     private final void fileOpenCsvAsTable() {
         // Throw up a file chooser for the CSV filename.
-        final String title = "Open CSV as Table"; //$NON-NLS-1$
+        final String title = "Open CSV as Table";
         final List< ExtensionFilter > extensionFilterAdditions = ExtensionFilterUtilities
                 .getCsvExtendedExtensionFilters();
 
         // Open a CSV file using the selected filename.
         fileOpen( this,
+                  FileMode.IMPORT_TABLE_DATA,
                   title,
                   _defaultDirectory,
                   extensionFilterAdditions,
                   ExtensionFilters.CSV_EXTENSION_FILTER,
                   false );
-    }
-
-    @Override
-    public final boolean fileOpenErrorHandling( final File file,
-                                                final FileStatus fileStatus ) {
-        boolean sawErrors = false;
-        
-        switch ( fileStatus ) {
-        case READ_ERROR:
-            // Alert the user that a general file open error occurred.
-            final String message = MessageFactory.getFileNotOpenedMessage( file );
-            DialogUtilities.showFileOpenErrorAlert( message );
-            break;
-        case CREATED:
-        case IMPORTED:
-        case LOADED:
-        case OPENED:
-            sawErrors = true;
-            break;
-        // $CASES-OMITTED$
-        default:
-            break;
-        }
-        
-        return sawErrors;
     }
 
     protected final void initStage( final String jarRelativeIconFilename ) {
@@ -271,42 +241,6 @@ public class DataViewer extends XStage {
         return contentPane;
     }
 
-    // This file loader uses a specified file for the open, and is the
-    // lowest-level shared call for all file open and import actions.
-    @SuppressWarnings("nls")
-    @Override
-    public final FileStatus loadFromFile( final File file ) {
-        final Collection< Collection< String > > rows = new ArrayList<>();
-
-        // Open the file.
-        try {
-            final String fileName = file.getName();
-            final String fileNameCaseInsensitive = fileName.toLowerCase( Locale.ENGLISH );
-            if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "csv" )
-                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "zip" ) ) {
-                // Load the data into a String from a CSV or ZIP file.
-                final boolean fileOpened = CsvUtilities.convertCsvToStringVector( file, rows );
-                if ( !fileOpened ) {
-                    return FileStatus.READ_ERROR;
-                }
-            }
-            else {
-                // Do not attempt to open unsupported file types.
-                return FileStatus.READ_ERROR;
-            }
-        }
-        catch ( final SecurityException se ) {
-            se.printStackTrace();
-            return FileStatus.READ_ERROR;
-        }
-
-        // Update the full cache of displayed data and context, along with tools
-        // enablement criteria.
-        updateCache( file, rows );
-
-        return FileStatus.OPENED;
-    }
-
     // Add the Tool Bar for this Frame.
     @Override
     public final ToolBar loadToolBar() {
@@ -317,8 +251,10 @@ public class DataViewer extends XStage {
         return _toolBar;
     }
 
-    private final void updateCache( 
-            final File file, final Collection< Collection< String > > rows ) {
+    @Override
+    public final void processTableData( 
+            final File file,
+            final Collection< Collection< String > > rows ) {
         // Update the table view with the new data content.
         updateTableView( rows );
 
@@ -417,11 +353,5 @@ public class DataViewer extends XStage {
         if ( numberOfRows < 1 ) {
             return;
         }
-    }
-
-    @Override
-    public void saveAllPreferences() {
-        // NOTE Auto-generated method stub
-        
     }
 }

@@ -494,6 +494,17 @@ public abstract class XStage extends Stage implements ForegroundManager,
         _windowManager.refreshObjectPropertiesEditors();
     }
 
+
+    // Save the User Preferences for all Windows associated with this Stage.
+    @Override
+    public final void saveAllPreferences() {
+        // First, save preferences for secondary windows owned by this Stage.
+        _windowManager.saveAllPreferences();
+
+        // Finally, save the User Preferences for this Stage itself.
+        savePreferences();
+    }
+
     /**
      * This method restores the Window Layout Preferences for all Windows.
      *

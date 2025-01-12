@@ -113,10 +113,4 @@ public final class OpacityStage extends XStage {
         // Forward this method to the Opacity Pane.
         _opacityPane.toggleGestures();
     }
-
-    @Override
-    public void saveAllPreferences() {
-        // NOTE Auto-generated method stub
-        
-    }
 }

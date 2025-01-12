@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -265,7 +265,7 @@ public abstract class ExportPreview extends XStage {
 
     // Save all of the User Preferences for this Stage.
     // TODO: Make a class with get/set methods for User Preferences, a la
-    // Listing 3.3 on p. 37 of "More Java Pitfalls" (Wiley).
+    //  Listing 3.3 on p. 37 of "More Java Pitfalls" (Wiley).
     @Override
     public final void savePreferences() {
         // Get the user node for this package/class, so that we get the
@@ -302,11 +302,11 @@ public abstract class ExportPreview extends XStage {
 
     // Update all of the user preferences for this stage.
     // TODO: Make a preferences object instead, with get/set methods, which can
-    // be set from HTML, XML, or stored user preferences?
+    //  be set from HTML, XML, or stored user preferences?
     private final void updatePreferences( final File defaultDirectory ) {
         // Set the background color for most layout content.
         // NOTE: This is mostly needed so that the CSS theme gets loaded and
-        // its tags are available for custom button rendering.
+        //  its tags are available for custom button rendering.
         setForegroundFromBackground( ColorConstants.WINDOW_BACKGROUND_COLOR );
 
         // Reset the default directory for local file operations.

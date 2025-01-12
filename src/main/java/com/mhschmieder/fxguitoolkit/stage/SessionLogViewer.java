@@ -45,6 +45,7 @@ import java.util.Locale;
 import org.apache.commons.io.FilenameUtils;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
+import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.io.FileStatus;
 import com.mhschmieder.commonstoolkit.io.LogUtilities;
 import com.mhschmieder.commonstoolkit.lang.StringConstants;
@@ -293,6 +294,8 @@ public class SessionLogViewer extends XStage {
         // potential deadlock or other such problems, we should provide a blank
         // initial file selection for the re-save.
         fileSaveAs( this,
+                    FileMode.SAVE_LOG,
+                    clientProperties,
                     title,
                     _defaultDirectory,
                     extensionFilterAdditions,
@@ -301,10 +304,10 @@ public class SessionLogViewer extends XStage {
     }
 
     // Take care of any extensions specific to this sub-class.
-    @SuppressWarnings("nls")
     @Override
     public final FileStatus fileSaveExtensions( final File file,
-                                                final File tempFile ) {
+                                                final File tempFile,
+                                                final FileMode fileMode ) {
         // Pre-declare the File Save status in case of exceptions.
         FileStatus fileStatus = FileStatus.WRITE_ERROR;
 
@@ -349,8 +352,8 @@ public class SessionLogViewer extends XStage {
         // for better performance.
         //
         // NOTE: Using the Logger API causes deadlock on second use, so is
-        // commented out until we adopt a full Logging Framework. For now, we
-        // simply redirect to a file in the user's default temporary directory.
+        //  commented out until we adopt a full Logging Framework. For now, we
+        //  simply redirect to a file in the user's default temporary directory.
         // try ( final LogOutputStream sessionLogOutputStream = new
         // LogOutputStream() ) {
         try ( final FileInputStream fileInputStream 
@@ -449,11 +452,5 @@ public class SessionLogViewer extends XStage {
 
         // Copy the Session Log to the Text Area.
         _sessionLogTextArea.setText( sessionLog );
-    }
-
-    @Override
-    public void saveAllPreferences() {
-        // NOTE Auto-generated method stub
-        
     }
 }

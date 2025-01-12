@@ -34,6 +34,7 @@ import java.io.File;
 import java.util.List;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
+import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.io.FileStatus;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.convertertoolkit.eps.EpsExportUtilities;
@@ -68,7 +69,7 @@ import javafx.stage.Modality;
 public final class RenderedGraphicsExportPreview extends ExportPreview {
 
     public static final String                      RENDERED_GRAPHICS_EXPORT_PREVIEW_TITLE_DEFAULT 
-            = "Rendered Graphics Export Preview"; //$NON-NLS-1$
+            = "Rendered Graphics Export Preview";
 
     // Declare the main content pane.
     public RenderedGraphicsExportPreviewPane       _renderedGraphicsExportPreviewPane;
@@ -120,7 +121,8 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
 
     @Override
     public FileStatus exportToEps( final File tempFile,
-                                   final File file ) {
+                                   final File file,
+                                   final FileMode fileMode ) {
         // Avoid throwing unnecessary exceptions by filtering for no-ops.
         if ( _renderedGraphicsExportSource == null ) {
             return FileStatus.NOT_SAVED;
@@ -161,7 +163,8 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
 
     @Override
     public FileStatus exportToPdf( final File tempFile,
-                                   final File file ) {
+                                   final File file,
+                                   final FileMode fileMode ) {
         // Avoid throwing unnecessary exceptions by filtering for no-ops.
         if ( _renderedGraphicsExportSource == null ) {
             return FileStatus.NOT_SAVED;
@@ -200,7 +203,8 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
 
     @Override
     public FileStatus exportToSvg( final File tempFile,
-                                   final File file ) {
+                                   final File file,
+                                   final FileMode fileMode ) {
         // Avoid throwing unnecessary exceptions by filtering for no-ops.
         if ( _renderedGraphicsExportSource == null ) {
             return FileStatus.NOT_SAVED;
@@ -241,15 +245,14 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
                 .getVectorGraphicsExtensionFilters();
 
         // Save a Vector Graphics file using the selected filename.
-        final boolean fileSaved =
-                                fileSaveAs( this,
-                                            title,
-                                            _defaultDirectory,
-                                            extensionFilterAdditions,
-                                            ExtensionFilters.VECTOR_GRAPHICS_EXTENSION_FILTER,
-                                            null );
-
-        return fileSaved;
+        return fileSaveAs( this,
+                           FileMode.EXPORT_RENDERED_GRAPHICS,
+                           clientProperties,
+                           title,
+                           _defaultDirectory,
+                           extensionFilterAdditions,
+                           ExtensionFilters.VECTOR_GRAPHICS_EXTENSION_FILTER,
+                           null );
     }
 
     @Override
@@ -379,11 +382,5 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
     public void updateView() {
         // Forward this method to the Rendered Graphics Export Preview Pane.
         _renderedGraphicsExportPreviewPane.updateExportOptionsView();
-    }
-
-    @Override
-    public void saveAllPreferences() {
-        // NOTE Auto-generated method stub
-        
     }
 }

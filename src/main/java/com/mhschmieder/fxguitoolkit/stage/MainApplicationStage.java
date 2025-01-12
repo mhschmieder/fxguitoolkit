@@ -251,16 +251,6 @@ public abstract class MainApplicationStage extends XStage
         super.prepareForInput( menuBar );
     }
 
-    // Save the User Preferences for all Windows associated with the Main Stage.
-    @Override
-    public final void saveAllPreferences() {
-        // First, save preferences for secondary windows owned by this Stage.
-        _windowManager.saveAllPreferences();
-
-        // Finally, save the User Preferences for the Main Stage itself.
-        savePreferences();
-    }
-
     @Override
     public void disposeAllResources() {
         // Save the User Preferences for the entire Application (if applicable).
@@ -289,7 +279,7 @@ public abstract class MainApplicationStage extends XStage
         exitApplication( true );
     }
 
-    // Define method for derived classes to implement for context reset per
+    // Define a method for derived classes to implement for context reset per
     // session (or other criteria for reset).
     protected abstract void resetSessionContext();
 
@@ -309,7 +299,7 @@ public abstract class MainApplicationStage extends XStage
         // generated during initialization that otherwise may take awhile to get
         // removed, resulting in unexpected memory caps and slow performance.
         // NOTE: Commented out, as this can slow down window layout
-        //  stabilization since that also runs on a deferred thread.
+        //  stabilization as that also runs on a deferred thread.
         // Platform.runLater( () -> System.gc() );
 
         // Show this Stage until the user dismisses it.

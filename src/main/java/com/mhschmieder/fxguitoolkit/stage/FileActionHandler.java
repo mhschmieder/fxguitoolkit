@@ -38,6 +38,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -45,7 +47,10 @@ import java.util.Locale;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FilenameUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
+import com.mhschmieder.commonstoolkit.io.CsvUtilities;
 import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.io.FileStatus;
 import com.mhschmieder.commonstoolkit.io.FileUtilities;
@@ -174,36 +179,60 @@ public interface FileActionHandler {
         return fileOpenPostProcessing( file, fileMode, fileStatus );
     }
 
-    @SuppressWarnings("nls")
     default FileStatus loadFromFile( final File file,
                                      final FileMode fileMode ) {
         // Pre-declare the File Load status in case of exceptions or unsupported
         // File Modes or file types. Not all applications support File Load of
         // types that are not native to the application, or of partial projects.
         FileStatus fileStatus = FileStatus.NOT_OPENED;
-
-        final String fileExtension = FileUtilities.getExtension( file );
-        switch ( fileExtension ) {
-        case "gif":
-        case "jpe":
-        case "jpeg":
-        case "jpg":
-        case "png":
-            // Load the raster image file.
-            //
-            // Chain a BufferedInputStream to a FileInputStream, for better
-            // performance.
-            try ( final FileInputStream fileInputStream = new FileInputStream( file );
-                    final BufferedInputStream bufferedInputStream 
-                            = new BufferedInputStream( fileInputStream ) ) {
-                if ( importImage( bufferedInputStream, fileExtension ) ) {
-                    fileStatus = FileStatus.IMPORTED;
-                }
-            }
-            catch ( final SecurityException | IOException e ) {
-                e.printStackTrace();
-            }
+        
+        switch ( fileMode ) {
+        case CLOSE:
+        case EXPORT_BINARY_DATA:
+        case EXPORT_CAD:
+        case EXPORT_IMAGE_DATA:
+        case EXPORT_RASTER_GRAPHICS:
+        case EXPORT_RENDERED_GRAPHICS:
+        case EXPORT_SPREADSHEET_DATA:
+        case EXPORT_TABLE_DATA:
+        case EXPORT_TEXT_DATA:
+        case EXPORT_VECTOR_GRAPHICS:
             break;
+        case IMPORT_BINARY_DATA:
+            break;
+        case IMPORT_CAD:
+            break;
+        case IMPORT_IMAGE_DATA:
+            fileStatus = importImageData( file );
+            break;
+        case IMPORT_RASTER_GRAPHICS:
+            break;
+        case IMPORT_RENDERED_GRAPHICS:
+            break;
+        case IMPORT_SPREADSHEET_DATA:
+            break;
+        case IMPORT_TABLE_DATA:
+            fileStatus = importTableData( file );
+            break;
+        case IMPORT_TEXT_DATA:
+            break;
+        case IMPORT_VECTOR_GRAPHICS:
+            fileStatus = importVectorGraphics( file );
+            break;
+        case LOAD:
+            break;
+        case NEW:
+            break;
+        case OPEN:
+            break;
+        case OTHER:
+            break;
+        case SAVE:
+        case SAVE_CONVERTED:
+        case SAVE_LOG:
+        case SAVE_REPORT:
+        case SAVE_SERVER_REQUEST:
+        case SAVE_SERVER_RESPONSE:
         default:
             break;
         }
@@ -310,6 +339,7 @@ public interface FileActionHandler {
         // TODO: Switch all of these to use the new JavaFX Imaging Engine.
         // TODO: Handle the extensions downstream and make exportVectorGraphics()
         //  and exportRenderedGraphics() to wrap the switching logic by sub-mode?
+        // TODO: Switch on FileMode instead; then no need for fileSaveExtensions?
         try {
             final String fileName = file.getName();
             final String fileNameCaseInsensitive = fileName.toLowerCase( Locale.ENGLISH );
@@ -492,6 +522,12 @@ public interface FileActionHandler {
             default:
                 break;
             }
+            break;
+        case NOT_OPENED:
+            // Alert the user that the file was not opened.
+            final String fileNotOpenedMessage = MessageFactory
+                    .getFileNotOpenedMessage( file );
+            DialogUtilities.showFileOpenErrorAlert( fileNotOpenedMessage );
             break;
         // $CASES-OMITTED$
         default:
@@ -700,7 +736,7 @@ public interface FileActionHandler {
 
     // File Save is not required for all stages, so this default is a no-op.
     default FileStatus fileSaveExtensions( final File file, 
-                                           final File tempFile ,
+                                           final File tempFile,
                                            final FileMode fileMode ) {
         return FileStatus.NOT_SAVED;
     }
@@ -710,17 +746,16 @@ public interface FileActionHandler {
     //  default directory per functional scope.
     default void setDefaultDirectory( final File defaultDirectory ) {}
 
-    default void fileImportRasterImage( final Window parent,
-                                        final FileMode fileMode,
-                                        final String fileChooserTitle,
-                                        final File initialDirectory ) {
+    default void fileImportImageData( final Window parent,
+                                      final String fileChooserTitle,
+                                      final File initialDirectory ) {
         // Prepare to throw up a file chooser for the raster image filename.
         final List< ExtensionFilter > extensionFilterAdditions 
                 = ExtensionFilterUtilities.getRasterImageExtensionFilters();
 
         // Load a single raster image file using the JavaFX File Chooser.
         fileOpen( parent,
-                  fileMode,
+                  FileMode.IMPORT_IMAGE_DATA,
                   fileChooserTitle,
                   initialDirectory,
                   extensionFilterAdditions,
@@ -821,11 +856,110 @@ public interface FileActionHandler {
     // NOTE: Not all implementing Windows will support importing images, but we
     //  are providing a convenience mechanism to do so in the file open hierarchy
     //  of methods, so we default the image importer to return false.
-    default boolean importImage( final InputStream inputStream, 
-                                 final String fileExtension ) {
-        return false;
+    default FileStatus importImageData( final File file ) {
+        // Pre-declare the File Load status in case of exceptions or unsupported
+        // File Modes or file types. Not all applications support Image Import.
+        FileStatus fileStatus = FileStatus.NOT_OPENED;
+        
+        final String fileExtension = FileUtilities.getExtension( file );
+        switch ( fileExtension ) {
+        case "gif":
+        case "jpe":
+        case "jpeg":
+        case "jpg":
+        case "png":
+            // Load the raster image file.
+            //
+            // Chain a BufferedInputStream to a FileInputStream, for better
+            // performance.
+            try ( final FileInputStream fileInputStream = new FileInputStream( file );
+                    final BufferedInputStream bufferedInputStream 
+                            = new BufferedInputStream( fileInputStream ) ) {
+                fileStatus = importImageData( bufferedInputStream, fileExtension );
+            }
+            catch ( final SecurityException | IOException e ) {
+                e.printStackTrace();
+            }
+            break;
+        default:
+            break;
+        }
+        
+        return fileStatus;
+    }
+    
+    // NOTE: Not all Stages support importing an image that is a data item.
+    default FileStatus importImageData( final InputStream inputStream,
+                                        final String fileExtension ) {
+        return FileStatus.NOT_SAVED; // Overrides should return IMPORTED
     }
 
+    default FileStatus importTableData( final File file ) {
+        // Pre-declare the File Load status in case of exceptions or unsupported
+        // File Modes or file types. Not all applications support Table Import.
+        FileStatus fileStatus = FileStatus.NOT_OPENED;
+        
+        final String fileExtension = FileUtilities.getExtension( file );
+        switch ( fileExtension ) {
+        case "csv":
+        case "zip":
+            // Load the data into a String from a CSV or ZIP file.
+            final Collection< Collection< String > > rows = new ArrayList<>();
+            if ( CsvUtilities.convertCsvToStringVector( file, rows ) ) {
+                processTableData( file, rows );
+                fileStatus = FileStatus.IMPORTED;
+            }
+            else {
+                fileStatus = FileStatus.READ_ERROR;
+            }
+            break;
+        default:
+            break;
+        }
+        
+        return fileStatus;
+    }
+    
+    default void processTableData( final File file,
+                                   final Collection< Collection< String > > rows ) {
+        // Nothing to do without access to the implementing class, but not every
+        // file handling Stage supports Import Table Data, so this is a no-op
+        // default method rather than an empty method requiring overrides.
+    }
+ 
+
+    default FileStatus importVectorGraphics( final File file ) {
+        // Pre-declare the File Load status in case of exceptions or unsupported
+        // File Modes or file types. Not all applications support Vector Graphics.
+        FileStatus fileStatus = FileStatus.NOT_OPENED;
+        
+        final String fileExtension = FileUtilities.getExtension( file );
+        switch ( fileExtension ) {
+        case "svg":
+            // Load the Scene Graph data from an SVG file.
+            try {
+                final Document doc = Jsoup.parse( file, "UTF-8", "" );
+                processSvgDocument( file, doc );
+                fileStatus = FileStatus.IMPORTED;
+            }
+            catch ( final IOException e ) {
+                e.printStackTrace();
+                fileStatus = FileStatus.READ_ERROR;
+            }
+            break;
+        default:
+            break;
+        }
+        
+        return fileStatus;
+    }
+    
+    default void processSvgDocument( final File file,
+                                     final Document doc ) {
+        // Nothing to do without access to the implementing class, but not every
+        // file handling Stage supports Import Table Data, so this is a no-op
+        // default method rather than an empty method requiring overrides.
+    }
 
     default FileStatus exportImage( final File file,
                                     final String imageFormatName,

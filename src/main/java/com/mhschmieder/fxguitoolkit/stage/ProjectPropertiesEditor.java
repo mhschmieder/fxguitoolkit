@@ -163,10 +163,4 @@ public final class ProjectPropertiesEditor extends XStage {
         // Forward this reference to the Project Properties Pane.
         _projectPropertiesPane.updateView();
     }
-
-    @Override
-    public void saveAllPreferences() {
-        // NOTE Auto-generated method stub
-        
-    }
 }
