@@ -179,6 +179,12 @@ public interface FileActionHandler {
         return fileOpenPostProcessing( file, fileMode, fileStatus );
     }
 
+    // TODO: Flesh out this method by borrowing stock implementations from
+    //  downstream Stages and writing forwarding methods for low-level details
+    //  that each Stage can override for its specific handling. This has been
+    //  done already for a few File Modes, and it reduces boilerplate code. Do
+    //  as much as is possible without access to downstream class variables.
+    // NOTE: This implies that downstream classes needn't override this method.
     default FileStatus loadFromFile( final File file,
                                      final FileMode fileMode ) {
         // Pre-declare the File Load status in case of exceptions or unsupported
@@ -328,9 +334,15 @@ public interface FileActionHandler {
     //  lower level method is given a default implementation that signifies
     //  failure. Implementing classes should override and forward per File
     //  Mode and File Type to specific handlers that aren't in this interface.
-    // TODO: Build out some general handling that calls new interface methods
-    //  that can be overridden, as much as can be done without class variables.
-    default FileStatus fileSave( final File file, 
+    // TODO: Flesh out this method by borrowing stock implementations from
+    //  downstream Stages and writing forwarding methods for low-level details
+    //  that each Stage can override for its specific handling. This has been
+    //  done already for a few File Modes, and it reduces boilerplate code. Do
+    //  as much as is possible without access to downstream class variables.
+    // NOTE: This implies that downstream classes needn't override this method.
+    // TODO: Rename this method as "storeToFile" or "saveToFile" as it goes
+    //  beyond basic File Action handling to start getting into file specifics?
+   default FileStatus fileSave( final File file, 
                                  final File tempFile,
                                  final FileMode fileMode ) {
         // Pre-declare the File Save status in case of exceptions.
@@ -461,22 +473,23 @@ public interface FileActionHandler {
     }
 
     /**
-     * Checks the file for errors, most trivially just looking at the incoming
-     * status of the file load, but possibly also checking for non-empty
-     * results.
+     * Checks the file for errors, most trivially by looking at the status of
+     * the incoming file load, but possibly also checking for non-empty results.
      * <p>
      * NOTE: This method is here for API flexibility in downstream clients of
-     *  this interface, and may be unneeded in most implementations.
+     *  this interface, and may be unneeded in some implementations.
      * <p>
      * TODO: Review whether the boolean return logic is counter-intuitive.
      * <p>
      * TODO: Come up with a generalized File Status enum vs. a boolean status?
+     * <p>
+     * TODO: Review all overrides in other classes and consolidate.
      *
      * @param file
      *            The {@link File} to check for errors.
      * @param fileMode The {@link FileMode} to use when opening the File
      * @param fileStatus
-     *            The incoming status of whether the file loaded
+     *            The status of whether the incoming file loaded
      * @return {@code true} if the error handling found no errors; {@code false}
      *         if the error handling found errors.
      */
@@ -489,12 +502,19 @@ public interface FileActionHandler {
         // method, such as to make sure the results of file load are non-empty.
         boolean sawErrors = true;
         switch ( fileStatus ) {
+        case CANCELED:
         case CREATED:
         case IMPORTED:
         case LOADED:
         case OPENED:
         case OPENED_FOR_RENAME:
             sawErrors = false;
+            break;
+        case NOT_OPENED:
+            // Alert the user that the file was not opened.
+            final String fileNotOpenedMessage = MessageFactory
+                    .getFileNotOpenedMessage( file );
+            DialogUtilities.showFileOpenErrorAlert( fileNotOpenedMessage );
             break;
         case READ_ERROR:
             switch ( fileMode ) {
@@ -522,12 +542,6 @@ public interface FileActionHandler {
             default:
                 break;
             }
-            break;
-        case NOT_OPENED:
-            // Alert the user that the file was not opened.
-            final String fileNotOpenedMessage = MessageFactory
-                    .getFileNotOpenedMessage( file );
-            DialogUtilities.showFileOpenErrorAlert( fileNotOpenedMessage );
             break;
         // $CASES-OMITTED$
         default:
@@ -627,11 +641,43 @@ public interface FileActionHandler {
         return filePostProcessed;
     }
 
+    /**
+     * Checks the file for errors, most trivially by looking at the status of
+     * the outgoing file save, but possibly also checking for non-empty results.
+     * <p>
+     * NOTE: This method is here for API flexibility in downstream clients of
+     *  this interface, and may be unneeded in some implementations.
+     * <p>
+     * TODO: Review whether the boolean return logic is counter-intuitive.
+     * <p>
+     * TODO: Come up with a generalized File Status enum vs. a boolean status?
+     * <p>
+     * TODO: Review all overrides in other classes and consolidate.
+     *
+     * @param file
+     *            The {@link File} to check for errors.
+     * @param fileMode The {@link FileMode} to use when saving the File
+     * @param fileStatus
+     *            The status of whether the outgoing file saved
+     * @return {@code true} if the error handling found no errors; {@code false}
+     *         if the error handling found errors.
+     */
     default boolean fileSaveErrorHandling( final File file, 
                                            final FileMode fileMode,
                                            final FileStatus fileStatus ) {
         boolean sawErrors = true;
         switch ( fileStatus ) {
+        case CANCELED:
+        case EXPORTED:
+        case SAVED:
+            sawErrors = false;
+            break;
+        case NOT_SAVED:
+            // Alert the user that the file was not saved.
+            final String fileNotSavedMessage = MessageFactory
+                    .getFileNotSavedMessage( file );
+            DialogUtilities.showFileSaveErrorAlert( fileNotSavedMessage );
+            break;
         case GRAPHICS_WRITE_ERROR:
             // Alert the user that a graphics file write error occurred.
             final String graphicsFileWriteErrorMessage = MessageFactory
@@ -684,14 +730,6 @@ public interface FileActionHandler {
             default:
                 break;
             }
-            break;
-        case EXPORTED:
-        case SAVED:
-            sawErrors = false;
-            break;
-        case CANCELED:
-        case NOT_SAVED:
-            // TODO: Review whether we should flag as no resulting errors?
             break;
         // $CASES-OMITTED$
         default:
