@@ -700,8 +700,6 @@ public interface FileActionHandler {
      * TODO: Review whether the boolean return logic is counter-intuitive.
      * <p>
      * TODO: Come up with a generalized File Status enum vs. a boolean status?
-     * <p>
-     * TODO: Review all overrides in other classes and consolidate.
      *
      * @param file
      *            The {@link File} to check for errors.
