@@ -687,6 +687,14 @@ public interface FileActionHandler {
         final boolean filePostProcessed = fileSaveErrorHandling( file,
                                                                  fileMode,
                                                                  fileRenamedStatus );
+        
+        // Conditionally add the chosen file to the cache and move it to the
+        // head of the list. If the file doesn't exist, delete it from the
+        // cache instead.
+        if ( filePostProcessed && FileStatus.SAVED.equals( fileStatus ) ) {
+            updateMruCache( file, true );
+        }
+        
         return filePostProcessed;
     }
 
