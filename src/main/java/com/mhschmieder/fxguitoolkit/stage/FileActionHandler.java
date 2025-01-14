@@ -42,11 +42,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.io.FilenameUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -205,53 +203,56 @@ public interface FileActionHandler {
         // types that are not native to the application, or of partial projects.
         FileStatus fileStatus = FileStatus.NOT_OPENED;
         
+        // TODO: Forward more output modes to skeletal default methods for classes
+        //  to override, to minimize the need for OTHER and fileSaveExtensions().
         switch ( fileMode ) {
-        case CLOSE:
-        case EXPORT_BINARY_DATA:
-        case EXPORT_CAD:
-        case EXPORT_IMAGE_DATA:
-        case EXPORT_RASTER_GRAPHICS:
-        case EXPORT_RENDERED_GRAPHICS:
-        case EXPORT_SPREADSHEET_DATA:
-        case EXPORT_TABLE_DATA:
-        case EXPORT_TEXT_DATA:
-        case EXPORT_VECTOR_GRAPHICS:
-            break;
-        case IMPORT_BINARY_DATA:
-            break;
-        case IMPORT_CAD:
-            break;
-        case IMPORT_IMAGE_DATA:
-            fileStatus = importImageData( file );
-            break;
-        case IMPORT_RASTER_GRAPHICS:
-            break;
-        case IMPORT_RENDERED_GRAPHICS:
-            break;
-        case IMPORT_SPREADSHEET_DATA:
-            break;
-        case IMPORT_TABLE_DATA:
-            fileStatus = importTableData( file );
-            break;
-        case IMPORT_TEXT_DATA:
-            break;
-        case IMPORT_VECTOR_GRAPHICS:
-            fileStatus = importVectorGraphics( file );
-            break;
-        case LOAD:
-            break;
         case NEW:
             break;
         case OPEN:
             break;
-        case OTHER:
+        case IMPORT_TEXT_DATA:
             break;
+        case IMPORT_TABLE_DATA:
+            fileStatus = importTableData( file, fileMode );
+            break;
+        case IMPORT_SPREADSHEET_DATA:
+            break;
+        case IMPORT_BINARY_DATA:
+            break;
+        case IMPORT_IMAGE_DATA:
+            fileStatus = importImageData( file, fileMode );
+            break;
+        case IMPORT_RASTER_GRAPHICS:
+            break;
+        case IMPORT_VECTOR_GRAPHICS:
+            fileStatus = importVectorGraphics( file, fileMode );
+            break;
+        case IMPORT_RENDERED_GRAPHICS:
+            break;
+        case IMPORT_CAD:
+            break;
+        case LOAD:
+            break;
+        case CLOSE:
         case SAVE:
         case SAVE_CONVERTED:
         case SAVE_LOG:
         case SAVE_REPORT:
         case SAVE_SERVER_REQUEST:
         case SAVE_SERVER_RESPONSE:
+        case EXPORT_TEXT_DATA:
+        case EXPORT_TABLE_DATA:
+        case EXPORT_SPREADSHEET_DATA:
+        case EXPORT_BINARY_DATA:
+        case EXPORT_IMAGE_DATA:
+        case EXPORT_RASTER_GRAPHICS:
+        case EXPORT_VECTOR_GRAPHICS:
+        case EXPORT_RENDERED_GRAPHICS:
+        case EXPORT_CAD:
+           break;
+        case OTHER:
+            // TODO: Call a default handler for this, for classes to override.
+            break;
         default:
             break;
         }
@@ -329,13 +330,15 @@ public interface FileActionHandler {
         // Get a temporary file for interim write operations.
         // TODO: Switch to Apache Commons I/O for safer handling (FileUtils).
         final String prefixForTempFile = getPrefixForTempFile();
-        final File tempFile = FileChooserUtilities.getTempFile( file, prefixForTempFile );
+        final File tempFile = FileChooserUtilities.getTempFile( file, 
+                                                                prefixForTempFile );
         if ( tempFile == null ) {
             return false;
         }
 
         // Save the file.
-        final FileStatus fileStatus = fileSave( file, tempFile, fileMode );
+        // NOTE: The temp file doesn't include the file extension.
+        final FileStatus fileStatus = saveToFile( file, tempFile, fileMode );
 
         // Post-process the File Save or Export action.
         fileSavePostProcessing( file, tempFile, fileMode, fileStatus );
@@ -343,102 +346,74 @@ public interface FileActionHandler {
         return true;
     }
 
-    // NOTE: Not all implementing Windows support File Save actions, so this
-    //  lower level method is given a default implementation that signifies
-    //  failure. Implementing classes should override and forward per File
-    //  Mode and File Type to specific handlers that aren't in this interface.
     // TODO: Flesh out this method by borrowing stock implementations from
     //  downstream Stages and writing forwarding methods for low-level details
     //  that each Stage can override for its specific handling. This has been
     //  done already for a few File Modes, and it reduces boilerplate code. Do
     //  as much as is possible without access to downstream class variables.
     // NOTE: This implies that downstream classes needn't override this method.
-    // TODO: Rename this method as "storeToFile" or "saveToFile" as it goes
-    //  beyond basic File Action handling to start getting into file specifics?
-   default FileStatus fileSave( final File file, 
-                                 final File tempFile,
-                                 final FileMode fileMode ) {
-        // Pre-declare the File Save status in case of exceptions.
-        FileStatus fileStatus = FileStatus.WRITE_ERROR;
+    default FileStatus saveToFile( final File file, 
+                                   final File tempFile,
+                                   final FileMode fileMode ) {
+       // Pre-declare the File Load status in case of exceptions or unsupported
+       // File Modes or file types. Not all applications support File Load of
+       // types that are not native to the application, or of partial projects.
+       FileStatus fileStatus = FileStatus.NOT_SAVED;
+       
+       // TODO: Forward more output modes to skeletal default methods for classes
+       //  to override, to minimize the need for OTHER and fileSaveExtensions().
+       switch ( fileMode ) {
+       case NEW:
+       case OPEN:
+       case IMPORT_TEXT_DATA:
+       case IMPORT_TABLE_DATA:
+       case IMPORT_SPREADSHEET_DATA:
+       case IMPORT_BINARY_DATA:
+       case IMPORT_IMAGE_DATA:
+       case IMPORT_RASTER_GRAPHICS:
+       case IMPORT_VECTOR_GRAPHICS:
+       case IMPORT_RENDERED_GRAPHICS:
+       case IMPORT_CAD:
+       case LOAD:
+       case CLOSE:
+       case SAVE:
+       case SAVE_CONVERTED:
+       case SAVE_LOG:
+       case SAVE_REPORT:
+       case SAVE_SERVER_REQUEST:
+       case SAVE_SERVER_RESPONSE:
+           break;
+       case EXPORT_TEXT_DATA:
+           break;
+       case EXPORT_TABLE_DATA:
+           break;
+       case EXPORT_SPREADSHEET_DATA:
+           break;
+       case EXPORT_BINARY_DATA:
+           break;
+       case EXPORT_IMAGE_DATA:
+           fileStatus = exportImageData( file, tempFile, fileMode );
+           break;
+       case EXPORT_RASTER_GRAPHICS:
+           fileStatus = exportRasterGraphics( file, tempFile, fileMode );
+           break;
+       case EXPORT_VECTOR_GRAPHICS:
+           fileStatus = exportVectorGraphics( file, tempFile, fileMode );
+           break;
+       case EXPORT_RENDERED_GRAPHICS:
+           fileStatus = exportRenderedGraphics( file, tempFile, fileMode );
+           break;
+       case EXPORT_CAD:
+           fileStatus = exportCadGraphics( file, tempFile, fileMode );
+           break;
+       case OTHER:
+           // TODO: Call a default handler for this, for classes to override.
+           break;
+       default:
+           break;
+       }
 
-        // TODO: Switch all of these to use the new JavaFX Imaging Engine.
-        // TODO: Handle the extensions downstream and make exportVectorGraphics()
-        //  and exportRenderedGraphics() to wrap the switching logic by sub-mode?
-        // TODO: Switch on FileMode instead; then no need for fileSaveExtensions?
-        try {
-            final String fileName = file.getName();
-            final String fileNameCaseInsensitive = fileName.toLowerCase( Locale.ENGLISH );
-            if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "bmp" )
-                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "dib" ) ) {
-                // Rasterize the main content pane to a BMP file.
-                fileStatus = exportImage( tempFile, "bmp", fileMode );
-            }
-            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "eps" )
-                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "epsf" ) ) {
-                // Vectorize the main content pane to an EPS file.
-                fileStatus = exportToEps( tempFile, file, fileMode );
-            }
-            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "gif" ) ) {
-                // Rasterize the main content pane to a GIF file.
-                fileStatus = exportImage( tempFile, "gif", fileMode );
-            }
-            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "jpg" )
-                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "jpeg" )
-                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "jpe" ) ) {
-                // Rasterize the main content pane to a JPEG file.
-                fileStatus = exportImage( tempFile, "jpg", fileMode );
-            }
-            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "pdf" ) ) {
-                // NOTE: We hope to eventually support Export to PDF from
-                // Rendered Graphics Preview, but this is currently a no-op
-                // and not exposed in the file extensions drop-list.
-                if ( FileMode.EXPORT_VECTOR_GRAPHICS.equals( fileMode )
-                        || FileMode.EXPORT_RENDERED_GRAPHICS.equals( fileMode ) ) {
-                    // Vectorize the main content pane to a PDF file.
-                    fileStatus = exportToPdf( tempFile, file, fileMode );
-                }
-                else {
-                    // Take care of any extensions specific to sub-classes.
-                    fileStatus = fileSaveExtensions( file, tempFile, fileMode );
-                }
-            }
-            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "png" ) ) {
-                // Rasterize the main content pane to a PNG file.
-                fileStatus = exportImage( tempFile, "png", fileMode );
-            }
-            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "pnm" ) ) {
-                // Rasterize the main content pane to a PNM file.
-                fileStatus = exportImage( tempFile, "pnm", fileMode );
-            }
-            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "pptx" )
-                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "ppt" ) ) {
-                // Vectorize the main content pane to a PPT file.
-                fileStatus = exportToPpt( tempFile, file, fileMode );
-            }
-            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "svg" ) ) {
-                // Vectorize the main content pane to an SVG file.
-                fileStatus = exportToSvg( tempFile, file, fileMode );
-            }
-            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "tif" )
-                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "tiff" ) ) {
-                // Rasterize the main content pane to a TIFF file.
-                fileStatus = exportImage( tempFile, "tiff", fileMode );
-            }
-            else if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "wbm" )
-                    || FilenameUtils.isExtension( fileNameCaseInsensitive, "wbmp" ) ) {
-                // Rasterize the main content pane to a WBMP file.
-                fileStatus = exportImage( tempFile, "wbmp", fileMode );
-            }
-            else {
-                // Take care of any extensions specific to sub-classes.
-                fileStatus = fileSaveExtensions( file, tempFile, fileMode );
-            }
-        }
-        catch ( final Exception e ) {
-            e.printStackTrace();
-        }
-
-        return fileStatus;
+       return fileStatus;
     }
 
     /**
@@ -827,6 +802,12 @@ public interface FileActionHandler {
         return "";
     }
 
+    // File Open is not required for all stages, so this default is a no-op.
+    default FileStatus fileOpenExtensions( final File file, 
+                                           final FileMode fileMode ) {
+        return FileStatus.NOT_OPENED;
+    }
+
     // File Save is not required for all stages, so this default is a no-op.
     default FileStatus fileSaveExtensions( final File file, 
                                            final File tempFile,
@@ -946,14 +927,17 @@ public interface FileActionHandler {
                     null );
     }
 
-    // NOTE: Not all implementing Windows will support importing images, but we
-    //  are providing a convenience mechanism to do so in the file open hierarchy
-    //  of methods, so we default the image importer to return false.
-    default FileStatus importImageData( final File file ) {
+    // NOTE: Not all implementing Windows support importing images, but we
+    //  provide a convenience mechanism to do so in the hierarchy of File Open.
+    default FileStatus importImageData( final File file,
+                                        final FileMode fileMode ) {
         // Pre-declare the File Load status in case of exceptions or unsupported
         // File Modes or file types. Not all applications support Image Import.
         FileStatus fileStatus = FileStatus.NOT_OPENED;
         
+        // TODO: Review whether we should adjust the file extension first for
+        //  simplicity. This requires following the downstream code to see how
+        //  the original extension is used. Java imaging is extension-neutral?
         final String fileExtension = FileUtilities.getExtension( file );
         switch ( fileExtension ) {
         case "gif":
@@ -975,6 +959,8 @@ public interface FileActionHandler {
             }
             break;
         default:
+            // Take care of any extensions specific to sub-classes.
+            fileStatus = fileOpenExtensions( file, fileMode );
             break;
         }
         
@@ -987,7 +973,8 @@ public interface FileActionHandler {
         return FileStatus.NOT_SAVED; // Overrides should return IMPORTED
     }
 
-    default FileStatus importTableData( final File file ) {
+    default FileStatus importTableData( final File file,
+                                        final FileMode fileMode ) {
         // Pre-declare the File Load status in case of exceptions or unsupported
         // File Modes or file types. Not all applications support Table Import.
         FileStatus fileStatus = FileStatus.NOT_OPENED;
@@ -996,7 +983,8 @@ public interface FileActionHandler {
         switch ( fileExtension ) {
         case "csv":
         case "zip":
-            // Load the data into a String from a CSV or ZIP file.
+            // Load the data into a String from a CSV or ZIP-contained ZIP file.
+            // TODO: Convert the CSV Utilities class to use Apache CSV Parser.
             final Collection< Collection< String > > rows = new ArrayList<>();
             if ( CsvUtilities.convertCsvToStringVector( file, rows ) ) {
                 processTableData( file, rows );
@@ -1007,6 +995,8 @@ public interface FileActionHandler {
             }
             break;
         default:
+            // Take care of any extensions specific to sub-classes.
+            fileStatus = fileOpenExtensions( file, fileMode );
             break;
         }
         
@@ -1021,7 +1011,8 @@ public interface FileActionHandler {
     }
  
 
-    default FileStatus importVectorGraphics( final File file ) {
+    default FileStatus importVectorGraphics( final File file,
+                                             final FileMode fileMode ) {
         // Pre-declare the File Load status in case of exceptions or unsupported
         // File Modes or file types. Not all applications support Vector Graphics.
         FileStatus fileStatus = FileStatus.NOT_OPENED;
@@ -1041,7 +1032,9 @@ public interface FileActionHandler {
             }
             break;
         default:
-            break;
+            // Take care of any extensions specific to sub-classes.
+            fileStatus = fileOpenExtensions( file, fileMode );
+           break;
         }
         
         return fileStatus;
@@ -1054,31 +1047,77 @@ public interface FileActionHandler {
         // default method rather than an empty method requiring overrides.
     }
 
-    default FileStatus exportImage( final File file,
-                                    final String imageFormatName,
-                                    final FileMode fileMode ) {
-        if ( FileMode.EXPORT_IMAGE_DATA.equals( fileMode ) ) {
-            return exportImageData( file, imageFormatName );
-        }
-
-        final RasterGraphicsExportOptions rasterGraphicsExportOptions 
-                = getRasterGraphicsExportOptions();
-        if ( rasterGraphicsExportOptions == null ) {
-            return FileStatus.NOT_SAVED;
+    // NOTE: Not all Stages support exporting an image that is a data item.
+    // TODO: Review which of these formats is presented in the file chooser.
+    default FileStatus exportImageData( final File file, 
+                                        final File tempFile,
+                                        final FileMode fileMode ) {
+        FileStatus fileStatus = FileStatus.NOT_SAVED;
+        
+        final String fileExtension = FileUtilities.getAdjustedFileExtension( file );
+        switch ( fileExtension ) {
+        case "bmp":
+        case "gif":
+        case "jpg":
+        case "png":
+        case "pnm":
+        case "tiff":
+        case "wbmp":
+            // Export a cached image in the specified format.
+            fileStatus = exportImageData( tempFile, fileExtension );
+            break;
+        default:
+            // Take care of any extensions specific to sub-classes.
+            fileStatus = fileSaveExtensions( file, tempFile, fileMode );
+            break;
         }
         
-        final ImageSize imageSize = rasterGraphicsExportOptions.getImageSize();
-        return exportRasterGraphics( file, imageFormatName, imageSize );
+        return fileStatus;
     }
 
     // NOTE: Not all Stages support exporting an image that is a data item.
     default FileStatus exportImageData( final File file, 
-                                        final String imageFormat ) {
+                                        final String fileExtension ) {
         return FileStatus.NOT_SAVED;
+    }
+
+    // NOTE: Not all Stages support exporting a screenshot as raster graphics.
+    // TODO: Review which of these formats is presented in the file chooser.
+    default FileStatus exportRasterGraphics( final File file, 
+                                             final File tempFile,
+                                             final FileMode fileMode ) {
+        FileStatus fileStatus = FileStatus.NOT_SAVED;
+        
+        final String fileExtension = FileUtilities.getAdjustedFileExtension( file );
+        switch ( fileExtension ) {
+        case "bmp":
+        case "gif":
+        case "jpg":
+        case "png":
+        case "pnm":
+        case "tiff":
+        case "wbmp":
+            final RasterGraphicsExportOptions rasterGraphicsExportOptions 
+                    = getRasterGraphicsExportOptions();
+            if ( rasterGraphicsExportOptions != null ) {
+                // Rasterize the main content pane to file in the specified format.
+                final ImageSize imageSize = rasterGraphicsExportOptions.getImageSize();
+                fileStatus = exportRasterGraphics( tempFile, 
+                                                   fileExtension, 
+                                                   imageSize );
+            }
+            break;
+        default:
+            // Take care of any extensions specific to sub-classes.
+            fileStatus = fileSaveExtensions( file, tempFile, fileMode );
+            break;
+        }
+        
+        return fileStatus;
     }
    
     default FileStatus exportRasterGraphics( final File file,
-                                             final String imageFormatName,
+                                             final String fileExtension,
                                              final ImageSize imageSize ) {
         // Avoid throwing unnecessary exceptions by filtering for no-ops.
         final Node rasterGraphicsExportSource = getRasterGraphicsExportSource();
@@ -1087,17 +1126,18 @@ public interface FileActionHandler {
         }
 
         // Get an AWT BufferedImage as the snapshot of the source Node.
-        final BufferedImage bufferedImage = ImageUtilities
+        // TODO: Switch this to use the new JavaFX Imaging Engine.
+       final BufferedImage bufferedImage = ImageUtilities
                 .getBufferedImageSnapshot( rasterGraphicsExportSource );
 
         // If necessary, correct bugs in Oracle's Image Type assignment.
         final BufferedImage correctedImage = ImageConversionUtilities
-                .swapImageType( bufferedImage, imageFormatName );
+                .swapImageType( bufferedImage, fileExtension );
 
         // Avoid unnecessary file buffering and image tasks if the image
         // writer's validity check would reject this image and/or its format.
         if ( !ImageFormatUtilities.isImageTypeSupportedForWrite( correctedImage,
-                                                                 imageFormatName ) ) {
+                                                                 fileExtension ) ) {
             return FileStatus.NOT_SAVED;
         }
 
@@ -1108,7 +1148,7 @@ public interface FileActionHandler {
                         = new BufferedOutputStream( fileOutputStream ) ) {
             // As long as no compression or other customization is needed, it is
             // simpler and less risky to use the default raster image writer.
-            ImageIO.write( correctedImage, imageFormatName, bufferedOutputStream );
+            ImageIO.write( correctedImage, fileExtension, bufferedOutputStream );
         }
         catch ( final Exception e ) {
             e.printStackTrace();
@@ -1116,8 +1156,85 @@ public interface FileActionHandler {
         }
 
         return FileStatus.EXPORTED;
+    }    
+
+    // NOTE: Not all Stages support exporting a screenshot as vector graphics.
+    // TODO: Review which of these formats is presented in the file chooser.
+    default FileStatus exportVectorGraphics( final File file,
+                                             final File tempFile, 
+                                             final FileMode fileMode ) {
+        FileStatus fileStatus = FileStatus.NOT_SAVED;
+        
+        final String fileExtension = FileUtilities.getAdjustedFileExtension( file );
+        switch ( fileExtension ) {
+        case "eps":
+            // Vectorize the main content pane to an EPS file.
+            fileStatus = exportToEps( tempFile, file, fileMode );
+            break;
+        case "pdf":
+            // Vectorize the main content pane to a PDF file.
+            fileStatus = exportToPdf( tempFile, file, fileMode );
+            break;
+        case "ppt":
+            // Vectorize the main content pane to a PPT file.
+            fileStatus = exportToPpt( tempFile, file, fileMode );
+        case "svg":
+            // Vectorize the main content pane to an SVG file.
+            fileStatus = exportToSvg( tempFile, file, fileMode );
+        default:
+            // Take care of any extensions specific to sub-classes.
+            fileStatus = fileSaveExtensions( file, tempFile, fileMode );
+            break;
+        }
+        
+        return fileStatus;
     }
-    
+
+    // NOTE: Not all Stages support curated content as rendered graphics.
+    // TODO: Review which of these formats is presented in the file chooser.
+    default FileStatus exportRenderedGraphics( final File file,
+                                               final File tempFile, 
+                                               final FileMode fileMode ) {
+        FileStatus fileStatus = FileStatus.NOT_SAVED;
+        
+        final String fileExtension = FileUtilities.getAdjustedFileExtension( file );
+        switch ( fileExtension ) {
+        case "eps":
+            // Vectorize the curated and styled content to an EPS file.
+            fileStatus = exportToEps( tempFile, file, fileMode );
+            break;
+        case "pdf":
+            // Vectorize the curated and styled content to a PDF file.
+            fileStatus = exportToPdf( tempFile, file, fileMode );
+            break;
+        default:
+            // Take care of any extensions specific to sub-classes.
+            fileStatus = fileSaveExtensions( file, tempFile, fileMode );
+            break;
+        }
+        
+        return fileStatus;
+    }
+
+    // NOTE: Not all Stages support structured data as CAD graphics.
+    // TODO: Review which of these formats is presented in the file chooser.
+    default FileStatus exportCadGraphics( final File file,
+                                          final File tempFile, 
+                                          final FileMode fileMode ) {
+        FileStatus fileStatus = FileStatus.NOT_SAVED;
+        
+        final String fileExtension = FileUtilities.getAdjustedFileExtension( file );
+        switch ( fileExtension ) {
+        case "dxf":
+        default:
+            // Take care of any extensions specific to sub-classes.
+            fileStatus = fileSaveExtensions( file, tempFile, fileMode );
+            break;
+        }
+        
+        return fileStatus;
+    }
+ 
     // NOTE: This default implementation is a no-op as the generic version
     //  would introduce a circular dependency with jfxconvertertoolkit.
     default FileStatus exportToEps( final File tempFile,
