@@ -38,6 +38,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -264,6 +266,55 @@ public interface FileActionHandler {
     //  method is given a default implementation that indicates cancellation.
     default boolean fileClose() {
         return false;
+    }
+
+    // File Save is not required for all stages, so we provide a default.
+    // This uses the supplied file, if it exists; otherwise it does a save as.
+    // NOTE: We also apply logic for whether confirmation is required, as is
+    //  the case if the user started a new file with the default name vs.
+    //  opening one from disc.
+    default boolean fileSave( final Window parent,
+                              final ClientProperties clientProperties,
+                              final File file,
+                              final boolean fileChanged,
+                              final String fileChooserTitle,
+                              final File initialDirectory,
+                              final List< ExtensionFilter > extensionFilterAdditions,
+                              final ExtensionFilter defaultExtensionFilter,
+                              final File defaultFile ) {
+        // NOTE: We avoid redundant saves as well as querying the user for a
+        //  filename when there is nothing to save (they can always do this
+        //  deliberately with a direct "Save As" anyway).
+        boolean fileSaved = false;
+        if ( fileChanged ) {
+            try {
+                if ( ( file != null ) && Files.isRegularFile( 
+                        file.toPath(), LinkOption.NOFOLLOW_LINKS ) ) {
+                    // Save the project in the same file location as was
+                    // originally opened.
+                    fileSaved = fileSave( file, FileMode.SAVE );
+                }
+                else {
+                    // Force the user to provide a new file name for
+                    // uninitialized files. The default file is usually null.
+                    // NOTE: We must forward any user cancellation events in
+                    //  order to prevent the project from being reset.
+                    fileSaved = fileSaveAs( parent,
+                                            FileMode.SAVE,
+                                            clientProperties,
+                                            fileChooserTitle,
+                                            initialDirectory,
+                                            extensionFilterAdditions,
+                                            defaultExtensionFilter,
+                                            defaultFile );
+                }
+            }
+            catch ( final Exception e ) {
+                e.printStackTrace();
+            }
+        }
+        
+        return fileSaved;
     }
 
     // File Save is not required for all stages, so we provide a default.

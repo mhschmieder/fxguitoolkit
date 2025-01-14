@@ -228,15 +228,4 @@ public interface FileCloseHandler {
         
         return closeFile;
     }
-     
-    /**
-     * Saves the file. 
-     * <p>
-     * This by default does nothing; it is a contract for the implementor of
-     * this interface to provide the details of a file save in the context of
-     * a user selecting a file action that results in saving the file before 
-     * executing that action, such as closing a window that includes unsaved
-     * changes. Usually, implementors will invoke FileActionHandler methods.
-     */
-     default void fileSave() {}
 }
