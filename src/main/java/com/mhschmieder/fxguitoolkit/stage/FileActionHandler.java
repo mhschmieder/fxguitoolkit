@@ -72,8 +72,21 @@ import javafx.stage.Window;
  * {@code FileActionHandler} is an interface that contracts Window-derived classes
  * to supply basic file action handling. To minimize the amount of coupling, it 
  * attempts to standardize as much as possible in default implementations herein.
+ * <p>
+ * In most contexts, the generic "file" reference refers to an application-domain
+ * project file, but to be more generally applicable for a variety of downstream
+ * implementers, we are keeping the terminology as simple and basic as possible.
  */
 public interface FileActionHandler {
+
+    /** 
+     * Opens a new file, after closing and/or saving the current file. 
+     * 
+     * @param saveProject {@code true} if called from a context where there is a
+     *                    valid current file; {@code false} if coming from a
+     *                    failed File Open action where we need a new default file
+     */
+    default void fileNew( final boolean saveProject ) {}
 
     default void fileOpen( final Window parent,
                            final FileMode fileMode,
@@ -482,8 +495,6 @@ public interface FileActionHandler {
      * TODO: Review whether the boolean return logic is counter-intuitive.
      * <p>
      * TODO: Come up with a generalized File Status enum vs. a boolean status?
-     * <p>
-     * TODO: Review all overrides in other classes and consolidate.
      *
      * @param file
      *            The {@link File} to check for errors.
@@ -517,9 +528,17 @@ public interface FileActionHandler {
             DialogUtilities.showFileOpenErrorAlert( fileNotOpenedMessage );
             break;
         case READ_ERROR:
+            final String fileReadErrorMessage = MessageFactory
+                    .getFileReadErrorMessage( file );
             switch ( fileMode ) {
-            case NEW:
             case OPEN:
+                // Reset to the next default file, in case of a partial open.
+                fileNew( false );
+
+                // Alert the user that a file open error occurred.
+                DialogUtilities.showFileOpenErrorAlert( fileReadErrorMessage );
+                break;
+            case NEW:
             case IMPORT_TEXT_DATA:
             case IMPORT_TABLE_DATA:
             case IMPORT_SPREADSHEET_DATA:
@@ -531,8 +550,6 @@ public interface FileActionHandler {
             case IMPORT_CAD:
             case LOAD:
                 // Alert the user that a file open error occurred.
-                final String fileReadErrorMessage = MessageFactory
-                        .getFileReadErrorMessage( file );
                 DialogUtilities.showFileOpenErrorAlert( fileReadErrorMessage );
                 break;
             case OTHER:
@@ -542,6 +559,32 @@ public interface FileActionHandler {
             default:
                 break;
             }
+            break;
+        case CLIENT_INCOMPATIBLE:
+            // Alert the user that the file is too new to open, and give
+            // them the chance to check for updates via the browser.
+            final String fileNewerThanClientMessage = MessageFactory
+                    .getFileNewerThanClientMessage();
+            DialogUtilities.showFileOpenErrorAlert( fileNewerThanClientMessage );
+            break;
+        case OUT_OF_MEMORY_ERROR:
+            // Clear all errors and and associated status from partial file open.
+            clearFileOpenErrors();
+
+            // Alert the user that a graphics file out of memory error
+            // occurred.
+            final String outOfMemoryMessage = MessageFactory
+                    .getFileImportOutOfMemoryMessage( fileMode, file );
+            DialogUtilities.showFileReadErrorAlert( outOfMemoryMessage );
+            break;
+        case GRAPHICS_READ_ERROR:
+            // Clear all the DXF errors and and associated status.
+            clearFileOpenErrors();
+
+            // Alert the user that a graphics file read error occurred.
+            final String graphicsFileReadErrorMessage = MessageFactory
+                    .getGraphicsFileReadErrorMessage( fileMode, file );
+            DialogUtilities.showFileReadErrorAlert( graphicsFileReadErrorMessage );
             break;
         // $CASES-OMITTED$
         default:
@@ -553,6 +596,12 @@ public interface FileActionHandler {
 
         return !sawErrors;
     }
+    
+    // This method is for implementing classes to detail. It provides a hook for
+    // cleaning up after potential incomplete file open actions, whereas file not
+    // opened errors and basic file read errors do not usually corrupt app state.
+    default void clearFileOpenErrors() {}
+
 
     // NOTE: This is by default a no-op that does no harm to the file status. As
     //  some applications need to do pre-processing in advance of other file

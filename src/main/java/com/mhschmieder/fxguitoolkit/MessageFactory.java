@@ -141,6 +141,27 @@ public class MessageFactory {
         return "Exit " + productName;
     }
 
+    public static final String getFileImportErrorMessage( final FileMode fileMode,
+                                                          final File file ) {
+        final String errorMessageBody = FileMode.IMPORT_CAD.equals( fileMode )
+            ? " could not load graphics data due to invalid file content."
+            : " was opened for project data, but could not load graphics data due to invalid file content.";
+        final String graphicsFileNotOpenedMessage = MessageFactory
+                .getFileErrorMessage( errorMessageBody, file );
+        return graphicsFileNotOpenedMessage;
+    }
+
+    public static final String getFileImportOutOfMemoryMessage( final FileMode fileMode,
+                                                                final File file ) {
+        final String errorMessageBody = FileMode.IMPORT_CAD.equals( fileMode )
+            ? " could not load graphics data as it requires more Java heap space memory than is available."
+            : " was opened for project data, but could not load graphics data as it requires"
+                    + " more Java heap space memory than is available.";
+        final String graphicsImportOutOfMemoryMessage = MessageFactory
+                .getFileErrorMessage( errorMessageBody, file );
+        return graphicsImportOutOfMemoryMessage;
+    }
+
     public static final String getFileNameConflictTitle() {
         return "File Name Conflict";
     }
@@ -167,13 +188,13 @@ public class MessageFactory {
     }
     
     public static final String getFileNotOpenedMessage( final File file ) {
-        final String errorMessageBody = " could not be opened.";
+        final String errorMessageBody = " could not be opened (in full or in part).";
         final String fileNotOpenedMessage = getFileErrorMessage( errorMessageBody, file );
         return fileNotOpenedMessage;
     }
 
     public static final String getFileNotSavedMasthead() {
-        return "File Will Not Be Saved";
+        return "File Not Saved";
     }
 
     public static final String getFileNotSavedMessage( final File file ) {
@@ -191,6 +212,37 @@ public class MessageFactory {
         final String graphicsFileNotOpenedMessage = MessageFactory
                 .getFileErrorMessage( errorMessageBody, file );
         return graphicsFileNotOpenedMessage;
+    }
+
+
+    public static final String getFileOpenErrorTitle() {
+        return "File Open Error";
+    }
+
+    public static final String getFileOpenOptionsTitle() {
+        return "File Open Options";
+    }
+
+    public static final String getFilePartiallySavedMasthead() {
+        return "File Partially Saved";
+    }
+
+    public static final String getFilePromptMessage( final String promptMessageBody,
+                                                     final File file ) {
+        final String fileName = file.getName();
+        final String fileError = "File: " + '"' + fileName + '"' + " "
+                + promptMessageBody;
+        return fileError;
+    }
+
+    public static final String getFileReadErrorMessage( final File file ) {
+        final String errorMessageBody = " could not open."
+                + " Check the Session Log for possible run-time exceptions.";
+        return getFileErrorMessage( errorMessageBody, file );
+    }
+    
+    public static final String getFileReadErrorTitle() {
+        return "File Read Error";
     }
 
     /**
@@ -224,37 +276,6 @@ public class MessageFactory {
         }
         
         return actionClause;
-    }
-
-
-    public static final String getFileOpenErrorTitle() {
-        return "File Open Error";
-    }
-
-    public static final String getFileOpenOptionsTitle() {
-        return "File Open Options";
-    }
-
-    public static final String getFilePartiallySavedMasthead() {
-        return "File Partially Saved";
-    }
-
-    public static final String getFilePromptMessage( final String promptMessageBody,
-                                                     final File file ) {
-        final String fileName = file.getName();
-        final String fileError = "File: " + '"' + fileName + '"' + " "
-                + promptMessageBody;
-        return fileError;
-    }
-
-    public static final String getFileReadErrorMessage( final File file ) {
-        final String errorMessageBody = " could not open."
-                + " Check the Session Log for possible run-time exceptions.";
-        return getFileErrorMessage( errorMessageBody, file );
-    }
-    
-    public static final String getFileReadErrorTitle() {
-        return "File Read Error";
     }
 
     public static final String getFileSaveErrorTitle() {
@@ -294,27 +315,6 @@ public class MessageFactory {
                 + " Please Zoom to Extents and try again.";
         final String graphicsFileNotSavedMessage = getFileErrorMessage( errorMessageBody, file );
         return graphicsFileNotSavedMessage;
-    }
-
-    public static final String getGraphicsImportFileErrorMessage( final FileMode fileMode,
-                                                                  final File file ) {
-        final String errorMessageBody = FileMode.IMPORT_CAD.equals( fileMode )
-            ? " could not load graphics data due to invalid file content."
-            : " was opened for project data, but could not load graphics data due to invalid file content.";
-        final String graphicsFileNotOpenedMessage = MessageFactory
-                .getFileErrorMessage( errorMessageBody, file );
-        return graphicsFileNotOpenedMessage;
-    }
-
-    public static final String getGraphicsImportOutOfMemoryMessage( final FileMode fileMode,
-                                                                    final File file ) {
-        final String errorMessageBody = FileMode.IMPORT_CAD.equals( fileMode )
-            ? " could not load graphics data as it requires more Java heap space memory than is available."
-            : " was opened for project data, but could not load graphics data as it requires"
-                    + " more Java heap space memory than is available.";
-        final String graphicsImportOutOfMemoryMessage = MessageFactory
-                .getFileErrorMessage( errorMessageBody, file );
-        return graphicsImportOutOfMemoryMessage;
     }
 
     public static final String getGraphicsImportStatusBanner() {
