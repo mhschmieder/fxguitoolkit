@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -45,8 +45,10 @@ import javafx.scene.paint.Color;
  * This is a struct-like container for generic Background Color choices.
  * <p>
  * NOTE: At this time, slate gray hues are not exposed anymore, so they are
- * removed from the factory methods and are aliased to default choices in the
- * mapping methods that go between cached values and list-based choices.
+ *  removed from the factory methods and are aliased to default choices in the
+ *  mapping methods that go between cached values and list-based choices.
+ * <p>
+ * TODO: Make an enum of these values, with label mappings.
  */
 public final class BackgroundColorChoices {
 

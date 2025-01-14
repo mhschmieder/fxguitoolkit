@@ -43,6 +43,7 @@
     CHART_ZERO_LINE: derive( gray, -30% ); 
     AXIS_COLOR_BASIS: COLOR_GRAY75;
     AXIS_COLOR_LABEL: white;
+    AXIS_FILL_TICK: null;
     AXIS_FILL_TICK_LABEL: white;
     
     /* Control Color Palette */
@@ -63,7 +64,7 @@
     COLOR_SPINNER: COLOR_GRAY20;
     FILL_SPINNER: white;
 
-    COLOR_TOOL_BAR_BUTTON: COLOR_GRAY66
+    COLOR_TOOL_BAR_BUTTON: COLOR_GRAY66;
     FILL_TOOL_BAR_BUTTON: black;
 
     /* Control Color Palette */
@@ -357,7 +358,11 @@
 
 /* Match the "Night Mode" color for Tool Bar Buttons. */
 .tool-bar-button {
-    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, COLOR_TOOL_BAR_BUTTON;
+    -fx-background-color: 
+        -fx-shadow-highlight-color, 
+        -fx-outer-border, 
+        -fx-inner-border, 
+        derive( COLOR_TOOL_BAR_BUTTON, 0% );
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-text-fill: FILL_TOOL_BAR_BUTTON;
@@ -478,7 +483,11 @@
 
 /* Match the "Night Mode" color for Tool Bar Toggle Buttons. */
 .tool-bar-toggle {
-    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, COLOR_TOOL_BAR_TOGGLE_OFF;
+    -fx-background-color: 
+        -fx-shadow-highlight-color, 
+        -fx-outer-border, 
+        -fx-inner-border, 
+        derive( COLOR_TOOL_BAR_TOGGLE_BUTTON, 0% );
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-text-fill: FILL_TOOL_BAR_TOGGLE_OFF;
