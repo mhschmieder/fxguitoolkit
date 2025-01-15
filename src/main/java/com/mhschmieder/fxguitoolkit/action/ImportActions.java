@@ -44,28 +44,38 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
  */
 public class ImportActions {
 
-    public XAction _importImageGraphicsAction;
+    public XAction _importSpreadsheetDataAction;
+    public XAction _importTableDataAction;
+    public XAction _importRasterGraphicsAction;
     public XAction _importVectorGraphicsAction;
     public XAction _importCadGraphicsAction;
 
     public ImportActions( final ClientProperties clientProperties ) {
-        _importImageGraphicsAction = LabeledActionFactory
-                .getImportImageGraphicsAction( clientProperties );
+        _importSpreadsheetDataAction = LabeledActionFactory
+                .getImportSpreadsheetDataAction( clientProperties );
+        _importTableDataAction = LabeledActionFactory
+                .getImportTableDataAction( clientProperties );
+        _importRasterGraphicsAction = LabeledActionFactory
+                .getImportRasterGraphicsAction( clientProperties );
         _importVectorGraphicsAction = LabeledActionFactory
                 .getImportVectorGraphicsAction( clientProperties );
-        _importImageGraphicsAction = LabeledActionFactory
-                .getImportImageGraphicsAction( clientProperties );
+        _importCadGraphicsAction = LabeledActionFactory
+                .getImportCadGraphicsAction( clientProperties );
     }
 
     // NOTE: This method is not final, so that it can be derived for
     //  additions.
-    public Collection< Action > getImportActionCollection( final boolean imageGraphicsSupported,
+    public Collection< Action > getImportActionCollection( final boolean rasterGraphicsSupported,
                                                            final boolean vectorGraphicsSupported,
                                                            final boolean cadGraphicsSupported ) {
         final Collection< Action > importActionCollection = new ArrayList<>();
 
-        if ( imageGraphicsSupported ) {
-            importActionCollection.add( _importImageGraphicsAction );
+        // TODO: Pass in flags to conditionally add table and spreadsheet data.
+        importActionCollection.add( _importTableDataAction );
+        importActionCollection.add( _importSpreadsheetDataAction );
+        
+        if ( rasterGraphicsSupported ) {
+            importActionCollection.add( _importRasterGraphicsAction );
         }
 
         if ( vectorGraphicsSupported ) {
@@ -75,6 +85,10 @@ public class ImportActions {
         if ( cadGraphicsSupported ) {
             importActionCollection.add( _importCadGraphicsAction );
         }
+        
+        // TODO: Pass a flag so it doesn't get added at all unless needed.
+        //_importTableDataAction.setDisabled( true );
+        _importSpreadsheetDataAction.setDisabled( true );
 
         return importActionCollection;
     }

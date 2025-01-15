@@ -38,6 +38,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.util.ArrayList;
@@ -439,7 +440,8 @@ public interface FileActionHandler {
        case EXPORT_TABLE_DATA:
            break;
        case EXPORT_SPREADSHEET_DATA:
-           break;
+           fileStatus = exportSpreadsheetData( file, tempFile, fileMode );
+          break;
        case EXPORT_BINARY_DATA:
            break;
        case EXPORT_IMAGE_DATA:
@@ -871,6 +873,23 @@ public interface FileActionHandler {
     //  default directory per functional scope.
     default void setDefaultDirectory( final File defaultDirectory ) {}
 
+    default void fileImportTableData( final Window parent,
+                                      final File initialDirectory ) {
+        // Prepare to throw up a file chooser for the table data filename.
+        final String title = "Import Table Data From";
+        final List< ExtensionFilter > extensionFilterAdditions 
+                = ExtensionFilterUtilities.getCsvExtendedExtensionFilters();
+
+        // Load a single CSV file using the JavaFX File Chooser.
+        fileOpen( parent,
+                  FileMode.IMPORT_TABLE_DATA,
+                  title,
+                  initialDirectory,
+                  extensionFilterAdditions,
+                  ExtensionFilters.CSV_EXTENSION_FILTER,
+                  false );
+    }
+
     default void fileImportImageData( final Window parent,
                                       final String fileChooserTitle,
                                       final File initialDirectory ) {
@@ -1098,6 +1117,47 @@ public interface FileActionHandler {
         // default method rather than an empty method requiring overrides.
     }
 
+    // NOTE: Not all Stages support exporting spreadsheet data.
+    // TODO: Review which of these formats is presented in the file chooser.
+    default FileStatus exportSpreadsheetData( final File file, 
+                                              final File tempFile,
+                                              final FileMode fileMode ) {
+        FileStatus fileStatus = FileStatus.NOT_SAVED;
+        
+        final String fileExtension = FileUtilities.getAdjustedFileExtension( file );
+        switch ( fileExtension ) {
+        case "xslx":
+            // Export a cached image in the specified format.
+            fileStatus = exportSpreadsheetData( tempFile, fileExtension );
+            break;
+        default:
+            // Take care of any extensions specific to sub-classes.
+            fileStatus = fileSaveExtensions( file, tempFile, fileMode );
+            break;
+        }
+        
+        return fileStatus;
+    }
+
+    // NOTE: Not all Stages support exporting spreadsheet data.
+    default FileStatus exportSpreadsheetData( final File file, 
+                                              final String fileExtension ) {
+        // Pre-declare the File Save status in case of exceptions.
+        FileStatus fileStatus = FileStatus.WRITE_ERROR;
+
+        // Export the results to an Excel Spreadsheet file, overwriting
+        // it if it already exists. Don't buffer it, as POI uses ZIP's.
+        // TODO: Base this on selected rows (if applicable).
+        try ( final FileOutputStream fileOutputStream = new FileOutputStream( file ) ) {
+            fileStatus = exportToXslx( fileOutputStream, fileExtension );
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+        }
+
+        return fileStatus;
+    }
+
     // NOTE: Not all Stages support exporting an image that is a data item.
     // TODO: Review which of these formats is presented in the file chooser.
     default FileStatus exportImageData( final File file, 
@@ -1286,6 +1346,13 @@ public interface FileActionHandler {
         return fileStatus;
     }
  
+    // NOTE: Very few classes support spreadsheet export, so the default
+    //  implementation is a no-op. This avoids wasteful empty overrides.
+    default FileStatus exportToXslx( final OutputStream outputStream,
+                                     final String fileExtension ) {
+        return FileStatus.NOT_SAVED;
+    }
+
     // NOTE: This default implementation is a no-op as the generic version
     //  would introduce a circular dependency with jfxconvertertoolkit.
     default FileStatus exportToEps( final File tempFile,

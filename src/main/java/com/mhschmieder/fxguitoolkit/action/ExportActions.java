@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,13 +44,19 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
  */
 public class ExportActions {
 
-    public XAction _exportImageGraphicsAction;
+    public XAction _exportTableDataAction;
+    public XAction _exportSpreadsheetDataAction;
+    public XAction _exportRasterGraphicsAction;
     public XAction _exportVectorGraphicsAction;
     public XAction _exportRenderedGraphicsAction;
 
     public ExportActions( final ClientProperties pClientProperties ) {
-        _exportImageGraphicsAction = LabeledActionFactory
-                .getExportImageGraphicsAction( pClientProperties );
+        _exportTableDataAction = LabeledActionFactory
+                .getExportTableDataAction( pClientProperties );
+        _exportSpreadsheetDataAction = LabeledActionFactory
+                .getExportSpreadsheetDataAction( pClientProperties );
+        _exportRasterGraphicsAction = LabeledActionFactory
+                .getExportRasterGraphicsAction( pClientProperties );
         _exportVectorGraphicsAction = LabeledActionFactory
                 .getExportVectorGraphicsAction( pClientProperties );
         _exportRenderedGraphicsAction = LabeledActionFactory
@@ -63,8 +69,12 @@ public class ExportActions {
                                                            final boolean renderedGraphicsSupported ) {
         final Collection< Action > exportActionCollection = new ArrayList<>();
 
-        // Image Graphics generally correspond to a JavaFX-generated screenshot.
-        exportActionCollection.add( _exportImageGraphicsAction );
+        // TODO: Pass in flags to conditionally add table and spreadsheet data.
+        exportActionCollection.add( _exportTableDataAction );
+        exportActionCollection.add( _exportSpreadsheetDataAction );
+        
+        // Raster Graphics generally correspond to a JavaFX-generated screenshot.
+        exportActionCollection.add( _exportRasterGraphicsAction );
 
         if ( vectorGraphicsSupported ) {
             exportActionCollection.add( _exportVectorGraphicsAction );
@@ -73,6 +83,10 @@ public class ExportActions {
         if ( renderedGraphicsSupported ) {
             exportActionCollection.add( _exportRenderedGraphicsAction );
         }
+        
+        // TODO: Pass a flag so it doesn't get added at all unless needed.
+        _exportTableDataAction.setDisabled( true );
+        _exportSpreadsheetDataAction.setDisabled( true );
 
         return exportActionCollection;
     }

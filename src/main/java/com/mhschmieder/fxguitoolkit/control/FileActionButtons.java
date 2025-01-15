@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,6 +39,7 @@ public class FileActionButtons {
     // Declare JavaFX image buttons for file related actions.
     public Button _fileOpenButton;
     public Button _fileSaveAsButton;
+    public Button _fileImportTableDataButton;
     public Button _fileExportSessionLogButton;
     public Button _filePageSetupButton;
     public Button _filePrintButton;
@@ -48,10 +49,11 @@ public class FileActionButtons {
         // Make the image-based buttons.
         _fileOpenButton = LabeledControlFactory.getOpenButton( pClientProperties );
         _fileSaveAsButton = LabeledControlFactory.getSaveAsButton( pClientProperties );
+        _fileImportTableDataButton = LabeledControlFactory
+                .getImportTableDataButton( pClientProperties );
         _fileExportSessionLogButton = LabeledControlFactory
                 .getExportSessionLogButton( pClientProperties );
         _filePageSetupButton = LabeledControlFactory.getPageSetupButton( pClientProperties );
         _filePrintButton = LabeledControlFactory.getPrintButton( pClientProperties );
     }
-
 }

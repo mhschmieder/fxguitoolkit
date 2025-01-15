@@ -544,11 +544,11 @@ public class LabeledActionFactory {
     }
 
     @SuppressWarnings("nls")
-    public static XAction getExportImageGraphicsAction( final ClientProperties pClientProperties ) {
+    public static XAction getExportRasterGraphicsAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
                                          BUNDLE_NAME,
                                          "export",
-                                         "imageGraphics",
+                                         "rasterGraphics",
                                          "icons/fatCow/FileExtensionJpg16.png" );
     }
 
@@ -559,6 +559,24 @@ public class LabeledActionFactory {
                                          "export",
                                          "renderedGraphics",
                                          "/icons/fatCow/FileExtensionEps16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getExportSpreadsheetDataAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "export",
+                                         "spreadsheetData",
+                                         "/com/led24/icons/DocExcelTable16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getExportTableDataAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "export",
+                                         "tableData",
+                                         "/icons/led24/DocExcelCsv16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -801,12 +819,30 @@ public class LabeledActionFactory {
     }
 
     @SuppressWarnings("nls")
-    public static XAction getImportImageGraphicsAction( final ClientProperties pClientProperties ) {
+    public static XAction getImportRasterGraphicsAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
                                          BUNDLE_NAME,
                                          "import",
-                                         "imageGraphics",
+                                         "rasterGraphics",
                                          "icons/fatCow/FileExtensionJpg16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getImportSpreadsheetDataAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "import",
+                                         "spreadsheetData",
+                                         "/icons/led24/DocExcel16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getImportTableDataAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "import",
+                                         "tableData",
+                                         "/com/led24/icons/DocExcelTable16.png" );
     }
 
     @SuppressWarnings("nls")

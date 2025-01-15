@@ -583,6 +583,20 @@ public final class LabeledControlFactory {
 
         return button;
     }
+    
+    public static Button getImportTableDataButton( final ClientProperties pClientProperties ) {
+        final Button button =
+                GuiUtilities.getIconButton( "/icons/led24/DocExcelCsv16.png" );
+
+        SceneGraphUtilities.setControlProperties( pClientProperties,
+                                                  BUNDLE_NAME,
+                                                  "import",
+                                                  "tableData",
+                                                  button,
+                                                  null );
+        
+        return button;
+    }
 
     @SuppressWarnings("nls")
     public static Button getEditNotesButton( final String tooltipText ) {

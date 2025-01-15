@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -64,9 +64,9 @@ public final class DataViewerToolBar extends ToolBar {
         final Region spacer1 = new Region();
         spacer1.setPrefWidth( spacerWidth );
 
-        // Add all the Nodes to the Tool Bar.
+        // Add all the relevant Nodes to the Tool Bar.
         // TODO: Implement the Back and Forward buttons.
-        getItems().addAll( _fileActionButtons._fileOpenButton,
+        getItems().addAll( _fileActionButtons._fileImportTableDataButton,
                            _fileActionButtons._filePageSetupButton,
                            _fileActionButtons._filePrintButton,
                            // spacer1,
@@ -74,5 +74,4 @@ public final class DataViewerToolBar extends ToolBar {
                            // _navigationButtons._forwardButton );
                            spacer1 );
     }
-
 }

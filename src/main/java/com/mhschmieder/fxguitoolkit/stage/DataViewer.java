@@ -31,17 +31,12 @@
 package com.mhschmieder.fxguitoolkit.stage;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
+import com.mhschmieder.fxguitoolkit.control.DataTableView;
 import com.mhschmieder.fxguitoolkit.control.DataViewerToolBar;
-import com.mhschmieder.fxguitoolkit.control.TableUtilities;
-import com.mhschmieder.fxguitoolkit.control.XTableView;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -63,10 +58,10 @@ import javafx.util.Callback;
 public class DataViewer extends XStage {
 
     // Declare the main tool bar.
-    public DataViewerToolBar                       _toolBar;
+    public DataViewerToolBar _toolBar;
 
     // Declare the table that will hold the dynamically loaded data.
-    private XTableView< ObservableList< String > > _tableView;
+    private DataTableView _tableView;
 
     public DataViewer( final String title,
                        final String windowKeyPrefix,
@@ -86,8 +81,8 @@ public class DataViewer extends XStage {
 
     // Add the Tool Bar's event listeners.
     // TODO: Use appropriate methodology to add an action linked to both
-    // the toolbar buttons and their associated menu items, so that when one
-    // is disabled the other is as well. Is this already true of what we do?
+    //  the toolbar buttons and their associated menu items, so that when one
+    //  is disabled the other is as well. Is this already true of what we do?
     @Override
     protected final void addToolBarListeners() {
         // Disable Page Setup and Print, until loading the first file.
@@ -98,8 +93,9 @@ public class DataViewer extends XStage {
         _toolBar._navigationButtons._backButton.setDisable( true );
         _toolBar._navigationButtons._forwardButton.setDisable( true );
 
-        // Load the event handler for the File Open Button.
-        _toolBar._fileActionButtons._fileOpenButton.setOnAction( evt -> doFileOpen() );
+        // Load the event handler for the Import Table Data Button.
+        _toolBar._fileActionButtons._fileImportTableDataButton.setOnAction( 
+                evt -> doImportTableData() );
 
         // Load the event handler for the File Page Setup Button.
         _toolBar._fileActionButtons._filePrintButton.setOnAction( evt -> doPageSetup() );
@@ -113,18 +109,19 @@ public class DataViewer extends XStage {
         // Load the event handler for the Navigate Forward Button.
         _toolBar._navigationButtons._forwardButton.setOnAction( evt -> doNavigateForward() );
 
-        // Detect the ENTER key while the File Open Button has focus, and use it
-        // to trigger its action (standard expected behavior).
-        _toolBar._fileActionButtons._fileOpenButton.setOnKeyReleased( keyEvent -> {
-            final KeyCombination keyCombo = new KeyCodeCombination( KeyCode.ENTER );
-            if ( keyCombo.match( keyEvent ) ) {
-                // Trigger the File Open action.
-                doFileOpen();
-
-                // Consume the ENTER key so it doesn't get processed
-                // twice.
-                keyEvent.consume();
-            }
+        // Detect the ENTER key while the Import Table Data Button has focus, 
+        // and use it to trigger its action (standard expected behavior).
+        _toolBar._fileActionButtons._fileImportTableDataButton.setOnKeyReleased( 
+            keyEvent -> {
+                final KeyCombination keyCombo = new KeyCodeCombination( KeyCode.ENTER );
+                if ( keyCombo.match( keyEvent ) ) {
+                    // Trigger the Import Table Data action.
+                    doImportTableData();
+    
+                    // Consume the ENTER key so it doesn't get processed
+                    // twice.
+                    keyEvent.consume();
+                }
         } );
 
         // Detect the ENTER key while the File Page Setup Button has focus, and
@@ -184,34 +181,11 @@ public class DataViewer extends XStage {
         } );
     }
 
-    protected final void doFileOpen() {
-        // NOTE: Use the on-line example to take file load status into account.
-        fileOpenCsvAsTable();
-    }
-
     // TODO: Implement this.
     protected final void doNavigateBack() {}
 
     // TODO: Implement this.
     protected final void doNavigateForward() {}
-
-    // This is a wrapper to ensure that all CSV open actions are treated
-    // uniformly.
-    private final void fileOpenCsvAsTable() {
-        // Throw up a file chooser for the CSV filename.
-        final String title = "Open CSV as Table";
-        final List< ExtensionFilter > extensionFilterAdditions = ExtensionFilterUtilities
-                .getCsvExtendedExtensionFilters();
-
-        // Open a CSV file using the selected filename.
-        fileOpen( this,
-                  FileMode.IMPORT_TABLE_DATA,
-                  title,
-                  _defaultDirectory,
-                  extensionFilterAdditions,
-                  ExtensionFilters.CSV_EXTENSION_FILTER,
-                  false );
-    }
 
     protected final void initStage( final String jarRelativeIconFilename ) {
         // First have the superclass initialize its content.
@@ -221,20 +195,11 @@ public class DataViewer extends XStage {
     @Override
     protected final Node loadContent() {
         // Instantiate and return the custom Content Node.
-        _tableView = new XTableView<>();
-
-        // This is a display-only table.
-        _tableView.setTableEditable( false );
-
-        // Try to force the preferred size to the total column width and
-        // multiple rows of data plus the header.
-        // NOTE: Once we pass in a size, leave room for scroll bars.
-        // _tableView.setPrefSize( 760, 340 );
-        _tableView.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
+        _tableView = new DataTableView();
 
         // NOTE: We create an empty Border Pane to host the Table View, as it
-        // has to be generated and replaced dynamically and is initially
-        // blank/empty until the first file load.
+        //  has to be generated and replaced dynamically and is initially
+        //  blank/empty until the first file load.
         final BorderPane contentPane = new BorderPane();
         contentPane.setPadding( new Insets( 5.0d ) );
         contentPane.setCenter( _tableView );
@@ -256,7 +221,7 @@ public class DataViewer extends XStage {
             final File file,
             final Collection< Collection< String > > rows ) {
         // Update the table view with the new data content.
-        updateTableView( rows );
+        _tableView.updateTableView( rows );
 
         // Update the frame title with the input name.
         updateFrameTitle( file, false );
@@ -269,89 +234,5 @@ public class DataViewer extends XStage {
         _toolBar._fileActionButtons._fileSaveAsButton.setDisable( false );
         _toolBar._fileActionButtons._filePageSetupButton.setDisable( false );
         _toolBar._fileActionButtons._filePrintButton.setDisable( false );
-    }
-
-    private final void updateTableView( 
-            final Collection< Collection< String > > dataRows ) {
-        // Pad the vector of string vectors to the maximum column count.
-        final int maxColumn = GlobalUtilities.padStringsToMaxColumn( dataRows );
-
-        // Create names for the default column headers.
-        final List< String > headers = new ArrayList<>( maxColumn );
-        for ( int i = 0; i < maxColumn; i++ ) {
-            headers.add( Integer.toString( i + 1 ) );
-        }
-
-        // Clear any existing table column headers to prepare for new ones.
-        final ObservableList< TableColumn< ObservableList< String >, ? > > columns = _tableView
-                .getColumns();
-        columns.clear();
-
-        // Convert to a TableView that has no property names due to being
-        // non-editable, and has default initial cell width as each column will
-        // be an indeterminate size.
-        final ArrayList< TableColumn< ObservableList< String >, String > > tableColumnCollection =
-                                                                                                 new ArrayList<>( maxColumn );
-        for ( int i = 0; i < maxColumn; i++ ) {
-            // NOTE: We appear to have to use an approach more akin to an SQL
-            // example that I saw due to the data being random and not having
-            // property names.
-            // final String columnPropertyName = null; // "";
-            // final TableColumn< ObservableList< String >, String > tableColumn
-            // = _csvTable
-            // .getTableColumnForString( headers.get( i ),
-            // 50,
-            // columnPropertyName,
-            // false,
-            // clientProperties );
-
-            final TableColumn< ObservableList< String >, String > tableColumn =
-                                                                              new TableColumn<>( headers
-                                                                                      .get( i ) );
-            tableColumn.setMinWidth( 50 );
-            TableUtilities.setTableColumnHeaderProperties( tableColumn );
-
-            // NOTE: Do not allow column reordering or row-sorting as this
-            // destroys the ability to understand how things relate to one
-            // another (that is, the relationships of the data).
-            tableColumn.setSortable( false );
-
-            // We are using non property style for making a dynamic table.
-            final int j = i;
-            final Callback< CellDataFeatures< ObservableList< String >, String >, ObservableValue< String > > callback =
-                                                                                                                       param -> new SimpleStringProperty( param
-                                                                                                                               .getValue()
-                                                                                                                               .get( j )
-                                                                                                                               .toString() );
-            tableColumn.setCellValueFactory( callback );
-
-            TableUtilities.setCellAlignment( tableColumn );
-
-            tableColumnCollection.add( tableColumn );
-        }
-        columns.addAll( 0, tableColumnCollection );
-
-        // Clear any existing table rows to prepare for new data.
-        final ObservableList< ObservableList< String > > data = _tableView.getItems();
-        data.clear();
-
-        // Replace the current Table View. This will cause automatic updates so
-        // should refresh the view on the screen. Iterate by Row, then Column.
-        dataRows.forEach( dataRow -> {
-            final ObservableList< String > row = FXCollections.observableArrayList();
-            dataRow.forEach( column -> row.add( column ) );
-            data.add( row );
-        } );
-
-        // Look at the revised list in the debugger to see why the display is
-        // blank currently even though the data is there and the column headers.
-        // NOTE: This proves the data is there, so it must be an issue with
-        // cell background or the details of the cell factory class used.
-        // TODO: Compare to what we do for other read-only string-based cells.
-        final ObservableList< ObservableList< String > > data2 = _tableView.getItems();
-        final int numberOfRows = data2.size();
-        if ( numberOfRows < 1 ) {
-            return;
-        }
     }
 }

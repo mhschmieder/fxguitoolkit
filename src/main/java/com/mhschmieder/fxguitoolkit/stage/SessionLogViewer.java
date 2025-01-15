@@ -291,8 +291,8 @@ public class SessionLogViewer extends XStage {
 
         // Save a Session Log file using the selected filename.
         // TODO: To avoid writing atop the actual Session Log file and causing
-        // potential deadlock or other such problems, we should provide a blank
-        // initial file selection for the re-save.
+        //  potential deadlock or other such problems, we should provide a blank
+        //  initial file selection for the re-save.
         fileSaveAs( this,
                     FileMode.SAVE_LOG,
                     clientProperties,
@@ -312,7 +312,7 @@ public class SessionLogViewer extends XStage {
         FileStatus fileStatus = FileStatus.WRITE_ERROR;
 
         // TODO: Switch these and others to Apache Commons I/O library, which
-        // has a SuffixFileFilter with accept() methods.
+        //  has a SuffixFileFilter with accept() methods.
         final String fileName = file.getName();
         final String fileNameCaseInsensitive = fileName.toLowerCase( Locale.ENGLISH );
         try {

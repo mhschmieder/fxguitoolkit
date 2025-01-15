@@ -141,6 +141,9 @@ public abstract class XStage extends Stage implements ForegroundManager,
     // Declare file options for the various file modes and actions.
     protected RasterGraphicsExportOptions               _rasterGraphicsExportOptions;
     protected VectorGraphicsExportOptions               _vectorGraphicsExportOptions;
+    
+    // The Graphics Category, when relevant, cuts across all graphics file actions.
+    protected String graphicsCategory;
 
     // Declare flag for whether this window shows the dirty flag.
     private final boolean                               _showDirtyFlag;
@@ -277,6 +280,9 @@ public abstract class XStage extends Stage implements ForegroundManager,
         _supportsRenderedGraphicsExport = supportsRenderedGraphicsExport;
         _productBranding = productBranding;
         clientProperties = pClientProperties;
+        
+        // Make sure this isn't null, as most classes don't need to set it.
+        graphicsCategory = "";
 
         // Default the pop-up window owner for warning/error dialogs to a
         // self-reference of this stage, in case a higher-level node in the GUI
@@ -458,6 +464,12 @@ public abstract class XStage extends Stage implements ForegroundManager,
         // session ends, thus effectively undoing the Clear Preferences action.
         loadPreferences();
     }
+    
+    // NOTE: In some cases, more complex logic is required and may return
+    //  something other than the cached Graphics Category. Override if so.
+    public String getGraphicsCategory() {
+        return graphicsCategory;
+    }
  
     // Hide all of Windows associated with this Stage, including this Stage.
     @Override
@@ -550,6 +562,27 @@ public abstract class XStage extends Stage implements ForegroundManager,
     public void doCloseWindow() {
         // Hide this window by setting invisible (was close() in Swing).
         setVisible( false );
+    }
+
+    public void doExportImageGraphics() {
+        // Switch on export context, so we know the data type and format to save.
+        fileExportRasterGraphics( this, 
+                                  _defaultDirectory, 
+                                  clientProperties, 
+                                  getGraphicsCategory() );
+    }
+
+    public void doExportVectorGraphics() {
+        // Switch on export context, so we know the data type and format to save.
+        fileExportVectorGraphics( this, 
+                                  _defaultDirectory, 
+                                  clientProperties, 
+                                  getGraphicsCategory() );
+    }
+
+    public void doImportTableData() {
+        // NOTE: Use the on-line example to take file load status into account.
+        fileImportTableData( this, _defaultDirectory );
     }
 
     public final void doMruFile( final int mruFileNumber ) {
