@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
  * This file is part of the FxGuiToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
@@ -398,6 +398,7 @@ public class SceneGraphUtilities {
      * @param action
      *            The {@link XAction} reference that contains most of the resources
      *            needed for making an associated {@link ToggleButton}
+     *  @param toggleGroup The {@link ToggleGroup} that the {@link XAction} is part of
      * @return A labeled icon-only {@link ToggleButton} adhering to custom style 
      * guidelines
      */

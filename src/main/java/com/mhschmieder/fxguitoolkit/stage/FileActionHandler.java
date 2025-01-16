@@ -1002,10 +1002,8 @@ public interface FileActionHandler {
                     null );
     }
 
-    /**
-     * This is a wrapper to ensure that all vector graphics export actions are
-     * treated uniformly.
-     */
+    // This is a wrapper to ensure that all vector graphics export actions are
+    // treated uniformly.
     default void fileExportVectorGraphics( final Window parent,
                                            final File initialDirectory,
                                            final ClientProperties clientProperties,

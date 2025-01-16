@@ -70,6 +70,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.scene.web.WebEngine;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -604,7 +605,7 @@ public abstract class XStage extends Stage implements ForegroundManager,
      * Prints the main content {@link Node} for this {@link Stage}.
      * <p>
      * Not marked as final, as derived classes may need to go through the
-     * {@link WebKit} toolkit instead, via {@link WebEngine} printing.
+     * WebKit toolkit instead, via {@link WebEngine} printing.
      */
     public void doPrint() {
         // TODO: Find a way to indicate and generate multiple pages.
