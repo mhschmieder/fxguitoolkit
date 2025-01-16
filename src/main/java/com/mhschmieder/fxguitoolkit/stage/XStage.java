@@ -572,6 +572,12 @@ public abstract class XStage extends Stage implements ForegroundManager,
                                   getGraphicsCategory() );
     }
 
+    public void doExportSessionLog() {
+        fileExportSessionLog( this, 
+                              _defaultDirectory, 
+                              clientProperties );
+    }
+
     public void doExportVectorGraphics() {
         // Switch on export context, so we know the data type and format to save.
         fileExportVectorGraphics( this, 

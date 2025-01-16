@@ -33,12 +33,15 @@ package com.mhschmieder.fxguitoolkit.stage;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.util.ArrayList;
@@ -55,6 +58,7 @@ import com.mhschmieder.commonstoolkit.io.CsvUtilities;
 import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.io.FileStatus;
 import com.mhschmieder.commonstoolkit.io.FileUtilities;
+import com.mhschmieder.commonstoolkit.io.LogUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageSize;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
@@ -431,6 +435,7 @@ public interface FileActionHandler {
        case SAVE:
        case SAVE_CONVERTED:
        case SAVE_LOG:
+           fileStatus = exportSessionLog( file, tempFile, fileMode );
        case SAVE_REPORT:
        case SAVE_SERVER_REQUEST:
        case SAVE_SERVER_RESPONSE:
@@ -907,6 +912,30 @@ public interface FileActionHandler {
                   false );
     }
 
+    // This is a wrapper to ensure that all session log export actions are
+    // treated uniformly.
+    default void fileExportSessionLog( final Window parent,
+                                       final File initialDirectory,
+                                       final ClientProperties clientProperties ) {
+        // Throw up a file chooser for the Session Log filename.
+        final String title = "Export Session Log As"; //$NON-NLS-1$
+        final List< ExtensionFilter > extensionFilterAdditions = ExtensionFilterUtilities
+                .getSessionLogExtensionFilters();
+
+        // Save a Session Log file using the selected filename.
+        // TODO: To avoid writing atop the actual Session Log file and causing
+        //  potential deadlock or other such problems, we must provide a blank
+        //  initial file for the re-save. Passing a null file accomplishes this?
+        fileSaveAs( parent,
+                    FileMode.SAVE_LOG,
+                    clientProperties,
+                    title,
+                    initialDirectory,
+                    extensionFilterAdditions,
+                    ExtensionFilters.TXT_EXTENSION_FILTER,
+                    null );
+    }
+
     // This is a wrapper to ensure that all spreadsheet data export actions
     // are treated uniformly.
     default void fileExportSpreadsheetData( final Window parent,
@@ -1115,6 +1144,71 @@ public interface FileActionHandler {
         // Nothing to do without access to the implementing class, but not every
         // file handling Stage supports Import Table Data, so this is a no-op
         // default method rather than an empty method requiring overrides.
+    }
+
+    // NOTE: Not all Stages support exporting session logs.
+    // TODO: Review which of these formats is presented in the file chooser.
+    default FileStatus exportSessionLog( final File file, 
+                                         final File tempFile,
+                                         final FileMode fileMode ) {
+        // Pre-declare the File Save status in case of exceptions.
+        FileStatus fileStatus = FileStatus.WRITE_ERROR;
+
+        // TODO: Switch these and others to Apache Commons I/O library, which
+        //  has a SuffixFileFilter with accept() methods?
+        final String fileExtension = FileUtilities.getAdjustedFileExtension( file );
+        switch ( fileExtension ) {
+        case "txt":
+        case "log":
+            // Export the Session Log to a standard ASCII text log file,
+            // overwriting it if it already exists.
+            //
+            // Chain a PrintWriter to a BufferedWriter to an OutputStreamWriter
+            // (using UTF-8 encoding) to a FileOutputStream, for better 
+            // performance and to guarantee platform-independence of newlines
+            // and overall system-neutrality and locale-sensitivity of text data.
+            try ( final FileOutputStream fileOutputStream 
+                            = new FileOutputStream( tempFile );
+                    final OutputStreamWriter outputStreamWriter 
+                            = new OutputStreamWriter( fileOutputStream, "UTF8" );
+                    final BufferedWriter bufferedWriter 
+                            = new BufferedWriter( outputStreamWriter );
+                    final PrintWriter printWriter 
+                            = new PrintWriter( bufferedWriter ) ) {
+                fileStatus = exportSessionLog( printWriter );
+            }
+            catch ( final NullPointerException | SecurityException | IOException e ) {
+                e.printStackTrace();
+            }
+            break;
+        default:
+            // Take care of any extensions specific to sub-classes.
+            fileStatus = fileSaveExtensions( file, tempFile, fileMode );
+            break;
+        }
+        
+        return fileStatus;
+    }
+
+    // NOTE: Not all Stages support exporting session logs.
+    // TODO: Review which of these formats is presented in the file chooser.
+    default FileStatus exportSessionLog( final PrintWriter printWriter ) {
+        // Avoid throwing unnecessary exceptions by filtering for bad print
+        // writers.
+        if ( printWriter == null ) {
+            return FileStatus.WRITE_ERROR;
+        }
+
+        // Get the current Session Log File Cache.
+        final String sessionLogFilename = getSessionLogFilename();
+        final String sessionLog = LogUtilities.loadSessionLogFromCache( 
+                sessionLogFilename );
+
+        // Print the entire Session Log out as one write-to-disc operation.
+        printWriter.println( sessionLog );
+
+        // Return the print writer's status, which subsumes exceptions.
+        return printWriter.checkError() ? FileStatus.WRITE_ERROR : FileStatus.SAVED;
     }
 
     // NOTE: Not all Stages support exporting spreadsheet data.
@@ -1383,6 +1477,11 @@ public interface FileActionHandler {
                                     final File file,
                                     final FileMode fileMode ) {
         return FileStatus.NOT_SAVED;
+    }
+    
+    // NOTE: Not all Stages support exporting session logs. Avoid nulls.
+    default String getSessionLogFilename() {
+        return "";
     }
     
     // NOTE: Implementing classes that support raster graphics export should

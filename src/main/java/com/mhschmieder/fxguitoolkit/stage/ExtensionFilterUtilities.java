@@ -190,6 +190,15 @@ public final class ExtensionFilterUtilities {
         return extensionFilterAdditions;
     }
 
+    public static List< ExtensionFilter > getSessionLogExtensionFilters() {
+        final List< ExtensionFilter > extensionFilterAdditions = new ArrayList<>();
+
+        extensionFilterAdditions.add( ExtensionFilters.TXT_EXTENSION_FILTER );
+        extensionFilterAdditions.add( ExtensionFilters.LOG_EXTENSION_FILTER );
+
+        return extensionFilterAdditions;
+    }
+
     public static List< ExtensionFilter > getSpreadsheetExtensionFilters() {
         final List< ExtensionFilter > extensionFilterAdditions = new ArrayList<>();
 
@@ -204,14 +213,6 @@ public final class ExtensionFilterUtilities {
         final List< ExtensionFilter > extensionFilterAdditions = new ArrayList<>();
 
         extensionFilterAdditions.add( ExtensionFilters.SVG_EXTENSION_FILTER );
-
-        return extensionFilterAdditions;
-    }
-
-    public static List< ExtensionFilter > getTxtExtensionFilters() {
-        final List< ExtensionFilter > extensionFilterAdditions = new ArrayList<>();
-
-        extensionFilterAdditions.add( ExtensionFilters.TXT_EXTENSION_FILTER );
 
         return extensionFilterAdditions;
     }

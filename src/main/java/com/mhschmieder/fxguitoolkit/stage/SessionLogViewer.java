@@ -30,25 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.util.List;
-import java.util.Locale;
-
-import org.apache.commons.io.FilenameUtils;
-
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.io.FileMode;
-import com.mhschmieder.commonstoolkit.io.FileStatus;
 import com.mhschmieder.commonstoolkit.io.LogUtilities;
-import com.mhschmieder.commonstoolkit.lang.StringConstants;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
@@ -63,7 +46,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 public class SessionLogViewer extends XStage {
 
@@ -127,13 +109,13 @@ public class SessionLogViewer extends XStage {
 
     // Add the Tool Bar's event listeners.
     // TODO: Use appropriate methodology to add an action linked to both
-    // the toolbar buttons and their associated menu items, so that when one
-    // is disabled the other is as well. Is this already true of what we do?
+    //  the toolbar buttons and their associated menu items, so that when one
+    //  is disabled the other is as well. Is this already true of what we do?
     @Override
     protected final void addToolBarListeners() {
         // Load the event handler for the File Export Session Log Button.
         _toolBar._fileActionButtons._fileExportSessionLogButton
-                .setOnAction( evt -> doFileExportSessionLog() );
+                .setOnAction( evt -> doExportSessionLog() );
 
         // Load the event handler for the File Page Setup Button.
         _toolBar._fileActionButtons._filePrintButton.setOnAction( evt -> doPageSetup() );
@@ -158,7 +140,7 @@ public class SessionLogViewer extends XStage {
             final KeyCombination keyCombo = new KeyCodeCombination( KeyCode.ENTER );
             if ( keyCombo.match( keyEvent ) ) {
                 // Trigger the File Export Session Log action.
-                doFileExportSessionLog();
+                doExportSessionLog();
 
                 // Consume the ENTER key so it doesn't get processed
                 // twice.
@@ -237,10 +219,6 @@ public class SessionLogViewer extends XStage {
         } );
     }
 
-    protected final void doFileExportSessionLog() {
-        fileExportSessionLog();
-    }
-
     protected final void doNewSessionLog() {
         newSessionLogFileCache();
     }
@@ -262,119 +240,9 @@ public class SessionLogViewer extends XStage {
         doWrapTextMode();
     }
 
-    // Generic method to export a text dump of the Session Log.
-    protected final FileStatus exportToTxt( final PrintWriter printWriter, 
-                                            final String filename ) {
-        // Avoid throwing unnecessary exceptions by filtering for bad print
-        // writers.
-        if ( printWriter == null ) {
-            return FileStatus.WRITE_ERROR;
-        }
-
-        // Get the current Session Log File Cache.
-        final String sessionLog = getSessionLogFileCache();
-
-        // Print the entire Session Log out as one write-to-disc operation.
-        printWriter.println( sessionLog );
-
-        // Return the print writer's status, which subsumes exceptions.
-        return printWriter.checkError() ? FileStatus.WRITE_ERROR : FileStatus.SAVED;
-    }
-
-    // This is a wrapper to ensure that all Session Log save actions are
-    // treated uniformly.
-    private final void fileExportSessionLog() {
-        // Throw up a file chooser for the Session Log filename.
-        final String title = "Export Session Log As"; //$NON-NLS-1$
-        final List< ExtensionFilter > extensionFilterAdditions = ExtensionFilterUtilities
-                .getTxtExtensionFilters();
-
-        // Save a Session Log file using the selected filename.
-        // TODO: To avoid writing atop the actual Session Log file and causing
-        //  potential deadlock or other such problems, we should provide a blank
-        //  initial file selection for the re-save.
-        fileSaveAs( this,
-                    FileMode.SAVE_LOG,
-                    clientProperties,
-                    title,
-                    _defaultDirectory,
-                    extensionFilterAdditions,
-                    ExtensionFilters.TXT_EXTENSION_FILTER,
-                    null );
-    }
-
-    // Take care of any extensions specific to this sub-class.
     @Override
-    public final FileStatus fileSaveExtensions( final File file,
-                                                final File tempFile,
-                                                final FileMode fileMode ) {
-        // Pre-declare the File Save status in case of exceptions.
-        FileStatus fileStatus = FileStatus.WRITE_ERROR;
-
-        // TODO: Switch these and others to Apache Commons I/O library, which
-        //  has a SuffixFileFilter with accept() methods.
-        final String fileName = file.getName();
-        final String fileNameCaseInsensitive = fileName.toLowerCase( Locale.ENGLISH );
-        try {
-            if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "txt" ) ) {
-                // Export the Session Log to a standard ASCII text log file,
-                // overwriting it if it already exists.
-                //
-                // Chain a PrintWriter to a BufferedWriter to an OutputStreamWriter
-                // (using UTF-8 encoding) to a FileOutputStream, for better 
-                // performance and to guarantee platform-independence of newlines
-                // and overall system-neutrality and locale-sensitivity of text data.
-                try ( final FileOutputStream fileOutputStream 
-                                = new FileOutputStream( tempFile );
-                        final OutputStreamWriter outputStreamWriter 
-                                = new OutputStreamWriter( fileOutputStream, "UTF8" );
-                        final BufferedWriter bufferedWriter 
-                                = new BufferedWriter( outputStreamWriter );
-                        final PrintWriter printWriter 
-                                = new PrintWriter( bufferedWriter ) ) {
-                    fileStatus = exportToTxt( printWriter, file.getCanonicalPath() );
-                }
-            }
-        }
-        catch ( final NullPointerException | SecurityException | IOException e ) {
-            e.printStackTrace();
-        }
-
-        return fileStatus;
-    }
-
-    // Get the current Session Log File Cache.
-    public final String getSessionLogFileCache() {
-        // For efficiency and downstream flexibility, use a string builder.
-        final StringBuilder sessionLogStringBuilder = new StringBuilder();
-
-        // Chain a BufferedReader to an InputStreamReader to a FileInputStream,
-        // for better performance.
-        //
-        // NOTE: Using the Logger API causes deadlock on second use, so is
-        //  commented out until we adopt a full Logging Framework. For now, we
-        //  simply redirect to a file in the user's default temporary directory.
-        // try ( final LogOutputStream sessionLogOutputStream = new
-        // LogOutputStream() ) {
-        try ( final FileInputStream fileInputStream 
-                        = new FileInputStream( _sessionLogFilename );
-                final InputStreamReader inputStreamReader
-                        = new InputStreamReader( fileInputStream );
-                final BufferedReader bufferedReader 
-                        = new BufferedReader( inputStreamReader ) ) {
-            String line;
-            while ( ( line = bufferedReader.readLine() ) != null ) {
-                // NOTE: Need the new line character as it gets discarded by
-                // the buffered reader.
-                sessionLogStringBuilder.append( line );
-                sessionLogStringBuilder.append( StringConstants.LINE_SEPARATOR );
-            }
-        }
-        catch ( final NullPointerException | IOException e ) {
-            e.printStackTrace();
-        }
-
-        return sessionLogStringBuilder.toString();
+    public final String getSessionLogFilename() {
+        return _sessionLogFilename;
     }
 
     @Override
@@ -448,7 +316,7 @@ public class SessionLogViewer extends XStage {
     // Update the Session Log File Cache and related settings.
     public final void updateSessionLogFileCache() {
         // Get the current Session Log File Cache.
-        final String sessionLog = getSessionLogFileCache();
+        final String sessionLog = LogUtilities.loadSessionLogFromCache( _sessionLogFilename );
 
         // Copy the Session Log to the Text Area.
         _sessionLogTextArea.setText( sessionLog );
