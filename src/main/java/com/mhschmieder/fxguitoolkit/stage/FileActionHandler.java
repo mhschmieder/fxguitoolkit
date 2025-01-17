@@ -912,13 +912,31 @@ public interface FileActionHandler {
                   false );
     }
 
+    default void fileImportVectorGraphics( final Window parent,
+                                           final File initialDirectory ) {
+        // Prepare to throw up a file chooser for the vector graphics filename.
+        // NOTE: Only SVG is supported for Vector Graphics Import for now.
+        final String title = "Import Vector Graphics To Scene Graph From";
+        final List< ExtensionFilter > extensionFilterAdditions 
+                = ExtensionFilterUtilities.getSvgExtensionFilters();
+
+        // Load a single vector graphics file using the JavaFX File Chooser.
+        fileOpen( parent,
+                  FileMode.IMPORT_VECTOR_GRAPHICS,
+                  title,
+                  initialDirectory,
+                  extensionFilterAdditions,
+                  ExtensionFilters.SVG_EXTENSION_FILTER,
+                  false );
+    }
+
     // This is a wrapper to ensure that all session log export actions are
     // treated uniformly.
     default void fileExportSessionLog( final Window parent,
                                        final File initialDirectory,
                                        final ClientProperties clientProperties ) {
         // Throw up a file chooser for the Session Log filename.
-        final String title = "Export Session Log As"; //$NON-NLS-1$
+        final String title = "Export Session Log As";
         final List< ExtensionFilter > extensionFilterAdditions = ExtensionFilterUtilities
                 .getSessionLogExtensionFilters();
 
@@ -1014,6 +1032,7 @@ public interface FileActionHandler {
                 = ExtensionFilterUtilities.getVectorGraphicsExtensionFilters();
 
         // Save a vector graphics file using the selected filename.
+        // TODO: Default to PDF here, and save EPS as default for Rendered Graphics?
         fileSaveAs( parent,
                     FileMode.EXPORT_VECTOR_GRAPHICS,
                     clientProperties,

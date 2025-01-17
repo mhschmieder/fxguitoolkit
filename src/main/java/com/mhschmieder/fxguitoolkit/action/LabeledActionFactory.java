@@ -851,7 +851,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "import",
                                          "vectorGraphics",
-                                         "/icons/fatCow/FileExtensionPdf16.png" );
+                                         "/icons/oxygenIcons/SvgMimeType16.png" );
     }
 
     @SuppressWarnings("nls")

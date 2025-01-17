@@ -39,7 +39,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.control.SvgViewerToolBar;
 import com.mhschmieder.fxguitoolkit.control.ZoomPane;
@@ -56,7 +55,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.FillRule;
 import javafx.scene.shape.SVGPath;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  * This is a generic SVG Viewer, used for testing concepts of SVG Import.
@@ -90,16 +88,17 @@ public class SvgViewer extends XStage {
 
     // Add the Tool Bar's event listeners.
     // TODO: Use appropriate methodology to add an action linked to both
-    // the toolbar buttons and their associated menu items, so that when one
-    // is disabled the other is as well. Is this already true of what we do?
+    //  the toolbar buttons and their associated menu items, so that when one
+    //  is disabled the other is as well. Is this already true of what we do?
     @Override
     protected final void addToolBarListeners() {
         // Disable Page Setup and Print, until loading the first file.
         _toolBar._fileActionButtons._filePageSetupButton.setDisable( true );
         _toolBar._fileActionButtons._filePrintButton.setDisable( true );
 
-        // Load the event handler for the File Open Button.
-        _toolBar._fileActionButtons._fileOpenButton.setOnAction( evt -> doFileOpen() );
+        // Load the event handler for the File Import Graphics Button.
+        _toolBar._fileActionButtons._fileImportVectorGraphicsButton.setOnAction( 
+            evt -> doImportVectorGraphics() );
 
         // Load the event handler for the File Page Setup Button.
         _toolBar._fileActionButtons._filePrintButton.setOnAction( evt -> doPageSetup() );
@@ -107,18 +106,18 @@ public class SvgViewer extends XStage {
         // Load the event handler for the File Print Button.
         _toolBar._fileActionButtons._filePrintButton.setOnAction( evt -> doPrint() );
 
-        // Detect the ENTER key while the File Open Button has focus, and use it
-        // to trigger its action (standard expected behavior).
-        _toolBar._fileActionButtons._fileOpenButton.setOnKeyReleased( keyEvent -> {
-            final KeyCombination keyCombo = new KeyCodeCombination( KeyCode.ENTER );
-            if ( keyCombo.match( keyEvent ) ) {
-                // Trigger the File Open action.
-                doFileOpen();
-
-                // Consume the ENTER key so it doesn't get processed
-                // twice.
-                keyEvent.consume();
-            }
+        // Detect the ENTER key while the File Import Vector Graphics Button has 
+        // focus, and use it to trigger its action (standard expected behavior).
+        _toolBar._fileActionButtons._fileImportVectorGraphicsButton.setOnKeyReleased( 
+            keyEvent -> {
+                final KeyCombination keyCombo = new KeyCodeCombination( KeyCode.ENTER );
+                if ( keyCombo.match( keyEvent ) ) {
+                    // Trigger the File Open action.
+                    doImportVectorGraphics();
+    
+                    // Consume the ENTER key so it doesn't get processed twice.
+                    keyEvent.consume();
+                }
         } );
 
         // Detect the ENTER key while the File Page Setup Button has focus, and
@@ -129,8 +128,7 @@ public class SvgViewer extends XStage {
                 // Trigger the File Page Setup action.
                 doPageSetup();
 
-                // Consume the ENTER key so it doesn't get processed
-                // twice.
+                // Consume the ENTER key so it doesn't get processed twice.
                 keyEvent.consume();
             }
         } );
@@ -143,34 +141,10 @@ public class SvgViewer extends XStage {
                 // Trigger the File Print action.
                 doPrint();
 
-                // Consume the ENTER key so it doesn't get processed
-                // twice.
+                // Consume the ENTER key so it doesn't get processed twice.
                 keyEvent.consume();
             }
         } );
-    }
-
-    protected final void doFileOpen() {
-        // NOTE: Use the on-line example to take file load status into account.
-        fileOpenSvgAsSceneGraph();
-    }
-
-    // This is a wrapper to ensure that all SVG open actions are treated
-    // uniformly.
-    private final void fileOpenSvgAsSceneGraph() {
-        // Throw up a file chooser for the SVG filename.
-        final String title = "Open SVG as Scene Graph"; //$NON-NLS-1$
-        final List< ExtensionFilter > extensionFilterAdditions = ExtensionFilterUtilities
-                .getSvgExtensionFilters();
-
-        // Open an SVG file using the selected filename.
-        fileOpen( this,
-                  FileMode.IMPORT_VECTOR_GRAPHICS,
-                  title,
-                  _defaultDirectory,
-                  extensionFilterAdditions,
-                  ExtensionFilters.CSV_EXTENSION_FILTER,
-                  false );
     }
 
     protected final void initStage( final String jarRelativeIconFilename ) {

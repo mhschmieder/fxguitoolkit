@@ -40,6 +40,7 @@ public class FileActionButtons {
     public Button _fileOpenButton;
     public Button _fileSaveAsButton;
     public Button _fileImportTableDataButton;
+    public Button _fileImportVectorGraphicsButton;
     public Button _fileExportSessionLogButton;
     public Button _filePageSetupButton;
     public Button _filePrintButton;
@@ -51,6 +52,8 @@ public class FileActionButtons {
         _fileSaveAsButton = LabeledControlFactory.getSaveAsButton( pClientProperties );
         _fileImportTableDataButton = LabeledControlFactory
                 .getImportTableDataButton( pClientProperties );
+        _fileImportVectorGraphicsButton = LabeledControlFactory
+                .getImportVectorGraphicsButton( pClientProperties );
         _fileExportSessionLogButton = LabeledControlFactory
                 .getExportSessionLogButton( pClientProperties );
         _filePageSetupButton = LabeledControlFactory.getPageSetupButton( pClientProperties );

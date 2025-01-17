@@ -221,8 +221,8 @@ public final class ExtensionFilterUtilities {
         final List< ExtensionFilter > extensionFilterAdditions = new ArrayList<>();
 
         // NOTE: The jfxConverter library is hard-wired to work with Apache
-        // POI's legacy support vs. the standard XML versions of PowerPoint
-        // files. It is a lot of work to revise their drivers to accept PPTX.
+        //  POI's legacy support vs. the standard XML versions of PowerPoint
+        //  files. It is a lot of work to revise their drivers to accept PPTX.
         extensionFilterAdditions.add( ExtensionFilters.VECTOR_GRAPHICS_EXTENSION_FILTER );
         extensionFilterAdditions.add( ExtensionFilters.EPS_EXTENSION_FILTER );
         extensionFilterAdditions.add( ExtensionFilters.PDF_EXTENSION_FILTER );

@@ -597,6 +597,20 @@ public final class LabeledControlFactory {
         
         return button;
     }
+    
+    public static Button getImportVectorGraphicsButton( final ClientProperties pClientProperties ) {
+        final Button button =
+                GuiUtilities.getIconButton( "/icons/oxygenIcons/SvgMimeType16.png" );
+
+        SceneGraphUtilities.setControlProperties( pClientProperties,
+                                                  BUNDLE_NAME,
+                                                  "import",
+                                                  "vectorGraphics",
+                                                  button,
+                                                  null );
+        
+        return button;
+    }
 
     @SuppressWarnings("nls")
     public static Button getEditNotesButton( final String tooltipText ) {

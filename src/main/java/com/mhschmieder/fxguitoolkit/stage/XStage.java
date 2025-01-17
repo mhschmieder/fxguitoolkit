@@ -592,6 +592,11 @@ public abstract class XStage extends Stage implements ForegroundManager,
         fileImportTableData( this, _defaultDirectory );
     }
 
+    protected final void doImportVectorGraphics() {
+        // NOTE: Use the on-line example to take file load status into account.
+        fileImportVectorGraphics( this, _defaultDirectory );
+    }
+
     public final void doMruFile( final int mruFileNumber ) {
         // Open a new project using the cached filename.
         fileOpenMru( mruFileNumber );
@@ -904,13 +909,34 @@ public abstract class XStage extends Stage implements ForegroundManager,
 
     protected void loadPopups() {}
 
-    // Preferences are not applicable to all Stages, so this method is not
-    // declared abstract and is instead given a default implementation that at
-    // least loads the additional custom styles pertinent to the default
-    // background being dark or light (currently it is light).
+    // Load all the User Preferences for this Stage.
+    // NOTE: Preferences are not applicable to all Stages, so this method is
+    //  not declared abstract and is instead given a default implementation that
+    //  at least loads the additional custom styles pertinent to the default
+    //  background being dark or light (currently it is light).
+    // TODO: Make a class with get/set methods for User Preferences, a la
+    //  Listing 3.3 on p. 37 of "More Java Pitfalls" (Wiley), and including
+    //  static default values for better modularity.
+    // TODO: Instead, follow the examples from Gralev, using an XML file for
+    //  default preferences, loading all from the top app node and then passing
+    //  along the hash set via Java's Properties class.
     @Override
     public void loadPreferences() {
-        setForegroundFromBackground( ColorConstants.WINDOW_BACKGROUND_COLOR );
+        // Get the user node for this package/class, so that we get the
+        // preferences specific to this stage and the application's user.
+        final Preferences prefs = Preferences.userNodeForPackage( getClass() );
+
+        // First restore all the window layout details for the application.
+        restoreAllWindowLayouts( prefs );
+        
+        // Load the Default Directory from User Preferences.
+        final File defaultDirectory = FileUtilities.loadDefaultDirectoryPreferences( prefs );
+
+        // Load the MRU Filename Cache from User Preferences.
+        final String[] mruFilenames = FileUtilities.loadMruPreferences( prefs );
+
+        updatePreferences( defaultDirectory, 
+                           mruFilenames );
     }
 
     protected final Scene loadScene( final Parent parent,
@@ -1067,10 +1093,24 @@ public abstract class XStage extends Stage implements ForegroundManager,
         adjustStageWithinBounds();
     }
 
-    // Preferences are not applicable to all Stages, so this method is not
-    // declared abstract and is instead given a default no-op implementation.
+    // Save all the User Preferences for this Stage.
+    // NOTE: Preferences are not applicable to all Stages, so this method is
+    //  not declared abstract and is instead given a default implementation.
     @Override
-    public void savePreferences() {}
+    public void savePreferences() {
+        // Get the user node for this package/class, so that we get the
+        // preferences specific to this stage and user.
+        final Preferences prefs = Preferences.userNodeForPackage( getClass() );
+
+        // First save all the window layout details for the application.
+        saveAllWindowLayouts( prefs );
+        
+        // Save the Default Directory to User Preferences.
+        FileUtilities.saveDefaultDirectoryPreferences( _defaultDirectory, prefs );
+
+        // Save the MRU Filename Cache to User Preferences.
+        FileUtilities.saveMruPreferences( _mruFilenameCache, prefs );
+    }
 
     /**
      * This method saves the Window Layout Preferences for this window. It
@@ -1394,6 +1434,18 @@ public abstract class XStage extends Stage implements ForegroundManager,
             // documentModified );
         }
     }
+    
+    // Update all of the User Preferences for this Stage.
+    // TODO: Make a preferences object instead, with get/set methods, which can
+    //  be set from CSV, XML, or stored User Preferences?
+    private void updatePreferences( final File defaultDirectory,
+                                    final String[] mruFilenames ) {
+        // Reset the default directory for local file operations.
+        setDefaultDirectory( defaultDirectory );
+
+        // Re-populate the MRU filename cache from the previous session.
+        loadMruCache( mruFilenames );
+    }
 
     // Unless more granularity is supported via the Export Options, it should
     // be sufficient to grab the main Content Node as Graphics Export Source,
@@ -1421,9 +1473,9 @@ public abstract class XStage extends Stage implements ForegroundManager,
             // already present. If the cache is full and the specified file is
             // not yet in the cache, remove the last filename from the cache.
             // NOTE: We special case for whether the file exists and is
-            // read-enabled, to remove deleted and invalid files from the cache.
-            // It is the caller's responsibility to determine this criteria and
-            // pass it in using the "addToCache" flag.
+            //  read-enabled, to remove deleted and invalid files from the cache.
+            //  It is the caller's responsibility to determine this criteria and
+            //  pass it in using the "addToCache" flag.
             final String filename = file.getCanonicalPath();
             if ( _mruFilenameCache.contains( filename ) ) {
                 _mruFilenameCache.remove( filename );
