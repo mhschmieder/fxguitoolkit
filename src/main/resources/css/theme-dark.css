@@ -297,7 +297,8 @@
 .fxguitoolkit-text-input {
     -fx-control-inner-background: COLOR_EDITOR;
     -fx-text-box-border: BORDER_EDITOR;
-    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
+    -fx-background-color:
+        linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
         linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
     -fx-background-insets: 0, 1;
     -fx-background-radius: 3, 2;
@@ -318,7 +319,7 @@
 }
 
 .fxguitoolkit-combo-box > .text-field {
-	-fx-background-color: COLOR_SELECTOR;
+    -fx-background-color: COLOR_SELECTOR;
     -fx-text-fill: FILL_SELECTOR;
 }
 
@@ -487,18 +488,19 @@
         -fx-shadow-highlight-color, 
         -fx-outer-border, 
         -fx-inner-border, 
-        derive( COLOR_TOOL_BAR_TOGGLE_BUTTON, 0% );
+        derive( COLOR_TOOL_BAR_TOGGLE_OFF, 0% );
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-text-fill: FILL_TOOL_BAR_TOGGLE_OFF;
 }
 
+/* TODO: Find a way to get the inner border back. Every attempt to
+    have four values feeding into the background color got errors */
 .tool-bar-toggle:selected {
-    -fx-background-color: 
-        -fx-shadow-highlight-color, 
-        linear-gradient(to bottom, derive(-fx-outer-border, -20%), -fx-outer-border), 
-        linear-gradient(to bottom, derive(-fx-inner-border, -20%), -fx-inner-border), 
-        COLOR_TOOL_BAR_TOGGLE_ON;
+    -fx-background-color:
+        -fx-shadow-highlight-color,
+        linear-gradient(to bottom, derive(-fx-outer-border, -20%), -fx-outer-border),
+        linear-gradient(to bottom, derive( COLOR_TOOL_BAR_TOGGLE_ON, 0% ), COLOR_TOOL_BAR_TOGGLE_ON);
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-text-fill: FILL_TOOL_BAR_TOGGLE_ON;

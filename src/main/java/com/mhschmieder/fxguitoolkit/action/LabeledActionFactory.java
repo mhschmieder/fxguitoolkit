@@ -549,7 +549,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "export",
                                          "rasterGraphics",
-                                         "icons/fatCow/FileExtensionJpg16.png" );
+                                         "/icons/fatCow/FileExtensionJpg16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -567,7 +567,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "export",
                                          "spreadsheetData",
-                                         "/com/led24/icons/DocExcelTable16.png" );
+                                         "/icons/led24/PageWhiteExcel16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -585,7 +585,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "export",
                                          "vectorGraphics",
-                                         "icons/fatCow/FileExtensionPdf16.png" );
+                                         "/icons/fatCow/FileExtensionPdf16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -824,7 +824,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "import",
                                          "rasterGraphics",
-                                         "icons/fatCow/FileExtensionJpg16.png" );
+                                         "/icons/fatCow/FileExtensionJpg16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -833,7 +833,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "import",
                                          "spreadsheetData",
-                                         "/icons/led24/DocExcel16.png" );
+                                         "/icons/led24/PageWhiteExcel16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -842,7 +842,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "import",
                                          "tableData",
-                                         "/com/led24/icons/DocExcelTable16.png" );
+                                         "/icons/led24/DocExcelCsv16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -851,7 +851,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "import",
                                          "vectorGraphics",
-                                         "icons/fatCow/FileExtensionPdf16.png" );
+                                         "/icons/fatCow/FileExtensionPdf16.png" );
     }
 
     @SuppressWarnings("nls")
