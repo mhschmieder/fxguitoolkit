@@ -55,7 +55,7 @@
         </dependency>
         <dependency>
             <groupId>com.mhschmieder</groupId>
-            <artifactId>fxgraphicstoolkit</artifactId>
+            <artifactId>fxpdftoolkit</artifactId>
             <version>0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
