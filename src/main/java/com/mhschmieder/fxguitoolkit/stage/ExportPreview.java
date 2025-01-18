@@ -102,12 +102,16 @@ public abstract class ExportPreview extends XStage {
     /**
      * Export Button callback.
      */
-    public final void export() {
+    public void doExportRenderedGraphics() {
         // Set the "canceled" status to query in any context.
         setCanceled( false );
 
+        // Switch on export context, so we know the data type and format to save.
         // Export the file, after querying the user for a file name.
-        final boolean fileSaved = fileExport();
+        final boolean fileSaved = fileExportRenderedGraphics( this,   
+                                                              _defaultDirectory, 
+                                                              clientProperties, 
+                                                              getGraphicsCategory() );
 
         // Unless the user canceled the file action, or there were errors, exit
         // this window, whether it is modal or modeless.
@@ -115,12 +119,6 @@ public abstract class ExportPreview extends XStage {
             setVisible( false, false );
         }
     }
-
-    /*
-     * The File Export method must be overridden by subclasses, to take care
-     * of the domain-specific export actions associated with the preview.
-     */
-    protected abstract boolean fileExport();
 
     /*
      * The domain-specific Cancel Button must be provided by the subclasses.
@@ -142,11 +140,11 @@ public abstract class ExportPreview extends XStage {
     }
 
     // This is the main Export Preview initializer.
-    // :NOTE It is the responsibility of the subclasses to invoke this method,
-    // as it needs to happen after basic initialization is completed and as this
-    // avoids complicated parameter lists.
+    // NOTE It is the responsibility of the subclasses to invoke this method,
+    //  as it needs to happen after basic initialization is completed and as
+    //  this avoids complicated parameter lists.
     // NOTE: This is declared "final" to reduce the chance of accidentally
-    // overriding it and losing the contracted behavior in a subclass.
+    //  overriding it and losing the contracted behavior in a subclass.
     public final void initStage( final String jarRelativeIconFilename,
                                  final double defaultWidth,
                                  final double defaultHeight,
@@ -172,10 +170,10 @@ public abstract class ExportPreview extends XStage {
 
         // Make the Export Button consume the ENTER key when possible.
         // NOTE: This is commented out, because it does not play well with the
-        // File Chooser in the workflow of an Export Preview window, as exiting
-        // the File Chooser doesn't consume its key event and thus it can get
-        // processed twice, resulting in an endless loop of invoking the File
-        // Chooser, if using the keyboard only and not the mouse.
+        //  File Chooser in the workflow of an Export Preview window, as exiting
+        //  the File Chooser doesn't consume its key event and thus it can get
+        //  processed twice, resulting in an endless loop of invoking the File
+        //  Chooser, if using the keyboard only and not the mouse.
         // _exportButton.setDefaultButton( true );
 
         // Add the Export Preview's Action Buttons to the Action Button Bar.
@@ -200,7 +198,7 @@ public abstract class ExportPreview extends XStage {
         _root.setBottom( buttonPane );
 
         // Load the event handler for the Export Button.
-        _exportButton.setOnAction( evt -> export() );
+        _exportButton.setOnAction( evt -> doExportRenderedGraphics() );
 
         // Load the event handler for the Cancel Button.
         _cancelButton.setOnAction( evt -> cancel() );
@@ -221,7 +219,7 @@ public abstract class ExportPreview extends XStage {
 
                 // Consume the ENTER key so it doesn't get processed twice.
                 // Trigger the Export action.
-                export();
+                doExportRenderedGraphics();
 
                 keyEvent.consume();
             }
@@ -247,8 +245,8 @@ public abstract class ExportPreview extends XStage {
 
     // Load all of the User Preferences for this Stage.
     // TODO: Make a class with get/set methods for user preferences, a la
-    // Listing 3.3 on p. 37 of "More Java Pitfalls" (Wiley), and including
-    // static default values for better modularity.
+    //  Listing 3.3 on p. 37 of "More Java Pitfalls" (Wiley), and including
+    //  static default values for better modularity.
     @Override
     public final void loadPreferences() {
         // Get the user node for this package/class, so that we get the
@@ -291,7 +289,7 @@ public abstract class ExportPreview extends XStage {
 
         // Wait for the user to dismiss via OK or Cancel Button.
         // NOTE: The visibility test is defensive programming, as the base
-        // class throws an exception vs. recovering nicely.
+        //  class throws an exception vs. recovering nicely.
         if ( isShowing() ) {
             toFront();
         }

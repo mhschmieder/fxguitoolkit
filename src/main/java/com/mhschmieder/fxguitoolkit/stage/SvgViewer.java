@@ -31,15 +31,12 @@
 package com.mhschmieder.fxguitoolkit.stage;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.fxgraphicstoolkit.shape.SvgUtilities;
 import com.mhschmieder.fxguitoolkit.control.SvgViewerToolBar;
 import com.mhschmieder.fxguitoolkit.control.ZoomPane;
 
@@ -52,9 +49,6 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.FillRule;
-import javafx.scene.shape.SVGPath;
 
 /**
  * This is a generic SVG Viewer, used for testing concepts of SVG Import.
@@ -180,7 +174,7 @@ public class SvgViewer extends XStage {
     public final void processSvgDocument( final File file, 
                                           final Document doc ) {
         // Update the scene graph with the new SVG content.
-        updateSceneGraph( doc );
+        SvgUtilities.makeSvgPathGroup( doc, _svgGroup );
 
         // Update the frame title with the input name.
         updateFrameTitle( file, false );
@@ -189,38 +183,5 @@ public class SvgViewer extends XStage {
         _toolBar._fileActionButtons._fileSaveAsButton.setDisable( false );
         _toolBar._fileActionButtons._filePageSetupButton.setDisable( false );
         _toolBar._fileActionButtons._filePrintButton.setDisable( false );
-    }
-
-    // Load the entire SVG file into a Group of JavaFX SVGPath nodes.
-    @SuppressWarnings("nls")
-    private final void updateSceneGraph( final Document doc ) {
-        // Get the SVG Path Elements from the SVG Document.
-        final Elements pathElements = doc.getElementsByTag( "path" );
-
-        // Load each SVG Path from the Path Elements and add to the Group
-        // Layout.
-        final List< Node > svgPaths = new ArrayList<>();
-        for ( final Element element : pathElements ) {
-            // Load the actual SVG Path from the SVG Path Element.
-            final String path = element.attr( "d" );
-
-            // TODO: See if we need to use the SVG path Attribute.
-            // final String usage = element.attr( "id" );
-
-            // Create a JavaFX SVG Path Node and set its content from the SVG
-            // Document, along with preferred attributes.
-            final SVGPath svgPath = new SVGPath();
-            svgPath.setContent( path );
-            svgPath.setStrokeWidth( 1.0d );
-            svgPath.setFillRule( FillRule.NON_ZERO );
-            svgPath.setFill( Color.TRANSPARENT );
-            svgPath.setStroke( Color.BLACK );
-
-            // Add this SVG Path to the overall collection of SVG Paths.
-            svgPaths.add( svgPath );
-        }
-
-        // Replace the SVG group Layout with the new SVG path Collection.
-        _svgGroup.getChildren().setAll( svgPaths );
     }
 }

@@ -31,7 +31,6 @@
 package com.mhschmieder.fxguitoolkit.stage;
 
 import java.io.File;
-import java.util.List;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.io.FileMode;
@@ -54,7 +53,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 
 /**
@@ -82,9 +80,6 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
     protected String                                _informationTablesLabel;
     protected String                                _optionalItemLabel;
 
-    // The Graphics Category may be different on each launch of this preview.
-    private String                                  _graphicsCategory;
-
     // Maintain a Swing Component reference for Rendered Graphics Export actions.
     protected RenderedGraphicsPanel                 _renderedGraphicsExportSource;
 
@@ -108,8 +103,6 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
         _auxiliaryLabel = auxiliaryLabel;
         _informationTablesLabel = informationTablesLabel;
         _optionalItemLabel = optionalItemLabel;
-
-        _graphicsCategory = "";
 
         try {
             initStage();
@@ -232,29 +225,6 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
         return fileSaved ? FileStatus.EXPORTED : FileStatus.NOT_SAVED;
     }
 
-    /*
-     * This is a wrapper to ensure that all Rendered Graphics Export actions
-     * are treated uniformly.
-     */
-    @Override
-    protected boolean fileExport() {
-        // Throw up a file chooser for the Rendered Graphics filename.
-        final String title = "Export " + _graphicsCategory //$NON-NLS-1$
-                + " Rendered Graphics To"; //$NON-NLS-1$
-        final List< ExtensionFilter > extensionFilterAdditions = ExtensionFilterUtilities
-                .getVectorGraphicsExtensionFilters();
-
-        // Save a Vector Graphics file using the selected filename.
-        return fileSaveAs( this,
-                           FileMode.EXPORT_RENDERED_GRAPHICS,
-                           clientProperties,
-                           title,
-                           _defaultDirectory,
-                           extensionFilterAdditions,
-                           ExtensionFilters.VECTOR_GRAPHICS_EXTENSION_FILTER,
-                           null );
-    }
-
     @Override
     protected Button getCancelButton() {
         final Button cancelButton = LabeledControlFactory.getCancelExportButton();
@@ -327,6 +297,7 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
         return exportOptionsBox;
     }
 
+    @Override 
     public RenderedGraphicsExportOptions getRenderedGraphicsExportOptions() {
         return _renderedGraphicsExportOptions;
     }
@@ -371,11 +342,6 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
         // Forward this method to the Rendered Graphics Export Preview Pane.
         _renderedGraphicsExportPreviewPane
                 .setRenderedGraphicsExportSource( renderedGraphicsExportSource );
-    }
-
-    public void setGraphicsCategory( final String graphicsCategory ) {
-        // Update the graphics category for the next Export request.
-        _graphicsCategory = graphicsCategory;
     }
 
     @Override

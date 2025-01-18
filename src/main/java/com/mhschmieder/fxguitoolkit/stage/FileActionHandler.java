@@ -63,6 +63,7 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageSize;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
+import com.mhschmieder.fxgraphicstoolkit.io.RenderedGraphicsExportOptions;
 import com.mhschmieder.fxgraphicstoolkit.io.VectorGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
@@ -436,6 +437,7 @@ public interface FileActionHandler {
        case SAVE_CONVERTED:
        case SAVE_LOG:
            fileStatus = exportSessionLog( file, tempFile, fileMode );
+           break;
        case SAVE_REPORT:
        case SAVE_SERVER_REQUEST:
        case SAVE_SERVER_RESPONSE:
@@ -651,6 +653,7 @@ public interface FileActionHandler {
         final boolean hasChart = ( graphicsExportChartLabel.trim().length() > 0 );
         final boolean hasAuxiliary = ( graphicsExportAuxiliaryLabel.trim().length() > 0 );
 
+        // TODO: Do the same for rendered graphics export? Code support is present.
         switch ( fileMode ) {
         case EXPORT_RASTER_GRAPHICS:
             // Query the Image Graphics Export Options.
@@ -1022,10 +1025,10 @@ public interface FileActionHandler {
 
     // This is a wrapper to ensure that all vector graphics export actions are
     // treated uniformly.
-    default void fileExportVectorGraphics( final Window parent,
-                                           final File initialDirectory,
-                                           final ClientProperties clientProperties,
-                                           final String graphicsCategory ) {
+    default boolean fileExportVectorGraphics( final Window parent,
+                                              final File initialDirectory,
+                                              final ClientProperties clientProperties,
+                                              final String graphicsCategory ) {
         // Throw up a file chooser for the vector graphics filename.
         final String title = "Export " + graphicsCategory + " Vector Graphics To";
         final List< ExtensionFilter > extensionFilterAdditions 
@@ -1033,14 +1036,37 @@ public interface FileActionHandler {
 
         // Save a vector graphics file using the selected filename.
         // TODO: Default to PDF here, and save EPS as default for Rendered Graphics?
-        fileSaveAs( parent,
-                    FileMode.EXPORT_VECTOR_GRAPHICS,
-                    clientProperties,
-                    title,
-                    initialDirectory,
-                    extensionFilterAdditions,
-                    ExtensionFilters.EPS_EXTENSION_FILTER,
-                    null );
+        return fileSaveAs( parent,
+                           FileMode.EXPORT_VECTOR_GRAPHICS,
+                           clientProperties,
+                           title,
+                           initialDirectory,
+                           extensionFilterAdditions,
+                           ExtensionFilters.EPS_EXTENSION_FILTER,
+                           null );
+    }
+
+    // This is a wrapper to ensure that all rendered graphics export actions are
+    // treated uniformly.
+    default boolean fileExportRenderedGraphics( final Window parent,
+                                                final File initialDirectory,
+                                                final ClientProperties clientProperties,
+                                                final String graphicsCategory ) {
+        // Throw up a file chooser for the vector graphics filename.
+        final String title = "Export " + graphicsCategory + " Rendered Graphics To";
+        final List< ExtensionFilter > extensionFilterAdditions 
+                = ExtensionFilterUtilities.getVectorGraphicsExtensionFilters();
+
+        // Save a rendered graphics file using the selected filename.
+        // TODO: Default to EPS here, and save PDF as default for Vector Graphics?
+        return fileSaveAs( parent,
+                           FileMode.EXPORT_RENDERED_GRAPHICS,
+                           clientProperties,
+                           title,
+                           initialDirectory,
+                           extensionFilterAdditions,
+                           ExtensionFilters.VECTOR_GRAPHICS_EXTENSION_FILTER,
+                           null );
     }
 
     // NOTE: Not all implementing Windows support importing images, but we
@@ -1551,6 +1577,12 @@ public interface FileActionHandler {
     // NOTE: Implementing classes that support vector graphics export should
     //  override this method to return a local class variable.
     default VectorGraphicsExportOptions getVectorGraphicsExportOptions() {
+        return null;
+    }
+    
+    // NOTE: Implementing classes that support rendered graphics export 
+    //  should override this method to return a local class variable.
+    default RenderedGraphicsExportOptions getRenderedGraphicsExportOptions() {
         return null;
     }
 }

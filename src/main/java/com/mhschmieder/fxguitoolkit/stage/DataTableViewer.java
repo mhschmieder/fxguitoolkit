@@ -36,7 +36,7 @@ import java.util.Collection;
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.control.DataTableView;
-import com.mhschmieder.fxguitoolkit.control.DataViewerToolBar;
+import com.mhschmieder.fxguitoolkit.control.DataTableViewerToolBar;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -46,15 +46,15 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 
-public class DataViewer extends XStage {
+public class DataTableViewer extends XStage {
 
     // Declare the main tool bar.
-    public DataViewerToolBar _toolBar;
+    public DataTableViewerToolBar _toolBar;
 
     // Declare the table that will hold the dynamically loaded data.
     private DataTableView _tableView;
 
-    public DataViewer( final String title,
+    public DataTableViewer( final String title,
                        final String windowKeyPrefix,
                        final String jarRelativeIconFilename,
                        final ProductBranding productBranding,
@@ -201,7 +201,7 @@ public class DataViewer extends XStage {
     @Override
     public final ToolBar loadToolBar() {
         // Build the Tool Bar for this Frame.
-        _toolBar = new DataViewerToolBar( clientProperties );
+        _toolBar = new DataTableViewerToolBar( clientProperties );
 
         // Return the Tool Bar so the superclass can use it.
         return _toolBar;

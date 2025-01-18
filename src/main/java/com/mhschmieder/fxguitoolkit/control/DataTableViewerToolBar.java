@@ -35,14 +35,14 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Region;
 
-public final class DataViewerToolBar extends ToolBar {
+public final class DataTableViewerToolBar extends ToolBar {
 
     // Declare all of the tool bar components.
     public FileActionButtons _fileActionButtons;
     public NavigationButtons _navigationButtons;
 
     // Default constructor
-    public DataViewerToolBar( final ClientProperties clientProperties ) {
+    public DataTableViewerToolBar( final ClientProperties clientProperties ) {
         // Always call the superclass constructor first!
         super();
 

@@ -471,6 +471,11 @@ public abstract class XStage extends Stage implements ForegroundManager,
     public String getGraphicsCategory() {
         return graphicsCategory;
     }
+
+    public void setGraphicsCategory( final String pGraphicsCategory ) {
+        // Update the graphics category for the next Export request.
+        graphicsCategory = pGraphicsCategory;
+    }
  
     // Hide all of Windows associated with this Stage, including this Stage.
     @Override
