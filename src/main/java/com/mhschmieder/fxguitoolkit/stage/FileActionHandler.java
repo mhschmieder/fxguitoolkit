@@ -93,6 +93,12 @@ public interface FileActionHandler {
      *                    failed File Open action where we need a new default file
      */
     default void fileNew( final boolean saveProject ) {}
+    
+    // Basic File Open is generally specific to domain objects in an application,
+    // so this is a default no-opo method that needs to be overridden if relevant.
+    default FileStatus fileOpen( final File file ) {
+        return FileStatus.NOT_OPENED;
+    }
 
     default void fileOpen( final Window parent,
                            final FileMode fileMode,
@@ -217,6 +223,7 @@ public interface FileActionHandler {
         case NEW:
             break;
         case OPEN:
+            fileStatus = fileOpen( file );
             break;
         case IMPORT_TEXT_DATA:
             break;
