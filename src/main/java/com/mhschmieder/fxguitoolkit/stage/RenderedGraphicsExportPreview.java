@@ -251,7 +251,7 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
                               _renderedGraphicsExportOptions.isExportOptionalItem() );
 
         // NOTE: We only show Export Options where there is at least one choice
-        // for refined scope. Otherwise the user has nothing to choose.
+        //  for refined scope. Otherwise the user has nothing to choose.
         final ObservableList< Node > exportOptionsNodes = FXCollections.observableArrayList();
 
         final boolean hasAuxiliary = ( _auxiliaryLabel != null )
@@ -297,11 +297,6 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
         return exportOptionsBox;
     }
 
-    @Override 
-    public RenderedGraphicsExportOptions getRenderedGraphicsExportOptions() {
-        return _renderedGraphicsExportOptions;
-    }
-
     @SuppressWarnings("nls")
     private void initStage() {
         // First have the superclass initialize its content.
@@ -325,6 +320,20 @@ public final class RenderedGraphicsExportPreview extends ExportPreview {
 
         // Forward this method to the Rendered Graphics Export Preview Pane.
         _renderedGraphicsExportPreviewPane.setForegroundFromBackground( backColor );
+    }
+    
+    @Override 
+    public boolean fileExport() {
+        // Forward to the stock Rendered Graphics Export handler.
+        return fileExportRenderedGraphics( this,   
+                                           _defaultDirectory, 
+                                           clientProperties, 
+                                           getGraphicsCategory() );
+    }
+
+    @Override 
+    public RenderedGraphicsExportOptions getRenderedGraphicsExportOptions() {
+        return _renderedGraphicsExportOptions;
     }
 
     /**

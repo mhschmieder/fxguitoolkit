@@ -88,57 +88,6 @@ public abstract class ExportPreview extends XStage {
         _canceled = false;
     }
 
-    /**
-     * Cancel Button callback.
-     */
-    public final void cancel() {
-        // Set the "canceled" status to query in any context.
-        setCanceled( true );
-
-        // Now exit the window, whether modal or modeless.
-        setVisible( false, false );
-    }
-
-    /**
-     * Export Button callback.
-     */
-    public void doExportRenderedGraphics() {
-        // Set the "canceled" status to query in any context.
-        setCanceled( false );
-
-        // Switch on export context, so we know the data type and format to save.
-        // Export the file, after querying the user for a file name.
-        final boolean fileSaved = fileExportRenderedGraphics( this,   
-                                                              _defaultDirectory, 
-                                                              clientProperties, 
-                                                              getGraphicsCategory() );
-
-        // Unless the user canceled the file action, or there were errors, exit
-        // this window, whether it is modal or modeless.
-        if ( fileSaved ) {
-            setVisible( false, false );
-        }
-    }
-
-    /*
-     * The domain-specific Cancel Button must be provided by the subclasses.
-     */
-    protected abstract Button getCancelButton();
-
-    /*
-     * The domain-specific Export Button must be provided by the subclasses.
-     */
-    protected abstract Button getExportButton();
-
-    /*
-     * Not all Export Previews need to expose Export Options, so this method
-     * is declared as a null return, and is not enforced to be implemented by
-     * subclasses, unless the "hasExportOptions" is passed to "initStage()".
-     */
-    protected VBox getExportOptionsBox() {
-        return null;
-    }
-
     // This is the main Export Preview initializer.
     // NOTE It is the responsibility of the subclasses to invoke this method,
     //  as it needs to happen after basic initialization is completed and as
@@ -155,8 +104,8 @@ public abstract class ExportPreview extends XStage {
 
         // Build the main action button bar, and register its callbacks.
         // NOTE: We can customize the text, but are taking advantage of a
-        // common implementation from JavaFX that is also OS-sensitive in its
-        // layout order.
+        //  common implementation from JavaFX that is also OS-sensitive in
+        //  its layout order.
         _actionButtonBar = new ButtonBar();
         _actionButtonBar.setPadding( new Insets( 6.0d, 12d, 6.0d, 12d ) );
 
@@ -198,7 +147,7 @@ public abstract class ExportPreview extends XStage {
         _root.setBottom( buttonPane );
 
         // Load the event handler for the Export Button.
-        _exportButton.setOnAction( evt -> doExportRenderedGraphics() );
+        _exportButton.setOnAction( evt -> export() );
 
         // Load the event handler for the Cancel Button.
         _cancelButton.setOnAction( evt -> cancel() );
@@ -219,7 +168,7 @@ public abstract class ExportPreview extends XStage {
 
                 // Consume the ENTER key so it doesn't get processed twice.
                 // Trigger the Export action.
-                doExportRenderedGraphics();
+                export();
 
                 keyEvent.consume();
             }
@@ -239,9 +188,66 @@ public abstract class ExportPreview extends XStage {
         } );
     }
 
+    /*
+     * The domain-specific Cancel Button must be provided by the subclasses.
+     */
+    protected abstract Button getCancelButton();
+
+    /*
+     * The domain-specific Export Button must be provided by the subclasses.
+     */
+    protected abstract Button getExportButton();
+
+    /*
+     * Not all Export Previews need to expose Export Options, so this method
+     * is declared as a null return, and is not enforced to be implemented by
+     * subclasses, unless the "hasExportOptions" is passed to "initStage()".
+     */
+    protected VBox getExportOptionsBox() {
+        return null;
+    }
+
     public final boolean isCanceled() {
         return _canceled;
     }
+
+    public final void setCanceled( final boolean canceled ) {
+        _canceled = canceled;
+    }
+
+    /**
+     * Cancel Button callback.
+     */
+    public final void cancel() {
+        // Set the "canceled" status to query in any context.
+        setCanceled( true );
+
+        // Now exit the window, whether modal or modeless.
+        setVisible( false, false );
+    }
+
+    /**
+     * Export Button callback.
+     */
+    public void export() {
+        // Set the "canceled" status to query in any context.
+        setCanceled( false );
+
+        // Export the file, after querying the user for a file name.
+        final boolean fileSaved = fileExport();
+
+        // Unless the user canceled the file action, or there were errors, exit
+        // this window, whether it is modal or modeless.
+        if ( fileSaved ) {
+            setVisible( false, false );
+        }
+    }
+    
+    /*
+     * The File Export method must be overridden by subclasses, to take care
+     * of domain-specific export actions, likely using FileActionHandler.
+     */
+    protected abstract boolean fileExport();
 
     // Load all of the User Preferences for this Stage.
     // TODO: Make a class with get/set methods for user preferences, a la
@@ -274,8 +280,17 @@ public abstract class ExportPreview extends XStage {
         FileUtilities.saveDefaultDirectoryPreferences( _defaultDirectory, prefs );
     }
 
-    public final void setCanceled( final boolean canceled ) {
-        _canceled = canceled;
+    // Update all of the user preferences for this stage.
+    // TODO: Make a preferences object instead, with get/set methods, which can
+    //  be set from HTML, XML, or stored user preferences?
+    private final void updatePreferences( final File defaultDirectory ) {
+        // Set the background color for most layout content.
+        // NOTE: This is mostly needed so that the CSS theme gets loaded and
+        //  its tags are available for custom button rendering.
+        setForegroundFromBackground( ColorConstants.WINDOW_BACKGROUND_COLOR );
+
+        // Reset the default directory for local file operations.
+        setDefaultDirectory( defaultDirectory );
     }
 
     // Common open method for opening an textField in modal Insert Mode.
@@ -296,18 +311,5 @@ public abstract class ExportPreview extends XStage {
         else {
             super.showAndWait();
         }
-    }
-
-    // Update all of the user preferences for this stage.
-    // TODO: Make a preferences object instead, with get/set methods, which can
-    //  be set from HTML, XML, or stored user preferences?
-    private final void updatePreferences( final File defaultDirectory ) {
-        // Set the background color for most layout content.
-        // NOTE: This is mostly needed so that the CSS theme gets loaded and
-        //  its tags are available for custom button rendering.
-        setForegroundFromBackground( ColorConstants.WINDOW_BACKGROUND_COLOR );
-
-        // Reset the default directory for local file operations.
-        setDefaultDirectory( defaultDirectory );
     }
 }
