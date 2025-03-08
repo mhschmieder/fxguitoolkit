@@ -16,3 +16,10 @@ This project may eventually be split up to depend on my upcoming FxGraphicsToolk
 Currently, there is a dependency on ControlsFX version 8.40.18, as well as my own commonstoolkit library.
 
 Until I publish to Maven Central or elswehere, I am attempting to provide pre-built JAR files for binary builds, source code, and Javadocs.
+
+Recently, I have pulled in some helpful code that makes use of Qoppa's free jPDFWriter library for transcoding HTML to PDF. Unfortunately, the Maven Central coordinates for recent versions of this library are broken, and older versions are not available there, so for now you will need to download your own copy of the library JAR (not the desktop product that shows usages) from the following URL:
+
+https://www.qoppa.com/pdfwriter/download/#jardownload
+
+Once downloaded, you will need to create an M2 cache for it. The POM file for this librfary will do this for you, but will leave it with blank placeholders due to the failure to find at Maven Central. As the JAR file is not named correctly according to Maven standards, copy it to "~.m2/com/qoppa/jpdfwriter/jpdfwriter/v2021R1.00" and then rename the JAR file from "jPDFWriter.v2021R1.00.jar" to "jpdfwriter-v2021R.100.jar". This should align it with the entry in this library's POM file.
+
