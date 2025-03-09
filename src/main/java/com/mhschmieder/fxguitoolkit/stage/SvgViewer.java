@@ -62,6 +62,15 @@ public class SvgViewer extends XStage {
     // file.
     final Group             _svgGroup;
 
+    public SvgViewer( final ProductBranding productBranding,
+                      final ClientProperties pClientProperties ) {
+        this( "SVG Viewer",
+              "svgViewer",
+              "/icons/oxygenIcons/SvgMimeType16.png", 
+              productBranding, 
+              pClientProperties );
+    }
+
     public SvgViewer( final String title,
                       final String windowKeyPrefix,
                       final String jarRelativeIconFilename,

@@ -54,13 +54,27 @@ public class DataTableViewer extends XStage {
     // Declare the table that will hold the dynamically loaded data.
     private DataTableView _tableView;
 
+    public DataTableViewer( final ProductBranding productBranding,
+                            final ClientProperties pClientProperties ) {
+        this( "CSV Viewer", 
+              "csvViewer", 
+              "/icons/led24/DocExcelCsv16.png", 
+              productBranding, 
+              pClientProperties );
+    }
+
     public DataTableViewer( final String title,
-                       final String windowKeyPrefix,
-                       final String jarRelativeIconFilename,
-                       final ProductBranding productBranding,
-                       final ClientProperties pClientProperties ) {
+                            final String windowKeyPrefix,
+                            final String jarRelativeIconFilename,
+                            final ProductBranding productBranding,
+                            final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super( title, windowKeyPrefix, true, true, productBranding, pClientProperties );
+        super( title, 
+               windowKeyPrefix, 
+               true, 
+               true, 
+               productBranding, 
+               pClientProperties );
 
         try {
             initStage( jarRelativeIconFilename );
@@ -137,8 +151,7 @@ public class DataTableViewer extends XStage {
                 // Trigger the File Print action.
                 doPrint();
 
-                // Consume the ENTER key so it doesn't get processed
-                // twice.
+                // Consume the ENTER key so it doesn't get processed twice.
                 keyEvent.consume();
             }
         } );
@@ -151,8 +164,7 @@ public class DataTableViewer extends XStage {
                 // Trigger the Navigate Back action.
                 doNavigateBack();
 
-                // Consume the ENTER key so it doesn't get processed
-                // twice.
+                // Consume the ENTER key so it doesn't get processed twice.
                 keyEvent.consume();
             }
         } );
@@ -200,7 +212,7 @@ public class DataTableViewer extends XStage {
     // Add the Tool Bar for this Frame.
     @Override
     public final ToolBar loadToolBar() {
-        // Build the Tool Bar for this Frame.
+        // Build the Tool Bar for this Stage.
         _toolBar = new DataTableViewerToolBar( clientProperties );
 
         // Return the Tool Bar so the superclass can use it.

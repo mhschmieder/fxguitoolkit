@@ -109,8 +109,29 @@ public class ProjectViewer extends XStage {
      */
     protected String jarRelativeXsltFilename;
 
-    @SuppressWarnings("nls")
+    public ProjectViewer( final String fileOpenTitle,
+                          final List< ExtensionFilter > fileOpenExtensionFilterAdditions,
+                          final ExtensionFilter fileOpenExtensionFilterDefault,
+                          final String fileSaveTitle,
+                          final List< ExtensionFilter > fileSaveExtensionFilterAdditions,
+                          final ProductBranding productBranding,
+                          final ClientProperties pClientProperties ) {
+        this( "Project Viewer", 
+              "projectViewer", 
+              "/icons/graphicRating/Project16.png",
+              820.0d,
+              640.0d,
+              fileOpenTitle, 
+              fileOpenExtensionFilterAdditions, 
+              fileOpenExtensionFilterDefault,
+              fileSaveTitle,
+              fileSaveExtensionFilterAdditions,
+              productBranding, 
+              pClientProperties );
+    }
+
     public ProjectViewer( final String title,
+                          final String windowKeyPrefix,
                           final String jarRelativeIconFilename,
                           final double preferredWidth,
                           final double preferredHeight,
@@ -122,7 +143,7 @@ public class ProjectViewer extends XStage {
                           final ProductBranding productBranding,
                           final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super( title, "projectViewer", true, true, productBranding, pClientProperties );
+        super( title, windowKeyPrefix, true, true, productBranding, pClientProperties );
 
         _fileOpenTitle = fileOpenTitle;
         _fileOpenExtensionFilterAdditions = fileOpenExtensionFilterAdditions;

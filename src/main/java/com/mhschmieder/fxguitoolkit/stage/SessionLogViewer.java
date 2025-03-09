@@ -60,6 +60,17 @@ public class SessionLogViewer extends XStage {
     // Declare a string to hold the filename for this Session Log File Cache.
     private final String           _sessionLogFilename;
 
+    public SessionLogViewer( final String sessionLogFilename,
+                             final ProductBranding productBranding,
+                             final ClientProperties pClientProperties ) {
+        this( productBranding.productName + SESSION_LOG_VIEWER_TITLE_DEFAULT, 
+              "sessionLogViewer", 
+              sessionLogFilename, 
+              productBranding, 
+              pClientProperties, 
+              true );
+    }
+
     public SessionLogViewer( final String title,
                              final String windowKeyPrefix,
                              final String sessionLogFilename,
@@ -96,7 +107,7 @@ public class SessionLogViewer extends XStage {
 
     protected final void initStage( final boolean allowSessionLogRestart ) {
        // First have the superclass initialize its content.
-       initStage( "/icons/everaldo/EasyMobLog16.png", 840d, 480d, true );
+       initStage( "/icons/everaldo/EasyMobLog16.png", 840.0d, 480.0d, true );
        
        // NOTE: When using Log4J and some other logging mechanisms, there may
        //  be race conditions or security violations if the user resets the log.

@@ -51,5 +51,6 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/server/deployment/jars/jPDFWriter.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
