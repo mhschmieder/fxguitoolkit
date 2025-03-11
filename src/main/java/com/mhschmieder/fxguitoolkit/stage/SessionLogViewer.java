@@ -63,12 +63,22 @@ public class SessionLogViewer extends XStage {
     public SessionLogViewer( final String sessionLogFilename,
                              final ProductBranding productBranding,
                              final ClientProperties pClientProperties ) {
-        this( productBranding.productName + SESSION_LOG_VIEWER_TITLE_DEFAULT, 
-              "sessionLogViewer", 
-              sessionLogFilename, 
-              productBranding, 
-              pClientProperties, 
+        this( sessionLogFilename,
+              productBranding,
+              pClientProperties,
               true );
+    }
+ 
+    public SessionLogViewer( final String sessionLogFilename,
+                             final ProductBranding productBranding,
+                             final ClientProperties pClientProperties,
+                             final boolean allowSessionLogRestart ) {
+        this( productBranding.productName + SESSION_LOG_VIEWER_TITLE_DEFAULT,
+              "sessionLogViewer",
+              sessionLogFilename,
+              productBranding,
+              pClientProperties,
+              allowSessionLogRestart );
     }
 
     public SessionLogViewer( final String title,
