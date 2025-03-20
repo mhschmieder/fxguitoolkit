@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -67,6 +67,60 @@ public class ControlFactory {
      * The default constructor is disabled, as this is a static factory class.
      */
     private ControlFactory() {}
+
+    public static IntegerEditor makeIntegerPercentEditor( final ClientProperties pClientProperties,
+                                                          final String tooltipText,
+                                                          final int defaultValue ) {
+        // Set the current value and format it as initial text.
+        final String initialText = defaultValue + "%";
+
+        // Declare value increment/decrement amount for up and down arrow keys.
+        // NOTE: We increment by 1 percent as this is an integer-based editor.
+        final int valueIncrementPercent = 1;
+    
+        final IntegerEditor percentEditor = new IntegerEditor(
+                 pClientProperties,
+                 initialText,
+                 tooltipText,
+                 true,
+                 0,
+                 100,
+                 defaultValue,
+                 valueIncrementPercent );
+    
+        percentEditor.setMeasurementUnitString( "%" );
+    
+        return percentEditor;
+    }
+
+    public static DoubleEditor makeDoublePercentEditor( final ClientProperties pClientProperties,
+                                                        final String tooltipText,
+                                                        final double defaultValue ) {
+        // Set the current value and format it as initial text.
+        final String initialText = defaultValue + "%";
+
+        // Declare value increment/decrement amount for up and down arrow keys.
+        // NOTE: We increment by 1 percent as this is an integer-based editor.
+        final double valueIncrementPercent = 1.0d;
+
+        final DoubleEditor percentEditor = new DoubleEditor(
+             pClientProperties,
+             initialText,
+             tooltipText,
+             true,
+             0,
+             4,
+             0,
+             6,
+             0.0d,
+             100.0d,
+             defaultValue,
+             valueIncrementPercent );
+
+        percentEditor.setMeasurementUnitString( "%" );
+
+        return percentEditor;
+    }
 
     // Helper method to get an Opacity Editor, standalone or paired.
     public static final DoubleEditor makeOpacityEditor( final ClientProperties clientProperties,

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -60,8 +60,8 @@ public abstract class NumberEditorTableCell< RT, Number > extends EditorTableCel
         // Generally, we prefer numeric fields to be centered.
         setAlignment( Pos.CENTER );
 
-        // Make sure we show the numbers in the default locale.
-        _numberFormat = NumberFormat.getNumberInstance( Locale.getDefault() );
+        // Make sure we show the numbers in the user's locale.
+        _numberFormat = NumberFormat.getNumberInstance( pClientProperties.locale );
         _numberFormat.setMinimumFractionDigits( 0 );
         _numberFormat.setMinimumIntegerDigits( 1 );
     }
