@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2024 Mark Schmieder
+ * Copyright (c) 2024, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +32,8 @@ package com.mhschmieder.fxguitoolkit.stage;
 
 import java.text.NumberFormat;
 import java.util.List;
+
+import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
 import com.mhschmieder.commonstoolkit.util.SystemType;
@@ -208,6 +210,9 @@ public class ProgressMonitor extends Stage {
         setTitle( title );
         
         setScene( scene );
+        
+        // Make sure clicking "X" to close the window triggers Cancel.
+        setOnCloseRequest( evt -> cancelButton.fire() );
     }
     
     public Button getCancelButton() {
@@ -228,9 +233,10 @@ public class ProgressMonitor extends Stage {
     
     public void updateProgress( final int currentStep ) {
         // NOTE: Progress is percentile based, so we round down to avoid
-        //  exceeding 100% at the end.
-        final double progressRatio = MathUtilities.roundDownDecimal( 
-                ( double ) currentStep / numberOfSteps, 2 );
+        //  exceeding 100% at the end, and we clamp to avoid exceeding 1.0.
+        final double progressRatio = FastMath.min( MathUtilities
+                .roundDownDecimal( ( double ) currentStep / numberOfSteps, 2 ),
+                1.0d );
         
         // Show the percentage of executed steps in the Progress Bar.
         // NOTE: For consistency, we always show exactly two decimal places.
@@ -241,6 +247,7 @@ public class ProgressMonitor extends Stage {
         numberFormat.setMaximumFractionDigits( 2 );
         progressRatioLabel.setText( NumberFormatUtilities.formatDouble( 
                 progressRatio, numberFormat ) );
+        
         progressBar.setProgress( progressRatio );
         progressIndicator.setProgress( progressRatio );
         

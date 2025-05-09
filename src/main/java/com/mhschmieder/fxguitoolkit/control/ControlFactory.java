@@ -146,6 +146,8 @@ public class ControlFactory {
                                                              1,
                                                              0,
                                                              1,
+                                                             OpacitySlider.MINIMUM_OPACITY_DEFAULT,
+                                                             OpacitySlider.MAXIMUM_OPACITY_DEFAULT,
                                                              initialValue,
                                                              valueIncrementPercent );
 

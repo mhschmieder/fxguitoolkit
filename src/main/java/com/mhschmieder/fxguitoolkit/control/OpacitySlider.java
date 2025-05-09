@@ -41,8 +41,8 @@ public final class OpacitySlider extends NumberSlider {
 
     // Declare default minimum, maximum, and initial opacity for { 0, 100 }.
     public static final double  MINIMUM_OPACITY_DEFAULT    = 0.0d;
-    public static final double  MAXIMUM_OPACITY_DEFAULT    = 100d;
-    public static final double  INITIAL_OPACITY_DEFAULT    = 100d;
+    public static final double  MAXIMUM_OPACITY_DEFAULT    = 100.0d;
+    public static final double  INITIAL_OPACITY_DEFAULT    = 100.0d;
 
     // Default tick spacing in percentiles.
     private static final double MAJOR_TICK_SPACING_PERCENT = 5.0d;

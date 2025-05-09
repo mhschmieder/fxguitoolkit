@@ -92,7 +92,7 @@ public final class OpacityPane extends VBox {
 
         // Conform the associated textField (text field) to the slider attributes.
         _opacityEditor = ControlFactory.makeOpacitySliderEditor( clientProperties, _opacitySlider );
-        _opacityEditor.setPrefWidth( 70d );
+        _opacityEditor.setPrefWidth( 70.0d );
 
         _opacityLabel = GuiUtilities.getControlLabel( labelText );
 
@@ -104,22 +104,22 @@ public final class OpacityPane extends VBox {
         getChildren().addAll( hbox, _opacitySlider );
 
         setAlignment( Pos.CENTER );
-        setPadding( new Insets( 0.0d, 16d, 0.0d, 16d ) );
+        setPadding( new Insets( 0.0d, 16.0d, 0.0d, 16.0d ) );
 
         // Bidirectionally bind the slider to an editable text field restricted
         // to the slider range.
         // NOTE: We no longer need the more complicated text binding with the
-        // new converter and formatter API calls, but rather than delete that
-        // code, it is good to keep around as an example of how to use the newer
-        // API calls from Oracle. Our Opacity Editor has a custom double
-        // precision value property that allows for direct bindings with the
-        // slider's double precision value property, bypassing this step. The
-        // text property of the underlying Text Field stays in sync as a
-        // formatted number via other methods and callbacks.
+        //  new converter and formatter API calls, but rather than delete that
+        //  code, it is good to keep around as an example of how to use the newer
+        //  API calls from Oracle. Our Opacity Editor has a custom double
+        //  precision value property that allows for direct bindings with the
+        //  slider's double precision value property, bypassing this step. The
+        //  text property of the underlying Text Field stays in sync as a
+        //  formatted number via other methods and callbacks.
         // NOTE: We don't even need this binding at all anymore, as we instead
-        // bind the textField and the slider independently to the data model. This
-        // reduces confusion over any master/slave relationships between the
-        // paired controls, and seems to retain the higher textField resolution.
+        //  bind the textField and the slider independently to the data model. This
+        //  reduces confusion over any master/slave relationships between the
+        //  paired controls, and seems to retain the higher textField resolution.
         // _opacityEditor.valueProperty().bindBidirectional(
         // _opacitySlider.valueProperty() );
         // _opacityEditor.textProperty().bindBidirectional(
@@ -164,9 +164,10 @@ public final class OpacityPane extends VBox {
         _opacityEditor.setMinimumValue( minimumopacity );
     }
 
-    public void setNumericRange( final double minimumopacity, final double maximumopacity ) {
-        setMinimum( minimumopacity );
-        setMaximum( maximumopacity );
+    public void setNumericRange( final double minimumOpacity, 
+                                 final double maximumOpacity ) {
+        setMinimum( minimumOpacity );
+        setMaximum( maximumOpacity );
     }
 
     public void setOpacityPercent( final double pOpacityPercent ) {
