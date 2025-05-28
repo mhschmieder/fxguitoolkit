@@ -849,8 +849,11 @@ public abstract class XStage extends Stage implements ForegroundManager,
     // Re-populate the MRU Filename Cache from the previous session.
     protected final void loadMruCache( final String[] mruFilenames ) {
         for ( final String mruFilename : mruFilenames ) {
-            if ( !mruFilename.trim().isEmpty() ) {
-                _mruFilenameCache.add( mruFilename );
+            // Trim all entries and make sure we don't add duplicates.
+            final String mruFilenameTrimmed = mruFilename.trim();
+            if ( !mruFilenameTrimmed.isEmpty() 
+                    && !_mruFilenameCache.contains( mruFilenameTrimmed ) ) {
+                _mruFilenameCache.add( mruFilenameTrimmed );
             }
         }
 
@@ -1471,7 +1474,8 @@ public abstract class XStage extends Stage implements ForegroundManager,
     }
 
     @Override
-    public final void updateMruCache( final File file, final boolean addToCache ) {
+    public final void updateMruCache( final File file, 
+                                      final boolean addToCache ) {
         try {
             // Add the specified file to the head of the MRU Filename Cache if
             // not already present, or move it to the head of the list if

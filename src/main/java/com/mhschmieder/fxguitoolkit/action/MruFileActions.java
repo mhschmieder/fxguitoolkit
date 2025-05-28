@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -96,12 +96,18 @@ public class MruFileActions {
             // It is more efficient to hierarchically check for positive
             // conditions, process and continue, and then allow all condition
             // failures to fall through to the padding/hiding operation.
+            // NOTE: We add the underscore cue for JavaFX to detect the MRU
+            //  file number as the mnemonic for the menu item. If we don't do
+            //  this, the first underscore in the filename gets stripped, as
+            //  it gets detected as the mnemonic by TextBinding.parseAndSplit()
+            //  and thus it overlays the next character when displaying menus.
             if ( i <= mruFilenamesLastIndex ) {
                 final String mruFilename = mruFilenames.get( i );
                 if ( ( mruFilename != null ) && !mruFilename.trim().isEmpty() ) {
                     final File mruFile = new File( mruFilename );
-                    final String mruLabel = LabeledControlFactory
-                            .getFileMruHeader( clientProperties, i + 1 ) + " " + mruFile.getName(); //$NON-NLS-1$
+                    final String mruLabel = "_" + LabeledControlFactory
+                            .getFileMruHeader( clientProperties, i + 1 ) 
+                            + " " + mruFile.getName();
 
                     mruFileAction.setText( mruLabel );
                     mruFileAction.setDisabled( false );
@@ -111,9 +117,8 @@ public class MruFileActions {
             }
 
             // Pad unused slots with empty names and disable, to hide.
-            mruFileAction.setText( "" ); //$NON-NLS-1$
+            mruFileAction.setText( "" );
             mruFileAction.setDisabled( true );
         }
     }
-
 }
