@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,14 +42,14 @@ import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 
 // NOTE: This needs to be a CheckBoxTableCell derivative in order to inherit
-// all the correct table cell height, width, gaps, and other rendering details.
+//  all the correct table cell height, width, gaps, and other rendering details.
 public abstract class ToggleButtonTableCell< RT, VT > extends XCheckBoxTableCell< RT, Boolean > {
 
     // This is a custom cell so we declare our own Toggle Button to handle it.
     // NOTE: Custom XToggleButton backed out, as CSS based implementations
-    // don't give the opportunity to veto state changes and "lie" about state.
-    // Unfortunately, we have to do this sometimes due to inadequacies of the
-    // TableView API in terms of momentary blocking of table cell editing.
+    //  don't give the opportunity to veto state changes and "lie" about state.
+    //  Unfortunately, we have to do this sometimes due to inadequacies of the
+    //  TableView API in terms of momentary blocking of table cell editing.
     protected ToggleButton _toggleButton;
 
     // Cache text and colors for selected and unselected states.
@@ -146,10 +146,10 @@ public abstract class ToggleButtonTableCell< RT, VT > extends XCheckBoxTableCell
 
         // Register a callback to handle button clicks/toggles.
         // NOTE: This callback is how we find out the Toggle Button state
-        // changed, so we are responsible for syncing that with the underlying
-        // data model, which must be done via bean properties vs. using the
-        // Toggle Button's selected state, since we programmatically change
-        // the values when we enforce rules or when we clone a table row.
+        //  changed, so we are responsible for syncing that with the underlying
+        //  data model, which must be done via bean properties vs. using the
+        //  Toggle Button's selected state, since we programmatically change
+        //  the values when we enforce rules or when we clone a table row.
         _toggleButton.setOnAction( evt -> {
             // Save edits from the Toggle Button to the property bean.
             saveEdits();

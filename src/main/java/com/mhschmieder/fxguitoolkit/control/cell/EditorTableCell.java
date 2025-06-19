@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,11 +30,13 @@
  */
 package com.mhschmieder.fxguitoolkit.control.cell;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.application.Platform;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
@@ -69,8 +71,8 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
     }
 
     // NOTE: This is primarily invoked dynamically from the startEdit()
-    // method so that we can guarantee we capture focus events that should
-    // commit edits (e.g. mouse movement, TAB key, and ENTER key).
+    //  method so that we can guarantee we capture focus events that should
+    //  commit edits (e.g. mouse movement, TAB key, and ENTER key).
     @SuppressWarnings("nls")
     protected void initTextField() {
         textField.setMinWidth( getWidth() - ( getGraphicTextGap() * 2.0d ) );
@@ -96,11 +98,12 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
 
         // When focus is lost, commit the changes; otherwise update the text.
         // NOTE: Mouse focus events to other rows, cause the editing state to
-        // be turned off before the commit is called, and thus the edits are
-        // thrown out by the JavaFX core methods. There doesn't appear to be a
-        // workaround, but strangely this doesn't happen if moving focus within
-        // the same row.
-        textField.focusedProperty().addListener( ( observableValue, wasFocused, isNowFocused ) -> {
+        //  be turned off before the commit is called, and thus the edits are
+        //  thrown out by the JavaFX core methods. There doesn't appear to be a
+        //  workaround, but strangely this doesn't happen if moving focus within
+        //  the same row.
+        textField.focusedProperty().addListener( 
+                ( observableValue, wasFocused, isNowFocused ) -> {
             if ( isNowFocused ) {
                 // Update the displayed text to match the last cached value.
                 updateText();
@@ -122,8 +125,8 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
         } );
 
         // NOTE: We must manually handle the ENTER key in order to save edits
-        // and release editing focus, but the ESCAPE key seems to be handled
-        // already as it cancels edits and releases editing focus.
+        //  and release editing focus, but the ESCAPE key seems to be handled
+        //  already as it cancels edits and releases editing focus.
         textField.setOnKeyPressed( keyEvent -> {
             final KeyCode keyCode = keyEvent.getCode();
             switch ( keyCode ) {
@@ -147,8 +150,15 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
                 break;
             case TAB:
                 // NOTE: Nothing to do, as Text Input Controls commit edits and
-                // then release focus when the TAB key is pressed, so the Focus
-                // Lost handler is where value restrictions should be applied.
+                //  then release focus when the TAB key is pressed, so the Focus
+                //  Lost handler is where value restrictions should be applied.
+                // NOTE: Nevertheless, as tables don't handle tab focus traversal
+                //  well on their own, we do have to take care of that part here.
+                final TableColumn< RT, ? > nextColumn = getNextColumn( 
+                        !keyEvent.isShiftDown() );
+                if ( nextColumn != null ) {
+                    getTableView().getSelectionModel().selectRightCell();
+                }
                 break;
             // $CASES-OMITTED$
             default:
@@ -255,7 +265,7 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
     protected abstract String getTextValue();
 
     // NOTE: The execution order below is the only one that works dependably
-    // for all contexts (focus via mouse, TAB, ENTER).
+    //  for all contexts (focus via mouse, TAB, ENTER).
     private final void saveEdits() {
         // Potentially adjust the current edits from the Text Field.
         adjustValue();
@@ -301,8 +311,8 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
     public void updateItem( final VT item, final boolean empty ) {
         // Make sure the table cell knows the current selected item.
         // NOTE: We have to override the value of "empty" to overcome flaws in
-        // inaccessible private methods of the JavaFX base class that prevents
-        // us from entering edit mode during initial invocation.
+        //  inaccessible private methods of the JavaFX base class that prevents
+        //  us from entering edit mode during initial invocation.
         // NOTE: No longer the case since Java 8u40, or maybe Java 8u60?
         super.updateItem( item, empty ); // false );
 
@@ -329,9 +339,56 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
         final String currentValue = getString();
 
         // Always check for invalid, incomplete, null, or empty values.
-        if ( ( currentValue != null ) && ( !currentValue.trim().isEmpty() || blankTextAllowed ) ) {
+        if ( ( currentValue != null ) 
+                && ( !currentValue.trim().isEmpty() 
+                        || blankTextAllowed ) ) {
             // Update the text textField to match the last valid cached value.
             textField.setText( currentValue );
+        }
+    }
+
+    private TableColumn< RT, ? > getNextColumn( final boolean forward ) {
+        final List< TableColumn< RT, ? > > columns = new ArrayList<>();
+        for ( TableColumn< RT, ? > column : getTableView().getColumns() ) {
+            columns.addAll( getLeaves( column ) );
+        }
+
+        // There is no other column that supports editing, if only one column.
+        if ( columns.size() < 2 ) {
+            return null;
+        }
+
+        int currentIndex = columns.indexOf( getTableColumn() );
+        int nextIndex = currentIndex;
+        if ( forward ) {
+            nextIndex++;
+            if ( nextIndex > columns.size() - 1 ) {
+                nextIndex = 0;
+            }
+        } else {
+            nextIndex--;
+            if ( nextIndex < 0 ) {
+                nextIndex = columns.size() - 1;
+            }
+        }
+
+        return columns.get( nextIndex );
+    }
+
+    private List< TableColumn< RT, ? > > getLeaves(
+            final TableColumn< RT, ? > root ) {
+        final List< TableColumn< RT, ? > > columns = new ArrayList<>();
+        if ( root.getColumns().isEmpty() ) {
+            // We only want the leaves that are editable, for tab traversal.
+            if ( root.isEditable() ) {
+                columns.add( root );
+            }
+            return columns;
+        } else {
+            for ( TableColumn< RT, ? > column : root.getColumns() ) {
+                columns.addAll( getLeaves( column ) );
+            }
+            return columns;
         }
     }
 }
