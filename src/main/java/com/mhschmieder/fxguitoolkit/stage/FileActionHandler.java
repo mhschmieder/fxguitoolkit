@@ -46,7 +46,6 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -108,7 +107,7 @@ public interface FileActionHandler {
                            final ExtensionFilter defaultExtensionFilter,
                            final boolean multiSelectionEnabled ) {
         // NOTE: JavaFX uses a different file chooser action for multi-select.
-        final List< File > files = Collections.emptyList();
+        final List< File > files = new ArrayList<>();
         if ( multiSelectionEnabled ) {
             // Get a file (or list of files) for a "File Open" action.
             files.addAll( FileChooserUtilities.getFilesForOpen( 
