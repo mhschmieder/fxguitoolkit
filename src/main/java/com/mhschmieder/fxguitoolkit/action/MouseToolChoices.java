@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,11 +44,11 @@ import com.mhschmieder.fxgraphicstoolkit.input.MouseToolMode;
 public final class MouseToolChoices {
 
     // Declare all of the Mouse Tool choices.
-    // TODO: Add one for Pan Tool.
     public XAction      _selectToolChoice;
+    public XAction      _panToolChoice;
     public XAction      _zoomToolChoice;
     public XAction      _rotateToolChoice;
-    public XAction      _architectureToolChoice;
+    public XAction      _lineToolChoice;
 
     // Cache the associated choice group, for ease of overall enablement.
     public XActionGroup _mouseToolChoiceGroup;
@@ -57,10 +57,10 @@ public final class MouseToolChoices {
     @SuppressWarnings("nls")
     public MouseToolChoices( final ClientProperties pClientProperties ) {
         _selectToolChoice = LabeledActionFactory.getSelectToolChoice( pClientProperties );
+        _panToolChoice = LabeledActionFactory.getPanToolChoice( pClientProperties );
         _zoomToolChoice = LabeledActionFactory.getZoomToolChoice( pClientProperties );
         _rotateToolChoice = LabeledActionFactory.getRotateToolChoice( pClientProperties );
-        _architectureToolChoice =
-                                LabeledActionFactory.getLineToolChoice( pClientProperties );
+        _lineToolChoice = LabeledActionFactory.getLineToolChoice( pClientProperties );
 
         final Collection< Action > mouseToolChoiceCollection = getMouseToolChoiceCollection();
 
@@ -75,9 +75,10 @@ public final class MouseToolChoices {
     public Collection< Action > getMouseToolChoiceCollection() {
         final Collection< Action > mouseToolChoiceCollection = Arrays
                 .asList( _selectToolChoice,
+                         _panToolChoice,
                          _zoomToolChoice,
                          _rotateToolChoice,
-                         _architectureToolChoice );
+                         _lineToolChoice );
         return mouseToolChoiceCollection;
     }
 
@@ -105,9 +106,10 @@ public final class MouseToolChoices {
             _zoomToolChoice.setSelected( true );
             break;
         case PAN:
+            _panToolChoice.setSelected( true );
             break;
-        case DRAW:
-            _architectureToolChoice.setSelected( true );
+        case LINE:
+            _lineToolChoice.setSelected( true );
             break;
         case MEASURE:
             break;
@@ -119,5 +121,4 @@ public final class MouseToolChoices {
             break;
         }
     }
-
 }

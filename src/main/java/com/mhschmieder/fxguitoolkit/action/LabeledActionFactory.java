@@ -909,6 +909,13 @@ public class LabeledActionFactory {
     }
 
     @SuppressWarnings("nls")
+    public static XAction getPanToolChoice( final ClientProperties pClientProperties ) {
+        return getMouseToolChoice( pClientProperties,
+                                   "panTool",
+                                   "/icons/happyIconStudio/CursorDragArrowBlack16.png" );
+    }
+
+    @SuppressWarnings("nls")
     public static XAction getSelectToolChoice( final ClientProperties pClientProperties ) {
         return getMouseToolChoice( pClientProperties,
                                    "selectTool",
