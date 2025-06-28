@@ -30,6 +30,10 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
+import java.time.Month;
+import java.time.format.TextStyle;
+import java.util.Locale;
+
 import com.mhschmieder.commonstoolkit.lang.Labeled;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
@@ -107,7 +111,90 @@ public class ListViewUtilities {
             false,
             false,
             supportedValues );
+        
+        // Initialize the Combo Box to handle the custom Cell Factory.
+        initEnumSelector( selector, cellFactory, defaultValue );
 
+        return selector;
+    }
+
+    /**
+     * Returns a Combo Box that hosts labels from the Month enum.
+     * <p>
+     * The goal is to allow for a combo box that doesn't need overrides of the
+     * control itself for string conversions of Month values. 
+     * <p>
+     * This method is almost identical to the one above, but as Month doesn't
+     * implement Labeled, it needs its own implementation method.
+     * 
+     * @param pClientProperties client properties for OS, Locale, etc.
+     * @param supportedValues a list of supported values for the List View
+     * @param tooltipText the tooltip to show when hovering on the Combo Box
+     * @param defaultValue initial default value to set, to avoid nulls
+     * @return a Combo Box that hosts a curated list of months from the enum 
+     */
+    public static XComboBox< Month > makeMonthSelector(
+            final ClientProperties pClientProperties,
+            final Month[] supportedValues,
+            final String tooltipText,
+            final Month defaultValue ) {
+        // Make the callback for the ListCells to grab the custom enum label.
+        final Callback< ListView< Month >, ListCell< Month > > cellFactory 
+            = new Callback< ListView< Month >, ListCell< Month > >() {
+            @Override
+            public ListCell< Month > call(final ListView< Month > p ) {
+                return new ListCell< Month >() {
+                    {
+                        setContentDisplay( ContentDisplay.TEXT_ONLY );
+                    }
+
+                    @Override
+                    protected void updateItem( final Month item, boolean empty ) {
+                        super.updateItem( item, empty );
+
+                        final Month currentMonth
+                                = ( ( item == null ) || empty )
+                                  ? getItem()
+                                  : item;
+                        if ( currentMonth != null ) {
+                            // TODO: Allow custom Locale and TextStyle?.
+                            setText( currentMonth.getDisplayName( 
+                                TextStyle.FULL, Locale.US ) );
+                        }
+                    }
+                };
+            } };
+
+        // Make the combo box using the supported Month values as objects.
+        final XComboBox< Month > selector = new XComboBox<>(
+            pClientProperties,
+            tooltipText,
+            true,
+            false,
+            false,
+            supportedValues );
+        
+        // Initialize the Combo Box to handle the custom Cell Factory.
+        initEnumSelector( selector, cellFactory, defaultValue );
+
+        return selector;
+    }
+
+    /**
+     * Initializes a Combo Box that hosts display values from an enum.
+     * <p>
+     * This method slightly diminishes the copy/paste repetition of the two
+     * methods above, but it was a challenge to find correct syntax for also
+     * having this method make the Combo Box, so that is not done yet.
+     * 
+     * @param selector the Combo Box that displays enumerated values
+     * @param cellFactory the Cell Factory that handles enum displayed values
+     * @param defaultValue initial default value to set, to avoid nulls
+     */
+    public static < T > void initEnumSelector(
+            final XComboBox< T > selector,
+            final Callback< ListView< T >, ListCell< T > > cellFactory,
+            final T defaultValue ) {
         // Set the custom cell view on the displayed value field.
         selector.setButtonCell( cellFactory.call( null ) );
 
@@ -115,7 +202,5 @@ public class ListViewUtilities {
         selector.setCellFactory( cellFactory );
 
         selector.getSelectionModel().select( defaultValue );
-
-        return selector;
     }
 }
