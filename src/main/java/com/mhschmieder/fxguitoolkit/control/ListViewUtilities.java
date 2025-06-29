@@ -50,17 +50,17 @@ public class ListViewUtilities {
     private ListViewUtilities() {}
 
     /**
-     * Returns a Combo Box that hosts labels from an enum that implements the
-     * {@link Labeled} interface. It doesn't have to be enum-based but
-     * that is the most common and likely client, as the interface helps to
-     * partially get around enums being final classes in Java.
+     * Returns a Combo Box that hosts labels from an object or enum that 
+     * implements the {@link Labeled} interface. It doesn't have to be
+     * enum-based but that is the most common and likely client, as the 
+     * interface helps to partially get around enums being final classes.
      * <p>
      * The goal is to allow for a combo box that doesn't need overrides of the
      * control itself for string conversions of enum values. 
      * <p>
      * This approach allows for one factory method that covers all enums that
-     * implement the interface, with no verbosity of repetitive boilerplate
-     * code and copy paste of otherwise identical code between enum types.
+     * implement the interface without verbose, repetitive boilerplate code
+     * and/or copy/paste of otherwise identical code between enum/object types.
      * 
      * @param <T> the object or enum that provides the Combo Box's choices
      * @param pClientProperties client properties for OS, Locale, etc.
@@ -69,12 +69,12 @@ public class ListViewUtilities {
      * @param defaultValue initial default value to set, to avoid nulls
      * @return a Combo Box that hosts a curated list of labels from an enum 
      */
-    public static < T extends Labeled< ? > > XComboBox< T > makeEnumSelector(
+    public static < T extends Labeled< ? > > XComboBox< T > makeLabeledSelector(
             final ClientProperties pClientProperties,
             final T[] supportedValues,
             final String tooltipText,
             final T defaultValue ) {
-        // Make the callback for the ListCells to grab the custom enum label.
+        // Make the callback for the ListCells to grab the custom label.
         final Callback< ListView< T >, ListCell< T > > cellFactory 
             = new Callback< ListView< T >, ListCell< T > >() {
             @Override
@@ -94,16 +94,16 @@ public class ListViewUtilities {
                                   : item;
                         if ( currentLabelAssignable != null ) {
                             // Remove leading whitespace when using in a 
-                            // drop-list, as some labels are designed to
-                            // serve as measurement units following a
-                            // numeric value and many of those use a space.
+                            // drop-list, as some labels may be designed to
+                            // serve as measurement units that follow a
+                            // numeric value, and many of those use a space.
                             setText( currentLabelAssignable.label().trim() );
                         }
                     }
                 };
             } };
 
-        // Make the combo box using the supported enum values as objects.
+        // Make the Combo Box using the supported Labeled values as objects.
         final XComboBox< T > selector = new XComboBox<>(
             pClientProperties,
             tooltipText,
@@ -112,8 +112,8 @@ public class ListViewUtilities {
             false,
             supportedValues );
         
-        // Initialize the Combo Box to handle the custom Cell Factory.
-        initEnumSelector( selector, cellFactory, defaultValue );
+        // Initialize the Combo Box behavior using the custom Cell Factory.
+        initSelectorBehavior( selector, cellFactory, defaultValue );
 
         return selector;
     }
@@ -165,7 +165,7 @@ public class ListViewUtilities {
                 };
             } };
 
-        // Make the combo box using the supported Month values as objects.
+        // Make the Combo Box using the supported Month values as objects.
         final XComboBox< Month > selector = new XComboBox<>(
             pClientProperties,
             tooltipText,
@@ -174,24 +174,24 @@ public class ListViewUtilities {
             false,
             supportedValues );
         
-        // Initialize the Combo Box to handle the custom Cell Factory.
-        initEnumSelector( selector, cellFactory, defaultValue );
+        // Initialize the Combo Box behavior using the custom Cell Factory.
+        initSelectorBehavior( selector, cellFactory, defaultValue );
 
         return selector;
     }
 
     /**
-     * Initializes a Combo Box that hosts display values from an enum.
+     * Initializes a Combo Box's behavior using a pre-made cell factory.
      * <p>
      * This method slightly diminishes the copy/paste repetition of the two
      * methods above, but it was a challenge to find correct syntax for also
      * having this method make the Combo Box, so that is not done yet.
      * 
-     * @param selector the Combo Box that displays enumerated values
-     * @param cellFactory the Cell Factory that handles enum displayed values
-     * @param defaultValue initial default value to set, to avoid nulls
+     * @param selector the Combo Box that displays curated values
+     * @param cellFactory the Cell Factory that handles the displayed values
+     * @param defaultValue the initial default value to set, to avoid nulls
      */
-    public static < T > void initEnumSelector(
+    public static < T > void initSelectorBehavior(
             final XComboBox< T > selector,
             final Callback< ListView< T >, ListCell< T > > cellFactory,
             final T defaultValue ) {
@@ -201,6 +201,7 @@ public class ListViewUtilities {
         // Set the custom cell view on the Combo Box's drop list.
         selector.setCellFactory( cellFactory );
 
+        // Set the default value to avoid null pointers prior to user input.
         selector.getSelectionModel().select( defaultValue );
     }
 }
