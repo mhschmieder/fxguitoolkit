@@ -124,31 +124,33 @@ public class ControlFactory {
 
     // Helper method to get an Opacity Editor, standalone or paired.
     public static final DoubleEditor makeOpacityEditor( final ClientProperties clientProperties,
-                                                        final String tooltipText,
                                                         final String measurementUnit,
-                                                        final double minimumValue,
-                                                        final double maximumValue,
-                                                        final double initialValue ) {
+                                                        final double minimumOpacityPercent,
+                                                        final double maximumOpacityPercent,
+                                                        final double initialOpacityPercent ) {
         // Get the current value and format it as initial text.
-        final String initialText = Double.toString( initialValue );
+        final String initialText = Double.toString( initialOpacityPercent ) + measurementUnit;
 
         // Declare value increment/decrement amount for up and down arrow keys,
         // set to 0.5% as a mid-way value of general use for auto-increment.
         final double valueIncrementPercent = 0.5d;
 
         // NOTE: We use up to one decimal place of precision for displaying
-        // opacity, and one decimal place for parsing opacity.
+        //  opacity, and one decimal place for parsing opacity.
+        final String tooltipText = "Enter an Opacity between " 
+                + minimumOpacityPercent + measurementUnit
+                + " and " + maximumOpacityPercent + measurementUnit;
         final DoubleEditor opacityEditor = new DoubleEditor( clientProperties,
                                                              initialText,
                                                              tooltipText,
                                                              true,
                                                              0,
-                                                             1,
+                                                             2,
                                                              0,
-                                                             1,
-                                                             OpacitySlider.MINIMUM_OPACITY_DEFAULT,
-                                                             OpacitySlider.MAXIMUM_OPACITY_DEFAULT,
-                                                             initialValue,
+                                                             4,
+                                                             minimumOpacityPercent,
+                                                             maximumOpacityPercent,
+                                                             initialOpacityPercent,
                                                              valueIncrementPercent );
 
         opacityEditor.setMeasurementUnitString( measurementUnit );
@@ -156,12 +158,20 @@ public class ControlFactory {
         return opacityEditor;
     }
 
+    // Helper method to get a default Opacity Editor, usually for a table cell.
+    public static final DoubleEditor makeOpacityEditor( final ClientProperties clientProperties ) {
+        return makeOpacityEditor( clientProperties,
+                                  OpacitySlider.PERCENT_MEASUREMENT_UNIT,
+                                  OpacitySlider.DEFAULT_MINIMUM_OPACITY_PERCENT,
+                                  OpacitySlider.DEFAULT_MAXIMUM_OPACITY_PERCENT,
+                                  OpacitySlider.DEFAULT_INITIAL_OPACITY_PERCENT );
+    }
+
     // Helper method to get an Opacity Editor to pair with a slider.
     public static final DoubleEditor makeOpacitySliderEditor( final ClientProperties clientProperties,
                                                               final OpacitySlider opacitySlider ) {
         // Use the current slider value and limits to set the number textField.
         final DoubleEditor opacityEditor = makeOpacityEditor( clientProperties,
-                                                              null,
                                                               opacitySlider
                                                                       .getMeasurementUnitString(),
                                                               opacitySlider.getMin(),

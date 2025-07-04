@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
+import java.text.NumberFormat;
+
 import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
@@ -41,24 +43,33 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.ScrollEvent;
+import javafx.util.StringConverter;
 
+/**
+ * A catch-all numeric slider base class, with some tricks via special
+ * parameter handling, to account for the JavaFX Slider not accepting
+ * a generic argument, meaning we can't make special versions for long,
+ * integer, float, or double, as {@link Slider} uses doubles internally.
+ */
 public class NumberSlider extends Slider {
 
     /** Flag for determining whether to support gestures. */
-    private boolean                _gesturesEnabled;
+    private boolean gesturesEnabled;
 
     /** Keep track of the current Scrolling Sensitivity for the Mouse */
-    protected ScrollingSensitivity _scrollingSensitivity;
+    private ScrollingSensitivity scrollingSensitivity;
 
-    // Maintain a reference to the Measurement Unit label (can be blank).
-    private String                 _measurementUnitString;
+    /** Maintain a reference to the Measurement Unit label (can be blank). */
+    private String measurementUnitString;
+
+    /** Number format cache used to control the mantissa in label formatter. */
+    protected NumberFormat numberFormat;
 
     /**
      * Cache the Client Properties (System Type, Locale, etc.).
      */
-    public ClientProperties        clientProperties;
+    public ClientProperties clientProperties;
 
-    @SuppressWarnings("nls")
     public NumberSlider( final ClientProperties pClientProperties,
                          final double minimumValue,
                          final double maximumValue,
@@ -67,62 +78,68 @@ public class NumberSlider extends Slider {
                          final double minorTickSpacing,
                          final double blockIncrement,
                          final boolean useContextMenu ) {
+        // NOTE: As this is the older constructor that assumed a precise
+        //  associated text field for the slider, we stick to integer-only
+        //  tick labels and "snap to ticks" turned on.
+        this( pClientProperties, 
+              minimumValue, 
+              maximumValue, 
+              initialValue,
+              0,
+              0,
+              majorTickSpacing,
+              minorTickSpacing,
+              blockIncrement,
+              useContextMenu,
+              true );
+    }
+
+    public NumberSlider( final ClientProperties pClientProperties,
+                         final double minimumValue,
+                         final double maximumValue,
+                         final double initialValue,
+                         final int minFractionDigitsFormat,
+                         final int maxFractionDigitsFormat,
+                         final double majorTickSpacing,
+                         final double minorTickSpacing,
+                         final double blockIncrement,
+                         final boolean useContextMenu,
+                         final boolean snapToTicks ) {
         // Always call the superclass constructor first!
         super( minimumValue, maximumValue, initialValue );
 
         clientProperties = pClientProperties;
 
-        _gesturesEnabled = false;
-        _scrollingSensitivity = ScrollingSensitivity.defaultValue();
-        _measurementUnitString = "";
+        gesturesEnabled = false;
+        scrollingSensitivity = ScrollingSensitivity.defaultValue();
+        measurementUnitString = "";
 
         try {
-            initSlider( majorTickSpacing, minorTickSpacing, blockIncrement, useContextMenu );
+            initSlider( minFractionDigitsFormat,
+                        maxFractionDigitsFormat,
+                        majorTickSpacing, 
+                        minorTickSpacing, 
+                        blockIncrement, 
+                        useContextMenu,
+                        snapToTicks );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
         }
     }
 
-    public final String getMeasurementUnitString() {
-        return _measurementUnitString;
-    }
-
-    /**
-     * This is a standard getter method for the Scrolling Sensitivity setting.
-     *
-     * @return The current Scrolling Sensitivity setting
-     */
-    public final ScrollingSensitivity getScrollingSensitivity() {
-        return _scrollingSensitivity;
-    }
-
-    private final void initContextMenu() {
-        // Sliders do not have Context Menus by default, but we may need to
-        // present the user with a choice regarding the Snap to Ticks feature.
-        final ContextMenu contextMenu = new ContextMenu();
-        final CheckMenuItem snapToTicksMenuItem = new CheckMenuItem( "Snap to Ticks" ); //$NON-NLS-1$
-
-        // Default to the Snap to Ticks feature being turned on, as it is hard
-        // to fine-tune a slider anyway, and the associated Text Field is
-        // generally used for that instead.
-        setSnapToTicks( true );
-        snapToTicksMenuItem.setSelected( true );
-
-        snapToTicksMenuItem.setOnAction( evt -> {
-            // Toggle the current value of "Snap to Ticks".
-            setSnapToTicks( !isSnapToTicks() );
-        } );
-        contextMenu.getItems().add( snapToTicksMenuItem );
-
-        setOnContextMenuRequested( evt -> contextMenu
-                .show( this, evt.getScreenX(), evt.getScreenY() ) );
-    }
-
-    private final void initSlider( final double majorTickSpacing,
+    private final void initSlider( final int minFractionDigitsFormat,
+                                   final int maxFractionDigitsFormat,
+                                   final double majorTickSpacing,
                                    final double minorTickSpacing,
                                    final double blockIncrement,
-                                   final boolean useContextMenu ) {
+                                   final boolean useContextMenu,
+                                   final boolean snapToTicks ) {
+        numberFormat = NumberFormat.getNumberInstance( clientProperties.locale );
+        numberFormat.setGroupingUsed( true );
+        numberFormat.setMinimumFractionDigits( minFractionDigitsFormat );
+        numberFormat.setMaximumFractionDigits( maxFractionDigitsFormat );
+
         // Always show the tick labels and tick marks.
         setShowTickLabels( true );
         setShowTickMarks( true );
@@ -134,14 +151,109 @@ public class NumberSlider extends Slider {
         // Sliders do not have Context Menus by default, but we may need to
         // present the user with a choice regarding the Snap to Ticks feature.
         if ( useContextMenu ) {
-            initContextMenu();
+            initContextMenu( snapToTicks );
         }
 
         setOnScroll( this::scroll );
+        
+        // Set a custom label formatter to show and strip measurement units.
+        setLabelFormatter( new StringConverter< Double >() {
+            @Override
+            public String toString( final Double doubleValue ) {
+                // Do a simple string conversion to a number, in case we get 
+                // arithmetic exceptions using the number formatter.
+                String label = Double.toString( doubleValue );
+
+                try {
+                    label = numberFormat.format( doubleValue );
+                }
+                catch ( final ArithmeticException ae ) {
+                    ae.printStackTrace();
+                }
+                
+                return measurementUnitString.isEmpty()
+                        ? label
+                        : label + measurementUnitString;
+            }
+
+            @Override
+            public Double fromString( final String label ) {
+                final int measurementUnitIndex = measurementUnitString.isEmpty()
+                        ? -1
+                        : label.indexOf( measurementUnitString );
+                final String strippedLabel = ( measurementUnitIndex < 0 )
+                        ? label
+                        : label.substring( 0, measurementUnitIndex + 1 );
+                return Double.valueOf( strippedLabel );
+            }
+        } );
+    }
+
+    private final void initContextMenu( final boolean snapToTicks ) {
+        // Sliders do not have Context Menus by default, but we may need to
+        // present the user with a choice regarding the Snap to Ticks feature.
+        final ContextMenu contextMenu = new ContextMenu();
+        final CheckMenuItem snapToTicksMenuItem = new CheckMenuItem( "Snap to Ticks" );
+
+        // Set the requested default for the Snap to Ticks feature. If the
+        // older constructor was called, this will be set to true, as it is 
+        // hard to fine-tune a slider anyway, and the associated Text Field
+        // is generally used for that instead. But some sliders don't have
+        // associated text fields, or they aren't editable, and need precision.
+        setSnapToTicks( snapToTicks );
+        snapToTicksMenuItem.setSelected( snapToTicks );
+
+        snapToTicksMenuItem.setOnAction( evt -> {
+            // Toggle the current value of "Snap to Ticks".
+            setSnapToTicks( !isSnapToTicks() );
+        } );
+        contextMenu.getItems().add( snapToTicksMenuItem );
+
+        setOnContextMenuRequested( evt -> contextMenu
+                .show( this, evt.getScreenX(), evt.getScreenY() ) );
+    }
+
+    public final void setTickResolution( final double majorTickSpacing,
+                                         final double minorTickSpacing ) {
+        // NOTE: The tick count is for how many are between major ticks.
+        final int minorTickCount = ( int ) FastMath.round( majorTickSpacing / minorTickSpacing ) - 1;
+
+        setMajorTickUnit( majorTickSpacing );
+        setMinorTickCount( minorTickCount );
     }
 
     public final boolean isGesturesEnabled() {
-        return _gesturesEnabled;
+        return gesturesEnabled;
+    }
+
+    public final void setGesturesEnabled( final boolean pGesturesEnabled ) {
+        gesturesEnabled = pGesturesEnabled;
+    }
+
+    public final void toggleGestures() {
+        // Toggle the "Gestures Enabled" state.
+        setGesturesEnabled( !isGesturesEnabled() );
+    }
+
+    /**
+     * This is a standard getter method for the Scrolling Sensitivity setting.
+     *
+     * @return The current Scrolling Sensitivity setting
+     */
+    public final ScrollingSensitivity getScrollingSensitivity() {
+        return scrollingSensitivity;
+    }
+
+    /**
+     * Set the new Scrolling Sensitivity for the Slider.
+     *
+     * @param pScrollingSensitivity
+     *            The sensitivity of the mouse scroll wheel
+     */
+    public final void setScrollingSensitivity( 
+            final ScrollingSensitivity pScrollingSensitivity ) {
+        // Cache the new Scrolling Sensitivity preference.
+        scrollingSensitivity = pScrollingSensitivity;
     }
 
     protected void scroll( final ScrollEvent event ) {
@@ -157,7 +269,7 @@ public class NumberSlider extends Slider {
 
         // If Scrolling Sensitivity is off, then we are supposed to ignore
         // traditional mouse scroll wheel events.
-        if ( ScrollingSensitivity.OFF.equals( _scrollingSensitivity ) ) {
+        if ( ScrollingSensitivity.OFF.equals( scrollingSensitivity ) ) {
             return;
         }
 
@@ -168,7 +280,7 @@ public class NumberSlider extends Slider {
         }
 
         double scrolledDelta = 0.0d;
-        switch ( _scrollingSensitivity ) {
+        switch ( scrollingSensitivity ) {
         case COARSE:
             scrolledDelta = getMajorTickUnit();
             break;
@@ -210,45 +322,19 @@ public class NumberSlider extends Slider {
         setValue( scrolledValue );
     }
 
-    public final void setGesturesEnabled( final boolean gesturesEnabled ) {
-        _gesturesEnabled = gesturesEnabled;
+    protected void updateTooltipText() {
+        setTooltip( new Tooltip( "Use ARROW Keys to Step by "
+                + Double.toString( getBlockIncrement() ) + measurementUnitString ) );
     }
 
-    public final void setMeasurementUnitString( final String measurementUnitString ) {
-        _measurementUnitString = measurementUnitString;
+    public final String getMeasurementUnitString() {
+        return measurementUnitString;
+    }
+
+    public final void setMeasurementUnitString( final String pMeasurementUnitString ) {
+        measurementUnitString = pMeasurementUnitString;
 
         // Update the tool tip text as it embeds the measurement unit.
         updateTooltipText();
     }
-
-    /**
-     * Set the new Scrolling Sensitivity for the Slider.
-     *
-     * @param scrollingSensitivity
-     *            The sensitivity of the mouse scroll wheel
-     */
-    public final void setScrollingSensitivity( final ScrollingSensitivity scrollingSensitivity ) {
-        // Cache the new Scrolling Sensitivity preference.
-        _scrollingSensitivity = scrollingSensitivity;
-    }
-
-    public final void setTickResolution( final double majorTickSpacing,
-                                         final double minorTickSpacing ) {
-        // NOTE: The tick count is for how many are between major ticks.
-        final int minorTickCount = ( int ) FastMath.round( majorTickSpacing / minorTickSpacing ) - 1;
-
-        setMajorTickUnit( majorTickSpacing );
-        setMinorTickCount( minorTickCount );
-    }
-
-    public final void toggleGestures() {
-        // Toggle the "Gestures Enabled" state.
-        setGesturesEnabled( !isGesturesEnabled() );
-    }
-
-    protected void updateTooltipText() {
-        setTooltip( new Tooltip( "Use ARROW Keys to Step by " //$NON-NLS-1$
-                + Double.toString( getBlockIncrement() ) + _measurementUnitString ) );
-    }
-
 }
