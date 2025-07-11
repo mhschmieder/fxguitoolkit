@@ -32,7 +32,6 @@ package com.mhschmieder.fxguitoolkit.control.cell;
 
 import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 

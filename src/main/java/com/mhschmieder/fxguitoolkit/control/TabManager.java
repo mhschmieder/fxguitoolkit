@@ -30,10 +30,10 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
+import java.util.List;
+
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-
-import java.util.List;
 
 public class TabManager {
 

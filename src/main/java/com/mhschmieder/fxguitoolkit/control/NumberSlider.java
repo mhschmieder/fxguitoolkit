@@ -35,8 +35,8 @@ import java.text.NumberFormat;
 import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.fxgraphicstoolkit.input.ScrollingSensitivity;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
-import com.mhschmieder.fxguitoolkit.ScrollingSensitivity;
 
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
