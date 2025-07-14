@@ -74,6 +74,22 @@ public class MouseRotationTracker extends TrackerLabelGroup {
         _objectAngle = Double.NaN;
     }
     
+    public void updateTrackerLabel( final double displayX,
+                                    final double displayY,
+                                    final double localX,
+                                    final double localY,
+                                    final double objectAngle ) {
+        // Set the object angle to use for modifying the mouse rotation angle.
+        setObjectAngle( objectAngle );
+
+        // Update the special cursor angle readouts next to the main cursor.
+        // NOTE: This must be done after updating graphical object angles.
+        updateTrackerLabel( displayX, 
+                            displayY,
+                            localX,
+                            localY );
+    }
+    
     @Override
     public String getTrackerLabelText( final double localX,
                                        final double localY ) {
