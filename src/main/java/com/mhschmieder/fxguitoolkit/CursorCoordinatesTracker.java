@@ -44,6 +44,12 @@ import javafx.scene.chart.ValueAxis;
  */
 public class CursorCoordinatesTracker extends TrackerLabelGroup {
 
+    /** Flag for determining whether to show cursor coordinates. */
+    protected boolean _showCursorCoordinates;
+
+    /** Cache for restoring previous cursor coordinates setting. */
+    protected boolean _cachedShowCursorCoordinates;
+
     /** Cache a local copy of the Mouse Tool Manager to check mouse context. */
     public MouseToolManager _mouseToolManager;
 
@@ -66,6 +72,79 @@ public class CursorCoordinatesTracker extends TrackerLabelGroup {
         _mouseToolManager = mouseToolManager;
         _numberFormat = numberFormat;
         _distanceUnit = distanceUnit;
+
+        _showCursorCoordinates = false;
+        _cachedShowCursorCoordinates = false;
+    }
+    
+    /**
+     * Returns {@code true} if the cursor coordinates are to be drawn.
+     *
+     * @return {@code true} if the cursor coordinates are to be drawn
+     */
+    public boolean isShowCursorCoordinates() {
+        return _showCursorCoordinates;
+    }
+
+    /**
+     * Controls whether the cursor coordinates are drawn.
+     *
+     * @param showCursorCoordinates
+     *            If {@code true}, the cursor coordinates are drawn.
+     */
+    public void setShowCursorCoordinates( final boolean showCursorCoordinates ) {
+        _showCursorCoordinates = showCursorCoordinates;
+    }
+
+    /**
+     * Toggles the cursor coordinates display to on if off, and vice-versa.
+     */
+    public void toggleShowCursorCoordinates() {
+        // Toggle the "Show Cursor Coordinates" state.
+        setShowCursorCoordinates( !isShowCursorCoordinates() );
+    }
+
+    public void cacheShowCursorCoordinates() {
+        _cachedShowCursorCoordinates = _showCursorCoordinates;
+    }
+    
+    public void cacheAndShowCursorCoordinates() {
+        // Cache the Show Cursor Coordinates preference, to restore after
+        // confirming a Paste action (for example).
+        cacheShowCursorCoordinates();
+
+        // Temporarily override "Show Cursor Coordinates" and show the mouse
+        // location as the basis of the pasted object set (for example).
+        setShowCursorCoordinates( true );
+    }
+
+    /**
+     * Restores the cached status of whether to show the cursor coordinates.
+     */
+    public void restoreShowCursorCoordinates() {
+        // Restore the global setting for Cursor Coordinates.
+        setShowCursorCoordinates( _cachedShowCursorCoordinates );
+
+        // Due to some quirks in mouse handling order, we may have to explicitly
+        // hide the associated cursor coordinates node.
+        // TODO: Review whether this is still necessary, after other fixes.
+        if ( !_cachedShowCursorCoordinates ) {
+            setVisible( false );
+        }
+    }
+    
+    @Override
+    public void updateTrackerLabel( final double displayX,
+                                    final double displayY,
+                                    final double localX,
+                                    final double localY ) {
+        // Do not continue unless cursor coordinate tracking is enabled.
+        if ( !isShowCursorCoordinates() ) {
+            setVisible( false );
+            return;
+        }
+        
+        super.updateTrackerLabel( displayX, displayY, localX, localY );
     }
     
     @Override
