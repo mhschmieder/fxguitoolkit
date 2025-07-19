@@ -1072,7 +1072,7 @@ public abstract class XStage extends Stage implements ForegroundManager,
      * Returns the background color for this window, or default if unsupported.
      * <p>
      * Derived classes should override this method to point to an associated
-     * {@link Action} if the window supports background color setting.
+     * {@code Action} if the window supports background color setting.
      * 
      * @return the background color for this window, or default if unsupported
      */
@@ -1101,7 +1101,7 @@ public abstract class XStage extends Stage implements ForegroundManager,
      * Selects the background color for this window, if applicable.
      * <p>
      * Derived classes should override this method to point to an associated
-     * {@link Action}, if the window supports background color setting.
+     * {code Action}, if the window supports background color setting.
      * 
      * @param backgroundColorName the Background Color to select.
      */

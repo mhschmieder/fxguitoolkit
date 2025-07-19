@@ -421,6 +421,8 @@ public class SceneGraphUtilities {
      * @param cssStyleClass
      *            The Style Class of the CSS attributes that customize the toggle
      *            button
+     * @param toggleGroup
+     *            The {@link ToggleGroup} to add the {@link ToggleButton} to
      * @return A labeled icon-only {@link ToggleButton} adhering to custom style 
      * guidelines
      */
