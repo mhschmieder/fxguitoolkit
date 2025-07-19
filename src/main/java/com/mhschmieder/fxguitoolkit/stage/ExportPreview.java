@@ -30,13 +30,10 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.io.File;
-import java.util.prefs.Preferences;
-
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.io.FileUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
+import com.mhschmieder.fxguitoolkit.action.BackgroundColorChoices;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -248,49 +245,11 @@ public abstract class ExportPreview extends XStage {
      * of domain-specific export actions, likely using FileActionHandler.
      */
     protected abstract boolean fileExport();
-
-    // Load all of the User Preferences for this Stage.
-    // TODO: Make a class with get/set methods for user preferences, a la
-    //  Listing 3.3 on p. 37 of "More Java Pitfalls" (Wiley), and including
-    //  static default values for better modularity.
+    
     @Override
-    public final void loadPreferences() {
-        // Get the user node for this package/class, so that we get the
-        // preferences specific to this stage and user.
-        final Preferences prefs = Preferences.userNodeForPackage( getClass() );
-
-        // Load the Default Directory from User Preferences.
-        final File defaultDirectory = FileUtilities.loadDefaultDirectoryPreferences( prefs );
-
-        // Forward the preferences data from the stored preferences to the
-        // common preferences handler.
-        updatePreferences( defaultDirectory );
-    }
-
-    // Save all of the User Preferences for this Stage.
-    // TODO: Make a class with get/set methods for User Preferences, a la
-    //  Listing 3.3 on p. 37 of "More Java Pitfalls" (Wiley).
-    @Override
-    public final void savePreferences() {
-        // Get the user node for this package/class, so that we get the
-        // preferences specific to this stage and user.
-        final Preferences prefs = Preferences.userNodeForPackage( getClass() );
-
-        // Save the Default Directory to User Preferences.
-        FileUtilities.saveDefaultDirectoryPreferences( _defaultDirectory, prefs );
-    }
-
-    // Update all of the user preferences for this stage.
-    // TODO: Make a preferences object instead, with get/set methods, which can
-    //  be set from HTML, XML, or stored user preferences?
-    private final void updatePreferences( final File defaultDirectory ) {
-        // Set the background color for most layout content.
-        // NOTE: This is mostly needed so that the CSS theme gets loaded and
-        //  its tags are available for custom button rendering.
-        setForegroundFromBackground( ColorConstants.WINDOW_BACKGROUND_COLOR );
-
-        // Reset the default directory for local file operations.
-        setDefaultDirectory( defaultDirectory );
+    public String getDefaultBackgroundColor() {
+        return BackgroundColorChoices.getBackgroundColorName(
+                ColorConstants.WINDOW_BACKGROUND_COLOR );
     }
 
     // Common open method for opening an textField in modal Insert Mode.

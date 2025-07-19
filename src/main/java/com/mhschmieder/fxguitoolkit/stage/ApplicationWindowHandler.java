@@ -47,9 +47,9 @@ public interface ApplicationWindowHandler {
     
     void saveAllPreferences();
     
-    void loadPreferences();
+    Preferences loadPreferences();
     
-    void savePreferences();
+    Preferences savePreferences();
     
     void restoreAllWindowLayouts( final Preferences prefs );
     

@@ -32,12 +32,16 @@ package com.mhschmieder.fxguitoolkit.stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import java.util.stream.Stream;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
@@ -119,6 +123,9 @@ public abstract class XStage extends Stage implements ForegroundManager,
 
     // Cache the window key prefix that is used for window layout preferences.
     private final String                                _windowKeyPrefix;
+
+    // Declare a project number for assigning unique default names on File->New.
+    private int projectNumber;
 
     // Declare a file object to hold the most recent directory used in a file
     // chooser.
@@ -837,9 +844,73 @@ public abstract class XStage extends Stage implements ForegroundManager,
         _numberParse.setMaximumFractionDigits( 10 );
         _percentParse.setMinimumFractionDigits( 0 );
         _percentParse.setMaximumFractionDigits( 10 );
+        
+        // NOTE: Start project number at zero as we pre-increment on calls
+        //  to getDefaultProjectFile().
+        projectNumber = 0;
 
         // By default, the MRU Cache is non-null and empty.
         _mruFilenameCache = new LinkedList<>();
+    }
+
+    /**
+     * Returns a project file with a unique name to avoid overwriting files.
+     *
+     * @return a project file with a unique name to avoid overwriting files
+     */
+    public File getDefaultProjectFile( final String defaultBaseFilename,
+                                       final String defaultFileSuffix ) {
+        // If the current default directory is null, switch to the current
+        // user directory as more likely to always be valid and non-null.
+        File defaultDirectory = getDefaultDirectory();
+        if ( defaultDirectory == null ) {
+            defaultDirectory = new File( System.getProperty( "user.dir" ) );
+        }
+        Path defaultDirectoryPath = null;
+
+        try {
+            // Check if the default directory exists and is writable. Otherwise,
+            // use the current user directory (if valid).
+            defaultDirectoryPath = defaultDirectory.toPath();
+            if ( !Files.isDirectory( defaultDirectoryPath )
+                    || !Files.isWritable( defaultDirectoryPath ) ) {
+                defaultDirectory = FileUtils.getUserDirectory();
+                defaultDirectoryPath = defaultDirectory.toPath();
+                if ( !Files.isDirectory( defaultDirectoryPath )
+                        || !Files.isWritable( defaultDirectoryPath ) ) {
+                    // As a last resort, use the system's temporary directory.
+                    defaultDirectory = FileUtils.getTempDirectory();
+                    defaultDirectoryPath = defaultDirectory.toPath();
+                }
+            }
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+        }
+
+        File defaultProjectFile = null;
+        boolean fileExists = true;
+        while ( fileExists ) {
+            projectNumber++;
+            final String defaultFilename = defaultBaseFilename
+                    + Integer.toString( projectNumber ) + defaultFileSuffix;
+            final File defaultFile = new File(
+                    defaultDirectory, defaultFilename );
+
+            try ( final Stream< Path > directoryEntries = Files.list(
+                    defaultDirectoryPath ) ) {
+                if ( !directoryEntries.anyMatch( directoryEntry ->
+                        directoryEntry.equals( defaultFile.toPath() ) ) ) {
+                    defaultProjectFile = defaultFile;
+                    fileExists = false;
+                }
+            }
+            catch ( final Exception e ) {
+                e.printStackTrace();
+            }
+        }
+
+        return defaultProjectFile;
     }
 
     public final boolean isFrameTitleManager() {
@@ -919,33 +990,119 @@ public abstract class XStage extends Stage implements ForegroundManager,
 
     // Load all the User Preferences for this Stage.
     // NOTE: Preferences are not applicable to all Stages, so this method is
-    //  not declared abstract and is instead given a default implementation that
-    //  at least loads the additional custom styles pertinent to the default
-    //  background being dark or light (currently it is light).
-    // TODO: Make a class with get/set methods for User Preferences, a la
-    //  Listing 3.3 on p. 37 of "More Java Pitfalls" (Wiley), and including
-    //  static default values for better modularity.
-    // TODO: Instead, follow the examples from Gralev, using an XML file for
-    //  default preferences, loading all from the top app node and then passing
-    //  along the hash set via Java's Properties class.
+    //  not declared abstract and is instead given a default implementation
+    //  that at least loads basic shared functionality such as window layout,
+    //  background color, default directory, and MRU filename cache.
+    // TODO: Make a preferences object instead, with get/set methods, which
+    //  can be set from CSV, XML, or stored User Preferences? See the example
+    //  in Listing 3.3 on p. 37 of "More Java Pitfalls" (Wiley), and include
+    //  static default values for better modularity, or follow the examples
+    //  from Gralev, using an XML file for default preferences, first loading 
+    //  all from the top app node then pass the hash set via Java Properties?
     @Override
-    public void loadPreferences() {
+    public Preferences loadPreferences() {
         // Get the user node for this package/class, so that we get the
         // preferences specific to this stage and the application's user.
         final Preferences prefs = Preferences.userNodeForPackage( getClass() );
 
         // First restore all the window layout details for the application.
         restoreAllWindowLayouts( prefs );
-        
-        // Load the Default Directory from User Preferences.
-        final File defaultDirectory = FileUtilities.loadDefaultDirectoryPreferences( prefs );
 
-        // Load the MRU Filename Cache from User Preferences.
+        // Load and set the background color for this window, if supported.
+        final String backgroundColor = prefs.get( 
+                "backgroundColor",
+                getDefaultBackgroundColor() );
+        setBackgroundColor( backgroundColor );
+       
+        // Reset the default directory for local file operations.
+        final File defaultDirectory = FileUtilities
+                .loadDefaultDirectoryPreferences( prefs );
+                setDefaultDirectory( defaultDirectory );
+
+        // Re-populate the MRU filename cache from the previous session.
         final String[] mruFilenames = FileUtilities.loadMruPreferences( prefs );
+        loadMruCache( mruFilenames );
 
-        updatePreferences( defaultDirectory, 
-                           mruFilenames );
+        return prefs;
     }
+
+    // Save all the User Preferences for this Stage.
+    // NOTE: Preferences are not applicable to all Stages, so this method is
+    //  not declared abstract and is instead given a default implementation
+    //  that at least saves basic shared functionality such as window layout,
+    //  background color, default directory, and MRU filename cache.
+    @Override
+    public Preferences savePreferences() {
+        // Get the user node for this package/class, so that we get the
+        // preferences specific to this stage and user.
+        final Preferences prefs = Preferences.userNodeForPackage( getClass() );
+
+        // First save all the window layout details for the application.
+        saveAllWindowLayouts( prefs );
+        
+        // Save the background color for this window.
+        final String backgroundColor = getBackgroundColor();
+        prefs.put( "backgroundColor", backgroundColor );
+
+        // Save the Default Directory to User Preferences.
+        FileUtilities.saveDefaultDirectoryPreferences( _defaultDirectory, prefs );
+
+        // Save the MRU Filename Cache to User Preferences.
+        FileUtilities.saveMruPreferences( _mruFilenameCache, prefs );
+        
+        return prefs;
+    }
+    
+    /**
+     * Returns the default background color for this window.
+     * <p>
+     * Derived classes should override this method if their preferred default
+     * background color is something other than the one set here.
+     * 
+     * @return the default background color for this window
+     */
+    public String getDefaultBackgroundColor() {
+        return BackgroundColorChoices.DEFAULT_BACKGROUND_COLOR_NAME;
+    }
+    
+    /**
+     * Returns the background color for this window, or default if unsupported.
+     * <p>
+     * Derived classes should override this method to point to an associated
+     * {@link Action} if the window supports background color setting.
+     * 
+     * @return the background color for this window, or default if unsupported
+     */
+    public String getBackgroundColor() {
+        return getDefaultBackgroundColor();
+    }
+   
+    /**
+     * Sets and selects the background color for this window, if applicable.
+     * 
+     * @param backgroundColorName the Background Color to set for this window.
+     */
+    public void setBackgroundColor( final String backgroundColorName ) {
+        // Set the background color for most layout content.
+        // NOTE: This is mostly needed so that the CSS theme gets loaded and
+        //  its tags are available for custom button rendering.
+        final Color backgroundColor = BackgroundColorChoices
+                .getBackgroundColor( backgroundColorName );
+        setForegroundFromBackground( backgroundColor );
+        
+        // Select the background color for this window, if applicable.
+        selectBackgroundColor( backgroundColorName );
+    }
+    
+    /**
+     * Selects the background color for this window, if applicable.
+     * <p>
+     * Derived classes should override this method to point to an associated
+     * {@link Action}, if the window supports background color setting.
+     * 
+     * @param backgroundColorName the Background Color to select.
+     */
+    public void selectBackgroundColor( final String backgroundColorName ) {}
 
     protected final Scene loadScene( final Parent parent,
                                      final double defaultWidth,
@@ -1101,25 +1258,6 @@ public abstract class XStage extends Stage implements ForegroundManager,
         adjustStageWithinBounds();
     }
 
-    // Save all the User Preferences for this Stage.
-    // NOTE: Preferences are not applicable to all Stages, so this method is
-    //  not declared abstract and is instead given a default implementation.
-    @Override
-    public void savePreferences() {
-        // Get the user node for this package/class, so that we get the
-        // preferences specific to this stage and user.
-        final Preferences prefs = Preferences.userNodeForPackage( getClass() );
-
-        // First save all the window layout details for the application.
-        saveAllWindowLayouts( prefs );
-        
-        // Save the Default Directory to User Preferences.
-        FileUtilities.saveDefaultDirectoryPreferences( _defaultDirectory, prefs );
-
-        // Save the MRU Filename Cache to User Preferences.
-        FileUtilities.saveMruPreferences( _mruFilenameCache, prefs );
-    }
-
     /**
      * This method saves the Window Layout Preferences for this window. It
      * starts by checking the current menu setting (if available), which is
@@ -1184,6 +1322,10 @@ public abstract class XStage extends Stage implements ForegroundManager,
 
         // Make sure the main Content Node is centered in all contexts.
         _root.setCenter( _content );
+    }
+
+    public File getDefaultDirectory() {
+        return _defaultDirectory;
     }
 
     // NOTE: Unlike most applications, we allow separate default directories
@@ -1441,18 +1583,6 @@ public abstract class XStage extends Stage implements ForegroundManager,
             // rootPane.putClientProperty( "Window.documentModified",
             // documentModified );
         }
-    }
-    
-    // Update all of the User Preferences for this Stage.
-    // TODO: Make a preferences object instead, with get/set methods, which can
-    //  be set from CSV, XML, or stored User Preferences?
-    private void updatePreferences( final File defaultDirectory,
-                                    final String[] mruFilenames ) {
-        // Reset the default directory for local file operations.
-        setDefaultDirectory( defaultDirectory );
-
-        // Re-populate the MRU filename cache from the previous session.
-        loadMruCache( mruFilenames );
     }
 
     // Unless more granularity is supported via the Export Options, it should
