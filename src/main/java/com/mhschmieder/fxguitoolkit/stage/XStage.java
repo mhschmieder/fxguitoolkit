@@ -1017,7 +1017,7 @@ public abstract class XStage extends Stage implements ForegroundManager,
         // Reset the default directory for local file operations.
         final File defaultDirectory = FileUtilities
                 .loadDefaultDirectoryPreferences( prefs );
-                setDefaultDirectory( defaultDirectory );
+        setDefaultDirectory( defaultDirectory );
 
         // Re-populate the MRU filename cache from the previous session.
         final String[] mruFilenames = FileUtilities.loadMruPreferences( prefs );
