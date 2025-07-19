@@ -856,6 +856,9 @@ public abstract class XStage extends Stage implements ForegroundManager,
     /**
      * Returns a project file with a unique name to avoid overwriting files.
      *
+     * @param defaultBaseFilename the default base filename to apply the
+     *                            running project number to, for uniqueness
+     * @param defaultFileSuffix the file suffix to append to the default name
      * @return a project file with a unique name to avoid overwriting files
      */
     public File getDefaultProjectFile( final String defaultBaseFilename,
