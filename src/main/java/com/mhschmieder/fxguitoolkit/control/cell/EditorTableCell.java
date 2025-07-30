@@ -152,44 +152,6 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
                 // NOTE: Nothing to do, as Text Input Controls commit edits and
                 //  then release focus when the TAB key is pressed, so the Focus
                 //  Lost handler is where value restrictions should be applied.
-                // NOTE: Nevertheless, as tables don't handle tab focus traversal
-                //  well on their own, we do have to take care of that part here.
-                /*
-                final TableColumn< RT, ? > nextColumn = getNextColumn( 
-                        !keyEvent.isShiftDown() );
-                if ( nextColumn != null ) {
-                    getTableView().getSelectionModel().selectRightCell();
-                }
-                */
-                //commitEdit( ( VT ) ( textField.getText() ) );
-                /*
-                Point newPosition = getNextCellPosition( !keyEvent.isShiftDown() );
-
-                if ( newPosition != null ) {
-                    getTableView().edit( newPosition.y,
-                            getTableView().getColumns().get( newPosition.x ) );
-                }
-                else {
-                    getTableView().edit( getTableRow().getIndex(),
-                            getTableColumn() );
-                }
-                */
-
-                //final TableColumn< RT, ? > nextColumn = getNextColumn( 
-                //        !keyEvent.isShiftDown() );
-                //if ( nextColumn != null ) {
-                //    getTableView().edit( getTableRow().getIndex(), nextColumn );
-                    /*
-                    getTableView().getFocusModel().focus( getTableRow().getIndex(), nextColumn );
-                    if ( keyEvent.isShiftDown() ) {
-                        getTableView().getSelectionModel().selectLeftCell();
-                    }
-                    else {
-                        getTableView().getSelectionModel().selectRightCell();
-                    }
-                    */
-                //}
-
                 break;
             // $CASES-OMITTED$
             default:
