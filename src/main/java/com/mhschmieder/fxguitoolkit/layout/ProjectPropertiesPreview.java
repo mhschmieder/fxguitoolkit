@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,11 +43,13 @@ import javafx.scene.layout.HBox;
 public final class ProjectPropertiesPreview extends GridPane {
 
     // Declare the basic UI components.
-    protected Label           _projectName;
-    protected Label           _projectVenue;
-    protected Label           _projectDesigner;
-    protected Label           _projectDate;
-    protected Label           _projectNotes;
+    // TODO: Match the revised names (and labels, with overrides) in the Editor.
+    protected Label projectName;
+    protected Label projectType;
+    protected Label projectVenue;
+    protected Label projectDesigner;
+    protected Label projectDate;
+    protected Label projectNotes;
 
     // Cache the current project properties.
     private ProjectProperties projectProperties;
@@ -61,11 +63,12 @@ public final class ProjectPropertiesPreview extends GridPane {
 
     private void bindProperties() {
         // Bind the text labels to their associated Project Properties.
-        _projectName.textProperty().bind( projectProperties.projectNameProperty() );
-        _projectVenue.textProperty().bind( projectProperties.venueProperty() );
-        _projectDesigner.textProperty().bind( projectProperties.designerProperty() );
-        _projectDate.textProperty().bind( projectProperties.dateProperty() );
-        _projectNotes.textProperty().bind( projectProperties.projectNotesProperty() );
+        projectName.textProperty().bind( projectProperties.projectNameProperty() );
+        projectType.textProperty().bind( projectProperties.projectTypeProperty() );
+        projectVenue.textProperty().bind( projectProperties.projectLocationProperty() );
+        projectDesigner.textProperty().bind( projectProperties.projectAuthorProperty() );
+        projectDate.textProperty().bind( projectProperties.projectDateProperty().asString() );
+        projectNotes.textProperty().bind( projectProperties.projectNotesProperty() );
     }
 
     private void initPane( final ClientProperties clientProperties,
@@ -75,32 +78,37 @@ public final class ProjectPropertiesPreview extends GridPane {
         setVgap( 6.0d );
         setPadding( new Insets( 0.0d, 4.0d, 0.0d, 4.0d ) );
 
-        _projectName = new Label();
-        final HBox projectNamePane = GuiUtilities.getPropertySheetLabelPane( "Project", //$NON-NLS-1$
-                                                                             _projectName );
+        projectName = new Label();
+        final HBox projectNamePane = GuiUtilities.getPropertySheetLabelPane( "Project",
+                                                                             projectName );
 
-        _projectVenue = new Label();
-        final HBox venuePane = GuiUtilities.getPropertySheetLabelPane( "Venue", //$NON-NLS-1$
-                                                                       _projectVenue );
+        projectType = new Label();
+        final HBox typePane = GuiUtilities.getPropertySheetLabelPane( "Type",
+                                                                       projectType );
 
-        _projectDesigner = new Label();
-        final HBox designerPane = GuiUtilities.getPropertySheetLabelPane( "Designer", //$NON-NLS-1$
-                                                                          _projectDesigner );
+        projectVenue = new Label();
+        final HBox venuePane = GuiUtilities.getPropertySheetLabelPane( "Venue",
+                                                                       projectVenue );
 
-        _projectDate = new Label();
-        final HBox datePane = GuiUtilities.getPropertySheetLabelPane( "Date", //$NON-NLS-1$
-                                                                      _projectDate );
+        projectDesigner = new Label();
+        final HBox designerPane = GuiUtilities.getPropertySheetLabelPane( "Designer",
+                                                                          projectDesigner );
 
-        _projectNotes = new Label();
-        final HBox notesPane = GuiUtilities.getPropertySheetLabelPane( "Project Notes: ", //$NON-NLS-1$
-                                                                       _projectNotes );
+        projectDate = new Label();
+        final HBox datePane = GuiUtilities.getPropertySheetLabelPane( "Date",
+                                                                      projectDate );
+
+        projectNotes = new Label();
+        final HBox notesPane = GuiUtilities.getPropertySheetLabelPane( "Project Notes: ",
+                                                                       projectNotes );
 
         add( projectNamePane, 0, 0 );
-        add( venuePane, 0, 1 );
-        add( designerPane, 0, 2 );
-        add( datePane, 0, 3 );
+        add( typePane, 0, 1 );
+        add( venuePane, 0, 2 );
+        add( designerPane, 0, 3 );
+        add( datePane, 0, 4 );
         if ( useProjectNotes ) {
-            add( notesPane, 0, 4 );
+            add( notesPane, 0, 5 );
         }
     }
 
@@ -113,5 +121,4 @@ public final class ProjectPropertiesPreview extends GridPane {
         // Bind the data model to the respective GUI components.
         bindProperties();
     }
-
 }

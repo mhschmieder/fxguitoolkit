@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ import javafx.scene.layout.Region;
 public final class ProjectPropertiesToolBar extends ToolBar {
 
     // Declare tool bar buttons for shortcuts, etc.
-    public Button _resetButton;
+    public Button resetButton;
 
     // Default constructor
     public ProjectPropertiesToolBar( final ClientProperties pClientProperties,
@@ -61,13 +61,14 @@ public final class ProjectPropertiesToolBar extends ToolBar {
     private void initToolBar( final ClientProperties pClientProperties,
                               final ProjectPropertiesActions projectPropertiesActions ) {
         // Make the nodes for the tool bar.
-        _resetButton = LabeledControlFactory
-                .getResetButton( pClientProperties, projectPropertiesActions._resetAction );
+        resetButton = LabeledControlFactory.getResetButton( 
+                pClientProperties, 
+                projectPropertiesActions.resetAction );
 
         final Region spacer = new Region();
         HBox.setHgrow( spacer, Priority.ALWAYS );
 
         // Add all the nodes to the tool bar.
-        getItems().addAll( spacer, _resetButton );
+        getItems().addAll( spacer, resetButton );
     }
 }

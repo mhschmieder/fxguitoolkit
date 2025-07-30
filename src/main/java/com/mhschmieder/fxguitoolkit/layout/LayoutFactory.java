@@ -287,8 +287,8 @@ public final class LayoutFactory {
      */
     public static GridPane makeGridPane( final Pos alignment,
                                          final Insets padding,
-                                         final int hgap,
-                                         final int vgap ) {
+                                         final double hgap,
+                                         final double vgap ) {
         final GridPane gridPane = new GridPane();
 
         gridPane.setAlignment( alignment );

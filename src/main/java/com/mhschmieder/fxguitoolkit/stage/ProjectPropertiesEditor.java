@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
+import java.util.Locale;
+
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.action.ProjectPropertiesActions;
@@ -42,125 +44,186 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.paint.Color;
 
 public final class ProjectPropertiesEditor extends XStage {
 
-    public static final String      PROJECT_PROPERTIES_EDITOR_TITLE_DEFAULT  = "Project Properties"; //$NON-NLS-1$
-
     // Default window locations and dimensions.
-    private static final int        PROJECT_PROPERTIES_EDITOR_WIDTH_DEFAULT  = 540;
-    private static final int        PROJECT_PROPERTIES_EDITOR_HEIGHT_DEFAULT = 380;
+    private static final double PROJECT_PROPERTIES_EDITOR_WIDTH_DEFAULT = 480.0d;
+    private static final double  PROJECT_PROPERTIES_EDITOR_HEIGHT_DEFAULT = 320.0d;
+
+    // Cache the Project Category for reference during label creation.
+    protected String projectCategory;
 
     // Declare the actions.
-    public ProjectPropertiesActions _actions;
+    public ProjectPropertiesActions actions;
 
     // Declare the main tool bar.
-    public ProjectPropertiesToolBar _toolBar;
+    public ProjectPropertiesToolBar toolBar;
 
     // Declare the main content pane.
-    public ProjectPropertiesPane    _projectPropertiesPane;
+    public ProjectPropertiesPane projectPropertiesPane;
 
-    @SuppressWarnings("nls")
-    public ProjectPropertiesEditor( final ProductBranding productBranding,
+    public ProjectPropertiesEditor( final ProductBranding pProductBranding,
+                                    final String pProjectCategory,
                                     final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super( PROJECT_PROPERTIES_EDITOR_TITLE_DEFAULT,
-               "projectProperties",
+        // NOTE: The window key prefix is bumped whenever default size changes.
+        super( pProjectCategory + " Properties",
+               pProjectCategory.toLowerCase( Locale.US ) + "Properties",
                true,
                true,
-               productBranding,
+               pProductBranding,
                pClientProperties );
 
+        projectCategory = pProjectCategory;
+
         try {
-            initStage();
+            initStage( true );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
         }
     }
 
+    protected void initStage( final boolean resizable ) {
+        // First have the superclass initialize its content.
+        initStage( "/icons/everaldo/PackageEditors16.png",
+                   PROJECT_PROPERTIES_EDITOR_WIDTH_DEFAULT,
+                   PROJECT_PROPERTIES_EDITOR_HEIGHT_DEFAULT,
+                   resizable );
+    }
+
     // Add all of the relevant action handlers.
     @Override
     protected void addActionHandlers() {
         // Load the action handler for the "Reset" action.
-        _actions._resetAction.setEventHandler( evt -> doReset() );
+        actions.resetAction.setEventHandler( evt -> doReset() );
     }
 
     // Add the Tool Bar's event listeners.
     // TODO: Use appropriate methodology to add an action linked to both
-    // the toolbar buttons and their associated menu items, so that when one
-    // is disabled the other is as well. Is this already true of what we do?
+    //  the toolbar buttons and their associated menu items, so that when one
+    //  is disabled the other is as well. Is this already true of what we do?
     @Override
     protected void addToolBarListeners() {
         // Detect the ENTER key while the Reset Button has focus, and use it to
         // trigger its action (standard expected behavior).
-        _toolBar._resetButton.setOnKeyReleased( keyEvent -> {
+        toolBar.resetButton.setOnKeyReleased( keyEvent -> {
             final KeyCombination keyCombo = new KeyCodeCombination( KeyCode.ENTER );
             if ( keyCombo.match( keyEvent ) ) {
                 // Trigger the Reset action.
                 doReset();
 
-                // Consume the ENTER key so it doesn't get processed
-                // twice.
+                // Consume the ENTER key so it doesn't get processed twice.
                 keyEvent.consume();
             }
         } );
-    }
-
-    protected void doReset() {
-        reset();
-    }
-
-    @SuppressWarnings("nls")
-    protected void initStage() {
-        // First have the superclass initialize its content.
-        initStage( "/icons/everaldo/PackageEditors16.png",
-                   PROJECT_PROPERTIES_EDITOR_WIDTH_DEFAULT,
-                   PROJECT_PROPERTIES_EDITOR_HEIGHT_DEFAULT,
-                   false );
     }
 
     // Load the relevant actions for this Stage.
     @Override
     protected void loadActions() {
         // Make all of the actions.
-        _actions = new ProjectPropertiesActions( clientProperties );
-    }
-
-    @Override
-    protected Node loadContent() {
-        // Instantiate and return the custom Content Node.
-        _projectPropertiesPane = new ProjectPropertiesPane( clientProperties );
-        return _projectPropertiesPane;
+        actions = new ProjectPropertiesActions( 
+                projectCategory, 
+                clientProperties );
     }
 
     // Add the Tool Bar for this Stage.
     @Override
     public ToolBar loadToolBar() {
         // Build the Tool Bar for this Stage.
-        _toolBar = new ProjectPropertiesToolBar( clientProperties, _actions );
+        toolBar = new ProjectPropertiesToolBar( clientProperties, actions );
 
         // Return the Tool Bar so the superclass can use it.
-        return _toolBar;
+        return toolBar;
+    }
+
+    @Override
+    protected Node loadContent() {
+        // Instantiate and return the custom Content Node.
+        projectPropertiesPane = new ProjectPropertiesPane(
+                projectCategory,
+                clientProperties );
+        return projectPropertiesPane;
+    }
+
+    @Override
+    public void setForegroundFromBackground( final Color backColor ) {
+        // Take care of general styling first, as that also loads shared
+        // variables.
+        super.setForegroundFromBackground( backColor );
+
+        // Forward this method to the Project Properties Pane.
+        projectPropertiesPane.setForegroundFromBackground( backColor );
+    }
+
+    /**
+     * Sets a custom text string for the Project Type Label.
+     * <p>
+     * For example, in some application domains, the terminology is "Scenario".
+     *
+     * @param pProjectTypeLabel the custom text to use for Project Type
+     */
+    public final void setProjectTypeLabel(
+            final String pProjectTypeLabel ) {
+        // Forward this method to the Project Properties Pane.
+        projectPropertiesPane.setProjectTypeLabel( pProjectTypeLabel );
+    }
+
+    /**
+     * Sets a custom text string for the Project Location Label.
+     * <p>
+     * For example, in some application domains, the terminology is "Venue".
+     *
+     * @param pProjectLocationLabel the custom text to use for Project Location
+     */
+    public final void setProjectLocationLabel(
+            final String pProjectLocationLabel ) {
+        // Forward this method to the Project Properties Pane.
+        projectPropertiesPane.setProjectLocationLabel( pProjectLocationLabel );
+    }
+
+    /**
+     * Sets a custom text string for the Project Author Label.
+     * <p>
+     * For example, in some application domains, the terminology is "Designer".
+     *
+     * @param pProjectAuthorLabel the custom text to use for Project Author
+     */
+    public final void setProjectAuthorLabel(
+            final String pProjectAuthorLabel ) {
+        // Forward this method to the Project Properties Pane.
+        projectPropertiesPane.setProjectAuthorLabel( pProjectAuthorLabel );
+    }
+
+    public final ProjectProperties getProjectProperties() {
+        // Forward this method to the Project Properties Pane.
+        return projectPropertiesPane.getProjectProperties();
+    }
+
+    protected void doReset() {
+        reset();
     }
 
     // Reset all fields to the default values, regardless of state.
     @Override
     protected void reset() {
         // Forward this method to the Project Properties Pane.
-        _projectPropertiesPane.reset();
+        projectPropertiesPane.reset();
     }
 
     // Set and propagate the Project Properties reference.
     // NOTE: This should be done only once, to avoid breaking bindings.
     public void setProjectProperties( final ProjectProperties pProjectProperties ) {
         // Forward this reference to the Project Properties Pane.
-        _projectPropertiesPane.setProjectProperties( pProjectProperties );
+        projectPropertiesPane.setProjectProperties( pProjectProperties );
     }
 
     @Override
     public void updateView() {
         // Forward this reference to the Project Properties Pane.
-        _projectPropertiesPane.updateView();
+        projectPropertiesPane.updateView();
     }
 }

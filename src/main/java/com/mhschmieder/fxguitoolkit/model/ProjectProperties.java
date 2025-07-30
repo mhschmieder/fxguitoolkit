@@ -30,54 +30,68 @@
  */
 package com.mhschmieder.fxguitoolkit.model;
 
+import java.time.LocalDate;
+
 import com.mhschmieder.fxgraphicstoolkit.beans.BeanFactory;
 
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public final class ProjectProperties {
+/**
+ * Observable data model for GUI elements associated with Project Properties.
+ */
+public class ProjectProperties {
 
     // Declare default constants, where appropriate, for all fields.
-    private static final String  PROJECT_NAME_DEFAULT  = ""; //$NON-NLS-1$
-    private static final String  VENUE_DEFAULT         = ""; //$NON-NLS-1$
-    private static final String  DESIGNER_DEFAULT      = ""; //$NON-NLS-1$
-    private static final String  DATE_DEFAULT          = ""; //$NON-NLS-1$
-    private static final String  PROJECT_NOTES_DEFAULT = ""; //$NON-NLS-1$
+    private static final String  DEFAULT_PROJECT_NAME = "";
+    private static final String  DEFAULT_PROJECT_TYPE = "";
+    private static final String  DEFAULT_PROJECT_LOCATION = "";
+    private static final String  DEFAULT_PROJECT_AUTHOR = "";
+    private static final LocalDate  DEFAULT_PROJECT_DATE = LocalDate.now();
+    private static final String  DEFAULT_PROJECT_NOTES = "";
 
     private final StringProperty projectName;
-    private final StringProperty venue;
-    private final StringProperty designer;
-    private final StringProperty date;
+    private final StringProperty projectType;
+    private final StringProperty projectLocation;
+    private final StringProperty projectAuthor;
+    private final ObjectProperty< LocalDate > projectDate;
     private final StringProperty projectNotes;
 
     // NOTE: This field has to follow JavaFX Property Beans conventions.
-    private BooleanBinding        projectPropertiesChanged;
+    private final BooleanBinding projectPropertiesChanged;
 
     /**
+     * Makes a {@code ProjectProperties} instance using default values.
+     * <p>
      * This is the default constructor; it sets all instance variables to
      * default values, initializing anything that requires memory allocation.
      */
     public ProjectProperties() {
-        this( PROJECT_NAME_DEFAULT,
-              VENUE_DEFAULT,
-              DESIGNER_DEFAULT,
-              DATE_DEFAULT,
-              PROJECT_NOTES_DEFAULT );
+        this( DEFAULT_PROJECT_NAME,
+              DEFAULT_PROJECT_TYPE,
+              DEFAULT_PROJECT_LOCATION,
+              DEFAULT_PROJECT_AUTHOR,
+              DEFAULT_PROJECT_DATE,
+              DEFAULT_PROJECT_NOTES );
     }
 
     /*
      * This is the fully qualified constructor. 
      */
     public ProjectProperties( final String pProjectName,
-                              final String pVenue,
-                              final String pDesigner,
-                              final String pDate,
+                              final String pProjectType,
+                              final String pProjectLocation,
+                              final String pProjectAuthor,
+                              final LocalDate pProjectDate,
                               final String pProjectNotes ) {
         projectName = new SimpleStringProperty( pProjectName );
-        venue = new SimpleStringProperty( pVenue );
-        designer = new SimpleStringProperty( pDesigner );
-        date = new SimpleStringProperty( pDate );
+        projectType = new SimpleStringProperty( pProjectType );
+        projectLocation = new SimpleStringProperty( pProjectLocation );
+        projectAuthor = new SimpleStringProperty( pProjectAuthor );
+        projectDate = new SimpleObjectProperty<>( pProjectDate );
         projectNotes = new SimpleStringProperty( pProjectNotes );
 
         // Bind all of the properties to the associated dirty flag.
@@ -85,13 +99,16 @@ public final class ProjectProperties {
         //  singleton objects and just update their values vs. reconstructing.
         projectPropertiesChanged = BeanFactory.makeBooleanBinding(
                projectNameProperty(),
-               venueProperty(),
-               designerProperty(),
-               dateProperty(),
+               projectTypeProperty(),
+               projectLocationProperty(),
+               projectAuthorProperty(),
+               projectDateProperty(),
                projectNotesProperty());
     }
 
     /**
+     * Makes a copy of the referenced {@code projectProperties} object.
+     * <p>
      * This is the copy constructor, and is offered in place of clone() to
      * guarantee that the source object is never modified by the new target
      * object created here.
@@ -101,43 +118,48 @@ public final class ProjectProperties {
      */
     public ProjectProperties( final ProjectProperties pProjectProperties ) {
         this( pProjectProperties.getProjectName(),
-              pProjectProperties.getVenue(),
-              pProjectProperties.getDesigner(),
-              pProjectProperties.getDate(),
+              pProjectProperties.getProjectType(),
+              pProjectProperties.getProjectLocation(),
+              pProjectProperties.getProjectAuthor(),
+              pProjectProperties.getProjectDate(),
               pProjectProperties.getProjectNotes() );
     }
 
     // NOTE: Cloning is disabled as it is dangerous; use the copy constructor
-    // instead.
+    //  instead.
     @Override
     protected Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
     }
 
-
-    /** 
-     * Default pseudo-constructor. 
+    /**
+     * Resets all fields to their default values, which are blank.
+     * 
+     * Serves as a default pseudo-constructor. 
      */
     public void reset() {
-        setProjectProperties( PROJECT_NAME_DEFAULT,
-                              VENUE_DEFAULT,
-                              DESIGNER_DEFAULT,
-                              DATE_DEFAULT,
-                              PROJECT_NOTES_DEFAULT );
+        setProjectProperties( DEFAULT_PROJECT_NAME,
+                              DEFAULT_PROJECT_TYPE,
+                              DEFAULT_PROJECT_LOCATION,
+                              DEFAULT_PROJECT_AUTHOR,
+                              DEFAULT_PROJECT_DATE,
+                              DEFAULT_PROJECT_NOTES );
     }
 
     /*
      * Fully qualified pseudo-constructor. 
      */
     public void setProjectProperties( final String pProjectName,
-                                      final String pVenue,
-                                      final String pDesigner,
-                                      final String pDate,
+                                      final String pProjectType,
+                                      final String pProjectLocation,
+                                      final String pProjectAuthor,
+                                      final LocalDate pProjectDate,
                                       final String pProjectNotes ) {
         setProjectName( pProjectName );
-        setVenue( pVenue );
-        setDesigner( pDesigner );
-        setDate( pDate );
+        setProjectType( pProjectType );
+        setProjectLocation( pProjectLocation );
+        setProjectAuthor( pProjectAuthor );
+        setProjectDate( pProjectDate );
 
         if ( pProjectNotes != null ) {
             setProjectNotes( pProjectNotes );
@@ -145,16 +167,19 @@ public final class ProjectProperties {
     }
 
     /**
-     * Copy pseudo-constructor. 
+     * Sets all fields to match the values in the referenced instance.
+     * <p>
+     * This serves as a copy pseudo-constructor. 
      *
      * @param pProjectProperties
      *            The Project Properties reference for the copy
      */
     public void setProjectProperties( final ProjectProperties pProjectProperties ) {
         setProjectProperties( pProjectProperties.getProjectName(),
-                              pProjectProperties.getVenue(),
-                              pProjectProperties.getDesigner(),
-                              pProjectProperties.getDate(),
+                              pProjectProperties.getProjectType(),
+                              pProjectProperties.getProjectLocation(),
+                              pProjectProperties.getProjectAuthor(),
+                              pProjectProperties.getProjectDate(),
                               pProjectProperties.getProjectNotes() );
     }
 
@@ -170,40 +195,52 @@ public final class ProjectProperties {
         projectName.set( pProjectName );
     }
 
-    public StringProperty designerProperty() {
-        return designer;
+    public StringProperty projectTypeProperty() {
+        return projectType;
     }
 
-    public String getDesigner() {
-        return designer.get();
+    public String getProjectType() {
+        return projectType.get();
     }
 
-    public void setDesigner( final String pDesigner ) {
-        designer.set( pDesigner );
+    public void setProjectType( final String pProjectType ) {
+        projectType.set( pProjectType );
     }
 
-    public StringProperty venueProperty() {
-        return venue;
+    public StringProperty projectLocationProperty() {
+        return projectLocation;
     }
 
-    public String getVenue() {
-        return venue.get();
+    public String getProjectLocation() {
+        return projectLocation.get();
     }
 
-    public void setVenue( final String pVenue ) {
-        venue.set( pVenue );
+    public void setProjectLocation( final String pProjectLocation ) {
+        projectLocation.set( pProjectLocation );
     }
 
-    public StringProperty dateProperty() {
-        return date;
+    public StringProperty projectAuthorProperty() {
+        return projectAuthor;
     }
 
-    public String getDate() {
-        return date.get();
+    public String getProjectAuthor() {
+        return projectAuthor.get();
     }
 
-    public void setDate( final String pDate ) {
-        date.set( pDate );
+    public void setProjectAuthor( final String pProjectAuthor ) {
+        projectAuthor.set( pProjectAuthor );
+    }
+
+    public ObjectProperty< LocalDate > projectDateProperty() {
+        return projectDate;
+    }
+
+    public LocalDate getProjectDate() {
+        return projectDate.get();
+    }
+
+    public void setProjectDate( final LocalDate pProjectDate ) {
+        projectDate.set( pProjectDate );
     }
 
     public StringProperty projectNotesProperty() {

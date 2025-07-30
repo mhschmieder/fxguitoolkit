@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,19 +42,22 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
  */
 public final class ProjectPropertiesActions {
 
-    public XAction _resetAction;
+    public XAction resetAction;
 
-    public ProjectPropertiesActions( final ClientProperties pClientProperties ) {
-        _resetAction = LabeledActionFactory.getResetAction( pClientProperties );
+    public ProjectPropertiesActions( final String pProjectCategory,
+                                     final ClientProperties pClientProperties ) {
+        resetAction = LabeledActionFactory.getResetAction( pClientProperties );
 
         // The tool tip for "Reset" is unique per context so isn't in the
         // locale-sensitive resources for the generic action lookup.
-        _resetAction.setLongText( "Reset Project Properties to Blank Fields" ); //$NON-NLS-1$
+        final String tooltipText 
+                = "Reset " + pProjectCategory + " Properties to Blank Fields";
+        resetAction.setLongText( tooltipText );
     }
 
     public Collection< Action > getProjectPropertiesActionCollection() {
-        final Collection< Action > projectPropertiesActionCollection =
-                                                                     Arrays.asList( _resetAction );
+        final Collection< Action > projectPropertiesActionCollection 
+                = Arrays.asList( resetAction );
 
         return projectPropertiesActionCollection;
     }
