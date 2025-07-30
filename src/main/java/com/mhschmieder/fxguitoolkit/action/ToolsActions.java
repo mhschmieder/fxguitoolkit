@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.controlsfx.control.action.Action;
+import org.controlsfx.control.action.ActionUtils;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
@@ -44,30 +45,26 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
  */
 public class ToolsActions {
 
-    public XAction _predictAction;
-    public XAction _clearAction;
+    public XAction projectReportAction;
+    public XAction csvViewerAction;
 
     public ToolsActions( final ClientProperties pClientProperties ) {
-        _predictAction = com.mhschmieder.fxguitoolkit.action.LabeledActionFactory.getPredictAction( pClientProperties );
-        _clearAction = com.mhschmieder.fxguitoolkit.action.LabeledActionFactory.getClearAction( pClientProperties );
+        projectReportAction = LabeledActionFactory.getProjectReportAction( 
+                pClientProperties );
+        csvViewerAction = LabeledActionFactory.getCsvViewerAction( 
+                pClientProperties );
     }
 
     // NOTE: This method is not final, so that it can be derived for
-    // additions.
-    public Collection< Action > getToolsActionCollection( final ClientProperties pClientProperties ) {
+    //  additions.
+    public Collection< Action > getToolsActionCollection( 
+            final ClientProperties pClientProperties ) {
         final Collection< Action > toolsActionCollection = new ArrayList<>();
 
-        toolsActionCollection.add( _predictAction );
-        toolsActionCollection.add( _clearAction );
-
-        // Disable the Predict action until there is valid criteria.
-        _predictAction.setDisabled( true );
-
-        // Disable the Clear action until there is a valid prediction response
-        // from the server.
-        _clearAction.setDisabled( true );
+        toolsActionCollection.add( projectReportAction );
+        toolsActionCollection.add( ActionUtils.ACTION_SEPARATOR );
+        toolsActionCollection.add( csvViewerAction );
 
         return toolsActionCollection;
     }
-
 }

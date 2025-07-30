@@ -28,42 +28,46 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxguitoolkit.control;
+package com.mhschmieder.fxguitoolkit.action;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.controlsfx.control.action.Action;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.fxguitoolkit.action.SimulationActions;
 
-import javafx.scene.control.Button;
+/**
+ * This is a struct-like container for common Tools actions.
+ * <p>
+ * NOTE: This class is not final, so that it can be derived for additions.
+ */
+public class SimulationActions {
 
-public class PredictButtons {
+    public XAction predictAction;
+    public XAction clearAction;
 
-    // Declare all of the prediction related action buttons.
-    public Button predictButton;
-    public Button clearButton;
+    public SimulationActions( final ClientProperties pClientProperties ) {
+        predictAction = LabeledActionFactory.getPredictAction( pClientProperties );
+        clearAction = LabeledActionFactory.getClearAction( pClientProperties );
+    }
 
-    // Cache the Client properties for Locale, etc.
-    protected ClientProperties clientProperties;
+    // NOTE: This method is not final, so that it can be derived for
+    //  additions.
+    public Collection< Action > getSimulationActionCollection( 
+            final ClientProperties pClientProperties ) {
+        final Collection< Action > simulationActionCollection = new ArrayList<>();
 
-    // Default constructor
-    public PredictButtons( final ClientProperties pClientProperties,
-                           final SimulationActions simulationActions ) {
-        clientProperties = pClientProperties;
+        simulationActionCollection.add( predictAction );
+        simulationActionCollection.add( clearAction );
 
-        if ( simulationActions != null ) {
-            // Make the Action Buttons.
-            predictButton = LabeledControlFactory
-                    .getPredictButton( clientProperties, 
-                                       simulationActions.predictAction );
-            clearButton = LabeledControlFactory
-                    .getClearButton( clientProperties, 
-                                     simulationActions.clearAction );
-        }
-        else {
-            // Make the Action Buttons.
-            predictButton = LabeledControlFactory
-                    .getPredictButton( clientProperties );
-            clearButton = LabeledControlFactory
-                    .getClearButton( clientProperties );
-        }
+        // Disable the Predict action until there is valid criteria.
+        predictAction.setDisabled( true );
+
+        // Disable the Clear action until there is a valid prediction response
+        // from the server.
+        clearAction.setDisabled( true );
+
+        return simulationActionCollection;
     }
 }

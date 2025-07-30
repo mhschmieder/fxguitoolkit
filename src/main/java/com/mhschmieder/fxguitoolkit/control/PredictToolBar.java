@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,23 +31,23 @@
 package com.mhschmieder.fxguitoolkit.control;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.fxguitoolkit.action.ToolsActions;
+import com.mhschmieder.fxguitoolkit.action.SimulationActions;
 
 import javafx.scene.control.ToolBar;
 
 public class PredictToolBar extends ToolBar {
 
     // Declare tool bar buttons for shortcuts, etc.
-    public PredictButtons _predictButtons;
+    public PredictButtons predictButtons;
 
     // Default constructor
     public PredictToolBar( final ClientProperties pClientProperties,
-                           final ToolsActions toolsActions ) {
+                           final SimulationActions simulationActions ) {
         // Always call the superclass constructor first!
         super();
 
         try {
-            initToolBar( pClientProperties, toolsActions );
+            initToolBar( pClientProperties, simulationActions );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -56,11 +56,13 @@ public class PredictToolBar extends ToolBar {
 
     // Initialize the JavaFX components in this GUI sub-hierarchy.
     private final void initToolBar( final ClientProperties pClientProperties,
-                                    final ToolsActions toolsActions ) {
+                                    final SimulationActions simulationActions ) {
         // Make the JavaFX Nodes for the Tool Bar.
-        _predictButtons = new PredictButtons( pClientProperties, toolsActions );
+        predictButtons = new PredictButtons( pClientProperties, 
+                                             simulationActions );
 
         // Add all the Nodes to the Tool Bar.
-        getItems().addAll( _predictButtons._predictButton, _predictButtons._clearButton );
+        getItems().addAll( predictButtons.predictButton, 
+                           predictButtons.clearButton );
     }
 }

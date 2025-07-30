@@ -1002,6 +1002,23 @@ public class LabeledActionFactory {
     }
 
     @SuppressWarnings("nls")
+    public static XActionGroup getSimulationActionGroup( 
+            final ClientProperties pClientProperties,
+            final SimulationActions simulationActions ) {
+        final Collection< Action > simulationActionCollection = simulationActions
+                .getSimulationActionCollection( pClientProperties );
+
+        final XActionGroup simulationActionGroup = ActionFactory
+                .makeActionGroup( pClientProperties,
+                                  simulationActionCollection,
+                                  BUNDLE_NAME,
+                                  "simulation",
+                                  null );
+
+        return simulationActionGroup;
+    }
+
+    @SuppressWarnings("nls")
     public static XAction getTestClearPreferencesAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
                                          BUNDLE_NAME,
