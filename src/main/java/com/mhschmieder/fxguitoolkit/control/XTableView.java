@@ -128,16 +128,26 @@ public class XTableView< TD > extends TableView< TD > {
             }
         } );
         
-        /*
+        // Final status of experiment in handling TAB and ENTER for traversing the
+        // table cells. Although this code mostly works, it breaks other aspects of
+        // those keys, and we have to use weird combinations of clearing selections
+        // and consuming the key event, yet the end result is that ENTER goes up and
+        // down rows but only goes into edit mode once on the last row. If in edit
+        // mode, with or without committing changes, neither key traverses usefully.
         setOnKeyPressed( keyEvent -> {
+            // Cache the previous selection, in case of multi-mode.
+            final int selectedIndex = getSelectionModel().getSelectedIndex();
+        
             switch ( keyEvent.getCode() ) {
-                case ESCAPE:
+                case ENTER:
                     if ( keyEvent.isShiftDown() ) {
-                        getFocusModel().focusAboveCell();
+                        getSelectionModel().selectAboveCell();
                     }
                     else {
-                        getFocusModel().focusBelowCell();
+                        getSelectionModel().selectBelowCell();
                     }
+                    
+                    getSelectionModel().clearSelection( selectedIndex );
 
                     keyEvent.consume();
                    
@@ -145,12 +155,15 @@ public class XTableView< TD > extends TableView< TD > {
                     
                 case TAB:
                     if ( keyEvent.isShiftDown() ) {
-                        getFocusModel().focusLeftCell();
+                        getSelectionModel().selectLeftCell();
                     }
                     else {
-                        getFocusModel().focusRightCell();
+                        getSelectionModel().selectRightCell();
                     }
                     
+                    getSelectionModel().clearSelection( selectedIndex );
+
+                    /*
                     // Cache the previous selection, in case of multi-mode.
                     final int selectedIndex = getSelectionModel().getSelectedIndex();
                     
@@ -162,8 +175,9 @@ public class XTableView< TD > extends TableView< TD > {
 
                     // Remove the previous selection, in case of multi-mode.
                     getSelectionModel().clearSelection( selectedIndex );
+                    */
 
-                    keyEvent.consume();
+                    //keyEvent.consume();
                     
                     break;
 
@@ -171,7 +185,6 @@ public class XTableView< TD > extends TableView< TD > {
                     break;
             }
         } );
-        */
     }
 
     ////////////////// Accessor methods for private data /////////////////////
