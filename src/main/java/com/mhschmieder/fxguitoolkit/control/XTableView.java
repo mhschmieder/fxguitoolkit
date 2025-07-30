@@ -116,7 +116,8 @@ public class XTableView< TD > extends TableView< TD > {
         // used until the default placeholder label is replaced by a table.
         // There does not appear to be another way to override the default.
         final Pane placeholder = new Pane();
-        final Background background = LayoutFactory.makeRegionBackground( Color.WHITE );
+        final Background background = LayoutFactory.makeRegionBackground( 
+                Color.WHITE );
         placeholder.setBackground( background );
         setPlaceholder( placeholder );
 
@@ -126,6 +127,51 @@ public class XTableView< TD > extends TableView< TD > {
                 getSortOrder().remove( 1 );
             }
         } );
+        
+        /*
+        setOnKeyPressed( keyEvent -> {
+            switch ( keyEvent.getCode() ) {
+                case ESCAPE:
+                    if ( keyEvent.isShiftDown() ) {
+                        getFocusModel().focusAboveCell();
+                    }
+                    else {
+                        getFocusModel().focusBelowCell();
+                    }
+
+                    keyEvent.consume();
+                   
+                    break;
+                    
+                case TAB:
+                    if ( keyEvent.isShiftDown() ) {
+                        getFocusModel().focusLeftCell();
+                    }
+                    else {
+                        getFocusModel().focusRightCell();
+                    }
+                    
+                    // Cache the previous selection, in case of multi-mode.
+                    final int selectedIndex = getSelectionModel().getSelectedIndex();
+                    
+                    if ( keyEvent.isShiftDown() ) {
+                        getSelectionModel().selectPrevious();
+                    } else {
+                        getSelectionModel().selectNext();
+                    }
+
+                    // Remove the previous selection, in case of multi-mode.
+                    getSelectionModel().clearSelection( selectedIndex );
+
+                    keyEvent.consume();
+                    
+                    break;
+
+                default:
+                    break;
+            }
+        } );
+        */
     }
 
     ////////////////// Accessor methods for private data /////////////////////
@@ -413,5 +459,4 @@ public class XTableView< TD > extends TableView< TD > {
         final Background background = LayoutFactory.makeRegionBackground( backColor );
         setBackground( background );
     }
-
 }

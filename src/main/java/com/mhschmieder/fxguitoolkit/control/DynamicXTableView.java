@@ -106,7 +106,8 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
                                            final int maximumLastRowIndex ) {
         // If the index is out of bounds, or the table size has already reached
         // the maximum number of rows allowed, ignore the insertion request.
-        return ( ( insertIndex >= minimumInsertIndex ) && ( insertIndex <= maximumInsertIndex )
+        return ( ( insertIndex >= minimumInsertIndex ) 
+                && ( insertIndex <= maximumInsertIndex )
                 && ( maximumInsertIndex >= minimumInsertIndex )
                 && ( maximumInsertIndex <= maximumLastRowIndex ) );
     }
@@ -193,7 +194,8 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
                                            final int minimumLastRowIndex ) {
         // If the index is out of bounds, or the table size has already reached
         // the minimum number of rows required, ignore the deletion request.
-        return ( ( deleteIndex >= minimumDeleteIndex ) && ( deleteIndex <= maximumDeleteIndex )
+        return ( ( deleteIndex >= minimumDeleteIndex ) 
+                && ( deleteIndex <= maximumDeleteIndex )
                 && ( maximumDeleteIndex >= minimumDeleteIndex )
                 && ( maximumDeleteIndex > minimumLastRowIndex ) );
     }
@@ -315,7 +317,9 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
         final int minimumLastRowIndex = -1;
 
         // Delete the selected table row(s).
-        final int referenceIndex = deleteTableRows( minimumDeleteIndex, minimumLastRowIndex );
+        final int referenceIndex = deleteTableRows( 
+                minimumDeleteIndex, 
+                minimumLastRowIndex );
 
         return referenceIndex;
     }
@@ -425,5 +429,4 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
         // re-highlight the most appropriate default row for the next action.
         return deleteIndex;
     }
-
 }
