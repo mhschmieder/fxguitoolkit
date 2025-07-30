@@ -30,6 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control.cell;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,12 +44,12 @@ import javafx.scene.input.KeyCode;
 public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
 
     // This is a custom cell so we declare our own Text Field to handle it.
-    protected TextField       textField;
+    protected TextField textField;
 
     protected List< Integer > uneditableRows;
 
     // Flag to note whether blank text is allowed or not.
-    protected boolean         blankTextAllowed;
+    protected boolean blankTextAllowed;
     
     // Cache the Client Properties as they may be needed after initialization.
     protected ClientProperties clientProperties;
@@ -73,7 +74,6 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
     // NOTE: This is primarily invoked dynamically from the startEdit()
     //  method so that we can guarantee we capture focus events that should
     //  commit edits (e.g. mouse movement, TAB key, and ENTER key).
-    @SuppressWarnings("nls")
     protected void initTextField() {
         textField.setMinWidth( getWidth() - ( getGraphicTextGap() * 2.0d ) );
 
@@ -154,11 +154,42 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
                 //  Lost handler is where value restrictions should be applied.
                 // NOTE: Nevertheless, as tables don't handle tab focus traversal
                 //  well on their own, we do have to take care of that part here.
+                /*
                 final TableColumn< RT, ? > nextColumn = getNextColumn( 
                         !keyEvent.isShiftDown() );
                 if ( nextColumn != null ) {
                     getTableView().getSelectionModel().selectRightCell();
                 }
+                */
+                //commitEdit( ( VT ) ( textField.getText() ) );
+                /*
+                Point newPosition = getNextCellPosition( !keyEvent.isShiftDown() );
+
+                if ( newPosition != null ) {
+                    getTableView().edit( newPosition.y,
+                            getTableView().getColumns().get( newPosition.x ) );
+                }
+                else {
+                    getTableView().edit( getTableRow().getIndex(),
+                            getTableColumn() );
+                }
+                */
+
+                //final TableColumn< RT, ? > nextColumn = getNextColumn( 
+                //        !keyEvent.isShiftDown() );
+                //if ( nextColumn != null ) {
+                //    getTableView().edit( getTableRow().getIndex(), nextColumn );
+                    /*
+                    getTableView().getFocusModel().focus( getTableRow().getIndex(), nextColumn );
+                    if ( keyEvent.isShiftDown() ) {
+                        getTableView().getSelectionModel().selectLeftCell();
+                    }
+                    else {
+                        getTableView().getSelectionModel().selectRightCell();
+                    }
+                    */
+                //}
+
                 break;
             // $CASES-OMITTED$
             default:
@@ -198,6 +229,8 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
 
         // Return to a state of displaying values vs. editing text.
         endEdits();
+        
+        //setContentDisplay( ContentDisplay.TEXT_ONLY );
     }
 
     // NOTE: This should be overridden by derived classes, as only those can
@@ -292,7 +325,10 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
             updateEdits();
 
             // Select the updated text, to make it obvious we started editing.
-            textField.selectAll();
+            //Platform.runLater( () -> {
+                //textField.requestFocus();
+                textField.selectAll();
+            //} );
         }
     }
 
@@ -327,10 +363,15 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
             // When we update editing, we need the Text Field to match and
             // display the last valid cached value.
             updateEdits();
+            //setContentDisplay( ContentDisplay.GRAPHIC_ONLY );
         }
         else {
             // Return to a state of displaying values vs. editing text.
+            //TableView< RT > table = getTableView();
+            //table.getColumns().get( 0 ).setVisible( false );
+            //table.getColumns().get( 0 ).setVisible( true );
             endEdits();
+            //setContentDisplay( ContentDisplay.TEXT_ONLY );
         }
     }
 
@@ -375,6 +416,55 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
         return columns.get( nextIndex );
     }
 
+    private Point getNextCellPosition( boolean forward ) {
+        int columnCount = getTableView().getColumns().size();
+        int rowCount = getTableView().getItems().size();
+        int currentRow = getTableRow().getIndex();
+        int newRow = currentRow;
+        int newColumn = 0;
+
+        java.util.List< TableColumn< RT, ?>> columns = new ArrayList<>();
+        for ( TableColumn< RT, ? > column : getTableView().getColumns() ) {
+            columns.addAll( getLeaves( column ) );
+        }
+        
+        int currentColumn = columns.indexOf( getTableColumn() );
+        newColumn = currentColumn;
+
+        if ( currentColumn == 0 && currentRow == 0 && !forward ) {
+            System.out.println("not moving : cant go backward");
+            return null;
+        }
+
+        if ( currentColumn == columnCount-1 && currentRow == rowCount-1 && forward ) {
+            System.out.println("not moving : cant go forward");
+            return null;
+        }
+
+        if ( forward ) {
+            if ( currentColumn == columnCount-1 ) {
+                newColumn = 0;
+                newRow ++;
+            }
+            else {
+                newColumn++;
+            }
+        }
+        else {
+            if  (currentColumn == 0 ) {
+                newRow--;
+                newColumn = columnCount - 1;
+            }
+            else {
+                newColumn--;
+            }
+        }
+
+        System.out.println("from "+currentColumn+","+currentRow+" to "+newColumn+","+newRow+"");
+
+        return new Point( newColumn,newRow );
+    }
+
     private List< TableColumn< RT, ? > > getLeaves(
             final TableColumn< RT, ? > root ) {
         final List< TableColumn< RT, ? > > columns = new ArrayList<>();
@@ -384,11 +474,12 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
                 columns.add( root );
             }
             return columns;
-        } else {
-            for ( TableColumn< RT, ? > column : root.getColumns() ) {
-                columns.addAll( getLeaves( column ) );
-            }
-            return columns;
         }
+        
+        for ( TableColumn< RT, ? > column : root.getColumns() ) {
+            columns.addAll( getLeaves( column ) );
+        }
+        
+        return columns;
     }
 }
