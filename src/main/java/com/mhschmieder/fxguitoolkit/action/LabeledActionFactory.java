@@ -157,7 +157,7 @@ public class LabeledActionFactory {
     public static XAction getClearAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
                                          LabeledActionFactory.BUNDLE_NAME,
-                                         "tools",
+                                         "simulation",
                                          "clear",
                                          "/icons/ahaSoft/Clear16.png" );
     }
@@ -166,7 +166,7 @@ public class LabeledActionFactory {
     public static XAction getPredictAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
                                          LabeledActionFactory.BUNDLE_NAME,
-                                         "tools",
+                                         "simulation",
                                          "predict",
                                          "/icons/glyphish/Calculator16.png" );
     }
