@@ -49,8 +49,8 @@ import javafx.scene.paint.Color;
 public final class ProjectPropertiesEditor extends XStage {
 
     // Default window locations and dimensions.
-    private static final double PROJECT_PROPERTIES_EDITOR_WIDTH_DEFAULT = 480.0d;
-    private static final double  PROJECT_PROPERTIES_EDITOR_HEIGHT_DEFAULT = 320.0d;
+    private static final double PROJECT_PROPERTIES_EDITOR_WIDTH_DEFAULT = 620.0d;
+    private static final double  PROJECT_PROPERTIES_EDITOR_HEIGHT_DEFAULT = 400.0d;
 
     // Cache the Project Category for reference during label creation.
     protected String projectCategory;
@@ -70,7 +70,7 @@ public final class ProjectPropertiesEditor extends XStage {
         // Always call the superclass constructor first!
         // NOTE: The window key prefix is bumped whenever default size changes.
         super( pProjectCategory + " Properties",
-               pProjectCategory.toLowerCase( Locale.US ) + "Properties",
+               pProjectCategory.toLowerCase( Locale.US ) + "Properties2",
                true,
                true,
                pProductBranding,
