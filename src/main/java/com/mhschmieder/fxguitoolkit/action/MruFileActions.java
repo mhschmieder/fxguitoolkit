@@ -36,8 +36,8 @@ import java.util.List;
 
 import org.controlsfx.control.action.Action;
 
-import com.mhschmieder.commonstoolkit.io.FileUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.commonstoolkit.util.PreferenceUtilities;
 import com.mhschmieder.fxguitoolkit.control.LabeledControlFactory;
 
 /**
@@ -57,7 +57,7 @@ public class MruFileActions {
         clientProperties = pClientProperties;
 
         // Make the MRU File Actions.
-        final int maximumNumberOfMruFiles = FileUtilities.MRU_CACHE_SIZE;
+        final int maximumNumberOfMruFiles = PreferenceUtilities.MRU_CACHE_SIZE;
         _mruFileActions = new XAction[ maximumNumberOfMruFiles ];
 
         for ( int i = 0; i < maximumNumberOfMruFiles; i++ ) {
@@ -80,7 +80,7 @@ public class MruFileActions {
         // NOTE: We no longer add the tenth MRU action, as we must switch to
         // letters at that point and run through the alphabet, at which point we
         // really should break all the MRU's out into a sub-menu.
-        final int maximumNumberOfMruFiles = FileUtilities.MRU_CACHE_SIZE;
+        final int maximumNumberOfMruFiles = PreferenceUtilities.MRU_CACHE_SIZE;
         for ( int i = 0; i < maximumNumberOfMruFiles; i++ ) {
             final XAction mruFileAction = _mruFileActions[ i ];
             fileActionCollection.add( mruFileAction );

@@ -38,7 +38,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 
 import com.mhschmieder.commonstoolkit.io.FileMode;
-import com.mhschmieder.commonstoolkit.io.FileUtilities;
+import com.mhschmieder.commonstoolkit.io.FilenameUtilities;
 import com.mhschmieder.fxguitoolkit.stage.FileActionHandler;
 
 import javafx.event.EventHandler;
@@ -79,7 +79,7 @@ public class DragDropUtilities {
                 final List< File > files = dragboard.getFiles();
                 if ( files.size() == 1 ) {
                     final File file = files.get( 0 );
-                    final String fileExtension = FileUtilities.getExtension( file );
+                    final String fileExtension = FilenameUtilities.getExtension( file );
                     final Iterator< ImageReader > iter = ImageIO
                             .getImageReadersBySuffix( fileExtension );
                     final boolean canReadImageExtension = iter.hasNext();

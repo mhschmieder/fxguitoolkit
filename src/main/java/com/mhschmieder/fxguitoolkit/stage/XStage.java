@@ -45,10 +45,10 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.io.FileUtilities;
 import com.mhschmieder.commonstoolkit.io.IoUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
+import com.mhschmieder.commonstoolkit.util.PreferenceUtilities;
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
@@ -1018,12 +1018,12 @@ public abstract class XStage extends Stage implements ForegroundManager,
         setBackgroundColor( backgroundColor );
        
         // Reset the default directory for local file operations.
-        final File defaultDirectory = FileUtilities
+        final File defaultDirectory = PreferenceUtilities
                 .loadDefaultDirectoryPreference( prefs );
         setDefaultDirectory( defaultDirectory );
 
         // Re-populate the MRU filename cache from the previous session.
-        final String[] mruFilenames = FileUtilities.loadMruPreferences( prefs );
+        final String[] mruFilenames = PreferenceUtilities.loadMruPreferences( prefs );
         loadMruCache( mruFilenames );
 
         return prefs;
@@ -1048,10 +1048,10 @@ public abstract class XStage extends Stage implements ForegroundManager,
         prefs.put( "backgroundColor", backgroundColor );
 
         // Save the Default Directory to User Preferences.
-        FileUtilities.saveDefaultDirectoryPreference( _defaultDirectory, prefs );
+        PreferenceUtilities.saveDefaultDirectoryPreference( _defaultDirectory, prefs );
 
         // Save the MRU Filename Cache to User Preferences.
-        FileUtilities.saveMruPreferences( _mruFilenameCache, prefs );
+        PreferenceUtilities.saveMruPreferences( _mruFilenameCache, prefs );
         
         return prefs;
     }
@@ -1622,7 +1622,7 @@ public abstract class XStage extends Stage implements ForegroundManager,
             if ( _mruFilenameCache.contains( filename ) ) {
                 _mruFilenameCache.remove( filename );
             }
-            else if ( _mruFilenameCache.size() >= FileUtilities.MRU_CACHE_SIZE ) {
+            else if ( _mruFilenameCache.size() >= PreferenceUtilities.MRU_CACHE_SIZE ) {
                 if ( addToCache ) {
                     _mruFilenameCache.removeLast();
                 }

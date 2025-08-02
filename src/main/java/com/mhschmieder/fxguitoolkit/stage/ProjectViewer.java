@@ -46,6 +46,7 @@ import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.io.FileStatus;
 import com.mhschmieder.commonstoolkit.io.FileUtilities;
+import com.mhschmieder.commonstoolkit.io.FilenameUtilities;
 import com.mhschmieder.commonstoolkit.io.IoUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.xml.XmlUtilities;
@@ -361,7 +362,7 @@ public class ProjectViewer extends XStage {
         // to work with that includes the full canonical file path.
         final File referenceFile = _files.get( _currentPageIndex );
         final String pdfFileSuffix = "pdf";
-        final StringBuilder pdfFileName = FileUtilities.getFileNameWithNewSuffix( referenceFile,
+        final StringBuilder pdfFileName = FilenameUtilities.getFilenameWithNewSuffix( referenceFile,
                                                                                   pdfFileSuffix );
 
         // Conditionally revision tag the target file name and re-save, so we

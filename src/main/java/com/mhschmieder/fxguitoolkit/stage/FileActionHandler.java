@@ -55,8 +55,9 @@ import org.jsoup.nodes.Document;
 
 import com.mhschmieder.commonstoolkit.io.CsvUtilities;
 import com.mhschmieder.commonstoolkit.io.FileMode;
+import com.mhschmieder.commonstoolkit.io.FileMover;
 import com.mhschmieder.commonstoolkit.io.FileStatus;
-import com.mhschmieder.commonstoolkit.io.FileUtilities;
+import com.mhschmieder.commonstoolkit.io.FilenameUtilities;
 import com.mhschmieder.commonstoolkit.io.LogUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageSize;
@@ -716,7 +717,7 @@ public interface FileActionHandler {
         final boolean fileSaved = FileStatus.SAVED.equals( fileStatus )
                 || FileStatus.EXPORTED.equals( fileStatus );
         final boolean fileRenamed = fileSaved 
-                ? FileUtilities.moveFile( tempFile, file ) 
+                ? FileMover.moveFile( tempFile, file ) 
                 : false;
 
         // Modify the file status, but be careful not to write over existing
@@ -1086,7 +1087,7 @@ public interface FileActionHandler {
         // TODO: Review whether we should adjust the file extension first for
         //  simplicity. This requires following the downstream code to see how
         //  the original extension is used. Java imaging is extension-neutral?
-        final String fileExtension = FileUtilities.getExtension( file );
+        final String fileExtension = FilenameUtilities.getExtension( file );
         switch ( fileExtension ) {
         case "gif":
         case "jpe":
@@ -1127,7 +1128,7 @@ public interface FileActionHandler {
         // File Modes or file types. Not all applications support Table Import.
         FileStatus fileStatus = FileStatus.NOT_OPENED;
         
-        final String fileExtension = FileUtilities.getExtension( file );
+        final String fileExtension = FilenameUtilities.getExtension( file );
         switch ( fileExtension ) {
         case "csv":
         case "zip":
@@ -1165,7 +1166,7 @@ public interface FileActionHandler {
         // File Modes or file types. Not all applications support Vector Graphics.
         FileStatus fileStatus = FileStatus.NOT_OPENED;
         
-        final String fileExtension = FileUtilities.getExtension( file );
+        final String fileExtension = FilenameUtilities.getExtension( file );
         switch ( fileExtension ) {
         case "svg":
             // Load the Scene Graph data from an SVG file.
@@ -1205,7 +1206,7 @@ public interface FileActionHandler {
 
         // TODO: Switch these and others to Apache Commons I/O library, which
         //  has a SuffixFileFilter with accept() methods?
-        final String fileExtension = FileUtilities.getAdjustedFileExtension( file );
+        final String fileExtension = FilenameUtilities.getAdjustedFileExtension( file );
         switch ( fileExtension ) {
         case "txt":
         case "log":
@@ -1267,7 +1268,7 @@ public interface FileActionHandler {
                                               final FileMode fileMode ) {
         FileStatus fileStatus = FileStatus.NOT_SAVED;
         
-        final String fileExtension = FileUtilities.getAdjustedFileExtension( file );
+        final String fileExtension = FilenameUtilities.getAdjustedFileExtension( file );
         switch ( fileExtension ) {
         case "xslx":
             // Export a cached image in the specified format.
@@ -1308,7 +1309,7 @@ public interface FileActionHandler {
                                         final FileMode fileMode ) {
         FileStatus fileStatus = FileStatus.NOT_SAVED;
         
-        final String fileExtension = FileUtilities.getAdjustedFileExtension( file );
+        final String fileExtension = FilenameUtilities.getAdjustedFileExtension( file );
         switch ( fileExtension ) {
         case "bmp":
         case "gif":
@@ -1342,7 +1343,7 @@ public interface FileActionHandler {
                                              final FileMode fileMode ) {
         FileStatus fileStatus = FileStatus.NOT_SAVED;
         
-        final String fileExtension = FileUtilities.getAdjustedFileExtension( file );
+        final String fileExtension = FilenameUtilities.getAdjustedFileExtension( file );
         switch ( fileExtension ) {
         case "bmp":
         case "gif":
@@ -1419,7 +1420,7 @@ public interface FileActionHandler {
                                              final FileMode fileMode ) {
         FileStatus fileStatus = FileStatus.NOT_SAVED;
         
-        final String fileExtension = FileUtilities.getAdjustedFileExtension( file );
+        final String fileExtension = FilenameUtilities.getAdjustedFileExtension( file );
         switch ( fileExtension ) {
         case "eps":
             // Vectorize the main content pane to an EPS file.
@@ -1451,7 +1452,7 @@ public interface FileActionHandler {
                                                final FileMode fileMode ) {
         FileStatus fileStatus = FileStatus.NOT_SAVED;
         
-        final String fileExtension = FileUtilities.getAdjustedFileExtension( file );
+        final String fileExtension = FilenameUtilities.getAdjustedFileExtension( file );
         switch ( fileExtension ) {
         case "eps":
             // Vectorize the curated and styled content to an EPS file.
@@ -1477,7 +1478,7 @@ public interface FileActionHandler {
                                           final FileMode fileMode ) {
         FileStatus fileStatus = FileStatus.NOT_SAVED;
         
-        final String fileExtension = FileUtilities.getAdjustedFileExtension( file );
+        final String fileExtension = FilenameUtilities.getAdjustedFileExtension( file );
         switch ( fileExtension ) {
         case "dxf":
         default:
