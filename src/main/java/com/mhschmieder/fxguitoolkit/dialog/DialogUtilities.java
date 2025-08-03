@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.mhschmieder.commonstoolkit.lang.CharConstants;
+import com.mhschmieder.commonstoolkit.lang.StringUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
 import com.mhschmieder.fxgraphicstoolkit.io.VectorGraphicsExportOptions;
@@ -459,4 +461,83 @@ public final class DialogUtilities {
         showTextFlowAlert( message, masthead, title, textFlow, AlertType.ERROR );
     }
 
+    /**
+     * Returns {@code true} if specified file exists and the user chooses to
+     * overwrite; returns {@code false} if specified file doesn't exist, or it
+     * exists and the user chooses not to overwrite.
+     *
+     * @param filename The name of the file to be checked for overwrite
+     * @return {@code true} if file exists and should be overwritten; {@code
+     * false} otherwise (for all other cases and user responses)
+     */
+    public static boolean checkOverwriteExistingFile( final String filename ) {
+        final File possibleFile = new File( filename );
+        return checkOverwriteExistingFile( possibleFile );
+    }
+
+    /**
+     * Returns {@code true} if specified file exists and the user chooses to
+     * overwrite; returns {@code false} if specified file doesn't exist, or it
+     * exists and the user chooses not to overwrite.
+     *
+     * @param file The file to be checked for overwrite
+     * @return {@code true} if file exists and should be overwritten; {@code
+     * false} otherwise (for all other cases and user responses)
+     */
+    public static boolean checkOverwriteExistingFile( final File file ) {
+        // No need to specify the full file path for the confirmation dialog.
+        final String filename = file.getName();
+        final String message = "Overwrite Existing File: "
+                + StringUtilities.quote( filename ) + " ?";
+        final String masthead = "File Will Be Overwritten";
+        final String title = "File Already Exists";
+
+        final Optional< ButtonType > response = showConfirmationAlert(
+                message,
+                masthead,
+                title,
+                false );
+
+        return ( !ButtonType.NO.equals( response.get() ) );
+    }
+
+    /**
+     * Returns {@code true} if specified file exists and the user chooses to
+     * overwrite; returns {@code false} if specified file doesn't exist, or it
+     * exists and the user chooses not to overwrite.
+     *
+     * @param directoryPathname The path of the directory to be checked for
+     *                          content removal
+     * @return {@code true} if file exists and should be overwritten; {@code
+     * false} otherwise (for all other cases and user responses)
+     */
+    public static boolean checkRemoveDirectoryContents(
+            final String directoryPathname ) {
+        final String message = "Remove Files and Subfolders from Folder: "
+                + StringUtilities.quote( directoryPathname ) + " ?";
+        final String masthead = "Folder Contains Files or Subfolders";
+        final String title = "Folder Not Empty";
+
+        final Optional< ButtonType > response = showConfirmationAlert(
+                message,
+                masthead,
+                title,
+                false );
+
+        return ( !ButtonType.NO.equals( response.get() ) );
+    }
+
+    // NOTE: No longer used, but keep it at hand for upcoming deployments.
+    public static void showInstallationDirectoryError() {
+        final String message
+                = "The installation directory contains a space in its name."
+                + CharConstants.LF
+                + "Application components cannot run from directories with spaces in"
+                + CharConstants.LF
+                + "their name. Please rename or move the installation directory.";
+        final String masthead = "Space in Directory Name";
+        final String title = "Space in Directory Name Warning";
+
+        showWarningAlert( message, masthead, title );
+    }
 }
