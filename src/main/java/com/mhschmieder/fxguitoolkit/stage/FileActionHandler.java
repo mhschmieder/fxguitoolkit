@@ -1535,13 +1535,15 @@ public interface FileActionHandler {
     }
     
     // NOTE: Implementing classes that support raster graphics export should
-    //  override this method to return a local class variable.
+    //  override this method to return a local class variable. Stages can
+    //  just use the class variable returned by the XStage parent class.
     default Node getRasterGraphicsExportSource() {
         return null;
     }
     
     // NOTE: Implementing classes that support vector graphics export should
-    //  override this method to return a local class variable.
+    //  override this method to return a local class variable. Stages can
+    //  just use the class variable returned by the XStage parent class.
     default Node getVectorGraphicsExportSource() {
         return null;
     }
@@ -1576,19 +1578,21 @@ public interface FileActionHandler {
     }
     
     // NOTE: Implementing classes that support raster graphics export should
-    //  override this method to return a local class variable.
+    //  override this method to return a local class variable. Stages can
+    //  just use the class variable returned by the XStage parent class.
     default RasterGraphicsExportOptions getRasterGraphicsExportOptions() {
         return null;
     }
     
     // NOTE: Implementing classes that support vector graphics export should
-    //  override this method to return a local class variable.
+    //  override this method to return a local class variable. Stages can
+    //  just use the class variable returned by the XStage parent class.
     default VectorGraphicsExportOptions getVectorGraphicsExportOptions() {
         return null;
     }
     
-    // NOTE: Implementing classes that support rendered graphics export 
-    //  should override this method to return a local class variable.
+    // NOTE: Implementing classes that support rendered graphics export should
+    //  override this method to return a local class variable.
     default RenderedGraphicsExportOptions getRenderedGraphicsExportOptions() {
         return null;
     }
