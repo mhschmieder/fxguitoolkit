@@ -10,7 +10,7 @@
 	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>FxGuiToolkit</name>
+	<name>fxguitoolkit</name>
 	<url>https://github.com/mhschmieder/fxguitoolkit</url>
 	<description>Utilities and custom classes for JavaFX based GUI work.</description>
 
@@ -147,6 +147,25 @@
                         <goals>
                             <goal>jar-no-fork</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>install-external-jar</id>
+                        <phase>validate</phase>
+                        <goals><goal>install-file</goal></goals>
+                        <configuration>
+                            <file>${project.basedir}/jPDFWriter.v2021R1.00.jar</file>
+                            <groupId>com.qoppa.jpdfwriter</groupId>
+                            <artifactId>jpdfwriter</artifactId>
+                            <version>v2021R1.00</version>
+                            <packaging>jar</packaging>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
