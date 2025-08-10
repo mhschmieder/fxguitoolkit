@@ -74,7 +74,7 @@ public interface FileCloseHandler {
      * @param fileCategory The descriptive category of the file (not file suffix)
      * @param fileAction The file action type that triggered the "Save Changes"
      * @param isChanged {@code true} if the file has changed; {@code false} if not
-     * @return {@code true} if the user clicked "cancel"; {@code false} if "save"
+     * @return {@code false} if the user clicked "cancel"; {@code true} if "save"
      */
     default boolean checkFileClose( final String title,
                                     final File file,

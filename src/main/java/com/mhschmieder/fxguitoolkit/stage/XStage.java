@@ -1789,6 +1789,42 @@ public abstract class XStage extends Stage implements ForegroundManager,
         setForegroundFromBackground( Color.WHITESMOKE );
     }
 
+    // NOTE: The FileActionHandler interface can't return a class variable,
+    //  but is a better place to declare this method with its default 
+    //  implementation that returns null than declaring it on this abstract
+    //  base class, as not all implementors of FileActionHandler are Stages.
+    @Override
+    public Node getRasterGraphicsExportSource() {
+        return _rasterGraphicsExportSource;
+    }
+    
+    // NOTE: The FileActionHandler interface can't return a class variable,
+    //  but is a better place to declare this method with its default 
+    //  implementation that returns null than declaring it on this abstract
+    //  base class, as not all implementors of FileActionHandler are Stages.
+    @Override
+    public Node getVectorGraphicsExportSource() {
+        return _vectorGraphicsExportSource;
+    }
+    
+    // NOTE: The FileActionHandler interface can't return a class variable,
+    //  but is a better place to declare this method with its default 
+    //  implementation that returns null than declaring it on this abstract
+    //  base class, as not all implementors of FileActionHandler are Stages.
+    @Override
+    public RasterGraphicsExportOptions getRasterGraphicsExportOptions() {
+        return _rasterGraphicsExportOptions;
+    }
+    
+    // NOTE: The FileActionHandler interface can't return a class variable,
+    //  but is a better place to declare this method with its default 
+    //  implementation that returns null than declaring it on this abstract
+    //  base class, as not all implementors of FileActionHandler are Stages.
+    @Override
+    public VectorGraphicsExportOptions getVectorGraphicsExportOptions() {
+        return _vectorGraphicsExportOptions;
+    }
+
     /**
      * This method wraps behavior for canceling Rendered Graphics Export
      * actions. It should be overridden by classes that need to clean up
