@@ -94,7 +94,7 @@ public class MouseRotationTracker extends TrackerLabelGroup {
     public String getTrackerLabelText( final double localX,
                                        final double localY ) {
         // Don't assume we are set to degrees as our Angle Unit.
-        final String angleUnitSymbol = _angleUnit.toAbbreviatedString();
+        final String angleUnitSymbol = _angleUnit.abbreviation();
 
         // Determine the Total Angle of the current mouse cursor position, and
         // normalized to the ( -180, +180 ) range.

@@ -155,7 +155,7 @@ public class CursorCoordinatesTracker extends TrackerLabelGroup {
                 .getFormattedQuantityPair( localX,
                                            localY,
                                            _numberFormat,
-                                           _distanceUnit.toAbbreviatedString() );
+                                           _distanceUnit.abbreviation() );
 
         // If in Paste Confirmation Mode, prepend a special context message.
         if ( MouseToolMode.PASTE.equals( _mouseToolManager._mouseMode ) ) {
