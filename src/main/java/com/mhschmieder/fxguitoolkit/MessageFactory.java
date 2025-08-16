@@ -338,13 +338,13 @@ public class MessageFactory {
     public static final String getLoginCredentialsMasthead( final LoginType loginType,
                                                             final String loginTarget ) {
         final String loginCredentialsMasthead = "Please Log In to the "
-                + loginTarget + " " + loginType.toPresentationString();
+                + loginTarget + " " + loginType.label();
         return loginCredentialsMasthead;
     }
 
     public static final String getLoginCredentialsTitle( final LoginType loginType ) {
         final String loginCredentialsTitle =
-                                           loginType.toPresentationString() + " Login Credentials";
+                                           loginType.label() + " Login Credentials";
         return loginCredentialsTitle;
     }
 
