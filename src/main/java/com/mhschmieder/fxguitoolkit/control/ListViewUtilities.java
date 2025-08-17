@@ -74,6 +74,42 @@ public class ListViewUtilities {
             final T[] supportedValues,
             final String tooltipText,
             final T defaultValue ) {
+        return makeLabeledSelector( pClientProperties,
+                                    supportedValues,
+                                    tooltipText,
+                                    true,
+                                    defaultValue );
+    }
+
+
+    /**
+     * Returns a Combo Box that hosts labels from an object or enum that 
+     * implements the {@link Labeled} interface. It doesn't have to be
+     * enum-based but that is the most common and likely client, as the 
+     * interface helps to partially get around enums being final classes.
+     * <p>
+     * The goal is to allow for a combo box that doesn't need overrides of the
+     * control itself for string conversions of enum values. 
+     * <p>
+     * This approach allows for one factory method that covers all enums that
+     * implement the interface without verbose, repetitive boilerplate code
+     * and/or copy/paste of otherwise identical code between enum/object types.
+     * 
+     * @param <T> the object or enum that provides the Combo Box's choices
+     * @param pClientProperties client properties for OS, Locale, etc.
+     * @param supportedValues a list of supported values for the List View
+     * @param tooltipText the tooltip to show when hovering on the Combo Box
+     * @param applyToolkitCss {@code true} if the toolkit's CSS should be
+     *                        applied to the Combo Box; {@code false} if not
+     * @param defaultValue initial default value to set, to avoid nulls
+     * @return a Combo Box that hosts a curated list of labels from an enum 
+     */
+    public static < T extends Labeled< ? > > XComboBox< T > makeLabeledSelector(
+            final ClientProperties pClientProperties,
+            final T[] supportedValues,
+            final String tooltipText,
+            final boolean applyToolkitCss,
+            final T defaultValue ) {
         // Make the callback for the ListCells to grab the custom label.
         final Callback< ListView< T >, ListCell< T > > cellFactory 
             = new Callback< ListView< T >, ListCell< T > >() {
