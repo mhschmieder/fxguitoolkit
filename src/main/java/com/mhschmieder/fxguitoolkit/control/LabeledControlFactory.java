@@ -473,7 +473,7 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getRefreshButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/icons/deviantArt/Update16.png" );
+        final Button button = GuiUtilities.getIconButton( "/icons/deviantArt/shlyapnikova/miniIconSet/Update16.png" );
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "view",
@@ -559,7 +559,7 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getSessionLogUpdateButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/icons/deviantArt/Update16.png" );
+        final Button button = GuiUtilities.getIconButton( "/icons/deviantArt/shlyapnikova/miniIconSet/Update16.png" );
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "sessionLog",

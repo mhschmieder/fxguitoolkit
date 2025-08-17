@@ -70,7 +70,7 @@ public class LabeledActionFactory {
                                   windowSizeActionCollection,
                                   BUNDLE_NAME,
                                   "windowSize",
-                                  "/icons/deviantArt/FullScreen16.png" );
+                                  "/icons/deviantArt/shlyapnikova/toolbar2/FullScreen16.png" );
 
         return windowSizeActionGroup;
     }
@@ -266,7 +266,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "edit",
                                          "redo",
-                                         "/icons/deviantArt/EditRedo16.png" );
+                                         "/icons/deviantArt/hbons/discovery/EditRedo16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -280,7 +280,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "edit",
                                          "undo",
-                                         "/icons/deviantArt/EditUndo16.png" );
+                                         "/icons/deviantArt/hbons/discovery/EditUndo16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -976,7 +976,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "select",
                                          "all",
-                                         "/icons/deviantArt/EditSelectAll16.png" );
+                                         "/icons/deviantArt/hbons/discovery/EditSelectAll16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -1087,7 +1087,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "view",
                                          "refresh",
-                                         "/icons/deviantArt/PowerRestartInvert16.png" );
+                                         "/icons/deviantArt/dAKirby309/windows8MetroInvert/PowerRestartInvert16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -1123,7 +1123,7 @@ public class LabeledActionFactory {
                                         BUNDLE_NAME,
                                         "view",
                                         "showImportedGraphics",
-                                        "/icons/deviantArt/Blueprint16.png" );
+                                        "/icons/deviantArt/shlyapnikova/blueprint/Blueprint16.png" );
     }
 
     @SuppressWarnings("nls")
