@@ -689,7 +689,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "help",
                                          "accountManagement",
-                                         "/icons/pc/MyAccount16.png" );
+                                         "/icons/pc/hamburg/MyAccount16.png" );
     }
 
     @SuppressWarnings("nls")
@@ -752,7 +752,7 @@ public class LabeledActionFactory {
                                          BUNDLE_NAME,
                                          "help",
                                          "thirdPartyLibraries",
-                                         "/icons/pc/Library16.png" );
+                                         "/icons/pc/essen/Library16.png" );
     }
 
     @SuppressWarnings("nls")
