@@ -534,7 +534,8 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getNavigateForwardButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/icons/ahaSoft/Forward16.png" );
+        final Button button = GuiUtilities.getIconButton( 
+                "/icons/ahaSoft/Forward16.png" );
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "navigate",
@@ -546,8 +547,8 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getSessionLogNewButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities
-                .getIconButton( "/icons/deviantArt/PowerRestartInvert16.png" );
+        final Button button = GuiUtilities.getIconButton( 
+                "/icons/deviantArt/dAKirby309/windows8MetroInvert/PowerRestartInvert16.png" );
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "sessionLog",
@@ -559,7 +560,8 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getSessionLogUpdateButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/icons/deviantArt/shlyapnikova/miniIconSet/Update16.png" );
+        final Button button = GuiUtilities.getIconButton( 
+                "/icons/deviantArt/shlyapnikova/miniIconSet/Update16.png" );
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "sessionLog",
@@ -571,8 +573,8 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getExportSessionLogButton( final ClientProperties pClientProperties ) {
-        final Button button =
-                            GuiUtilities.getIconButton( "/icons/everaldo/Txt2Mimetype16.png" );
+        final Button button = GuiUtilities.getIconButton( 
+                "/icons/everaldo/Txt2Mimetype16.png" );
 
         SceneGraphUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
