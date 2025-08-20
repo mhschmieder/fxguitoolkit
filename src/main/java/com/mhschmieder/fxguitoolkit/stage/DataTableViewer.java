@@ -32,7 +32,6 @@ package com.mhschmieder.fxguitoolkit.stage;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.prefs.Preferences;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
@@ -234,23 +233,7 @@ public class DataTableViewer extends XStage {
         // Return the Tool Bar so the superclass can use it.
         return _toolBar;
     }
-    
-
-    // Load all the User Preferences for this Stage.
-    @Override
-    public Preferences loadPreferences() {
-        // Call the superclass to load any shared preferences first. It will use
-        // the same preferences node without closing it, so we can append here.
-        final Preferences prefs = super.loadPreferences();
-
-        // Get the vertical scrollbar to show up on the left so that we don't
-        // scroll the horizontal scrollbar all the way to the right to reach it.
-        GuiUtilities.addStylesheetAsJarResource( _root.getScene(),
-                                                 "/css/dataTableViewer.css" );
-        
-        return prefs;
-    }
-
+ 
     @Override
     public final void processTableData( 
             final File file,
