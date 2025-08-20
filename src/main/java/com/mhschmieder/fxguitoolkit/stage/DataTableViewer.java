@@ -32,19 +32,23 @@ package com.mhschmieder.fxguitoolkit.stage;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.prefs.Preferences;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.DataTableView;
 import com.mhschmieder.fxguitoolkit.control.DataTableViewerToolBar;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 public class DataTableViewer extends XStage {
 
@@ -200,13 +204,25 @@ public class DataTableViewer extends XStage {
         // Instantiate and return the custom Content Node.
         _tableView = new DataTableView();
 
+        // NOTE: The extra layout wrapper of a VBox seems to be necessary for
+        //  the horizontal scrollbar to show up when a table has many columns.
+        final VBox vbox = new VBox();
+        vbox.getChildren().addAll( _tableView );
+
         // NOTE: We create an empty Border Pane to host the Table View, as it
         //  has to be generated and replaced dynamically and is initially
         //  blank/empty until the first file load.
-        final BorderPane contentPane = new BorderPane();
-        contentPane.setPadding( new Insets( 5.0d ) );
-        contentPane.setCenter( _tableView );
-        return contentPane;
+        final BorderPane borderPane = new BorderPane();
+        borderPane.setPadding( new Insets( 5.0d ) );
+        borderPane.setCenter( vbox );
+        
+        // The Scroll Pane is necessary as otherwise a table with many columns
+        // will clip its right-most columns even if you widen this window.
+        // NOTE: Don't fit to height and width as the scroll pane doesn't show
+        //  up if both values are set, and one on its own doesn't do anything.
+        final ScrollPane scrollPane = new ScrollPane( borderPane );
+        
+        return scrollPane;
     }
 
     // Add the Tool Bar for this Frame.
@@ -217,6 +233,22 @@ public class DataTableViewer extends XStage {
 
         // Return the Tool Bar so the superclass can use it.
         return _toolBar;
+    }
+    
+
+    // Load all the User Preferences for this Stage.
+    @Override
+    public Preferences loadPreferences() {
+        // Call the superclass to load any shared preferences first. It will use
+        // the same preferences node without closing it, so we can append here.
+        final Preferences prefs = super.loadPreferences();
+
+        // Get the vertical scrollbar to show up on the left so that we don't
+        // scroll the horizontal scrollbar all the way to the right to reach it.
+        GuiUtilities.addStylesheetAsJarResource( _root.getScene(),
+                                                 "/css/dataTableViewer.css" );
+        
+        return prefs;
     }
 
     @Override
