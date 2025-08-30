@@ -364,3 +364,8 @@
 .log-viewer-text-area .content {
 	-fx-background-color: ivory;
 }
+
+.tooltip {
+	-fx-show-delay: 100ms;
+	-fx-show-duration: 10000ms;
+}
