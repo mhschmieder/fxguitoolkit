@@ -65,20 +65,20 @@ public final class MouseToolChoices {
         final Collection< Action > mouseToolChoiceCollection = getMouseToolChoiceCollection();
 
         _mouseToolChoiceGroup = ActionFactory.makeChoiceGroup( pClientProperties,
-                                                               mouseToolChoiceCollection,
-                                                               LabeledActionFactory.BUNDLE_NAME,
-                                                               "mouseTool",
-                                                               null,
-                                                               true );
+                mouseToolChoiceCollection,
+                LabeledActionFactory.BUNDLE_NAME,
+                "mouseTool",
+                null,
+                true );
     }
 
     public Collection< Action > getMouseToolChoiceCollection() {
         final Collection< Action > mouseToolChoiceCollection = Arrays
                 .asList( _selectToolChoice,
-                         _panToolChoice,
-                         _zoomToolChoice,
-                         _rotateToolChoice,
-                         _lineToolChoice );
+                        _panToolChoice,
+                        _zoomToolChoice,
+                        _rotateToolChoice,
+                        _lineToolChoice );
         return mouseToolChoiceCollection;
     }
 
@@ -94,31 +94,31 @@ public final class MouseToolChoices {
         // Update the Active Mouse Tool.
         // NOTE: We ignore passive tools like MOVE, MEASURE, and PASTE.
         switch ( mouseToolMode ) {
-        case SELECT:
-            _selectToolChoice.setSelected( true );
-            break;
-        case MOVE:
-            break;
-        case ROTATE:
-            _rotateToolChoice.setSelected( true );
-            break;
-        case ZOOM:
-            _zoomToolChoice.setSelected( true );
-            break;
-        case PAN:
-            _panToolChoice.setSelected( true );
-            break;
-        case LINE:
-            _lineToolChoice.setSelected( true );
-            break;
-        case MEASURE:
-            break;
-        case COPY:
-            break;
-        case PASTE:
-            break;
-        default:
-            break;
+            case SELECT:
+                _selectToolChoice.setSelected( true );
+                break;
+            case MOVE:
+                break;
+            case ROTATE:
+                _rotateToolChoice.setSelected( true );
+                break;
+            case ZOOM:
+                _zoomToolChoice.setSelected( true );
+                break;
+            case PAN:
+                _panToolChoice.setSelected( true );
+                break;
+            case LINE:
+                _lineToolChoice.setSelected( true );
+                break;
+            case MEASURE:
+                break;
+            case COPY:
+                break;
+            case PASTE:
+                break;
+            default:
+                break;
         }
     }
 }
