@@ -1,7 +1,7 @@
-/**
+/*
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ public class HelpActions {
     public final XAction _knowledgeBaseAction;
     public final XAction _releaseNotesAction;
     public final XAction _issueTrackingAction;
-    public final XAction _reportAnIssueAction;
+    public final XAction _reportIssueAction;
     public final XAction _sessionLogAction;
     public final XAction _accountManagementAction;
     public final XAction _checkForUpdatesAction;
@@ -64,7 +64,7 @@ public class HelpActions {
         _knowledgeBaseAction = LabeledActionFactory.getKnowledgeBaseAction( pClientProperties );
         _releaseNotesAction = LabeledActionFactory.getHelpReleaseNotesAction( pClientProperties );
         _issueTrackingAction = LabeledActionFactory.getIssueTrackingAction( pClientProperties );
-        _reportAnIssueAction = LabeledActionFactory.getReportAnIssueAction( pClientProperties );
+        _reportIssueAction = LabeledActionFactory.getReportIssueAction( pClientProperties );
         _sessionLogAction = LabeledActionFactory.getHelpSessionLogAction( pClientProperties );
         _accountManagementAction = LabeledActionFactory
                 .getHelpAccountManagementAction( pClientProperties );
@@ -90,7 +90,7 @@ public class HelpActions {
         helpActionCollection.add( _releaseNotesAction );
         helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
         helpActionCollection.add( _issueTrackingAction );
-        helpActionCollection.add( _reportAnIssueAction );
+        helpActionCollection.add( _reportIssueAction );
         helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
         helpActionCollection.add( _sessionLogAction );
         helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
