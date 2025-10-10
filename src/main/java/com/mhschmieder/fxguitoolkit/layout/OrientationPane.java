@@ -50,12 +50,12 @@ public class OrientationPane extends BorderPane {
     public CheckBox    _orientationInvertedCheckBox;
 
     public OrientationPane( final ClientProperties clientProperties,
-                            final boolean useInvertedbutton ) {
+                            final boolean useInvertedButton ) {
         // Always call the superclass constructor first!
         super();
 
         try {
-            initPane( clientProperties, useInvertedbutton );
+            initPane( clientProperties, useInvertedButton );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -73,12 +73,17 @@ public class OrientationPane extends BorderPane {
     private final void initPane( final ClientProperties clientProperties,
                                  final boolean useInvertedbutton ) {
         _orientationToggleGroup = new ToggleGroup();
-        _orientationHzRadioButton = GuiUtilities.getRadioButton( Orientation.HORIZONTAL
-                .label(), _orientationToggleGroup, true );
-        _orientationVtRadioButton = GuiUtilities.getRadioButton( Orientation.VERTICAL
-                .label(), _orientationToggleGroup, false );
+        _orientationHzRadioButton = GuiUtilities.getRadioButton(
+                Orientation.HORIZONTAL.label(),
+                _orientationToggleGroup,
+                true );
+        _orientationVtRadioButton = GuiUtilities.getRadioButton(
+                Orientation.VERTICAL.label(),
+                _orientationToggleGroup,
+                false );
 
-        _orientationInvertedCheckBox = GuiUtilities.getCheckBox( "Inverted", false ); //$NON-NLS-1$
+        _orientationInvertedCheckBox = GuiUtilities.getCheckBox(
+                "Inverted", false );
 
         final GridPane gridPane = new GridPane();
         gridPane.setHgap( 10.0d );
