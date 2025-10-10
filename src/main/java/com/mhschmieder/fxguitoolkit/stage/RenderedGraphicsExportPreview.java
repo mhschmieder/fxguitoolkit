@@ -30,8 +30,6 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.io.File;
-
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.io.FileStatus;
@@ -44,7 +42,6 @@ import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.LabeledControlFactory;
 import com.mhschmieder.fxguitoolkit.layout.RenderedGraphicsExportPreviewPane;
 import com.mhschmieder.fxguitoolkit.swing.RenderedGraphicsPanel;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -54,6 +51,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
+
+import java.io.File;
 
 /**
  * This Preview window is for use with Rendered Graphics Export actions, mostly

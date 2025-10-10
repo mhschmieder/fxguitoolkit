@@ -30,16 +30,14 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import java.text.ParseException;
-
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.input.KeyCode;
+import org.apache.commons.math3.util.FastMath;
+
+import java.text.ParseException;
 
 /**
  * This class formalizes aspects of text editing that are specific to doubles.

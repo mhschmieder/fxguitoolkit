@@ -31,7 +31,6 @@
 package com.mhschmieder.fxguitoolkit.control;
 
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
-
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventTarget;

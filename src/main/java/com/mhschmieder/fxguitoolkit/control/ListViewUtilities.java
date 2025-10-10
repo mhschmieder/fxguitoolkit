@@ -30,17 +30,16 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import java.time.Month;
-import java.time.format.TextStyle;
-import java.util.Locale;
-
 import com.mhschmieder.commonstoolkit.lang.Labeled;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
+
+import java.time.Month;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 public class ListViewUtilities {
 

@@ -30,14 +30,13 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import java.text.NumberFormat;
-
 import com.mhschmieder.commonstoolkit.lang.StringUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+
+import java.text.NumberFormat;
 
 /**
  * This class formalizes aspects of text editing that are specific to numbers.

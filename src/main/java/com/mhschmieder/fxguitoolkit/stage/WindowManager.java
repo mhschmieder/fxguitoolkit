@@ -30,12 +30,12 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
+import javafx.stage.Popup;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
-
-import javafx.stage.Popup;
 
 /**
  * This is a container class for collections of windows of various types and

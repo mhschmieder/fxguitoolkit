@@ -30,17 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.dialog;
 
-import java.util.Locale;
-
-import org.controlsfx.control.textfield.CustomPasswordField;
-import org.controlsfx.control.textfield.CustomTextField;
-import org.controlsfx.control.textfield.TextFields;
-import org.controlsfx.validation.ValidationSupport;
-import org.controlsfx.validation.Validator;
-
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
-
 import impl.org.controlsfx.i18n.Localization;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -58,6 +49,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.util.Callback;
 import javafx.util.Pair;
+import org.controlsfx.control.textfield.CustomPasswordField;
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
+import java.util.Locale;
 
 /**
  * This is a heavily customized Login Dialog that is loosely based upon the

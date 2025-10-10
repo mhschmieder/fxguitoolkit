@@ -30,14 +30,13 @@
  */
 package com.mhschmieder.fxguitoolkit.control.cell;
 
-import java.util.List;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.control.IntegerEditor;
-
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.TextField;
+
+import java.util.List;
 
 public class IntegerEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Integer > {
 

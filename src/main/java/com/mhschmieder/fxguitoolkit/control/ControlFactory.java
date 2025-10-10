@@ -30,12 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import java.net.URL;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
-
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
@@ -44,6 +41,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+
+import java.net.URL;
 
 /**
  * This is a factory for generating customized controls. It is a way of avoiding

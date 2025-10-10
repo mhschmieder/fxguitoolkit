@@ -30,17 +30,16 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import java.util.Collection;
-import java.util.ResourceBundle;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
 import com.mhschmieder.fxguitoolkit.action.ActionFactory;
-
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCombination;
+
+import java.util.Collection;
+import java.util.ResourceBundle;
 
 /**
  * Common utilities for working with menus, such as setting accelerators.

@@ -30,18 +30,17 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
-
 import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.stage.Window;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // This class implements the basic features that all applications should share.
 // TODO: Find a JavaFX equivalent for the OSXAdapter, or delete for now.

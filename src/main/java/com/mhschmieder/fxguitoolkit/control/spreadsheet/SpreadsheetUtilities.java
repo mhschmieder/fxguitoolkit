@@ -30,11 +30,10 @@
  */
 package com.mhschmieder.fxguitoolkit.control.spreadsheet;
 
-import org.controlsfx.control.spreadsheet.SpreadsheetCell;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ToggleButton;
+import org.controlsfx.control.spreadsheet.SpreadsheetCell;
 
 public final class SpreadsheetUtilities {
 

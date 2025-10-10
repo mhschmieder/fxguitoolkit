@@ -30,6 +30,29 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
+import com.mhschmieder.commonstoolkit.io.CsvUtilities;
+import com.mhschmieder.commonstoolkit.io.FileMode;
+import com.mhschmieder.commonstoolkit.io.FileMover;
+import com.mhschmieder.commonstoolkit.io.FileStatus;
+import com.mhschmieder.commonstoolkit.io.FilenameUtilities;
+import com.mhschmieder.commonstoolkit.io.LogUtilities;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.fxgraphicstoolkit.image.ImageSize;
+import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
+import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
+import com.mhschmieder.fxgraphicstoolkit.io.RenderedGraphicsExportOptions;
+import com.mhschmieder.fxgraphicstoolkit.io.VectorGraphicsExportOptions;
+import com.mhschmieder.fxguitoolkit.MessageFactory;
+import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
+import com.mhschmieder.graphicstoolkit.image.ImageConversionUtilities;
+import com.mhschmieder.graphicstoolkit.image.ImageFormatUtilities;
+import javafx.scene.Node;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Window;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -47,32 +70,6 @@ import java.nio.file.LinkOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import javax.imageio.ImageIO;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import com.mhschmieder.commonstoolkit.io.CsvUtilities;
-import com.mhschmieder.commonstoolkit.io.FileMode;
-import com.mhschmieder.commonstoolkit.io.FileMover;
-import com.mhschmieder.commonstoolkit.io.FileStatus;
-import com.mhschmieder.commonstoolkit.io.FilenameUtilities;
-import com.mhschmieder.commonstoolkit.io.LogUtilities;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.fxgraphicstoolkit.image.ImageSize;
-import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
-import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
-import com.mhschmieder.fxgraphicstoolkit.io.RenderedGraphicsExportOptions;
-import com.mhschmieder.fxgraphicstoolkit.io.VectorGraphicsExportOptions;
-import com.mhschmieder.fxguitoolkit.MessageFactory;
-import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
-import com.mhschmieder.graphicstoolkit.image.ImageConversionUtilities;
-import com.mhschmieder.graphicstoolkit.image.ImageFormatUtilities;
-
-import javafx.scene.Node;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Window;
 
 /**
  * {@code FileActionHandler} is an interface that contracts Window-derived classes

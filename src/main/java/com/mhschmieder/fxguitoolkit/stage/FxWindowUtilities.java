@@ -30,17 +30,16 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.util.List;
-import java.util.prefs.Preferences;
-
-import org.apache.commons.math3.util.FastMath;
-
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.apache.commons.math3.util.FastMath;
+
+import java.util.List;
+import java.util.prefs.Preferences;
 
 /**
  * {@code FxWindowUtilities} is a static utility class for common window

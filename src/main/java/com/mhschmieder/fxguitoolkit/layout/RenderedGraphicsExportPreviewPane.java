@@ -30,14 +30,11 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import java.awt.EventQueue;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.io.RenderedGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.TextEditor;
 import com.mhschmieder.fxguitoolkit.swing.RenderedGraphicsPanel;
-
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -47,6 +44,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+
+import java.awt.EventQueue;
 
 /**
  * This is the main content pane for Rendered Graphics Export Preview

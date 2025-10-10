@@ -30,16 +30,14 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
-import java.util.Arrays;
-import java.util.Collection;
-
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
+import javafx.scene.paint.Color;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.action.ActionUtils;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
-
-import javafx.scene.paint.Color;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * This is a struct-like container for generic Background Color choices.

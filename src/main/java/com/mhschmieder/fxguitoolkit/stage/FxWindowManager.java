@@ -30,11 +30,11 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.util.List;
-
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.util.List;
 
 /**
  * This is a container class for collections of windows of various types and

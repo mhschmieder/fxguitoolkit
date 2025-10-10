@@ -30,13 +30,6 @@
  */
 package com.mhschmieder.fxguitoolkit.application;
 
-import java.io.File;
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.branding.ProductVersion;
 import com.mhschmieder.commonstoolkit.io.IoUtilities;
@@ -47,11 +40,17 @@ import com.mhschmieder.commonstoolkit.util.SystemUtilities;
 import com.mhschmieder.fxguitoolkit.demo.DemoStage;
 import com.mhschmieder.fxguitoolkit.stage.MainApplicationLoadTask;
 import com.mhschmieder.fxguitoolkit.stage.MainApplicationStage;
-
 import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * An extension of JavaFX Application class that shows how to make use of this

@@ -36,7 +36,6 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.SessionLogViewerToolBar;
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Node;

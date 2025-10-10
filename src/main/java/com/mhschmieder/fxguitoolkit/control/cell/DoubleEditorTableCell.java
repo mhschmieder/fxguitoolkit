@@ -30,14 +30,13 @@
  */
 package com.mhschmieder.fxguitoolkit.control.cell;
 
-import java.util.List;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.control.DoubleEditor;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.TextField;
+
+import java.util.List;
 
 public class DoubleEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Double > {
 

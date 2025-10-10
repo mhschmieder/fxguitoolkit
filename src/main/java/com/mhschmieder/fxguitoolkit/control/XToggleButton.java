@@ -32,7 +32,6 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
-
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

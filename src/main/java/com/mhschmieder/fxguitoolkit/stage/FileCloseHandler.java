@@ -30,15 +30,14 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.io.File;
-import java.util.Optional;
-
 import com.mhschmieder.commonstoolkit.io.FileAction;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
-
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+
+import java.io.File;
+import java.util.Optional;
 
 /**
  * {@code FileCloseHandler} is an interface that contracts Window-derived classes

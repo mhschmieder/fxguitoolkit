@@ -30,10 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import org.apache.commons.math3.util.FastMath;
-
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import org.apache.commons.math3.util.FastMath;
 
 /**
  * This is the task wrapper for waiting on the main application class to load.

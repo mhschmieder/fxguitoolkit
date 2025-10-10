@@ -30,10 +30,10 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
-import java.util.Collection;
-
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.action.ActionGroup;
+
+import java.util.Collection;
 
 /**
  * The ControlsFX ActionGroup doesn't know when a ToggleGroup is required to

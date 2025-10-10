@@ -31,7 +31,6 @@
 package com.mhschmieder.fxguitoolkit.stage;
 
 import com.mhschmieder.commonstoolkit.io.FileExtensions;
-
 import javafx.stage.FileChooser.ExtensionFilter;
 
 /**

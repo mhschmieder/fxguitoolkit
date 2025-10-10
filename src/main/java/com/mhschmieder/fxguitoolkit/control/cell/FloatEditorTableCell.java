@@ -30,14 +30,13 @@
  */
 package com.mhschmieder.fxguitoolkit.control.cell;
 
-import java.util.List;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.control.FloatEditor;
-
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.scene.control.TextField;
+
+import java.util.List;
 
 public class FloatEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Float > {
 

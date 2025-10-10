@@ -30,21 +30,20 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.util.Locale;
-
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.action.ProjectPropertiesActions;
 import com.mhschmieder.fxguitoolkit.control.ProjectPropertiesToolBar;
 import com.mhschmieder.fxguitoolkit.layout.ProjectPropertiesPane;
 import com.mhschmieder.fxguitoolkit.model.ProjectProperties;
-
 import javafx.scene.Node;
 import javafx.scene.control.ToolBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
+
+import java.util.Locale;
 
 public final class ProjectPropertiesEditor extends XStage {
 

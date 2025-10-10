@@ -30,10 +30,10 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
+import javafx.geometry.Dimension2D;
+
 import java.io.File;
 import java.util.prefs.Preferences;
-
-import javafx.geometry.Dimension2D;
 
 /**
  * Defines the contract for methods that all application windows and stages

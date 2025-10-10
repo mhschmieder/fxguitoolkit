@@ -30,12 +30,11 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
+import com.mhschmieder.commonstoolkit.io.FileExtensions;
+import javafx.stage.FileChooser.ExtensionFilter;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.mhschmieder.commonstoolkit.io.FileExtensions;
-
-import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  * {@code ExtensionFilterUtilities} is a static utilities class for generating

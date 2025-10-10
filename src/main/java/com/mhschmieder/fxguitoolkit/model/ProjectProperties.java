@@ -30,15 +30,14 @@
  */
 package com.mhschmieder.fxguitoolkit.model;
 
-import java.time.LocalDate;
-
 import com.mhschmieder.fxgraphicstoolkit.beans.BeanFactory;
-
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
+import java.time.LocalDate;
 
 /**
  * Observable data model for GUI elements associated with Project Properties.

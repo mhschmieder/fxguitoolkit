@@ -30,9 +30,13 @@
  */
 package com.mhschmieder.fxguitoolkit.control.spreadsheet;
 
-import java.text.NumberFormat;
-import java.util.Comparator;
-
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.fxguitoolkit.GuiUtilities;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TablePosition;
 import org.apache.commons.math3.util.FastMath;
 import org.controlsfx.control.spreadsheet.Grid;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
@@ -40,14 +44,8 @@ import org.controlsfx.control.spreadsheet.SpreadsheetColumn;
 import org.controlsfx.control.spreadsheet.SpreadsheetView;
 import org.controlsfx.control.spreadsheet.SpreadsheetViewSelectionModel;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.fxguitoolkit.GuiUtilities;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TablePosition;
+import java.text.NumberFormat;
+import java.util.Comparator;
 
 public abstract class XSpreadsheetView extends SpreadsheetView {
 

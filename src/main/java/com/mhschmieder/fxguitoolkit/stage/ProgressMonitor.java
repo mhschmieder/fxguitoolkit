@@ -30,11 +30,6 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.text.NumberFormat;
-import java.util.List;
-
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
@@ -42,7 +37,6 @@ import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 import com.mhschmieder.mathtoolkit.MathUtilities;
-
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -64,6 +58,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.commons.math3.util.FastMath;
+
+import java.text.NumberFormat;
+import java.util.List;
 
 /**
  * A Progress Monitor for contexts that do not have an observable Task.

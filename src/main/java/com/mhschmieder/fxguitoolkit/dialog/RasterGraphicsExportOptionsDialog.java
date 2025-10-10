@@ -35,7 +35,6 @@ import com.mhschmieder.fxgraphicstoolkit.image.ImageSize;
 import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.control.GraphicsExportOptionsToggleGroup;
 import com.mhschmieder.fxguitoolkit.layout.ImageSizePane;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

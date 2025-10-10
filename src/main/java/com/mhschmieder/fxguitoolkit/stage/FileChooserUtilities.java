@@ -30,6 +30,15 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
+import com.mhschmieder.commonstoolkit.lang.StringUtilities;
+import com.mhschmieder.fxguitoolkit.MessageFactory;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ButtonType;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Window;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -40,16 +49,6 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-
-import com.mhschmieder.commonstoolkit.lang.StringUtilities;
-import com.mhschmieder.fxguitoolkit.MessageFactory;
-
-import javafx.collections.ObservableList;
-import javafx.scene.control.ButtonType;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Window;
 
 public final class FileChooserUtilities {
 

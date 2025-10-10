@@ -30,12 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -44,6 +39,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * The Data Table View is designed as as read-only table viewer for tabular data

@@ -30,18 +30,6 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.io.FileStatus;
@@ -52,7 +40,6 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.xml.XmlUtilities;
 import com.mhschmieder.fxguitoolkit.control.ProjectViewerToolBar;
 import com.qoppa.pdfWriter.PDFDocument;
-
 import javafx.geometry.Insets;
 import javafx.print.Paper;
 import javafx.scene.Node;
@@ -63,6 +50,17 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser.ExtensionFilter;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.math3.util.FastMath;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * An HTML viewer that can export to PDF. It consumes HTML or XML with an XSLT

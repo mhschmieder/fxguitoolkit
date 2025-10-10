@@ -35,7 +35,6 @@ import com.mhschmieder.fxgraphicstoolkit.io.VectorGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.GraphicsExportOptionsToggleGroup;
 import com.mhschmieder.fxguitoolkit.control.TextEditor;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

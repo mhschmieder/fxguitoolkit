@@ -30,13 +30,12 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.action.ActionUtils;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * This is a struct-like container for common Edit actions.

@@ -30,12 +30,12 @@
  */
 package com.mhschmieder.fxguitoolkit.dialog;
 
-import java.util.Optional;
-
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.layout.Background;
+
+import java.util.Optional;
 
 /**
  * {@code XDialog} is an abstract extension of the standard {@link Dialog} that

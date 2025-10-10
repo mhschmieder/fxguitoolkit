@@ -30,10 +30,10 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+
 import java.text.NumberFormat;
 import java.util.Locale;
-
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 /**
  * This class formalizes aspects of list selection that are specific to

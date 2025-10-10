@@ -36,7 +36,6 @@ import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.ControlFactory;
 import com.mhschmieder.fxguitoolkit.control.DoubleEditor;
 import com.mhschmieder.fxguitoolkit.control.OpacitySlider;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Insets;

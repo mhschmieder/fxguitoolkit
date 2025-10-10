@@ -31,7 +31,6 @@
 package com.mhschmieder.fxguitoolkit.control.cell;
 
 import com.mhschmieder.fxguitoolkit.control.XColorPicker;
-
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

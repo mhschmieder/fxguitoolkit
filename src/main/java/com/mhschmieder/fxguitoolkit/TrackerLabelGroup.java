@@ -31,7 +31,6 @@
 package com.mhschmieder.fxguitoolkit;
 
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorUtilities;
-
 import javafx.scene.Group;
 import javafx.scene.chart.ValueAxis;
 import javafx.scene.control.Label;

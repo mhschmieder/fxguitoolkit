@@ -30,20 +30,6 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.text.NumberFormat;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
-import java.util.stream.Stream;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.io.IoUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
@@ -62,7 +48,6 @@ import com.mhschmieder.fxguitoolkit.action.WindowSizeActions;
 import com.mhschmieder.fxguitoolkit.action.XAction;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 import com.mhschmieder.fxguitoolkit.print.PrintManager;
-
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -80,6 +65,19 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.math3.util.FastMath;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.text.NumberFormat;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
+import java.util.stream.Stream;
 
 /**
  * {@code XStage} is a skeletal abstract base class that extends the JavaFX

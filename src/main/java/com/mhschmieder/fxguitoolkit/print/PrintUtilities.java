@@ -30,11 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.print;
 
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
-
 import javafx.geometry.Bounds;
 import javafx.print.JobSettings;
 import javafx.print.PageLayout;
@@ -42,6 +39,7 @@ import javafx.print.PrinterJob;
 import javafx.print.PrinterJob.JobStatus;
 import javafx.scene.Node;
 import javafx.scene.transform.Scale;
+import org.apache.commons.math3.util.FastMath;
 
 /**
  * Utilities for working with JavaFX print capabilities.

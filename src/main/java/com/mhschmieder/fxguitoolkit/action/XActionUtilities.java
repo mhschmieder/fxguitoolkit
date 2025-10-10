@@ -30,18 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.controlsfx.control.action.Action;
-import org.controlsfx.control.action.ActionCheck;
-import org.controlsfx.control.action.ActionGroup;
-import org.controlsfx.control.action.ActionUtils;
-import org.controlsfx.tools.Duplicatable;
-
 import com.mhschmieder.fxguitoolkit.control.MenuUtilities;
-
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.ObjectBinding;
 import javafx.collections.ListChangeListener;
@@ -57,6 +46,15 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.control.action.ActionCheck;
+import org.controlsfx.control.action.ActionGroup;
+import org.controlsfx.control.action.ActionUtils;
+import org.controlsfx.tools.Duplicatable;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * These are wrappers around the ControlsFX ActionUtils methods, taking care of

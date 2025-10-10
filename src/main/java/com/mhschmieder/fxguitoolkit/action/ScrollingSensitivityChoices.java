@@ -30,13 +30,12 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import org.controlsfx.control.action.Action;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.input.ScrollingSensitivity;
+import org.controlsfx.control.action.Action;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * This is a struct-like container for generic Scrolling Sensitivity choices,

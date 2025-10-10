@@ -35,7 +35,6 @@ import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 import com.mhschmieder.fxguitoolkit.stage.MainApplicationLoadTask;
-
 import javafx.animation.FadeTransition;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;

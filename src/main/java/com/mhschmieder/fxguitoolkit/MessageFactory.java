@@ -30,13 +30,13 @@
  */
 package com.mhschmieder.fxguitoolkit;
 
-import java.io.File;
-import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
-
 import com.mhschmieder.commonstoolkit.io.FileAction;
 import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.security.LoginType;
+
+import java.io.File;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
 
 /**
  * {@code MessageFactory} is a factory class for methods related to general

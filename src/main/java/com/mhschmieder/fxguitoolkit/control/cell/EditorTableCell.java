@@ -30,16 +30,15 @@
  */
 package com.mhschmieder.fxguitoolkit.control.cell;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-
 import javafx.application.Platform;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
 

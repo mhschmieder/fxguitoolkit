@@ -31,7 +31,6 @@
 package com.mhschmieder.fxguitoolkit.control.cell;
 
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
-
 import javafx.collections.ObservableList;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableRow;

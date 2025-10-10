@@ -30,16 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.Locale;
-
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
 import com.mhschmieder.commonstoolkit.text.TextUtilities;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -50,6 +43,11 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.StringConverter;
+import org.apache.commons.math3.util.FastMath;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 
 /**
  * Converts between user-edited strings and {@link Double} values.

@@ -30,22 +30,20 @@
  */
 package com.mhschmieder.fxguitoolkit;
 
-import java.io.File;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-
 import com.mhschmieder.commonstoolkit.io.FileMode;
 import com.mhschmieder.commonstoolkit.io.FilenameUtilities;
 import com.mhschmieder.fxguitoolkit.stage.FileActionHandler;
-
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * {@code DragDropUtilities} is a utility class for drag and drop utilities that

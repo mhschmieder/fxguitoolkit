@@ -30,12 +30,11 @@
  */
 package com.mhschmieder.fxguitoolkit.control.cell;
 
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import javafx.geometry.Pos;
+
 import java.text.NumberFormat;
 import java.util.List;
-
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
-
-import javafx.geometry.Pos;
 
 public abstract class NumberEditorTableCell< RT, Number > extends EditorTableCell< RT, Number > {
 

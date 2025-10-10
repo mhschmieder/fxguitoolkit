@@ -30,18 +30,17 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.net.URL;
-
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.NoticePane;
-
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Window;
+
+import java.net.URL;
 
 public class NoticeBox extends Popup {
 

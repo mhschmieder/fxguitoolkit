@@ -30,21 +30,19 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
-import java.util.Collection;
-import java.util.ResourceBundle;
-
-import org.controlsfx.control.action.Action;
-import org.controlsfx.control.action.ActionGroup;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxguitoolkit.SceneGraphUtilities;
 import com.mhschmieder.guitoolkit.component.ButtonUtilities;
-
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.control.action.ActionGroup;
+
+import java.util.Collection;
+import java.util.ResourceBundle;
 
 /**
  * This is a utility class for dealing with common attributes of actions.

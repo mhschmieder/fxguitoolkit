@@ -30,11 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import java.net.URL;
-
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.ControlFactory;
-
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
@@ -43,6 +40,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebView;
+
+import java.net.URL;
 
 public class NoticePane extends VBox {
 

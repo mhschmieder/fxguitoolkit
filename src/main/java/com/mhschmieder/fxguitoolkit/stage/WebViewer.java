@@ -30,16 +30,15 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.net.URL;
-
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+
+import java.net.URL;
 
 public class WebViewer extends XStage {
 

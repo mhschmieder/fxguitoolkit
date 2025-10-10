@@ -30,12 +30,11 @@
  */
 package com.mhschmieder.fxguitoolkit.control.cell;
 
-import java.util.List;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.control.ControlFactory;
-
 import javafx.scene.control.TextField;
+
+import java.util.List;
 
 public class OpacityTableCell< TD >
         extends DoubleEditorTableCell< TD, Double > {

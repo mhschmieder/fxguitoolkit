@@ -30,13 +30,11 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-
 import javafx.collections.FXCollections;
 import javafx.scene.input.KeyEvent;
+import org.apache.commons.math3.util.FastMath;
 
 /**
  * This class formalizes aspects of list selection that are specific to

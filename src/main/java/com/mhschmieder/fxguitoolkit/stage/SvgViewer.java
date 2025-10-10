@@ -30,16 +30,11 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.io.File;
-
-import org.jsoup.nodes.Document;
-
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.shape.SvgUtilities;
 import com.mhschmieder.fxguitoolkit.control.SvgViewerToolBar;
 import com.mhschmieder.fxguitoolkit.control.ZoomPane;
-
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -49,6 +44,9 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import org.jsoup.nodes.Document;
+
+import java.io.File;
 
 /**
  * This is a generic SVG Viewer, used for testing concepts of SVG Import.

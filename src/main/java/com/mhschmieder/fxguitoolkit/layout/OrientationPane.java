@@ -1,7 +1,7 @@
-/**
+/*
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,6 @@ package com.mhschmieder.fxguitoolkit.layout;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.geometry.Orientation;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
-
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -75,9 +74,9 @@ public class OrientationPane extends BorderPane {
                                  final boolean useInvertedbutton ) {
         _orientationToggleGroup = new ToggleGroup();
         _orientationHzRadioButton = GuiUtilities.getRadioButton( Orientation.HORIZONTAL
-                .toPresentationString(), _orientationToggleGroup, true );
+                .label(), _orientationToggleGroup, true );
         _orientationVtRadioButton = GuiUtilities.getRadioButton( Orientation.VERTICAL
-                .toPresentationString(), _orientationToggleGroup, false );
+                .label(), _orientationToggleGroup, false );
 
         _orientationInvertedCheckBox = GuiUtilities.getCheckBox( "Inverted", false ); //$NON-NLS-1$
 
@@ -134,5 +133,4 @@ public class OrientationPane extends BorderPane {
             break;
         }
     }
-
 }

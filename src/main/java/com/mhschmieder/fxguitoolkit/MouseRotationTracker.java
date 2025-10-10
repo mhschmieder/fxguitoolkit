@@ -30,15 +30,13 @@
  */
 package com.mhschmieder.fxguitoolkit;
 
-import java.text.NumberFormat;
-
-import org.apache.commons.math3.util.MathUtils;
-
 import com.mhschmieder.fxgraphicstoolkit.input.RotationManager;
 import com.mhschmieder.physicstoolkit.AngleUnit;
 import com.mhschmieder.physicstoolkit.UnitConversion;
-
 import javafx.scene.chart.ValueAxis;
+import org.apache.commons.math3.util.MathUtils;
+
+import java.text.NumberFormat;
 
 /**
  * A specialized Tracker Label Group used to manage Mouse Rotation Angle display.

@@ -32,7 +32,6 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.action.SimulationActions;
-
 import javafx.scene.control.Button;
 
 public class PredictButtons {

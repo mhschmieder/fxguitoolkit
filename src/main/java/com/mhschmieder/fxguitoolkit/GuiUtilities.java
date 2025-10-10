@@ -30,32 +30,12 @@
  */
 package com.mhschmieder.fxguitoolkit;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-import java.util.ResourceBundle;
-
-import org.apache.commons.math3.util.FastMath;
-import org.controlsfx.control.RangeSlider;
-import org.controlsfx.control.SegmentedButton;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.control.action.ActionUtils;
-import org.controlsfx.control.action.ActionUtils.ActionTextBehavior;
-import org.controlsfx.control.textfield.CustomTextField;
-import org.controlsfx.tools.Borders;
-
 import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorUtilities;
 import com.mhschmieder.fxguitoolkit.control.XToggleButton;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 import com.mhschmieder.guitoolkit.component.ButtonUtilities;
-
 import javafx.application.HostServices;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
@@ -124,6 +104,24 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.apache.commons.math3.util.FastMath;
+import org.controlsfx.control.RangeSlider;
+import org.controlsfx.control.SegmentedButton;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.control.action.ActionUtils;
+import org.controlsfx.control.action.ActionUtils.ActionTextBehavior;
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.tools.Borders;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
+import java.util.Random;
+import java.util.ResourceBundle;
 
 /**
  * {@code GuiUtilities} is a utility class for methods related to top-level

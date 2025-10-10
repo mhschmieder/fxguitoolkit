@@ -30,11 +30,10 @@
  */
 package com.mhschmieder.fxguitoolkit;
 
-import java.text.NumberFormat;
-
+import javafx.util.StringConverter;
 import org.apache.commons.math3.util.FastMath;
 
-import javafx.util.StringConverter;
+import java.text.NumberFormat;
 
 /**
  * For some reason, the Core JavaFX API doesn't include basic type-specific

@@ -30,11 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
-
 import impl.org.controlsfx.skin.SearchableComboBoxSkin;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,6 +39,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Skin;
 import javafx.scene.control.Tooltip;
+import org.apache.commons.math3.util.FastMath;
 
 /**
  * {@code XComboBox} is a concrete base class that serves as a specialization

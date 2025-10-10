@@ -33,7 +33,6 @@ package com.mhschmieder.fxguitoolkit.demo;
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.stage.MainApplicationStage;
-
 import javafx.scene.Node;
 
 /**

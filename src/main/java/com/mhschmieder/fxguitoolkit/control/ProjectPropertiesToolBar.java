@@ -32,7 +32,6 @@ package com.mhschmieder.fxguitoolkit.control;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.action.ProjectPropertiesActions;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.HBox;

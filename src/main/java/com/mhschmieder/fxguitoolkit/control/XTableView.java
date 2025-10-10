@@ -30,18 +30,16 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import java.util.Comparator;
-
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
-
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import org.apache.commons.math3.util.FastMath;
+
+import java.util.Comparator;
 
 /**
  * {@code XTableView} is a concrete base class that serves as a specialization

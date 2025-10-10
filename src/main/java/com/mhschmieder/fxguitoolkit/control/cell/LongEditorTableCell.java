@@ -30,14 +30,13 @@
  */
 package com.mhschmieder.fxguitoolkit.control.cell;
 
-import java.util.List;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.control.LongEditor;
-
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.control.TextField;
+
+import java.util.List;
 
 public class LongEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Long > {
 

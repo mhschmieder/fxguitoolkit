@@ -30,11 +30,6 @@
  */
 package com.mhschmieder.fxguitoolkit;
 
-import java.util.ResourceBundle;
-
-import org.controlsfx.control.SegmentedButton;
-import org.controlsfx.control.action.ActionUtils;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
 import com.mhschmieder.fxguitoolkit.action.XAction;
@@ -43,7 +38,6 @@ import com.mhschmieder.fxguitoolkit.control.NumberSlider;
 import com.mhschmieder.fxguitoolkit.control.XToggleButton;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 import com.mhschmieder.guitoolkit.component.ButtonUtilities;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -58,6 +52,10 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import org.controlsfx.control.SegmentedButton;
+import org.controlsfx.control.action.ActionUtils;
+
+import java.util.ResourceBundle;
 
 // TODO: Split this up into more specialized utilities for Buttons, etc.?
 public class SceneGraphUtilities {

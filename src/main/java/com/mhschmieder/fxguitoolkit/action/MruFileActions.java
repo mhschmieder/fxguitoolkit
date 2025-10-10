@@ -30,15 +30,14 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
-import java.io.File;
-import java.util.Collection;
-import java.util.List;
-
-import org.controlsfx.control.action.Action;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.PreferenceUtilities;
 import com.mhschmieder.fxguitoolkit.control.LabeledControlFactory;
+import org.controlsfx.control.action.Action;
+
+import java.io.File;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * This is a struct-like container for MRU File actions.

@@ -30,8 +30,6 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import java.util.ResourceBundle;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
@@ -49,7 +47,6 @@ import com.mhschmieder.fxguitoolkit.action.XActionGroup;
 import com.mhschmieder.fxguitoolkit.action.XActionUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 import com.mhschmieder.guitoolkit.component.ButtonUtilities;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -62,6 +59,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+
+import java.util.ResourceBundle;
 
 /**
  * {@code LabeledControlFactory} is a factory class for minimizing copy/paste

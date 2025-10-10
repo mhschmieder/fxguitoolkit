@@ -30,20 +30,18 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import java.text.NumberFormat;
-
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.input.ScrollingSensitivity;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
-
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.ScrollEvent;
 import javafx.util.StringConverter;
+import org.apache.commons.math3.util.FastMath;
+
+import java.text.NumberFormat;
 
 /**
  * A catch-all numeric slider base class, with some tricks via special

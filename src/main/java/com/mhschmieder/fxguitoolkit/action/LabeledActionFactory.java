@@ -30,12 +30,11 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
-import java.util.Collection;
-
-import org.controlsfx.control.action.Action;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.control.LabeledControlFactory;
+import org.controlsfx.control.action.Action;
+
+import java.util.Collection;
 
 public class LabeledActionFactory {
 

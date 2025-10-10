@@ -30,14 +30,13 @@
  */
 package com.mhschmieder.fxguitoolkit;
 
-import java.text.NumberFormat;
-
 import com.mhschmieder.commonstoolkit.text.TextUtilities;
 import com.mhschmieder.fxgraphicstoolkit.input.MouseToolManager;
 import com.mhschmieder.fxgraphicstoolkit.input.MouseToolMode;
 import com.mhschmieder.physicstoolkit.DistanceUnit;
-
 import javafx.scene.chart.ValueAxis;
+
+import java.text.NumberFormat;
 
 /**
  * A specialized Tracker Label Group used to manage Cursor Coordinates display.

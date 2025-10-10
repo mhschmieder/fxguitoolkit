@@ -30,15 +30,10 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import java.io.File;
-import java.util.Collection;
-
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.DataTableView;
 import com.mhschmieder.fxguitoolkit.control.DataTableViewerToolBar;
-
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
@@ -48,6 +43,9 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+
+import java.io.File;
+import java.util.Collection;
 
 public class DataTableViewer extends XStage {
 

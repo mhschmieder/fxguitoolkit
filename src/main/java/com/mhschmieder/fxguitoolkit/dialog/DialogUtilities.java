@@ -30,10 +30,6 @@
  */
 package com.mhschmieder.fxguitoolkit.dialog;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Optional;
-
 import com.mhschmieder.commonstoolkit.lang.CharConstants;
 import com.mhschmieder.commonstoolkit.lang.StringUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
@@ -41,7 +37,6 @@ import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
 import com.mhschmieder.fxgraphicstoolkit.io.VectorGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
-
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -51,6 +46,10 @@ import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * {@code DialogUtilities} is a static utilities class for ensuring a reduction

@@ -31,7 +31,6 @@
 package com.mhschmieder.fxguitoolkit.control;
 
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
-
 import javafx.scene.control.Button;
 
 public class NavigationButtons {
