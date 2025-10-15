@@ -78,7 +78,7 @@ import java.util.List;
  * to use this Progress Monitor to support cancellation of a task or thread.
  */
 public class ProgressMonitor extends Stage {
-    
+
     private Label progressBanner;
     private Label progressRatioLabel;
     private ProgressBar progressBar;
@@ -86,7 +86,7 @@ public class ProgressMonitor extends Stage {
     
     private Button cancelButton;
     
-    private int numberOfSteps;
+    private long numberOfSteps;
 
     /**
      * Makes a ProgressMonitor custom Stage with all parameters specified.
@@ -104,7 +104,7 @@ public class ProgressMonitor extends Stage {
                             final String jarRelativeIconFilename,
                             final String bannerText,
                             final String cancelText,
-                            final int pNumberOfSteps,
+                            final long pNumberOfSteps,
                             final double preferredWidth,
                             final double preferredHeight,
                             final SystemType systemType ) {
@@ -137,9 +137,6 @@ public class ProgressMonitor extends Stage {
                               final double preferredWidth,
                               final double preferredHeight,
                               final SystemType systemType ) {
-        final Image minimizeIconImage = ImageUtilities.loadImageAsJarResource(
-                jarRelativeIconFilename, false );
-        
         progressBanner = new Label( bannerText );
         progressBanner.getStyleClass().add( "banner-text" );
        
@@ -170,12 +167,14 @@ public class ProgressMonitor extends Stage {
         gridPane.add( progressIndicator, 3, 1, 1, 2 );
         
         final ButtonBar actionButtonBar = new ButtonBar();
-        actionButtonBar.setPadding( new Insets( 6.0d, 12.0d, 6.0d, 12.0d ) );
+        actionButtonBar.setPadding( new Insets(
+                6.0d, 12.0d, 6.0d, 12.0d ) );
         cancelButton = GuiUtilities.getLabeledButton( 
                 cancelText, null, "cancel-button" );
         ButtonBar.setButtonData( cancelButton, ButtonData.CANCEL_CLOSE );
         cancelButton.setPrefWidth( 160.0d );
-        final ObservableList< Node > actionButtons = actionButtonBar.getButtons();
+        final ObservableList< Node > actionButtons = actionButtonBar
+                .getButtons();
         actionButtons.add( cancelButton );
         
         final BorderPane borderPane = new BorderPane();
@@ -184,10 +183,11 @@ public class ProgressMonitor extends Stage {
         
         final Scene scene = new Scene( borderPane );
         
-        final List< String > jarRelativeStelesheetFilenames = GuiUtilities
+        final List< String > jarRelativeStylesheetFilenames = GuiUtilities
                 .getJarRelativeStylesheetFilenames( systemType );
-        GuiUtilities.addStylesheetsAsJarResource( scene, 
-                                                  jarRelativeStelesheetFilenames );
+        GuiUtilities.addStylesheetsAsJarResource(
+                scene,
+                jarRelativeStylesheetFilenames );
         
         final Color backColor = ColorConstants.WINDOW_BACKGROUND_COLOR;
         final Background background = LayoutFactory.makeRegionBackground( 
@@ -201,16 +201,32 @@ public class ProgressMonitor extends Stage {
         setWidth( preferredWidth );
         setHeight( preferredHeight );
         setResizable( false );
-        
-        if ( minimizeIconImage != null ) {
-            getIcons().add( minimizeIconImage );            
-        }
+
+        setMinimizeIcon( jarRelativeIconFilename );
+
         setTitle( title );
         
         setScene( scene );
         
         // Make sure clicking "X" to close the window triggers Cancel.
         setOnCloseRequest( evt -> cancelButton.fire() );
+    }
+
+    /**
+     * Sets the minimize icon, replacing any icon that was previously set.
+     * <p>
+     * This allows the Progress Monitor to be made once for multiple calling
+     * contexts, with the icon replaced each time the monitor ius used for a
+     * different task. The constructor still allows it to be set, for basic use.
+     *
+     * @param jarRelativeIconFilename the filename of the new minimize icon
+     */
+    public void setMinimizeIcon( final String jarRelativeIconFilename ) {
+        final Image minimizeIconImage = ImageUtilities.loadImageAsJarResource(
+                jarRelativeIconFilename, false );
+        if ( minimizeIconImage != null ) {
+            getIcons().setAll( minimizeIconImage );
+        }
     }
     
     public Button getCancelButton() {
@@ -225,29 +241,31 @@ public class ProgressMonitor extends Stage {
         cancelButton.setText( cancelText );
     }
     
-    public void setNumberOfSteps( final int pNumberOfSteps ) {
+    public void setNumberOfSteps( final long pNumberOfSteps ) {
         numberOfSteps = pNumberOfSteps;
     }
     
-    public void updateProgress( final int currentStep ) {
-        // NOTE: Progress is percentile based, so we round down to avoid
-        //  exceeding 100% at the end, and we clamp to avoid exceeding 1.0.
-        final double progressRatio = FastMath.min( MathUtilities
-                .roundDownDecimal( ( double ) currentStep / numberOfSteps, 2 ),
-                1.0d );
+    public void updateProgress( final long currentStep ) {
+        // NOTE: Progress is percentile based but represented as { 0, 1 }, so we
+        //  round down and clamp to avoid exceeding 100% (represented as 1.0).
+        final int numberOfDecimalPlaces = 2;
+        final double progressRatio = ( double ) currentStep / numberOfSteps;
+        final double progressRatioClamped = FastMath.min( MathUtilities
+                        .roundDownDecimal( progressRatio,
+                                numberOfDecimalPlaces ), 1.0d );
         
         // Show the percentage of executed steps in the Progress Bar.
         // NOTE: For consistency, we always show exactly two decimal places.
         final NumberFormat numberFormat = NumberFormat.getNumberInstance();
         numberFormat.setMinimumIntegerDigits( 1 );
         numberFormat.setMaximumIntegerDigits( 1 );
-        numberFormat.setMinimumFractionDigits( 2 );
-        numberFormat.setMaximumFractionDigits( 2 );
-        progressRatioLabel.setText( NumberFormatUtilities.formatDouble( 
-                progressRatio, numberFormat ) );
+        numberFormat.setMinimumFractionDigits( numberOfDecimalPlaces );
+        numberFormat.setMaximumFractionDigits( numberOfDecimalPlaces );
+        progressRatioLabel.setText( NumberFormatUtilities.formatDouble(
+                progressRatioClamped, numberFormat ) );
         
-        progressBar.setProgress( progressRatio );
-        progressIndicator.setProgress( progressRatio );
+        progressBar.setProgress( progressRatioClamped );
+        progressIndicator.setProgress( progressRatioClamped );
         
         if ( !isShowing() ) {
             show();
