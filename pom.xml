@@ -6,11 +6,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.mhschmieder</groupId>
-    <artifactId>fxspreadsheet</artifactId>
+    <artifactId>fxguitoolkit</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>fxspreadsheet</name>
+	<name>fxguitoolkit</name>
 	<url>https://github.com/mhschmieder/fxspreadsheet</url>
 	<description>Utilities and custom classes for JavaFX based spreadsheet work.</description>
 
