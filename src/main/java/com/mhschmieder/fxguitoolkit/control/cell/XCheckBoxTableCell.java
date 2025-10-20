@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2023, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,25 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-/**
- * This package is for controls derived from ControlsFX SpreadsheetView.
- */
-package main.java.com.mhschmieder.fxspreadsheet.control;
+package com.mhschmieder.fxguitoolkit.control.cell;
+
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.CheckBoxTableCell;
+
+public abstract class XCheckBoxTableCell< RT, VT >  
+    extends CheckBoxTableCell< RT, Boolean > implements CellValidator< RT > {
+
+    private final void setValue() {
+        // Save edits from the table cell's controller to the property bean.
+        final TableView< RT > tableView = getTableView();
+        final TableRow< RT > tableRow = getTableRow();
+        validateCellValue( tableView, tableRow );
+    }
+    
+    @Override 
+    public void setBeanProperty( final RT selectedRecord ) {
+        // NOTE: Generic check boxes may not need to validate selected values,
+        //  so a default no-op implementation is provided in this base class.
+    }
+}
