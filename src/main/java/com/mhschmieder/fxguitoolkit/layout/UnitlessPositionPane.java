@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.DoubleEditor;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;

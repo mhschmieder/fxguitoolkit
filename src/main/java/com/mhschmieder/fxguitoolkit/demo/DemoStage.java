@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit.demo;
 
-import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.stage.MainApplicationStage;
+import com.mhschmieder.jcommons.branding.ProductBranding;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.scene.Node;
 
 /**

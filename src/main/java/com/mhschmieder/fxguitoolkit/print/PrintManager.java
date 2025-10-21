@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit.print;
 
-import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
+import com.mhschmieder.jcommons.util.SystemType;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.transform.Scale;

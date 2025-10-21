@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.commonstoolkit.util.PreferenceUtilities;
 import com.mhschmieder.fxguitoolkit.control.LabeledControlFactory;
+import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jcommons.util.PreferenceUtilities;
 import org.controlsfx.control.action.Action;
 
 import java.io.File;

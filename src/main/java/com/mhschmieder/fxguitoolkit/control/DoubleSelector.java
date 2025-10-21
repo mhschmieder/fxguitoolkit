@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.jcommons.text.NumberFormatUtilities;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.collections.FXCollections;
 import javafx.scene.input.KeyEvent;
 import org.apache.commons.math3.util.FastMath;

@@ -30,12 +30,12 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.io.LogUtilities;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.SessionLogViewerToolBar;
+import com.mhschmieder.jcommons.branding.ProductBranding;
+import com.mhschmieder.jcommons.io.LogUtilities;
+import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jcommons.util.SystemType;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Node;

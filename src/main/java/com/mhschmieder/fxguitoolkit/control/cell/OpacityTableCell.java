@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control.cell;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.control.ControlFactory;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.scene.control.TextField;
 
 import java.util.List;

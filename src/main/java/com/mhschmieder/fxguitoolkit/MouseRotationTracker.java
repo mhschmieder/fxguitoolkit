@@ -31,8 +31,8 @@
 package com.mhschmieder.fxguitoolkit;
 
 import com.mhschmieder.fxgraphicstoolkit.input.RotationManager;
-import com.mhschmieder.physicstoolkit.AngleUnit;
-import com.mhschmieder.physicstoolkit.UnitConversion;
+import com.mhschmieder.jphysics.AngleUnit;
+import com.mhschmieder.jphysics.UnitConversion;
 import javafx.scene.chart.ValueAxis;
 import org.apache.commons.math3.util.MathUtils;
 

@@ -30,12 +30,12 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.action.ProjectPropertiesActions;
 import com.mhschmieder.fxguitoolkit.control.ProjectPropertiesToolBar;
 import com.mhschmieder.fxguitoolkit.layout.ProjectPropertiesPane;
 import com.mhschmieder.fxguitoolkit.model.ProjectProperties;
+import com.mhschmieder.jcommons.branding.ProductBranding;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.scene.Node;
 import javafx.scene.control.ToolBar;
 import javafx.scene.input.KeyCode;

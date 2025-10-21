@@ -30,10 +30,10 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageSize;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.TextSelector;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

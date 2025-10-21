@@ -30,12 +30,12 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.input.ScrollingSensitivity;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.ControlFactory;
 import com.mhschmieder.fxguitoolkit.control.DoubleEditor;
 import com.mhschmieder.fxguitoolkit.control.OpacitySlider;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Insets;

@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
+import com.mhschmieder.jcommons.branding.ProductBranding;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.scene.control.MenuBar;

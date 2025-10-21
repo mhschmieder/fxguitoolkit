@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;

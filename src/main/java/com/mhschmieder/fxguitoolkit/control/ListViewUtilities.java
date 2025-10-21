@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.lang.Labeled;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.jcommons.lang.Labeled;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;

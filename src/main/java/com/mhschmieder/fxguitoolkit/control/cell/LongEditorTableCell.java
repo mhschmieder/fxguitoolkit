@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.control.cell;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.control.LongEditor;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.control.TextField;

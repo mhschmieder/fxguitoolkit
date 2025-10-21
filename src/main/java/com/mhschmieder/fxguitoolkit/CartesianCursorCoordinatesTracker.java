@@ -33,7 +33,7 @@ package com.mhschmieder.fxguitoolkit;
 import com.mhschmieder.fxgraphicstoolkit.geometry.GeometryUtilities;
 import com.mhschmieder.fxgraphicstoolkit.input.ClickLocation;
 import com.mhschmieder.fxgraphicstoolkit.input.MouseToolManager;
-import com.mhschmieder.physicstoolkit.DistanceUnit;
+import com.mhschmieder.jphysics.DistanceUnit;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.chart.ValueAxis;

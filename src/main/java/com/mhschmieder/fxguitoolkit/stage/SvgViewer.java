@@ -30,11 +30,11 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.shape.SvgUtilities;
 import com.mhschmieder.fxguitoolkit.control.SvgViewerToolBar;
 import com.mhschmieder.fxguitoolkit.control.ZoomPane;
+import com.mhschmieder.jcommons.branding.ProductBranding;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;

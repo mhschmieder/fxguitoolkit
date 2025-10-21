@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
-import com.mhschmieder.commonstoolkit.text.TextUtilities;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
+import com.mhschmieder.jcommons.text.NumberFormatUtilities;
+import com.mhschmieder.jcommons.text.TextUtilities;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

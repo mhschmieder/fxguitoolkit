@@ -30,12 +30,6 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.io.IoUtilities;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
-import com.mhschmieder.commonstoolkit.util.PreferenceUtilities;
-import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
 import com.mhschmieder.fxgraphicstoolkit.io.VectorGraphicsExportOptions;
@@ -48,6 +42,12 @@ import com.mhschmieder.fxguitoolkit.action.WindowSizeActions;
 import com.mhschmieder.fxguitoolkit.action.XAction;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 import com.mhschmieder.fxguitoolkit.print.PrintManager;
+import com.mhschmieder.jcommons.branding.ProductBranding;
+import com.mhschmieder.jcommons.io.IoUtilities;
+import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jcommons.util.GlobalUtilities;
+import com.mhschmieder.jcommons.util.PreferenceUtilities;
+import com.mhschmieder.jcommons.util.SystemType;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;

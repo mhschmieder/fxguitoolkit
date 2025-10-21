@@ -30,13 +30,13 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
-import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
-import com.mhschmieder.mathtoolkit.MathUtilities;
+import com.mhschmieder.jcommons.text.NumberFormatUtilities;
+import com.mhschmieder.jcommons.util.SystemType;
+import com.mhschmieder.jmath.MathUtilities;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;

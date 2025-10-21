@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

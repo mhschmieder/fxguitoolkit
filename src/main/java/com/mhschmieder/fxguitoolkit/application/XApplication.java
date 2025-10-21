@@ -30,16 +30,16 @@
  */
 package com.mhschmieder.fxguitoolkit.application;
 
-import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.branding.ProductVersion;
-import com.mhschmieder.commonstoolkit.io.IoUtilities;
-import com.mhschmieder.commonstoolkit.io.LogUtilities;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
-import com.mhschmieder.commonstoolkit.util.SystemUtilities;
 import com.mhschmieder.fxguitoolkit.demo.DemoStage;
 import com.mhschmieder.fxguitoolkit.stage.MainApplicationLoadTask;
 import com.mhschmieder.fxguitoolkit.stage.MainApplicationStage;
+import com.mhschmieder.jcommons.branding.ProductBranding;
+import com.mhschmieder.jcommons.branding.ProductVersion;
+import com.mhschmieder.jcommons.io.IoUtilities;
+import com.mhschmieder.jcommons.io.LogUtilities;
+import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jcommons.util.GlobalUtilities;
+import com.mhschmieder.jcommons.util.SystemUtilities;
 import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.application.Platform;

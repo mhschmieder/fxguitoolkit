@@ -30,11 +30,11 @@
  */
 package com.mhschmieder.fxguitoolkit.layout;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.io.RenderedGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.TextEditor;
 import com.mhschmieder.fxguitoolkit.swing.RenderedGraphicsPanel;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

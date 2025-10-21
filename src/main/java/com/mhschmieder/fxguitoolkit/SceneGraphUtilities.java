@@ -30,14 +30,14 @@
  */
 package com.mhschmieder.fxguitoolkit;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
 import com.mhschmieder.fxguitoolkit.action.XAction;
 import com.mhschmieder.fxguitoolkit.control.DoubleEditor;
 import com.mhschmieder.fxguitoolkit.control.NumberSlider;
 import com.mhschmieder.fxguitoolkit.control.XToggleButton;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 import com.mhschmieder.guitoolkit.component.ButtonUtilities;
+import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jcommons.util.GlobalUtilities;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;

@@ -30,15 +30,15 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.io.FileMode;
-import com.mhschmieder.commonstoolkit.io.FileStatus;
-import com.mhschmieder.commonstoolkit.io.FileUtilities;
-import com.mhschmieder.commonstoolkit.io.FilenameUtilities;
-import com.mhschmieder.commonstoolkit.io.IoUtilities;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.commonstoolkit.xml.XmlUtilities;
 import com.mhschmieder.fxguitoolkit.control.ProjectViewerToolBar;
+import com.mhschmieder.jcommons.branding.ProductBranding;
+import com.mhschmieder.jcommons.io.FileMode;
+import com.mhschmieder.jcommons.io.FileStatus;
+import com.mhschmieder.jcommons.io.FileUtilities;
+import com.mhschmieder.jcommons.io.FilenameUtilities;
+import com.mhschmieder.jcommons.io.IoUtilities;
+import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jcommons.xml.XmlUtilities;
 import com.qoppa.pdfWriter.PDFDocument;
 import javafx.geometry.Insets;
 import javafx.print.Paper;

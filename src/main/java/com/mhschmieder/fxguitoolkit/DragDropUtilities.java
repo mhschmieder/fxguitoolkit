@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit;
 
-import com.mhschmieder.commonstoolkit.io.FileMode;
-import com.mhschmieder.commonstoolkit.io.FilenameUtilities;
 import com.mhschmieder.fxguitoolkit.stage.FileActionHandler;
+import com.mhschmieder.jcommons.io.FileMode;
+import com.mhschmieder.jcommons.io.FilenameUtilities;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.input.DragEvent;

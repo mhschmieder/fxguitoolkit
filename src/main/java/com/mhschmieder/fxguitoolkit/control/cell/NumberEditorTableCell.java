@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control.cell;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.geometry.Pos;
 
 import java.text.NumberFormat;

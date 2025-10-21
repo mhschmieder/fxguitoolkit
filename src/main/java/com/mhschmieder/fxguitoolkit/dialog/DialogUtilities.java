@@ -30,13 +30,13 @@
  */
 package com.mhschmieder.fxguitoolkit.dialog;
 
-import com.mhschmieder.commonstoolkit.lang.CharConstants;
-import com.mhschmieder.commonstoolkit.lang.StringUtilities;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
 import com.mhschmieder.fxgraphicstoolkit.io.VectorGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
+import com.mhschmieder.jcommons.lang.CharConstants;
+import com.mhschmieder.jcommons.lang.StringUtilities;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

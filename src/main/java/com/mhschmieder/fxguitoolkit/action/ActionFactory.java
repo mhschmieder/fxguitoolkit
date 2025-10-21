@@ -30,12 +30,12 @@
  */
 package com.mhschmieder.fxguitoolkit.action;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
-import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
-import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxguitoolkit.SceneGraphUtilities;
 import com.mhschmieder.guitoolkit.component.ButtonUtilities;
+import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jcommons.util.GlobalUtilities;
+import com.mhschmieder.jcommons.util.SystemType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import org.controlsfx.control.action.Action;

@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit;
 
-import com.mhschmieder.commonstoolkit.io.FileAction;
-import com.mhschmieder.commonstoolkit.io.FileMode;
-import com.mhschmieder.commonstoolkit.security.LoginType;
+import com.mhschmieder.jcommons.io.FileAction;
+import com.mhschmieder.jcommons.io.FileMode;
+import com.mhschmieder.jcommons.security.LoginType;
 
 import java.io.File;
 import java.nio.file.InvalidPathException;

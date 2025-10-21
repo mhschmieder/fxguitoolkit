@@ -30,11 +30,11 @@
  */
 package com.mhschmieder.fxguitoolkit.dialog;
 
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.io.VectorGraphicsExportOptions;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.control.GraphicsExportOptionsToggleGroup;
 import com.mhschmieder.fxguitoolkit.control.TextEditor;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxguitoolkit.GuiUtilities;
 import com.mhschmieder.fxguitoolkit.layout.NoticePane;
+import com.mhschmieder.jcommons.util.SystemType;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;

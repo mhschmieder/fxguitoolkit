@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxguitoolkit.control;
 
-import com.mhschmieder.commonstoolkit.util.GlobalUtilities;
+import com.mhschmieder.jcommons.util.GlobalUtilities;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

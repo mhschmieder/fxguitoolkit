@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import com.mhschmieder.commonstoolkit.lang.StringUtilities;
 import com.mhschmieder.fxguitoolkit.MessageFactory;
+import com.mhschmieder.jcommons.lang.StringUtilities;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
 import javafx.stage.DirectoryChooser;

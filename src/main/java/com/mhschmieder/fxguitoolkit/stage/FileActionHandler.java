@@ -30,13 +30,6 @@
  */
 package com.mhschmieder.fxguitoolkit.stage;
 
-import com.mhschmieder.commonstoolkit.io.CsvUtilities;
-import com.mhschmieder.commonstoolkit.io.FileMode;
-import com.mhschmieder.commonstoolkit.io.FileMover;
-import com.mhschmieder.commonstoolkit.io.FileStatus;
-import com.mhschmieder.commonstoolkit.io.FilenameUtilities;
-import com.mhschmieder.commonstoolkit.io.LogUtilities;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageSize;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.io.RasterGraphicsExportOptions;
@@ -46,6 +39,13 @@ import com.mhschmieder.fxguitoolkit.MessageFactory;
 import com.mhschmieder.fxguitoolkit.dialog.DialogUtilities;
 import com.mhschmieder.graphicstoolkit.image.ImageConversionUtilities;
 import com.mhschmieder.graphicstoolkit.image.ImageFormatUtilities;
+import com.mhschmieder.jcommons.io.CsvUtilities;
+import com.mhschmieder.jcommons.io.FileMode;
+import com.mhschmieder.jcommons.io.FileMover;
+import com.mhschmieder.jcommons.io.FileStatus;
+import com.mhschmieder.jcommons.io.FilenameUtilities;
+import com.mhschmieder.jcommons.io.LogUtilities;
+import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.scene.Node;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;

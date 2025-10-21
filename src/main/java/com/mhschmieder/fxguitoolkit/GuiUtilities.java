@@ -30,12 +30,12 @@
  */
 package com.mhschmieder.fxguitoolkit;
 
-import com.mhschmieder.commonstoolkit.util.SystemType;
 import com.mhschmieder.fxgraphicstoolkit.image.ImageUtilities;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorUtilities;
 import com.mhschmieder.fxguitoolkit.control.XToggleButton;
 import com.mhschmieder.fxguitoolkit.layout.LayoutFactory;
 import com.mhschmieder.guitoolkit.component.ButtonUtilities;
+import com.mhschmieder.jcommons.util.SystemType;
 import javafx.application.HostServices;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
