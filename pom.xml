@@ -89,6 +89,24 @@
             <version>0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.qoppa.jpdfwriter/jpdfwriter -->
+        <dependency>
+            <groupId>com.qoppa.jpdfwriter</groupId>
+            <artifactId>jpdfwriter</artifactId>
+            <version>v2021R1.00</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.hynnet/pdfjet -->
+        <dependency>
+            <groupId>com.hynnet</groupId>
+            <artifactId>pdfjet</artifactId>
+            <version>5.75</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.16.1</version>
+        </dependency>
     </dependencies>
 
 	<build>
