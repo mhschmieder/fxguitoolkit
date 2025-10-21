@@ -44,8 +44,7 @@ public class LabeledActionFactory {
     private LabeledActionFactory() {}
 
     // NOTE: We must substitute "." for resource directory tree delimiters.
-    @SuppressWarnings("nls") public static final String BUNDLE_NAME =
-            "properties.CommonActionLabels";
+    public static final String BUNDLE_NAME = "properties.CommonActionLabels";
 
     // TODO: Load an icon that is a stylized representation of the MRU number.
     @SuppressWarnings("nls")
