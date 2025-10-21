@@ -1495,7 +1495,7 @@ public interface FileActionHandler {
     }
 
     // NOTE: This default implementation is a no-op as the generic version
-    //  would introduce a circular dependency with jfxconvertertoolkit.
+    //  would introduce a circular dependency with jfxconverter.
     default FileStatus exportToEps( final File tempFile,
                                     final File file,
                                     final FileMode fileMode ) {
@@ -1503,7 +1503,7 @@ public interface FileActionHandler {
     }
 
     // NOTE: This default implementation is a no-op as the generic version
-    //  would introduce a circular dependency with jfxconvertertoolkit.
+    //  would introduce a circular dependency with jfxconverter.
     default FileStatus exportToPdf( final File tempFile,
                                     final File file,
                                     final FileMode fileMode ) {
@@ -1511,7 +1511,7 @@ public interface FileActionHandler {
     }
         
     // NOTE: This default implementation is a no-op as the generic version
-    //  would introduce a circular dependency with jfxconvertertoolkit.
+    //  would introduce a circular dependency with jfxconverter.
     default FileStatus exportToPpt( final File tempFile,
                                     final File file,
                                     final FileMode fileMode ) {
@@ -1519,7 +1519,7 @@ public interface FileActionHandler {
     }
     
     // NOTE: This default implementation is a no-op as the generic version
-    //  would introduce a circular dependency with jfxconvertertoolkit.
+    //  would introduce a circular dependency with jfxconverter.
     default FileStatus exportToSvg( final File tempFile,
                                     final File file,
                                     final FileMode fileMode ) {
