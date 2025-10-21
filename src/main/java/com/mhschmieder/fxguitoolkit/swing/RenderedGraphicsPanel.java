@@ -1,7 +1,7 @@
-/**
+/*
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ public abstract class RenderedGraphicsPanel extends TitledVectorizationXPanel {
     /**
      *
      */
-    private static final long                      serialVersionUID = -946301966269233300L;
+    private static final long serialVersionUID = -946301966269233300L;
 
     // Cache the most recent Rendered Graphics Export Options.
     protected RenderedGraphicsExportOptions _renderedGraphicsExportOptions;

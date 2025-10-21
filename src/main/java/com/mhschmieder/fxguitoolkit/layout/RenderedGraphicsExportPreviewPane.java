@@ -1,7 +1,7 @@
-/**
+/*
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,18 +53,18 @@ import java.awt.EventQueue;
  */
 public final class RenderedGraphicsExportPreviewPane extends BorderPane {
 
-    protected HBox                                 _titleBox;
-    protected TextEditor                           _titleEditor;
+    private HBox                                 _titleBox;
+    private TextEditor                           _titleEditor;
 
     // Cache the Rendered Graphics Export Options.
-    protected RenderedGraphicsExportOptions        _renderedGraphicsExportOptions;
+    private RenderedGraphicsExportOptions        _renderedGraphicsExportOptions;
 
     // Cache the Swing Node wrapper for the Graphics Export Source, for
     // background fills.
-    protected SwingNode                            _graphicsPreviewNode;
+    private SwingNode                            _graphicsPreviewNode;
 
     // Maintain a Swing Component reference for Graphics Export actions.
-    protected RenderedGraphicsPanel                _renderedGraphicsExportSource;
+    private RenderedGraphicsPanel                _renderedGraphicsExportSource;
 
     // Cache the Client Properties (System Type, Locale, Client Type, etc.).
     public ClientProperties                        _clientProperties;
@@ -113,12 +113,15 @@ public final class RenderedGraphicsExportPreviewPane extends BorderPane {
         setPadding( new Insets( 6.0d, 6.0d, 6.0d, 6.0d ) );
 
         // Bind the Title Editor to its associated property.
-        _titleEditor.textProperty()
-                .bindBidirectional( _renderedGraphicsExportOptions.titleProperty() );
+        _titleEditor.textProperty().bindBidirectional(
+                _renderedGraphicsExportOptions.titleProperty() );
 
         // Load the change listener for the Export Auxiliary Panel property.
         _renderedGraphicsExportOptions.exportAuxiliaryPanelProperty()
-                .addListener( ( observable, oldValue, newValue ) -> {
+                .addListener(
+                        ( observable,
+                          oldValue,
+                          newValue ) -> {
                     // Update the visibility of the associated panel.
                     EventQueue.invokeLater( () -> _renderedGraphicsExportSource
                             .setAuxiliaryPanelVisible( newValue ) );
@@ -126,15 +129,20 @@ public final class RenderedGraphicsExportPreviewPane extends BorderPane {
 
         // Load the change listener for the Export Information Tables property.
         _renderedGraphicsExportOptions.exportInformationTablesProperty()
-                .addListener( ( observable, oldValue, newValue ) -> {
+                .addListener(
+                        ( observable,
+                          oldValue,
+                          newValue ) -> {
                     // Update the visibility of the associated panel.
                     EventQueue.invokeLater( () -> _renderedGraphicsExportSource
                             .setInformationTablesVisible( newValue ) );
                 } );
 
         // Load the change listener for the Export Optional Item property.
-        _renderedGraphicsExportOptions.exportOptionalItemProperty()
-                .addListener( ( observable, oldValue, newValue ) -> {
+        _renderedGraphicsExportOptions.exportOptionalItemProperty().addListener(
+                ( observable,
+                  oldValue,
+                  newValue ) -> {
                     // Update the visibility of the associated panel.
                     EventQueue.invokeLater( () -> _renderedGraphicsExportSource
                             .setOptionalItemVisible( newValue ) );
@@ -148,7 +156,8 @@ public final class RenderedGraphicsExportPreviewPane extends BorderPane {
      * @param exportedGraphicsPreviewNode
      *            Exported graphics preview node
      */
-    private void setExportedGraphicsPreviewNode( final Node exportedGraphicsPreviewNode ) {
+    private void setExportedGraphicsPreviewNode(
+            final Node exportedGraphicsPreviewNode ) {
         // First, wrap the content in a scroll pane so the user has more
         // flexibility and to compensate for small laptop screens.
         final ScrollPane scrollPane = new ScrollPane();
@@ -169,7 +178,8 @@ public final class RenderedGraphicsExportPreviewPane extends BorderPane {
         _titleBox.setBackground( background );
     }
 
-    public void setRenderedGraphicsExportOptions( final RenderedGraphicsExportOptions renderedGraphicsExportOptions ) {
+    public void setRenderedGraphicsExportOptions(
+            final RenderedGraphicsExportOptions renderedGraphicsExportOptions ) {
         // Update the current export options (usually from preferences).
         _renderedGraphicsExportOptions
                 .setRenderedGraphicsExportOptions( renderedGraphicsExportOptions );
@@ -181,7 +191,8 @@ public final class RenderedGraphicsExportPreviewPane extends BorderPane {
      * @param renderedGraphicsExportSource
      *            The Swing container for the layout group to be exported
      */
-    public void setRenderedGraphicsExportSource( final RenderedGraphicsPanel renderedGraphicsExportSource ) {
+    public void setRenderedGraphicsExportSource(
+            final RenderedGraphicsPanel renderedGraphicsExportSource ) {
         // Cache the Graphics Export Source locally, for reference by panel
         // visibility change listeners.
         _renderedGraphicsExportSource = renderedGraphicsExportSource;
@@ -195,9 +206,7 @@ public final class RenderedGraphicsExportPreviewPane extends BorderPane {
 
     public void updateExportOptionsView() {
         // Make sure the previously selected options immediately take hold.
-        EventQueue.invokeLater( () -> {
-            _renderedGraphicsExportSource
-                    .updateExportOptionsView( _renderedGraphicsExportOptions );
-        } );
+        EventQueue.invokeLater( () -> _renderedGraphicsExportSource
+                .updateExportOptionsView( _renderedGraphicsExportOptions ) );
     }
 }

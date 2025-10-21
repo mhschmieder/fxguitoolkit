@@ -1,4 +1,4 @@
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2020, 2025 Mark Schmieder
@@ -50,10 +50,9 @@ import java.util.Collection;
  */
 public final class BackgroundColorChoices {
 
-    public static final String DEFAULT_BACKGROUND_COLOR_NAME =
-                                                             getBackgroundColorName( ColorConstants.DEFAULT_BACKGROUND_COLOR );
+    public static final String DEFAULT_BACKGROUND_COLOR_NAME
+            = getBackgroundColorName( ColorConstants.DEFAULT_BACKGROUND_COLOR );
 
-    @SuppressWarnings("nls")
     public static Color getBackgroundColor( final String backgroundColorName ) {
         Color backgroundColor = ColorConstants.DEFAULT_BACKGROUND_COLOR;
         
