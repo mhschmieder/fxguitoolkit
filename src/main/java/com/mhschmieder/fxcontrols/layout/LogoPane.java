@@ -32,7 +32,7 @@ package com.mhschmieder.fxcontrols.layout;
 
 import com.mhschmieder.fxgraphics.image.LogoUtilities;
 import com.mhschmieder.fxgraphics.paint.ColorUtilities;
-import com.mhschmieder.fxpdfexport.FxPdfTools;
+import com.mhschmieder.fxpdfwriter.FxPdfTools;
 import com.pdfjet.Image;
 import com.pdfjet.PDF;
 import com.pdfjet.Page;
