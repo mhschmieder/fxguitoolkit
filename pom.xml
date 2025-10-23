@@ -6,13 +6,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.mhschmieder</groupId>
-    <artifactId>fxguitoolkit</artifactId>
+    <artifactId>fxcontrols</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>fxguitoolkit</name>
-	<url>https://github.com/mhschmieder/fxspreadsheet</url>
-	<description>Utilities and custom classes for JavaFX based spreadsheet work.</description>
+	<name>fxcontrols</name>
+	<url>https://github.com/mhschmieder/fxcontrols</url>
+	<description>Utilities and custom classes for JavaFX based GUI work.</description>
 
 	<licenses>
 		<license>
@@ -23,9 +23,9 @@
 	</licenses>
 
 	<scm>
-		<url>https://github.com/mhschmieder/fxspreadsheet</url>
-		<connection>scm:git:git://github.com/mhschmieder/fxspreadsheet.git</connection>
-		<developerConnection>scm:git:git@github.com:mhschmieder/fxspreadsheet.git</developerConnection>
+		<url>https://github.com/mhschmieder/fxcontrols</url>
+		<connection>scm:git:git://github.com/mhschmieder/fxcontrols.git</connection>
+		<developerConnection>scm:git:git@github.com:mhschmieder/fxcontrols.git</developerConnection>
 	</scm>
 
 	<developers>
@@ -67,7 +67,7 @@
         </dependency>
         <dependency>
             <groupId>com.mhschmieder</groupId>
-            <artifactId>fxgraphicstoolkit</artifactId>
+            <artifactId>fxgraphics</artifactId>
             <version>0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
@@ -79,13 +79,13 @@
         </dependency>
         <dependency>
             <groupId>com.mhschmieder</groupId>
-            <artifactId>guitoolkit</artifactId>
+            <artifactId>jcontrols</artifactId>
             <version>0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.mhschmieder</groupId>
-            <artifactId>convertertoolkit</artifactId>
+            <artifactId>jvectorexport</artifactId>
             <version>0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
