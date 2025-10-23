@@ -30,7 +30,6 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.fxcontrols.GuiUtilities;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import impl.org.controlsfx.skin.SearchableComboBoxSkin;
 import javafx.collections.FXCollections;
@@ -174,11 +173,11 @@ public class XComboBox< T > extends ComboBox< T > {
 
         if ( applyToolkitCss ) {
             // Set the full list of this toolkit's custom Combo Box Properties.
-            GuiUtilities.setComboBoxProperties( this );
+            ControlUtilities.setComboBoxProperties( this );
         }
         else {
             // Apply drop-shadow effects when the mouse enters this Combo Box.
-            GuiUtilities.applyDropShadowEffect( this );
+            ControlUtilities.applyDropShadowEffect( this );
         }
 
         // Attempt to support auto-complete for all list data types.

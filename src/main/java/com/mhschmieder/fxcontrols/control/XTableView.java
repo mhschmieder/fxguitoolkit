@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.fxcontrols.layout.LayoutFactory;
+import com.mhschmieder.fxcontrols.util.RegionUtilities;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -104,7 +104,7 @@ public class XTableView< TD > extends TableView< TD > {
      *
      * @since 1.0
      */
-    private final void initTable() {
+    private void initTable() {
         // Replace the default "No content..." placeholder label with a blank,
         // white pane. This is as close as we can get to the look of an empty
         // table that matches the table's color scheme, but without column or
@@ -114,7 +114,7 @@ public class XTableView< TD > extends TableView< TD > {
         // used until the default placeholder label is replaced by a table.
         // There does not appear to be another way to override the default.
         final Pane placeholder = new Pane();
-        final Background background = LayoutFactory.makeRegionBackground( 
+        final Background background = RegionUtilities.makeRegionBackground(
                 Color.WHITE );
         placeholder.setBackground( background );
         setPlaceholder( placeholder );
@@ -409,7 +409,8 @@ public class XTableView< TD > extends TableView< TD > {
      * @since 1.0
      */
     public void setForegroundFromBackground( final Color backColor ) {
-        final Background background = LayoutFactory.makeRegionBackground( backColor );
+        final Background background = RegionUtilities.makeRegionBackground(
+                backColor );
         setBackground( background );
     }
 }

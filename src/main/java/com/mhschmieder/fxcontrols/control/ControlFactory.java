@@ -30,8 +30,7 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.fxcontrols.GuiUtilities;
-import com.mhschmieder.fxcontrols.layout.LayoutFactory;
+import com.mhschmieder.fxcontrols.util.RegionUtilities;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextArea;
@@ -207,11 +206,11 @@ public class ControlFactory {
 
         if ( applyToolkitCss ) {
             // Apply drop-shadow effects when the mouse enters this Node.
-            GuiUtilities.applyDropShadowEffect( doubleSpinner );
+            ControlUtilities.applyDropShadowEffect( doubleSpinner );
         }
         else {
             // Set the full list of shared Spinner Properties (CSS etc.).
-            GuiUtilities.setSpinnerProperties( doubleSpinner );
+            ControlUtilities.setSpinnerProperties( doubleSpinner );
         }
 
         // Return the fully initialized double Spinner.
@@ -245,11 +244,11 @@ public class ControlFactory {
 
         if ( applyToolkitCss ) {
             // Apply drop-shadow effects when the mouse enters this Node.
-            GuiUtilities.applyDropShadowEffect( integerSpinner );
+            ControlUtilities.applyDropShadowEffect( integerSpinner );
         }
         else {
             // Set the full list of shared Spinner Properties (CSS etc.).
-            GuiUtilities.setSpinnerProperties( integerSpinner );
+            ControlUtilities.setSpinnerProperties( integerSpinner );
         }
 
         // Return the fully initialized integer Spinner.
@@ -266,7 +265,8 @@ public class ControlFactory {
         noticeTextArea.setPrefColumnCount( numberOfColumns );
         noticeTextArea.setPrefRowCount( numberOfRows );
 
-        final Background background = LayoutFactory.makeRegionBackground( NOTES_BACKGROUND_COLOR );
+        final Background background = RegionUtilities.makeRegionBackground(
+                NOTES_BACKGROUND_COLOR );
         noticeTextArea.setBackground( background );
 
         return noticeTextArea;
@@ -280,7 +280,8 @@ public class ControlFactory {
         noticeTextFlow.setMaxWidth( numberOfRows * 12d );
         noticeTextFlow.setMaxHeight( numberOfColumns * 12d );
 
-        final Background background = LayoutFactory.makeRegionBackground( NOTES_BACKGROUND_COLOR );
+        final Background background = RegionUtilities.makeRegionBackground(
+                NOTES_BACKGROUND_COLOR );
         noticeTextFlow.setBackground( background );
 
         return noticeTextFlow;

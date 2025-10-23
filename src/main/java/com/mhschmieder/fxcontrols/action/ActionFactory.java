@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxcontrols.action;
 
-import com.mhschmieder.fxcontrols.SceneGraphUtilities;
+import com.mhschmieder.fxcontrols.control.ControlUtilities;
 import com.mhschmieder.fxgraphics.image.ImageUtilities;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jcommons.util.GlobalUtilities;
@@ -60,7 +60,7 @@ public final class ActionFactory {
                                               final String groupName,
                                               final String itemName ) {
         // Get the action's label from the resource bundle, if applicable.
-        final String menuItemLabel = SceneGraphUtilities
+        final String menuItemLabel = ControlUtilities
                 .getLabeledControlLabel( clientProperties, bundleName, groupName, itemName, true );
 
         if ( ( menuItemLabel != null ) && !menuItemLabel.trim().isEmpty() ) {

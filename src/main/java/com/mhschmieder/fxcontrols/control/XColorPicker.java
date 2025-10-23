@@ -30,7 +30,6 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.fxcontrols.GuiUtilities;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventTarget;
@@ -84,7 +83,7 @@ public class XColorPicker extends ColorPicker {
         }
 
         // Apply drop-shadow effects when the mouse enters this node.
-        GuiUtilities.applyDropShadowEffect( this );
+        ControlUtilities.applyDropShadowEffect( this );
     }
 
     // Get the JavaFX color value from the color picker.

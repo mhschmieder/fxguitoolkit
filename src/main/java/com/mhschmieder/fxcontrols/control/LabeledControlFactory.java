@@ -30,8 +30,6 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.fxcontrols.GuiUtilities;
-import com.mhschmieder.fxcontrols.SceneGraphUtilities;
 import com.mhschmieder.fxcontrols.action.BackgroundColorChoices;
 import com.mhschmieder.fxcontrols.action.ExportActions;
 import com.mhschmieder.fxcontrols.action.FileActions;
@@ -41,7 +39,7 @@ import com.mhschmieder.fxcontrols.action.WindowSizeActions;
 import com.mhschmieder.fxcontrols.action.XAction;
 import com.mhschmieder.fxcontrols.action.XActionGroup;
 import com.mhschmieder.fxcontrols.action.XActionUtilities;
-import com.mhschmieder.fxcontrols.layout.LayoutFactory;
+import com.mhschmieder.fxcontrols.util.RegionUtilities;
 import com.mhschmieder.fxgraphics.image.ImageUtilities;
 import com.mhschmieder.fxgraphics.paint.ColorConstants;
 import com.mhschmieder.jcommons.util.ClientProperties;
@@ -59,6 +57,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import org.apache.commons.math3.geometry.partitioning.RegionFactory;
 
 import java.util.ResourceBundle;
 
@@ -167,7 +166,7 @@ public final class LabeledControlFactory {
                                     final String borderInsetsCss ) {
         final Button button = getButton( label, font, buttonWidth );
 
-        GuiUtilities.applyLabeledButtonStyle( button,
+        ControlUtilities.applyLabeledButtonStyle( button,
                                               backColorCss,
                                               foreColorCss,
                                               borderColorCss,
@@ -206,11 +205,11 @@ public final class LabeledControlFactory {
                                         final double buttonHeight,
                                         final Color backgroundColor,
                                         final String tooltipText ) {
-        final SVGPath buttonIcon = GuiUtilities.getSvgImage( svgImage );
+        final SVGPath buttonIcon = ControlUtilities.getSvgImage( svgImage );
 
         final Button button = new Button();
         button.setShape( buttonIcon );
-        button.setBackground( LayoutFactory.makeRegionBackground( backgroundColor ) );
+        button.setBackground( RegionUtilities.makeRegionBackground( backgroundColor ) );
 
         button.setMinSize( buttonWidth, buttonHeight );
         button.setPrefSize( buttonWidth, buttonHeight );
@@ -285,7 +284,7 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getHelpButton( final boolean needsGraphic ) {
-        final Button helpButton = GuiUtilities.getLabeledButton( "Help", null, "help-button" );
+        final Button helpButton = ControlUtilities.getLabeledButton( "Help", null, "help-button" );
 
         if ( needsGraphic ) {
             final ImageView helpIcon = ImageUtilities.getImageView( "/icons/led24/Help16.png",
@@ -298,10 +297,10 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getPageSetupButton( final ClientProperties pClientProperties ) {
-        final Button button =
-                            GuiUtilities.getIconButton( "/icons/yusukeKamiyamane/diagone/Setup16.png" );
+        final Button button = ControlUtilities.getIconButton(
+                "/icons/yusukeKamiyamane/diagone/Setup16.png" );
 
-        SceneGraphUtilities.setControlProperties( pClientProperties,
+        ControlUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "file",
                                                   "pageSetup",
@@ -313,9 +312,9 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getPrintButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/icons/everaldo/FilePrint16.png" );
+        final Button button = ControlUtilities.getIconButton( "/icons/everaldo/FilePrint16.png" );
 
-        SceneGraphUtilities.setControlProperties( pClientProperties,
+        ControlUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "file",
                                                   "print",
@@ -327,9 +326,9 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getOpenButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/icons/led24/PageWhiteZip16.png" );
+        final Button button = ControlUtilities.getIconButton( "/icons/led24/PageWhiteZip16.png" );
 
-        SceneGraphUtilities.setControlProperties( pClientProperties,
+        ControlUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "file",
                                                   "open",
@@ -341,9 +340,9 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getSaveAsButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/icons/everaldo/FileSaveAs16.png" );
+        final Button button = ControlUtilities.getIconButton( "/icons/everaldo/FileSaveAs16.png" );
 
-        SceneGraphUtilities.setControlProperties( pClientProperties,
+        ControlUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "file",
                                                   "saveAs",
@@ -358,7 +357,7 @@ public final class LabeledControlFactory {
         final String buttonLabel = "Apply";
         final String tooltipText = buttonLabel + " Changes to " + objectType;
 
-        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "apply-button" );
+        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "apply-button" );
     }
 
     @SuppressWarnings("nls")
@@ -366,22 +365,22 @@ public final class LabeledControlFactory {
         final String buttonLabel = "Cancel";
         final String tooltipText = buttonLabel + " Changes to " + objectType + " and Close Window";
 
-        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "cancel-button" );
+        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "cancel-button" );
     }
 
     @SuppressWarnings("nls")
     public static Button getCancelExportButton() {
-        return GuiUtilities.getLabeledButton( "Cancel Export", null, "cancel-button" );
+        return ControlUtilities.getLabeledButton( "Cancel Export", null, "cancel-button" );
     }
 
     @SuppressWarnings("nls")
     public static Button getCancelImportButton() {
-        return GuiUtilities.getLabeledButton( "Cancel Import", null, "cancel-button" );
+        return ControlUtilities.getLabeledButton( "Cancel Import", null, "cancel-button" );
     }
 
     @SuppressWarnings("nls")
     public static Button getCancelReportButton( final String tooltipText ) {
-        return GuiUtilities.getLabeledButton( "Cancel Report", tooltipText, "cancel-button" );
+        return ControlUtilities.getLabeledButton( "Cancel Report", tooltipText, "cancel-button" );
     }
 
     @SuppressWarnings("nls")
@@ -391,28 +390,28 @@ public final class LabeledControlFactory {
 
         final String cssStyleId = modal ? "ok-button" : "apply-and-close-button";
 
-        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, cssStyleId );
+        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, cssStyleId );
     }
  
     @SuppressWarnings("nls")
     public static Button getExportGraphicsButton( final String tooltipText ) {
-        return GuiUtilities.getLabeledButton( "Export Graphics", tooltipText, "export-button" );
+        return ControlUtilities.getLabeledButton( "Export Graphics", tooltipText, "export-button" );
     }
 
     @SuppressWarnings("nls")
     public static Button getGenerateReportButton( final String tooltipText ) {
-        return GuiUtilities
+        return ControlUtilities
                 .getLabeledButton( "Generate Report", tooltipText, "generate-report-button" );
     }
 
     @SuppressWarnings("nls")
     public static Button getGraphicsImportButton( final String tooltipText ) {
-        return GuiUtilities.getLabeledButton( "Import Graphics", tooltipText, "import-button" );
+        return ControlUtilities.getLabeledButton( "Import Graphics", tooltipText, "import-button" );
     }
 
     @SuppressWarnings("nls")
     public static Button getHelpAlternateButton() {
-        return GuiUtilities.getLabeledButton( "Additional Help", null, "help-alternate-button" );
+        return ControlUtilities.getLabeledButton( "Additional Help", null, "help-alternate-button" );
     }
 
     @SuppressWarnings("nls")
@@ -420,7 +419,7 @@ public final class LabeledControlFactory {
         final String buttonLabel = "Insert";
         final String tooltipText = buttonLabel + " New " + objectType;
 
-        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "insert-button" );
+        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "insert-button" );
     }
 
     @SuppressWarnings("nls")
@@ -439,7 +438,7 @@ public final class LabeledControlFactory {
         final String buttonLabel = "Reset";
         final String tooltipText = "Set Default " + propertiesCategory;
 
-        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "reset-button" );
+        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "reset-button" );
     }
 
     @SuppressWarnings("nls")
@@ -447,7 +446,7 @@ public final class LabeledControlFactory {
         final String buttonLabel = "Revert";
         final String tooltipText = buttonLabel + " Changes to " + objectType;
 
-        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "revert-button" );
+        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "revert-button" );
     }
 
     @SuppressWarnings("nls")
@@ -455,12 +454,12 @@ public final class LabeledControlFactory {
         final String buttonLabel = "Save";
         final String tooltipText = "Save Current " + propertiesCategory;
 
-        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "save-button" );
+        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "save-button" );
     }
 
     @SuppressWarnings("nls")
     public static ToggleButton getTextWrapToggleButton() {
-        final ToggleButton toggleButton = GuiUtilities
+        final ToggleButton toggleButton = ControlUtilities
                 .getIconToggleButton( "/icons/everaldo/MultiRow16.png" );
 
         final String tooltipText = "Toggle Wrap Text Mode";
@@ -471,8 +470,8 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getRefreshButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/icons/deviantArt/shlyapnikova/miniIconSet/Update16.png" );
-        SceneGraphUtilities.setControlProperties( pClientProperties,
+        final Button button = ControlUtilities.getIconButton( "/icons/deviantArt/shlyapnikova/miniIconSet/Update16.png" );
+        ControlUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "view",
                                                   "refresh",
@@ -483,9 +482,9 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getResetButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities
+        final Button button = ControlUtilities
                 .getIconButton( "/icons/nineteenEightySeven/FormReset16.png" );
-        SceneGraphUtilities.setControlProperties( pClientProperties,
+        ControlUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "view",
                                                   "reset",
@@ -497,7 +496,7 @@ public final class LabeledControlFactory {
     @SuppressWarnings("nls")
     public static Button getResetButton( final ClientProperties pClientProperties,
                                          final XAction resetAction ) {
-        return SceneGraphUtilities.getLabeledButton( resetAction, "reset-button" );
+        return ControlUtilities.getLabeledButton( resetAction, "reset-button" );
     }
 
     @SuppressWarnings("nls")
@@ -513,15 +512,15 @@ public final class LabeledControlFactory {
     public static int getEditPropertiesMnemonicIndex( final ClientProperties pClientProperties ) {
         final ResourceBundle resourceBundle = GlobalUtilities
                 .getResourceBundle( pClientProperties, BUNDLE_NAME, false );
-        final int editPropertiesMnemonicIndex = GuiUtilities
+        final int editPropertiesMnemonicIndex = ControlUtilities
                 .getMnemonicIndex( "edit", "properties", resourceBundle );
         return editPropertiesMnemonicIndex;
     }
 
     @SuppressWarnings("nls")
     public static Button getNavigateBackButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( "/icons/ahaSoft/Back16.png" );
-        SceneGraphUtilities.setControlProperties( pClientProperties,
+        final Button button = ControlUtilities.getIconButton( "/icons/ahaSoft/Back16.png" );
+        ControlUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "navigate",
                                                   "back",
@@ -532,9 +531,9 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getNavigateForwardButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( 
+        final Button button = ControlUtilities.getIconButton(
                 "/icons/ahaSoft/Forward16.png" );
-        SceneGraphUtilities.setControlProperties( pClientProperties,
+        ControlUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "navigate",
                                                   "forward",
@@ -545,9 +544,9 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getSessionLogNewButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( 
+        final Button button = ControlUtilities.getIconButton(
                 "/icons/deviantArt/dAKirby309/windows8MetroInvert/PowerRestartInvert16.png" );
-        SceneGraphUtilities.setControlProperties( pClientProperties,
+        ControlUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "sessionLog",
                                                   "new",
@@ -558,9 +557,9 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getSessionLogUpdateButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( 
+        final Button button = ControlUtilities.getIconButton(
                 "/icons/deviantArt/shlyapnikova/miniIconSet/Update16.png" );
-        SceneGraphUtilities.setControlProperties( pClientProperties,
+        ControlUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "sessionLog",
                                                   "update",
@@ -571,10 +570,10 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getExportSessionLogButton( final ClientProperties pClientProperties ) {
-        final Button button = GuiUtilities.getIconButton( 
+        final Button button = ControlUtilities.getIconButton(
                 "/icons/everaldo/Txt2Mimetype16.png" );
 
-        SceneGraphUtilities.setControlProperties( pClientProperties,
+        ControlUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "export",
                                                   "sessionLog",
@@ -586,9 +585,9 @@ public final class LabeledControlFactory {
     
     public static Button getImportTableDataButton( final ClientProperties pClientProperties ) {
         final Button button =
-                GuiUtilities.getIconButton( "/icons/led24/DocExcelCsv16.png" );
+                ControlUtilities.getIconButton( "/icons/led24/DocExcelCsv16.png" );
 
-        SceneGraphUtilities.setControlProperties( pClientProperties,
+        ControlUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "import",
                                                   "tableData",
@@ -600,9 +599,9 @@ public final class LabeledControlFactory {
     
     public static Button getImportVectorGraphicsButton( final ClientProperties pClientProperties ) {
         final Button button =
-                GuiUtilities.getIconButton( "/icons/oxygenIcons/SvgMimeType16.png" );
+                ControlUtilities.getIconButton( "/icons/oxygenIcons/SvgMimeType16.png" );
 
-        SceneGraphUtilities.setControlProperties( pClientProperties,
+        ControlUtilities.setControlProperties( pClientProperties,
                                                   BUNDLE_NAME,
                                                   "import",
                                                   "vectorGraphics",
@@ -614,7 +613,7 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getEditNotesButton( final String tooltipText ) {
-        final Button editNotesButton = GuiUtilities
+        final Button editNotesButton = ControlUtilities
                 .getLabeledButton( "Edit Notes", tooltipText, "edit-notes-button" );
         final ImageView editNotesIcon = ImageUtilities
                 .getImageView( "/icons/visualIdiot/Notes16.png", true );
@@ -670,7 +669,7 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getPredictButton( final ClientProperties pClientProperties ) {
-        return SceneGraphUtilities.getLabeledButton( pClientProperties,
+        return ControlUtilities.getLabeledButton( pClientProperties,
                                                      BUNDLE_NAME,
                                                      "tools",
                                                      "predict",
@@ -679,13 +678,13 @@ public final class LabeledControlFactory {
 
     public static Button getPredictButton( final ClientProperties pClientProperties,
                                            final XAction predictAction ) {
-        return SceneGraphUtilities.getLabeledButton( predictAction,
+        return ControlUtilities.getLabeledButton( predictAction,
                                                      ColorConstants.PREDICT_BACKGROUND_COLOR );
     }
 
     @SuppressWarnings("nls")
     public static Button getCancelButton( final ClientProperties pClientProperties ) {
-        return SceneGraphUtilities.getLabeledButton( pClientProperties,
+        return ControlUtilities.getLabeledButton( pClientProperties,
                                                      BUNDLE_NAME,
                                                      "tools",
                                                      "cancel",
@@ -694,7 +693,7 @@ public final class LabeledControlFactory {
 
     @SuppressWarnings("nls")
     public static Button getClearButton( final ClientProperties pClientProperties ) {
-        return SceneGraphUtilities.getLabeledButton( pClientProperties,
+        return ControlUtilities.getLabeledButton( pClientProperties,
                                                      BUNDLE_NAME,
                                                      "tools",
                                                      "clear",
@@ -703,7 +702,7 @@ public final class LabeledControlFactory {
 
     public static Button getClearButton( final ClientProperties pClientProperties,
                                          final XAction clearAction ) {
-        return SceneGraphUtilities.getLabeledButton( clearAction,
+        return ControlUtilities.getLabeledButton( clearAction,
                                                      ColorConstants.CLEAR_BACKGROUND_COLOR );
     }
 
@@ -765,13 +764,13 @@ public final class LabeledControlFactory {
         final String buttonLabel = "Create"; //$NON-NLS-1$
         final String tooltipText = "Create New Layer after Selected Row"; //$NON-NLS-1$
 
-        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "create-button" ); //$NON-NLS-1$
+        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "create-button" ); //$NON-NLS-1$
     }
 
     public static Button getDeleteLayerButton() {
         final String buttonLabel = "Delete"; //$NON-NLS-1$
         final String tooltipText = "Delete Selected Layer(s) from Table"; //$NON-NLS-1$
 
-        return GuiUtilities.getLabeledButton( buttonLabel, tooltipText, "delete-button" ); //$NON-NLS-1$
+        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "delete-button" ); //$NON-NLS-1$
     }
 }

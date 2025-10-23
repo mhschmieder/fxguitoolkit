@@ -30,7 +30,6 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.fxcontrols.GuiUtilities;
 import com.mhschmieder.fxgraphics.image.ImageUtilities;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -147,7 +146,7 @@ public class XToggleButton extends ToggleButton {
 
         // Set the specified CSS Style Class reference, in place of directly
         // setting the background and foreground/text colors.
-        GuiUtilities.setToggleButtonProperties( this, cssStyleClass );
+        ControlUtilities.setToggleButtonProperties( this, cssStyleClass );
 
         // Add indentation (insets/margins), and use centering.
         setPadding( new Insets( 4.0d, 8.0d, 4.0d, 8.0d ) );

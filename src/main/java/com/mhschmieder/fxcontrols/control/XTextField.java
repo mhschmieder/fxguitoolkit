@@ -30,7 +30,6 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.fxcontrols.GuiUtilities;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jcommons.util.SystemType;
 import javafx.scene.control.TextField;
@@ -84,11 +83,11 @@ public class XTextField extends TextField {
 
         if ( applyToolkitCss ) {
             // Set the full list of this toolkit's custom Text Field Properties.
-            GuiUtilities.setTextFieldProperties( this );
+            ControlUtilities.setTextFieldProperties( this );
         }
         else {
             // Apply drop-shadow effects when the mouse enters this Text Field.
-            GuiUtilities.applyDropShadowEffect( this );
+            ControlUtilities.applyDropShadowEffect( this );
         }
 
         // Try to make sure the text field uses enough height so that commas

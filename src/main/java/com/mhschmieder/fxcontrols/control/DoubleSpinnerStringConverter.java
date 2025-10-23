@@ -30,7 +30,6 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.fxcontrols.GuiUtilities;
 import com.mhschmieder.jcommons.text.NumberFormatUtilities;
 import com.mhschmieder.jcommons.text.TextUtilities;
 import javafx.application.Platform;
@@ -136,8 +135,8 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
         spinnerValueFactory.setWrapAround( wrapAround );
 
         // Set the attributes and callbacks common to all Number Spinners.
-        GuiUtilities
-                .applySpinnerAttributes( doubleSpinner, tooltipText, maximumSpinnerWidth );
+        ControlUtilities.applySpinnerAttributes(
+                doubleSpinner, tooltipText, maximumSpinnerWidth );
 
         return converter;
     }

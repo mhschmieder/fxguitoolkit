@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxcontrols.control.cell;
 
-import com.mhschmieder.fxcontrols.GuiUtilities;
+import com.mhschmieder.fxcontrols.control.ControlUtilities;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableRow;
@@ -190,7 +190,8 @@ public abstract class ToggleButtonTableCell< RT, VT > extends XCheckBoxTableCell
             _toggleButton.setText( stringValue );
 
             final Color backgroundColor = getBackgroundColor();
-            final Background background = GuiUtilities.getButtonBackground( backgroundColor );
+            final Background background = ControlUtilities.getButtonBackground(
+                    backgroundColor );
             _toggleButton.setBackground( background );
 
             final Color textFillColor = getTextFillColor();

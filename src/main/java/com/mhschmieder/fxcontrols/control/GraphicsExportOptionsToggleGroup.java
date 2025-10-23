@@ -30,7 +30,6 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.fxcontrols.GuiUtilities;
 import com.mhschmieder.fxgraphics.io.GraphicsExportOptions;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -55,14 +54,15 @@ public class GraphicsExportOptionsToggleGroup extends ToggleGroup {
         super();
 
         // Make the Radio Buttons.
-        _exportAllRadioButton = GuiUtilities.getRadioButton( graphicsExportAllLabel,
-                                                             this,
-                                                             graphicsExportOptions.isExportAll() );
-        _exportChartRadioButton = GuiUtilities
+        _exportAllRadioButton = ControlUtilities.getRadioButton(
+                graphicsExportAllLabel,
+                this,
+                graphicsExportOptions.isExportAll() );
+        _exportChartRadioButton = ControlUtilities
                 .getRadioButton( graphicsExportChartLabel,
                                  this,
                                  graphicsExportOptions.isExportChart() );
-        _exportAuxiliaryRadioButton = GuiUtilities
+        _exportAuxiliaryRadioButton = ControlUtilities
                 .getRadioButton( graphicsExportAuxiliaryLabel,
                                  this,
                                  graphicsExportOptions.isExportAuxiliary() );

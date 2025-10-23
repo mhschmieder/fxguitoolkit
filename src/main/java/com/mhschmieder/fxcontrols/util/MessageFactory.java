@@ -29,7 +29,7 @@
  *
  * Project: https://github.com/mhschmieder/fxcontrols
  */
-package com.mhschmieder.fxcontrols;
+package com.mhschmieder.fxcontrols.util;
 
 import com.mhschmieder.jcommons.io.FileAction;
 import com.mhschmieder.jcommons.io.FileMode;
