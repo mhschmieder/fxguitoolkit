@@ -28,8 +28,9 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxcontrols;
+package com.mhschmieder.fxcontrols.input;
 
+import com.mhschmieder.fxcontrols.TrackerLabelGroup;
 import com.mhschmieder.fxgraphics.input.RotationManager;
 import com.mhschmieder.jphysics.AngleUnit;
 import com.mhschmieder.jphysics.UnitConversion;
@@ -116,9 +117,7 @@ public class MouseRotationTracker extends TrackerLabelGroup {
         }
 
         // Combine the angles into one formatted angle report.
-        final String sAngleReport = sTotalAngle + sObjectAngle;
-        
-        return sAngleReport;
+        return sTotalAngle + sObjectAngle;
     }
 
     public void updateAngleUnit( final AngleUnit angleUnit ) {

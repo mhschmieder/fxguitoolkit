@@ -47,10 +47,10 @@ public abstract class TrackerLabelGroup extends Group {
     /** A Label to display coordinates or other data of interest at the cursor. */
     public Label _trackerLabel;
 
-    /** Cache a local copy of the x axis so we can perform bounds containment. */
+    /** Cache a local copy of the x-axis so we can perform bounds containment. */
     protected ValueAxis< Number > _xAxis;
 
-    /** Cache a local copy of the y axis so we can perform bounds containment. */
+    /** Cache a local copy of the y-axis so we can perform bounds containment. */
     protected ValueAxis< Number > _yAxis;
 
     public TrackerLabelGroup( final ValueAxis< Number > xAxis,

@@ -28,7 +28,7 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxcontrols;
+package com.mhschmieder.fxcontrols.util;
 
 import javafx.util.StringConverter;
 import org.apache.commons.math3.util.FastMath;
@@ -44,7 +44,7 @@ import java.text.NumberFormat;
  * <p>
  * Other uses are more typical of JavaFX Controls contexts, for textField syncing.
  */
-public class IntegerConverter extends StringConverter< Number > {
+public class DoubleConverter extends StringConverter< Number > {
 
     // Maintain a reference to the Measurement Unit label (can be blank).
     protected String       _measurementUnit;
@@ -53,19 +53,19 @@ public class IntegerConverter extends StringConverter< Number > {
     protected NumberFormat _numberFormat;
 
     // Cache the default data value for when there is no valid input.
-    protected int          _defaultValue;
+    protected double       _defaultValue;
 
     // Cache the minimum allowed data value (negative).
-    protected int          _minimumValue;
+    protected double       _minimumValue;
 
     // Cache the maximum allowed data value (positive).
-    protected int          _maximumValue;
+    protected double       _maximumValue;
 
-    public IntegerConverter( final String measurementUnit,
-                             final NumberFormat numberFormat,
-                             final int defaultValue,
-                             final int minimumValue,
-                             final int maximumValue ) {
+    public DoubleConverter( final String measurementUnit,
+                            final NumberFormat numberFormat,
+                            final double defaultValue,
+                            final double minimumValue,
+                            final double maximumValue ) {
         // Always call the superclass constructor first!
         super();
 
@@ -95,7 +95,7 @@ public class IntegerConverter extends StringConverter< Number > {
     @Override
     public Number fromString( final String string ) {
         try {
-            int editedValue = _numberFormat.parse( string ).intValue();
+            double editedValue = _numberFormat.parse( string ).doubleValue();
 
             // If limits were established, enforce them. Always check though, to
             // avoid overflow and underflow conditions.
@@ -112,15 +112,15 @@ public class IntegerConverter extends StringConverter< Number > {
         }
     }
 
-    public int getDefaultValue() {
+    public double getDefaultValue() {
         return _defaultValue;
     }
 
-    public int getMinimumValue() {
+    public double getMinimumValue() {
         return _minimumValue;
     }
 
-    public int getMaximumValue() {
+    public double getMaximumValue() {
         return _maximumValue;
     }
 
@@ -132,15 +132,15 @@ public class IntegerConverter extends StringConverter< Number > {
         return _numberFormat;
     }
 
-    public void setDefaultValue( final int defaultValue ) {
+    public void setDefaultValue( final double defaultValue ) {
         _defaultValue = defaultValue;
     }
 
-    public void setMinimumValue( final int minimumValue ) {
+    public void setMinimumValue( final double minimumValue ) {
         _minimumValue = minimumValue;
     }
 
-    public void setMaximumValue( final int maximumValue ) {
+    public void setMaximumValue( final double maximumValue ) {
         _maximumValue = maximumValue;
     }
 

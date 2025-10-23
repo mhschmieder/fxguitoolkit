@@ -28,8 +28,9 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxcontrols;
+package com.mhschmieder.fxcontrols.input;
 
+import com.mhschmieder.fxcontrols.TrackerLabelGroup;
 import com.mhschmieder.fxgraphics.input.MouseToolManager;
 import com.mhschmieder.fxgraphics.input.MouseToolMode;
 import com.mhschmieder.jcommons.text.TextUtilities;

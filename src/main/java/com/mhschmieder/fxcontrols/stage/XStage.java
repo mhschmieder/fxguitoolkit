@@ -30,7 +30,6 @@
  */
 package com.mhschmieder.fxcontrols.stage;
 
-import com.mhschmieder.fxcontrols.ForegroundManager;
 import com.mhschmieder.fxcontrols.GuiUtilities;
 import com.mhschmieder.fxcontrols.action.BackgroundColorChoices;
 import com.mhschmieder.fxcontrols.action.MruFileActions;

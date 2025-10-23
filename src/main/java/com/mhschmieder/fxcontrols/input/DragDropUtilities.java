@@ -28,7 +28,7 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxcontrols;
+package com.mhschmieder.fxcontrols.input;
 
 import com.mhschmieder.fxcontrols.stage.FileActionHandler;
 import com.mhschmieder.jcommons.io.FileMode;
@@ -64,7 +64,8 @@ public class DragDropUtilities {
      *
      * @return An Event Handler for image drag events
      */
-    public static EventHandler< DragEvent > getImageDragHandler( final FileActionHandler fileActionHandler ) {
+    public static EventHandler< DragEvent > getImageDragHandler(
+            final FileActionHandler fileActionHandler ) {
         return dragEvent -> {
             final Dragboard dragboard = dragEvent.getDragboard();
 

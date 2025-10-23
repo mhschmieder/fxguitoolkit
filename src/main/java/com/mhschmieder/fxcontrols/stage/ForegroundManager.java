@@ -28,7 +28,7 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxcontrols;
+package com.mhschmieder.fxcontrols.stage;
 
 import javafx.scene.paint.Color;
 
@@ -62,5 +62,4 @@ public interface ForegroundManager {
      * @since 1.0
      */
     void setForegroundFromBackground( final Color backColor );
-
 }

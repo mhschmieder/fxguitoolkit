@@ -28,7 +28,7 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxcontrols;
+package com.mhschmieder.fxcontrols.layout;
 
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
@@ -37,13 +37,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
 /**
- * A node which displays a value on hover, but is otherwise empty
+ * A {@link StackPane} that displays a value on hover, but is otherwise empty.
  *
  * @version 1.0
  *
  * @author Mark Schmieder
  */
-public class HoveredThresholdNode extends StackPane {
+public class HoveredThresholdPane extends StackPane {
 
     /**
      * @param colorTag
@@ -60,10 +60,10 @@ public class HoveredThresholdNode extends StackPane {
         final Label label = new Label( y + "" ); //$NON-NLS-1$
 
         // TODO: Try to find out why this turns back on the circles at each
-        // data point, even if we remove the other two Style Class settings.
+        //  data point, even if we remove the other two Style Class settings.
         // NOTE: The chart line symbol style has been removed for now, as
-        // drawing a box around the data display, with a white background
-        // painting over everything in sight, obscures neighboring data points.
+        //  drawing a box around the data display, with a white background
+        //  painting over everything in sight, obscures neighboring data points.
         label.getStyleClass().addAll( colorTag, // "chart-line-symbol" );
                                       "chart-series-line" ); //$NON-NLS-1$
         label.setStyle( "-fx-font-family: 'sans-serif'; -fx-font-size: 12; -fx-font-weight: bold;" ); //$NON-NLS-1$
@@ -93,7 +93,7 @@ public class HoveredThresholdNode extends StackPane {
      * @param y
      *            The current data value, used for comparisons with previous.
      */
-    public HoveredThresholdNode( final String colorTag, final double d, final double y ) {
+    public HoveredThresholdPane(final String colorTag, final double d, final double y ) {
         setPrefSize( 15, 15 );
 
         final Label label = createDataThresholdLabel( colorTag, d, y );
