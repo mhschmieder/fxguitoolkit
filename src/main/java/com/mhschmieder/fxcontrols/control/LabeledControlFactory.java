@@ -44,7 +44,7 @@ import com.mhschmieder.fxgraphics.image.ImageUtilities;
 import com.mhschmieder.fxgraphics.paint.ColorConstants;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jcommons.util.GlobalUtilities;
-import com.mhschmieder.jcontrols.component.ButtonUtilities;
+import com.mhschmieder.jcontrols.control.ButtonUtilities;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

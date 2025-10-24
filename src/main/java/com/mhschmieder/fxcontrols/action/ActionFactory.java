@@ -35,7 +35,7 @@ import com.mhschmieder.fxgraphics.image.ImageUtilities;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jcommons.util.GlobalUtilities;
 import com.mhschmieder.jcommons.util.SystemType;
-import com.mhschmieder.jcontrols.component.ButtonUtilities;
+import com.mhschmieder.jcontrols.control.ButtonUtilities;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import org.controlsfx.control.action.Action;
