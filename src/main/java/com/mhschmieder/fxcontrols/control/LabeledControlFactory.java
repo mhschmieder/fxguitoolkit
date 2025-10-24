@@ -57,7 +57,6 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-import org.apache.commons.math3.geometry.partitioning.RegionFactory;
 
 import java.util.ResourceBundle;
 

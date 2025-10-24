@@ -31,12 +31,12 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxcontrols.action.XAction;
+import com.mhschmieder.fxcontrols.util.IconContext;
 import com.mhschmieder.fxcontrols.util.RegionUtilities;
 import com.mhschmieder.fxgraphics.image.ImageUtilities;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jcommons.util.GlobalUtilities;
 import com.mhschmieder.jcontrols.component.ButtonUtilities;
-import com.mhschmieder.jcontrols.icon.IconContext;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
